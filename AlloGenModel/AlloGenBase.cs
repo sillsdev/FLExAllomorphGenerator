@@ -12,6 +12,6 @@ namespace SIL.AlloGenModel
 {
     public class AlloGenBase
     {
-        public bool Active { get; set; }
+        public bool Active { get; set; } = true;
     }
 }

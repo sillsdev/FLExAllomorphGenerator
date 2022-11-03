@@ -7,12 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SIL.AlloGenModel
 {
     public class Replace : AlloGenBase
     {
         public string From { get; set; }
-        public List<string> To { get; set; }
+        public List<ReplaceTo> To { get; set; }
+        [XmlAttribute("mode")]
+        public bool Mode { get; set; } = true;
+
+        public Replace()
+        {
+            To = new List<ReplaceTo>();
+        }
     }
 }

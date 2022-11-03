@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AllomorphGenerators xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Operations>
+    <Operation>
+      <Active>true</Active>
+      <Name>foreshortening</Name>
+      <Description>Add allomorphs for entries which undergo foreshortening</Description>
+      <Pattern>
+        <Match>:$|:\..+$</Match>
+        <MorphTypes>
+          <MorphType guid="d7f713e4-e8cf-11d3-9764-00c04f186933" name="bound root">
+            <Active>true</Active>
+          </MorphType>
+          <MorphType guid="d7f713e7-e8cf-11d3-9764-00c04f186933" name="bound stem">
+            <Active>true</Active>
+          </MorphType>
+          <MorphType guid="d7f713e5-e8cf-11d3-9764-00c04f186933" name="root">
+            <Active>true</Active>
+          </MorphType>
+          <MorphType guid="d7f713e8-e8cf-11d3-9764-00c04f186933" name="stem">
+            <Active>true</Active>
+          </MorphType>
+        </MorphTypes>
+        <Categories />
+      </Pattern>
+      <Action>
+        <ReplaceOps>
+          <Replace mode="true">
+            <Active>true</Active>
+            <From>*</From>
+            <To>
+              <ReplaceTo ach="true" acl="true" akh="true" akl="true" ame="true">
+                <Active>true</Active>
+                <To />
+              </ReplaceTo>
+            </To>
+          </Replace>
+          <Replace mode="true">
+            <Active>true</Active>
+            <From>+</From>
+            <To>
+              <ReplaceTo ach="true" acl="true" akh="true" akl="true" ame="true">
+                <Active>true</Active>
+                <To />
+              </ReplaceTo>
+            </To>
+          </Replace>
+          <Replace mode="true">
+            <Active>true</Active>
+            <From>:</From>
+            <To>
+              <ReplaceTo ach="true" acl="true" akh="true" akl="true" ame="false">
+                <Active>true</Active>
+                <To />
+              </ReplaceTo>
+              <ReplaceTo ach="false" acl="false" akh="false" akl="false" ame="true">
+                <Active>true</Active>
+                <To>a</To>
+              </ReplaceTo>
+            </To>
+          </Replace>
+        </ReplaceOps>
+        <Environments />
+        <InflectionFeatures />
+        <RequiredFeatures />
+        <StemNames />
+      </Action>
+    </Operation>
+  </Operations>
+</AllomorphGenerators>

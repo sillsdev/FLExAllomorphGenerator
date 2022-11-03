@@ -12,7 +12,5 @@ namespace SIL.AlloGenModel
 {
     public class StemName : AlloGenBase
     {
-        public string Guid { get; set; }
-        public string name { get; set; }
     }
 }

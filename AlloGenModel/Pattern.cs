@@ -15,5 +15,10 @@ namespace SIL.AlloGenModel
         public string Match { get; set; }
         public List<MorphType> MorphTypes { get; set; }
         public List<Category> Categories { get; set; }
+        public Pattern()
+        {
+            MorphTypes = new List<MorphType>();
+            Categories = new List<Category>();
+        }
     }
 }

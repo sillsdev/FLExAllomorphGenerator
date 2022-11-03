@@ -7,12 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SIL.AlloGenModel
 {
     public class AlloGenGuid : AlloGenBase
     {
+        [XmlAttribute("guid")]
         public string Guid { get; set; }
-        public string name { get; set; }
+        [XmlAttribute("name")]
+        public string Name { get; set; }
     }
 }

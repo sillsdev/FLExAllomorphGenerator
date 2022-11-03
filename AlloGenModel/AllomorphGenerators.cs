@@ -13,5 +13,9 @@ namespace SIL.AlloGenModel
     public class AllomorphGenerators
     {
         public List<Operation> Operations { get; set; }
+        public AllomorphGenerators()
+        {
+            Operations = new List<Operation>();
+        }
     }
 }
