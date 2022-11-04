@@ -6,9 +6,11 @@ using NUnit.Framework;
 using SIL.AlloGenModel;
 using SIL.AlloGenService;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Action = SIL.AlloGenModel.Action;
 
 namespace SIL.AlloGenServiceTest
 {
@@ -34,7 +36,51 @@ namespace SIL.AlloGenServiceTest
         [Test]
         public void LoadTest()
         {
-            Assert.Pass();
+            provider.LoadDataFromFile(AlloGenExpected);
+            AllomorphGenerators allomorphGenerators = provider.AlloGens;
+            Assert.NotNull(allomorphGenerators);
+            Assert.AreEqual(1, allomorphGenerators.Operations.Count);
+            Operation operation = allomorphGenerators.Operations[0];
+            Assert.AreEqual("foreshortening", operation.Name);
+            Assert.AreEqual("Add allomorphs for entries which undergo foreshortening", operation.Description);
+            Pattern pattern = operation.Pattern;
+            Assert.NotNull(pattern);
+            Assert.AreEqual(@":$|:\..+$", pattern.Match);
+            Assert.AreEqual(4, pattern.MorphTypes.Count);
+            string guid = pattern.MorphTypes[0].Guid;
+            Assert.AreEqual("d7f713e4-e8cf-11d3-9764-00c04f186933", guid);
+            string name = pattern.MorphTypes[0].Name;
+            Assert.AreEqual("bound root", name);
+            Action action = operation.Action;
+            Assert.NotNull(action);
+            List<Replace> replaceOps = action.ReplaceOps;
+            Assert.NotNull(replaceOps);
+            Assert.AreEqual(3, replaceOps.Count);
+            Replace replace = replaceOps[0];
+            Assert.NotNull(replace);
+            bool mode = replace.Mode;
+            Assert.AreEqual(true, mode);
+            Assert.AreEqual("*", replace.From);
+            ReplaceTo replaceTo = replace.To[0];
+            Assert.NotNull(replaceTo);
+            Assert.AreEqual("", replaceTo.To);
+            Assert.True(replaceTo.Ach);
+            Assert.True(replaceTo.Acl);
+            Assert.True(replaceTo.Akh);
+            Assert.True(replaceTo.Akl);
+            Assert.True(replaceTo.Ame);
+            replace = replaceOps[2];
+            Assert.NotNull(replace);
+            Assert.AreEqual(":", replace.From);
+            replaceTo = replace.To[0];
+            Assert.NotNull(replaceTo);
+            Assert.AreEqual("", replaceTo.To);
+            Assert.True(replaceTo.Ach);
+            Assert.True(replaceTo.Acl);
+            Assert.True(replaceTo.Akh);
+            Assert.True(replaceTo.Akl);
+            Assert.False(replaceTo.Ame);
+
         }
 
         [Test]
