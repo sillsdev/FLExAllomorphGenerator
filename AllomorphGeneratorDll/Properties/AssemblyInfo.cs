@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿// Copyright (c) 2022 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
+
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -6,9 +10,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AllomorphGenerator")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("This program enables one to create allomorphs in lexical entries based on the shape of the ciation form.\r\nIt is compatible with FLEx database version 7000072 such as in version 9.1.12 Beta of FLEx.\r\n\r\nThis software is licensed under the LGPL, version 2.1 or later\r\n(http://www.gnu.org/licenses/lgpl-2.1.html)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("SIL International")]
 [assembly: AssemblyProduct("AllomorphGenerator")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
@@ -32,5 +36,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyFileVersion("0.1.0.0")]

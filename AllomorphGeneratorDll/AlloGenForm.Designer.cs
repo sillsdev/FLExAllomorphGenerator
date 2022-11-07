@@ -40,13 +40,13 @@
             this.tlpPattern = new System.Windows.Forms.TableLayoutPanel();
             this.lbMatch = new System.Windows.Forms.Label();
             this.tbMatch = new System.Windows.Forms.TextBox();
-            this.lbOperations = new System.Windows.Forms.ListBox();
-            this.tabRunOps = new System.Windows.Forms.TabPage();
             this.lbAction = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lbReplace = new System.Windows.Forms.Label();
             this.tbFrom = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lbOperations = new System.Windows.Forms.ListBox();
+            this.tabRunOps = new System.Windows.Forms.TabPage();
             this.lbAlloGenFile = new System.Windows.Forms.Label();
             this.tbFile = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
@@ -189,26 +189,6 @@
             this.tbMatch.TabIndex = 1;
             this.tbMatch.Text = "My match";
             // 
-            // lbOperations
-            // 
-            this.lbOperations.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lbOperations.FormattingEnabled = true;
-            this.lbOperations.ItemHeight = 20;
-            this.lbOperations.Location = new System.Drawing.Point(3, 3);
-            this.lbOperations.Name = "lbOperations";
-            this.lbOperations.Size = new System.Drawing.Size(476, 802);
-            this.lbOperations.TabIndex = 0;
-            // 
-            // tabRunOps
-            // 
-            this.tabRunOps.Location = new System.Drawing.Point(4, 29);
-            this.tabRunOps.Name = "tabRunOps";
-            this.tabRunOps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRunOps.Size = new System.Drawing.Size(1281, 913);
-            this.tabRunOps.TabIndex = 1;
-            this.tabRunOps.Text = "Run Operations";
-            this.tabRunOps.UseVisualStyleBackColor = true;
-            // 
             // lbAction
             // 
             this.lbAction.AutoSize = true;
@@ -223,7 +203,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 228F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 229F));
             this.tableLayoutPanel1.Controls.Add(this.lbReplace, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tbFrom, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 2, 0);
@@ -260,6 +240,26 @@
             this.textBox1.TabIndex = 2;
             this.textBox1.Text = "My to";
             // 
+            // lbOperations
+            // 
+            this.lbOperations.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lbOperations.FormattingEnabled = true;
+            this.lbOperations.ItemHeight = 20;
+            this.lbOperations.Location = new System.Drawing.Point(3, 3);
+            this.lbOperations.Name = "lbOperations";
+            this.lbOperations.Size = new System.Drawing.Size(476, 802);
+            this.lbOperations.TabIndex = 0;
+            // 
+            // tabRunOps
+            // 
+            this.tabRunOps.Location = new System.Drawing.Point(4, 29);
+            this.tabRunOps.Name = "tabRunOps";
+            this.tabRunOps.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRunOps.Size = new System.Drawing.Size(1281, 808);
+            this.tabRunOps.TabIndex = 1;
+            this.tabRunOps.Text = "Run Operations";
+            this.tabRunOps.UseVisualStyleBackColor = true;
+            // 
             // lbAlloGenFile
             // 
             this.lbAlloGenFile.AutoSize = true;
@@ -285,6 +285,7 @@
             this.btnBrowse.TabIndex = 3;
             this.btnBrowse.Text = "&Browse";
             this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // btnHelp
             // 
@@ -308,6 +309,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AlloGenForm";
             this.Text = "Allomorph Generator";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.tabControl.ResumeLayout(false);
             this.tabEditOps.ResumeLayout(false);
             this.tabEditOps.PerformLayout();
