@@ -3,6 +3,8 @@
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
 using Microsoft.Win32;
+using SIL.AlloGenModel;
+using SIL.AlloGenService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,37 +35,52 @@ namespace SIL.AllomorphGenerator
 
         public string LastDatabase { get; set; }
         public string LastOperationsFile { get; set; }
-        public string LastOperation { get; set; }
+        public int LastOperation { get; set; }
         public string LastRootGlossSelection { get; set; }
-        public string RetrievedLastOperation { get; set; }
+        public int RetrievedLastOperation { get; set; }
 
         private String OperationsFile { get; set; }
+        AllomorphGenerators AlloGens { get; set; }
+        List<Operation> Operations { get; set; }
 
         public AlloGenForm()
         {
             InitializeComponent();
             try
             {
-                regkey = Registry.CurrentUser.OpenSubKey(m_strRegKey);
-                if (regkey != null)
+                RememberFormState();
+                XmlBackEndProvider provider = new XmlBackEndProvider();
+                provider.LoadDataFromFile(OperationsFile);
+                AlloGens = provider.AlloGens;
+                if (AlloGens != null)
                 {
-                    Cursor.Current = Cursors.WaitCursor;
-                    Application.DoEvents();
-                    RetrieveRegistryInfo();
-                    regkey.Close();
-                    DesktopBounds = RectNormal;
-                    WindowState = WindowState;
-                    StartPosition = FormStartPosition.Manual;
-                    if (!String.IsNullOrEmpty(LastOperationsFile))
-                        tbFile.Text = LastOperationsFile;
-                    Cursor.Current = Cursors.Default;
+                    Operations = AlloGens.Operations;
                 }
+                FillOperationsListBox();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.InnerException);
                 Console.WriteLine(e.StackTrace);
+            }
+        }
+
+        private void RememberFormState()
+        {
+            regkey = Registry.CurrentUser.OpenSubKey(m_strRegKey);
+            if (regkey != null)
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                Application.DoEvents();
+                RetrieveRegistryInfo();
+                regkey.Close();
+                DesktopBounds = RectNormal;
+                WindowState = WindowState;
+                StartPosition = FormStartPosition.Manual;
+                if (!String.IsNullOrEmpty(LastOperationsFile))
+                    tbFile.Text = LastOperationsFile;
+                Cursor.Current = Cursors.Default;
             }
         }
 
@@ -80,7 +97,8 @@ namespace SIL.AllomorphGenerator
 
             LastDatabase = (string)regkey.GetValue(m_strLastDatabase);
             OperationsFile = LastOperationsFile = (string)regkey.GetValue(m_strLastOperationsFile);
-            RetrievedLastOperation = LastOperation = (string)regkey.GetValue(m_strLastOperation);
+            RetrievedLastOperation = LastOperation = (int)regkey.GetValue(m_strLastOperation, 1);
+
         }
 
         public void SaveRegistryInfo()
@@ -95,8 +113,7 @@ namespace SIL.AllomorphGenerator
                 regkey.SetValue(m_strLastDatabase, LastDatabase);
             if (LastOperationsFile != null)
                 regkey.SetValue(m_strLastOperationsFile, LastOperationsFile);
-            if (LastOperation != null)
-                regkey.SetValue(m_strLastOperation, LastOperation);
+            regkey.SetValue(m_strLastOperation, LastOperation);
             // Window position and location
             regkey.SetValue(m_strWindowState, (int)WindowState);
             regkey.SetValue(m_strLocationX, RectNormal.X);
@@ -138,6 +155,24 @@ namespace SIL.AllomorphGenerator
                 RectNormal = DesktopBounds;
         }
 
+        public void FillOperationsListBox()
+        {
+            lbOperations.DataSource = Operations;
+            // select last used operation, if any
+            if (LastOperation < 0 || LastOperation >= Operations.Count)
+                LastOperation = 1;
+            var selectedOperation = Operations[LastOperation];
+        }
 
+        private void lbOperations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Operation operation = lbOperations.SelectedItem as Operation;
+            LastOperation = lbOperations.SelectedIndex;
+            tbName.Text = operation.Name;
+            tbDescription.Text = operation.Description;
+            Pattern pattern = operation.Pattern;
+            tbMatch.Text = pattern.Match;
+
+        }
     }
 }

@@ -35,7 +35,7 @@
             this.lbName = new System.Windows.Forms.Label();
             this.lbDescription = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbDescription = new System.Windows.Forms.TextBox();
             this.lbPattern = new System.Windows.Forms.Label();
             this.tlpPattern = new System.Windows.Forms.TableLayoutPanel();
             this.lbMatch = new System.Windows.Forms.Label();
@@ -93,7 +93,7 @@
             this.tlpOperation.Controls.Add(this.lbName, 0, 0);
             this.tlpOperation.Controls.Add(this.lbDescription, 0, 1);
             this.tlpOperation.Controls.Add(this.tbName, 1, 0);
-            this.tlpOperation.Controls.Add(this.textBox2, 1, 1);
+            this.tlpOperation.Controls.Add(this.tbDescription, 1, 1);
             this.tlpOperation.Controls.Add(this.lbPattern, 0, 2);
             this.tlpOperation.Controls.Add(this.tlpPattern, 1, 2);
             this.tlpOperation.Controls.Add(this.lbAction, 0, 3);
@@ -137,14 +137,14 @@
             this.tbName.TabIndex = 2;
             this.tbName.Text = "My name";
             // 
-            // textBox2
+            // tbDescription
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(98, 35);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(692, 26);
-            this.textBox2.TabIndex = 3;
-            this.textBox2.Text = "My description";
+            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbDescription.Location = new System.Drawing.Point(98, 35);
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.Size = new System.Drawing.Size(692, 26);
+            this.tbDescription.TabIndex = 3;
+            this.tbDescription.Text = "My description";
             // 
             // lbPattern
             // 
@@ -249,6 +249,7 @@
             this.lbOperations.Name = "lbOperations";
             this.lbOperations.Size = new System.Drawing.Size(476, 802);
             this.lbOperations.TabIndex = 0;
+            this.lbOperations.SelectedIndexChanged += new System.EventHandler(this.lbOperations_SelectedIndexChanged);
             // 
             // tabRunOps
             // 
@@ -334,7 +335,7 @@
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.Label lbDescription;
         private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.Label lbPattern;
         private System.Windows.Forms.TableLayoutPanel tlpPattern;
         private System.Windows.Forms.Label lbMatch;

@@ -30,7 +30,7 @@ namespace SIL.AlloGenServiceTest
             int i = rootdir.LastIndexOf("AlloGenServiceTests");
             string basedir = rootdir.Substring(0, i);
             TestDataDir = Path.Combine(basedir, "AlloGenServiceTests", "TestData");
-            AlloGenExpected = Path.Combine(TestDataDir, "AlloGenExpected.xml");
+            AlloGenExpected = Path.Combine(TestDataDir, "AlloGenExpected.agf");
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace SIL.AlloGenServiceTest
             AlloGenModel.Action action = MakeAction();
             operation.Action = action;
             allomorphGenerators.Operations.Add(operation);
-            string xmlFile = Path.Combine(Path.GetTempPath(), "AlloGen.xml");
+            string xmlFile = Path.Combine(Path.GetTempPath(), "AlloGen.agf");
             provider.AlloGens = allomorphGenerators;
             provider.SaveDataToFile(xmlFile);
             using (var streamReader = new StreamReader(AlloGenExpected, Encoding.UTF8))

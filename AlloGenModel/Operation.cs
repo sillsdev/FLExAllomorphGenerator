@@ -16,5 +16,10 @@ namespace SIL.AlloGenModel
         public string Description { get; set; }
         public Pattern Pattern { get; set; }
         public Action Action { get; set; }
+
+        override public string ToString()
+        {
+            return Name;
+        }
     }
 }
