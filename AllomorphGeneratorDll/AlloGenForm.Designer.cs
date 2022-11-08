@@ -1,4 +1,6 @@
-﻿namespace SIL.AllomorphGenerator
+﻿using System;
+
+namespace SIL.AllomorphGenerator
 {
     partial class AlloGenForm
     {
@@ -40,6 +42,7 @@
             this.tlpPattern = new System.Windows.Forms.TableLayoutPanel();
             this.lbMatch = new System.Windows.Forms.Label();
             this.tbMatch = new System.Windows.Forms.TextBox();
+            this.lbMorphTypes = new System.Windows.Forms.ListBox();
             this.lbAction = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lbReplace = new System.Windows.Forms.Label();
@@ -163,6 +166,7 @@
             this.tlpPattern.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tlpPattern.Controls.Add(this.lbMatch, 0, 0);
             this.tlpPattern.Controls.Add(this.tbMatch, 1, 0);
+            this.tlpPattern.Controls.Add(this.lbMorphTypes, 1, 1);
             this.tlpPattern.Location = new System.Drawing.Point(98, 67);
             this.tlpPattern.Name = "tlpPattern";
             this.tlpPattern.RowCount = 2;
@@ -188,6 +192,17 @@
             this.tbMatch.Size = new System.Drawing.Size(627, 26);
             this.tbMatch.TabIndex = 1;
             this.tbMatch.Text = "My match";
+            // 
+            // lbMorphTypes
+            // 
+            this.lbMorphTypes.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lbMorphTypes.FormattingEnabled = true;
+            this.lbMorphTypes.ItemHeight = 20;
+            this.lbMorphTypes.Location = new System.Drawing.Point(62, 35);
+            this.lbMorphTypes.Name = "lbMorphTypes";
+            this.lbMorphTypes.Size = new System.Drawing.Size(476, 14);
+            this.lbMorphTypes.TabIndex = 0;
+            this.lbMorphTypes.SelectedIndexChanged += new System.EventHandler(this.lbMorphTypes_SelectedIndexChanged);
             // 
             // lbAction
             // 
@@ -340,6 +355,7 @@
         private System.Windows.Forms.TableLayoutPanel tlpPattern;
         private System.Windows.Forms.Label lbMatch;
         private System.Windows.Forms.TextBox tbMatch;
+        private System.Windows.Forms.ListBox lbMorphTypes;
         private System.Windows.Forms.Label lbAction;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label lbReplace;

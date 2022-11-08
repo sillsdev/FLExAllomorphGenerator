@@ -17,5 +17,11 @@ namespace SIL.AlloGenModel
         public string Guid { get; set; }
         [XmlAttribute("name")]
         public string Name { get; set; }
+
+        override public string ToString()
+        {
+            return Name;
+        }
+
     }
 }
