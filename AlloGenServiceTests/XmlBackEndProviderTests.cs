@@ -46,11 +46,17 @@ namespace SIL.AlloGenServiceTest
             Pattern pattern = operation.Pattern;
             Assert.NotNull(pattern);
             Assert.AreEqual(@":$|:\..+$", pattern.Match);
+            Assert.AreEqual(true, pattern.MatchMode);
             Assert.AreEqual(4, pattern.MorphTypes.Count);
             string guid = pattern.MorphTypes[0].Guid;
             Assert.AreEqual("d7f713e4-e8cf-11d3-9764-00c04f186933", guid);
             string name = pattern.MorphTypes[0].Name;
             Assert.AreEqual("bound root", name);
+            Assert.AreEqual(1, pattern.Categories.Count);
+            guid = pattern.Categories[0].Guid;
+            Assert.AreEqual("d7f713e8-e8cf-11d3-9733-00c04f186933", guid);
+            name = pattern.Categories[0].Name;
+            Assert.AreEqual("verb", name);
             Action action = operation.Action;
             Assert.NotNull(action);
             List<Replace> replaceOps = action.ReplaceOps;
@@ -59,7 +65,7 @@ namespace SIL.AlloGenServiceTest
             Replace replace = replaceOps[0];
             Assert.NotNull(replace);
             bool mode = replace.Mode;
-            Assert.AreEqual(true, mode);
+            Assert.AreEqual(false, mode);
             Assert.AreEqual("*", replace.From);
             ReplaceTo replaceTo = replace.To[0];
             Assert.NotNull(replaceTo);
@@ -146,6 +152,7 @@ namespace SIL.AlloGenServiceTest
         {
             Pattern pattern = new Pattern();
             pattern.Match = @":$|:\..+$";
+            pattern.MatchMode = true;
             MorphType morphType1 = new MorphType();
             morphType1.Guid = "d7f713e4-e8cf-11d3-9764-00c04f186933";
             morphType1.Name = "bound root";
@@ -162,6 +169,10 @@ namespace SIL.AlloGenServiceTest
             pattern.MorphTypes.Add(morphType2);
             pattern.MorphTypes.Add(morphType3);
             pattern.MorphTypes.Add(morphType4);
+            Category cat = new Category();
+            cat.Guid = "d7f713e8-e8cf-11d3-9733-00c04f186933";
+            cat.Name = "verb";
+            pattern.Categories.Add(cat);
             return pattern;
         }
     }

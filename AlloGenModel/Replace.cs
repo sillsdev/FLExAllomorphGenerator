@@ -15,8 +15,9 @@ namespace SIL.AlloGenModel
     {
         public string From { get; set; }
         public List<ReplaceTo> To { get; set; }
+        // mode: false = plain; true = regular expression
         [XmlAttribute("mode")]
-        public bool Mode { get; set; } = true;
+        public bool Mode { get; set; } = false;
 
         public Replace()
         {

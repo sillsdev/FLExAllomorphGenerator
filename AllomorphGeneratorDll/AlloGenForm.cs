@@ -172,12 +172,16 @@ namespace SIL.AllomorphGenerator
             tbDescription.Text = operation.Description;
             Pattern pattern = operation.Pattern;
             tbMatch.Text = pattern.Match;
-            lbMorphTypes.DataSource = pattern.MorphTypes;
-            //MessageBox.Show("mt count = " + lbMorphTypes.Container.Components.Count);
-            //MessageBox.Show("mt count = " + pattern.MorphTypes.Count);
+            cbRegEx.Checked = pattern.MatchMode;
+            lBoxMorphTypes.DataSource = pattern.MorphTypes;
             if (pattern.MorphTypes.Count > 0)
             {
-                var selectedMorphType = pattern.MorphTypes[1];
+                var selectedMorphType = pattern.MorphTypes[0];
+            }
+            lBoxCategories.DataSource = pattern.Categories;
+            if (pattern.Categories.Count > 0)
+            {
+                var selectedCategory = pattern.Categories[0];
             }
 
         }

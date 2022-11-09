@@ -7,12 +7,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SIL.AlloGenModel
 {
     public class Pattern
     {
         public string Match { get; set; }
+        // mode: false = plain; true = regular expression
+        [XmlAttribute("matchmode")]
+        public bool MatchMode { get; set; } = false;
         public List<MorphType> MorphTypes { get; set; }
         public List<Category> Categories { get; set; }
         public Pattern()

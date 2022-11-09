@@ -5,7 +5,7 @@
       <Active>true</Active>
       <Name>foreshortening</Name>
       <Description>Add allomorphs for entries which undergo foreshortening</Description>
-      <Pattern>
+      <Pattern matchmode="true">
         <Match>:$|:\..+$</Match>
         <MorphTypes>
           <MorphType guid="d7f713e4-e8cf-11d3-9764-00c04f186933" name="bound root">
@@ -21,11 +21,15 @@
             <Active>true</Active>
           </MorphType>
         </MorphTypes>
-        <Categories />
+        <Categories>
+          <Category guid="d7f713e8-e8cf-11d3-9733-00c04f186933" name="verb">
+            <Active>true</Active>
+          </Category>
+        </Categories>
       </Pattern>
       <Action>
         <ReplaceOps>
-          <Replace mode="true">
+          <Replace mode="false">
             <Active>true</Active>
             <From>*</From>
             <To>
@@ -35,7 +39,7 @@
               </ReplaceTo>
             </To>
           </Replace>
-          <Replace mode="true">
+          <Replace mode="false">
             <Active>true</Active>
             <From>+</From>
             <To>
@@ -45,7 +49,7 @@
               </ReplaceTo>
             </To>
           </Replace>
-          <Replace mode="true">
+          <Replace mode="false">
             <Active>true</Active>
             <From>:</From>
             <To>
