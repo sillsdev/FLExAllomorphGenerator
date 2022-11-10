@@ -18,32 +18,21 @@
       </Pattern>
       <Action>
         <ReplaceOps>
-          <Replace active="true" mode="false">
+          <Replace active="true" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
             <From>*</From>
-            <To>
-              <ReplaceTo active="true" ach="true" acl="true" akh="true" akl="true" ame="true">
-                <To />
-              </ReplaceTo>
-            </To>
+            <To />
           </Replace>
-          <Replace active="true" mode="false">
+          <Replace active="true" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
             <From>+</From>
-            <To>
-              <ReplaceTo active="true" ach="true" acl="true" akh="true" akl="true" ame="true">
-                <To />
-              </ReplaceTo>
-            </To>
+            <To />
           </Replace>
-          <Replace active="true" mode="false">
+          <Replace active="true" mode="false" ach="true" acl="true" akh="true" akl="true" ame="false">
             <From>:</From>
-            <To>
-              <ReplaceTo active="true" ach="true" acl="true" akh="true" akl="true" ame="false">
-                <To />
-              </ReplaceTo>
-              <ReplaceTo active="true" ach="false" acl="false" akh="false" akl="false" ame="true">
-                <To>a</To>
-              </ReplaceTo>
-            </To>
+            <To />
+          </Replace>
+          <Replace active="true" mode="false" ach="false" acl="false" akh="false" akl="false" ame="true">
+            <From>:</From>
+            <To>a</To>
           </Replace>
         </ReplaceOps>
         <Environments>
