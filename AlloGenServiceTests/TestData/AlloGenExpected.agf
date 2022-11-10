@@ -1,83 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AllomorphGenerators xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Operations>
-    <Operation>
-      <Active>true</Active>
+    <Operation active="true">
       <Name>foreshortening</Name>
       <Description>Add allomorphs for entries which undergo foreshortening</Description>
       <Pattern matchmode="true">
         <Match>:$|:\..+$</Match>
         <MorphTypes>
-          <MorphType guid="d7f713e4-e8cf-11d3-9764-00c04f186933" name="bound root">
-            <Active>true</Active>
-          </MorphType>
-          <MorphType guid="d7f713e7-e8cf-11d3-9764-00c04f186933" name="bound stem">
-            <Active>true</Active>
-          </MorphType>
-          <MorphType guid="d7f713e5-e8cf-11d3-9764-00c04f186933" name="root">
-            <Active>true</Active>
-          </MorphType>
-          <MorphType guid="d7f713e8-e8cf-11d3-9764-00c04f186933" name="stem">
-            <Active>true</Active>
-          </MorphType>
+          <MorphType active="true" guid="d7f713e4-e8cf-11d3-9764-00c04f186933" name="bound root" />
+          <MorphType active="true" guid="d7f713e7-e8cf-11d3-9764-00c04f186933" name="bound stem" />
+          <MorphType active="true" guid="d7f713e5-e8cf-11d3-9764-00c04f186933" name="root" />
+          <MorphType active="true" guid="d7f713e8-e8cf-11d3-9764-00c04f186933" name="stem" />
         </MorphTypes>
         <Categories>
-          <Category guid="d7f713e8-e8cf-11d3-9733-00c04f186933" name="verb">
-            <Active>true</Active>
-          </Category>
+          <Category active="true" guid="d7f713e8-e8cf-11d3-9733-00c04f186933" name="verb" />
         </Categories>
       </Pattern>
       <Action>
         <ReplaceOps>
-          <Replace mode="false">
-            <Active>true</Active>
+          <Replace active="true" mode="false">
             <From>*</From>
             <To>
-              <ReplaceTo ach="true" acl="true" akh="true" akl="true" ame="true">
-                <Active>true</Active>
+              <ReplaceTo active="true" ach="true" acl="true" akh="true" akl="true" ame="true">
                 <To />
               </ReplaceTo>
             </To>
           </Replace>
-          <Replace mode="false">
-            <Active>true</Active>
+          <Replace active="true" mode="false">
             <From>+</From>
             <To>
-              <ReplaceTo ach="true" acl="true" akh="true" akl="true" ame="true">
-                <Active>true</Active>
+              <ReplaceTo active="true" ach="true" acl="true" akh="true" akl="true" ame="true">
                 <To />
               </ReplaceTo>
             </To>
           </Replace>
-          <Replace mode="false">
-            <Active>true</Active>
+          <Replace active="true" mode="false">
             <From>:</From>
             <To>
-              <ReplaceTo ach="true" acl="true" akh="true" akl="true" ame="false">
-                <Active>true</Active>
+              <ReplaceTo active="true" ach="true" acl="true" akh="true" akl="true" ame="false">
                 <To />
               </ReplaceTo>
-              <ReplaceTo ach="false" acl="false" akh="false" akl="false" ame="true">
-                <Active>true</Active>
+              <ReplaceTo active="true" ach="false" acl="false" akh="false" akl="false" ame="true">
                 <To>a</To>
               </ReplaceTo>
             </To>
           </Replace>
         </ReplaceOps>
         <Environments>
-          <Environment guid="d7f7123-e8cf-11d3-9733-00c04f186933" name="/ _ #">
-            <Active>true</Active>
-          </Environment>
-          <Environment guid="d7f7456-e8cf-11d3-9733-00c04f186933" name="/ ([C])[C]_ [V]">
-            <Active>true</Active>
-          </Environment>
+          <Environment active="true" guid="d7f7123-e8cf-11d3-9733-00c04f186933" name="/ _ #" />
+          <Environment active="true" guid="d7f7456-e8cf-11d3-9733-00c04f186933" name="/ ([C])[C]_ [V]" />
         </Environments>
-        <InflectionFeatures guid="d7f7436-e8cf-11d3-9733-00c04f186933" name="[tense:present]">
-          <Active>true</Active>
-        </InflectionFeatures>
-        <StemName guid="d2cf436-e8cf-11d3-9733-00c04f186933" name="no lowering">
-          <Active>true</Active>
-        </StemName>
+        <InflectionFeatures active="true" guid="d7f7436-e8cf-11d3-9733-00c04f186933" name="[tense:present]" />
+        <StemName active="true" guid="d2cf436-e8cf-11d3-9733-00c04f186933" name="no lowering" />
       </Action>
     </Operation>
   </Operations>
