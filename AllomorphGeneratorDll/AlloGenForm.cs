@@ -157,7 +157,7 @@ namespace SIL.AllomorphGenerator
 
         public void FillOperationsListBox()
         {
-            lbOperations.DataSource = Operations;
+            lBoxOperations.DataSource = Operations;
             // select last used operation, if any
             if (LastOperation < 0 || LastOperation >= Operations.Count)
                 LastOperation = 1;
@@ -166,8 +166,8 @@ namespace SIL.AllomorphGenerator
 
         private void lbOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Operation operation = lbOperations.SelectedItem as Operation;
-            LastOperation = lbOperations.SelectedIndex;
+            Operation operation = lBoxOperations.SelectedItem as Operation;
+            LastOperation = lBoxOperations.SelectedIndex;
             tbName.Text = operation.Name;
             tbDescription.Text = operation.Description;
             Pattern pattern = operation.Pattern;
@@ -182,6 +182,12 @@ namespace SIL.AllomorphGenerator
             if (pattern.Categories.Count > 0)
             {
                 var selectedCategory = pattern.Categories[0];
+            }
+            AlloGenModel.Action action = operation.Action;
+            lBoxReplaceOps.DataSource = action.ReplaceOps;
+            if (action.ReplaceOps.Count > 0)
+            {
+                var selectedReplace = action.ReplaceOps[0];
             }
 
         }

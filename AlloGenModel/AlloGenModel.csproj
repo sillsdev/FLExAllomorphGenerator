@@ -54,7 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Replace.cs" />
     <Compile Include="ReplaceTo.cs" />
-    <Compile Include="RequiredFeature.cs" />
     <Compile Include="StemName.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

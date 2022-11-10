@@ -14,7 +14,7 @@ namespace SIL.AlloGenModel
     public class Pattern
     {
         public string Match { get; set; }
-        // mode: false = plain; true = regular expression
+        // match mode: false = plain; true = regular expression
         [XmlAttribute("matchmode")]
         public bool MatchMode { get; set; } = false;
         public List<MorphType> MorphTypes { get; set; }

@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 
 namespace SIL.AlloGenModel
 {
-    public class AlloGenGuid : AlloGenBase
+    abstract public class AlloGenGuid : AlloGenBase
     {
         [XmlAttribute("guid")]
         public string Guid { get; set; }

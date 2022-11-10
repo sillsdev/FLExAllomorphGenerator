@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SIL.AlloGenModel
 {
-    public class AlloGenBase
+    abstract public class AlloGenBase
     {
         public bool Active { get; set; } = true;
     }

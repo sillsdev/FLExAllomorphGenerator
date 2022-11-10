@@ -23,5 +23,11 @@ namespace SIL.AlloGenModel
         {
             To = new List<ReplaceTo>();
         }
+
+        override public string ToString()
+        {
+            return "Replace '" + From + "' to" + To;
+        }
+
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SIL.AlloGenModel
 {
-    public class StemName : AlloGenBase
+    public class StemName : AlloGenGuid
     {
     }
 }

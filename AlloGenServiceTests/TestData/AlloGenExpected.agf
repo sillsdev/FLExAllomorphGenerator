@@ -64,10 +64,20 @@
             </To>
           </Replace>
         </ReplaceOps>
-        <Environments />
-        <InflectionFeatures />
-        <RequiredFeatures />
-        <StemNames />
+        <Environments>
+          <Environment guid="d7f7123-e8cf-11d3-9733-00c04f186933" name="/ _ #">
+            <Active>true</Active>
+          </Environment>
+          <Environment guid="d7f7456-e8cf-11d3-9733-00c04f186933" name="/ ([C])[C]_ [V]">
+            <Active>true</Active>
+          </Environment>
+        </Environments>
+        <InflectionFeatures guid="d7f7436-e8cf-11d3-9733-00c04f186933" name="[tense:present]">
+          <Active>true</Active>
+        </InflectionFeatures>
+        <StemName guid="d2cf436-e8cf-11d3-9733-00c04f186933" name="no lowering">
+          <Active>true</Active>
+        </StemName>
       </Action>
     </Operation>
   </Operations>

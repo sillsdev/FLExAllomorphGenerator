@@ -11,6 +11,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Action = SIL.AlloGenModel.Action;
+using Environment = SIL.AlloGenModel.Environment;
 
 namespace SIL.AlloGenServiceTest
 {
@@ -86,6 +87,23 @@ namespace SIL.AlloGenServiceTest
             Assert.True(replaceTo.Akh);
             Assert.True(replaceTo.Akl);
             Assert.False(replaceTo.Ame);
+            List<Environment> envs = action.Environments;
+            Assert.NotNull(envs);
+            Assert.AreEqual(2, envs.Count);
+            Environment env = envs[0];
+            Assert.AreEqual("d7f7123-e8cf-11d3-9733-00c04f186933", env.Guid);
+            Assert.AreEqual("/ _ #", env.Name);
+            env = envs[1];
+            Assert.AreEqual("d7f7456-e8cf-11d3-9733-00c04f186933", env.Guid);
+            Assert.AreEqual("/ ([C])[C]_ [V]", env.Name);
+            InflectionFeature feat = action.InflectionFeatures;
+            Assert.NotNull(feat);
+            Assert.AreEqual("d7f7436-e8cf-11d3-9733-00c04f186933", feat.Guid);
+            Assert.AreEqual("[tense:present]", feat.Name);
+            StemName sn = action.StemName;
+            Assert.NotNull(sn);
+            Assert.AreEqual("d2cf436-e8cf-11d3-9733-00c04f186933", sn.Guid);
+            Assert.AreEqual("no lowering", sn.Name);
 
         }
 
@@ -145,6 +163,22 @@ namespace SIL.AlloGenServiceTest
             replace3.To.Add(replaceTo31);
             replace3.To.Add(replaceTo32);
             action.ReplaceOps.Add(replace3);
+            Environment env1 = new Environment();
+            env1.Guid = "d7f7123-e8cf-11d3-9733-00c04f186933";
+            env1.Name = "/ _ #";
+            action.Environments.Add(env1);
+            Environment env2 = new Environment();
+            env2.Guid = "d7f7456-e8cf-11d3-9733-00c04f186933";
+            env2.Name = "/ ([C])[C]_ [V]";
+            action.Environments.Add(env2);
+            InflectionFeature feat = new InflectionFeature();
+            feat.Guid = "d7f7436-e8cf-11d3-9733-00c04f186933";
+            feat.Name = "[tense:present]";
+            action.InflectionFeatures = feat;
+            StemName sn = new StemName();
+            sn.Guid = "d2cf436-e8cf-11d3-9733-00c04f186933";
+            sn.Name = "no lowering";
+            action.StemName = sn;
             return action;
         }
 
