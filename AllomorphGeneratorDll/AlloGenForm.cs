@@ -43,7 +43,8 @@ namespace SIL.AllomorphGenerator
         AllomorphGenerators AlloGens { get; set; }
         List<Operation> Operations { get; set; }
 
-        private ContextMenuStrip replaceContextMenu;
+        private ListBox currentListBox;
+        private ContextMenuStrip editContextMenu;
         const string cmEdit = "Edit";
         const string cmInsertBefore = "Insert before";
         const string cmInsertAfter = "Insert after";
@@ -78,65 +79,119 @@ namespace SIL.AllomorphGenerator
 
         private void BuildReplaceContextMenu()
         {
-            replaceContextMenu = new ContextMenuStrip();
+            editContextMenu = new ContextMenuStrip();
+            editContextMenu.Name = "ReplaceOps";
             ToolStripMenuItem editItem = new ToolStripMenuItem(cmEdit);
-            editItem.Click += new EventHandler(EditReplace_Click);
+            editItem.Click += new EventHandler(EditContextMenuReplace_Click);
             editItem.Name = cmEdit;
             ToolStripMenuItem insertBefore = new ToolStripMenuItem(cmInsertBefore);
-            insertBefore.Click += new EventHandler(InsertBeforeReplace_Click);
+            insertBefore.Click += new EventHandler(InsertBeforeContextMenu_Click);
             insertBefore.Name = cmInsertBefore;
             ToolStripMenuItem insertAfter = new ToolStripMenuItem(cmInsertAfter);
-            insertAfter.Click += new EventHandler(InsertAfterReplace_Click);
+            insertAfter.Click += new EventHandler(InsertAfterContextMenu_Click);
             insertAfter.Name = cmInsertAfter;
             ToolStripMenuItem moveUp = new ToolStripMenuItem(cmMoveUp);
-            moveUp.Click += new EventHandler(MoveUpReplace_Click);
+            moveUp.Click += new EventHandler(MoveUpContextMenu_Click);
             moveUp.Name = cmMoveUp;
             ToolStripMenuItem moveDown = new ToolStripMenuItem(cmMoveDown);
-            moveDown.Click += new EventHandler(MoveDownReplace_Click);
+            moveDown.Click += new EventHandler(MoveDownContextMenu_Click);
             moveDown.Name = cmMoveDown;
             ToolStripMenuItem deleteItem = new ToolStripMenuItem(cmDelete);
-            deleteItem.Click += new EventHandler(DeleteReplace_Click);
+            deleteItem.Click += new EventHandler(DeleteContextMenu_Click);
             deleteItem.Name = cmDelete;
-            replaceContextMenu.Items.Add(editItem);
-            replaceContextMenu.Items.Add("-");
-            replaceContextMenu.Items.Add(insertBefore);
-            replaceContextMenu.Items.Add(insertAfter);
-            replaceContextMenu.Items.Add("-");
-            replaceContextMenu.Items.Add(moveUp);
-            replaceContextMenu.Items.Add(moveDown);
-            replaceContextMenu.Items.Add("-");
-            replaceContextMenu.Items.Add(deleteItem);
+            editContextMenu.Items.Add(editItem);
+            editContextMenu.Items.Add("-");
+            editContextMenu.Items.Add(insertBefore);
+            editContextMenu.Items.Add(insertAfter);
+            editContextMenu.Items.Add("-");
+            editContextMenu.Items.Add(moveUp);
+            editContextMenu.Items.Add(moveDown);
+            editContextMenu.Items.Add("-");
+            editContextMenu.Items.Add(deleteItem);
         }
 
         private void lBoxReplaceOps_MouseUp(object sender, MouseEventArgs e)
         {
-            int location = lBoxReplaceOps.IndexFromPoint(e.Location);
+            HandleContextMenu(sender, e);
+        }
+
+        private void lBoxOperations_MouseUp(object sender, MouseEventArgs e)
+        {
+            HandleContextMenu(sender, e);
+        }
+
+        private void HandleContextMenu(object sender, MouseEventArgs e)
+        {
             if (e.Button == MouseButtons.Right)
             {
                 ListBox lBoxSender = (ListBox)sender;
+                currentListBox = lBoxSender;
                 int indexAtMouse = lBoxSender.IndexFromPoint(e.X, e.Y);
                 if (indexAtMouse > -1)
                 {
+                    AdjustContextMenuContent(lBoxSender, indexAtMouse);
                     lBoxSender.SelectedIndex = indexAtMouse;
                     Point ptClickedAt = e.Location;
                     ptClickedAt = lBoxSender.PointToScreen(ptClickedAt);
-                    replaceContextMenu.Show(ptClickedAt);
+                    editContextMenu.Show(ptClickedAt);
                 }
             }
         }
 
-        void EditReplace_Click(object sender, EventArgs e)
+        private void AdjustContextMenuContent(ListBox lBoxSender, int indexAtMouse)
+        {
+            int indexLast = lBoxSender.Items.Count - 1;
+            if (lBoxSender.Name == "lBoxOperations")
+            {
+                // Do not show Edit and its separator
+                editContextMenu.Items[0].Visible = false;
+                editContextMenu.Items[1].Visible = false;
+            }
+            else
+            {
+                editContextMenu.Items[0].Visible = true;
+                editContextMenu.Items[1].Visible = true;
+            }
+            if (indexAtMouse == 0)
+                // move up does not work
+                editContextMenu.Items[5].Enabled = false;
+            else
+                editContextMenu.Items[5].Enabled = true;
+            if (indexAtMouse == 0 && indexLast == 0)
+                // delete does not work
+                editContextMenu.Items[8].Enabled = false;
+            else
+                editContextMenu.Items[8].Enabled = true;
+            if (indexAtMouse == indexLast)
+                // move down does not work
+                editContextMenu.Items[6].Enabled = false;
+            else
+                editContextMenu.Items[6].Enabled = true;
+        }
+
+        void EditContextMenuReplace_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmEdit)
             {
-                MessageBox.Show(cmEdit);
+                MessageBox.Show(cmEdit + currentListBox);
+                //ToolStrip toolStrip = menuItem.Owner;
+                //if (toolStrip == null)
+                //    MessageBox.Show("owner is null");
+                //else
+                //{
+                //    Control parent = toolStrip.Parent;
+                //    if (parent == null)
+                //        MessageBox.Show("parent is null");
+                //    else
+                //        MessageBox.Show(parent.ToString());
+                //}
                 //String basedir = GetAppBaseDir();
                 //Process.Start(Path.Combine(basedir, "doc", "pcpatr.html"));
             }
         }
 
-        void InsertBeforeReplace_Click(object sender, EventArgs e)
+        void InsertBeforeContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmInsertBefore)
@@ -151,7 +206,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void InsertAfterReplace_Click(object sender, EventArgs e)
+        void InsertAfterContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmInsertAfter)
@@ -166,7 +221,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void MoveUpReplace_Click(object sender, EventArgs e)
+        void MoveUpContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmMoveUp)
@@ -177,7 +232,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void MoveDownReplace_Click(object sender, EventArgs e)
+        void MoveDownContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmMoveDown)
@@ -188,7 +243,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void DeleteReplace_Click(object sender, EventArgs e)
+        void DeleteContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmDelete)
