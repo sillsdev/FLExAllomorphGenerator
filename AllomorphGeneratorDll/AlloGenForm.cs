@@ -42,6 +42,8 @@ namespace SIL.AllomorphGenerator
         private String OperationsFile { get; set; }
         AllomorphGenerators AlloGens { get; set; }
         List<Operation> Operations { get; set; }
+        Operation Operation { get; set; }
+        List<Replace> ReplaceOps { get; set; }
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
@@ -226,9 +228,8 @@ namespace SIL.AllomorphGenerator
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmMoveUp)
             {
-                MessageBox.Show(cmMoveUp);
-                //String basedir = GetAppBaseDir();
-                //Process.Start(Path.Combine(basedir, "doc", "pcpatr.html"));
+                int index = currentListBox.SelectedIndex;
+                DoContextMenuMove(index, index - 1);
             }
         }
 
@@ -237,10 +238,27 @@ namespace SIL.AllomorphGenerator
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmMoveDown)
             {
-                MessageBox.Show(cmMoveDown);
-                //String basedir = GetAppBaseDir();
-                //Process.Start(Path.Combine(basedir, "doc", "pcpatr.html"));
+                int index = currentListBox.SelectedIndex;
+                DoContextMenuMove(index, index + 1);
             }
+        }
+
+        private void DoContextMenuMove(int index, int otherIndex)
+        {
+            Object selectedItem = currentListBox.SelectedItem;
+            Object otherItem = currentListBox.Items[otherIndex];
+            if (currentListBox.Name == "lBoxReplaceOps")
+            {
+                ReplaceOps[index] = (Replace)otherItem;
+                ReplaceOps[otherIndex] = (Replace)selectedItem;
+            }
+            else
+            {
+                Operations[index] = (Operation)otherItem;
+                Operations[otherIndex] = (Operation)selectedItem;
+            }
+            currentListBox.Items[index] = otherItem;
+            currentListBox.Items[otherIndex] = selectedItem;
         }
 
         void DeleteContextMenu_Click(object sender, EventArgs e)
@@ -248,13 +266,12 @@ namespace SIL.AllomorphGenerator
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmDelete)
             {
-                MessageBox.Show(cmDelete);
-                //var dialog = new AboutBox();
-                //// for some reason the following is needed to keep the dialog within the form
-                //Point pt = dialog.PointToClient(System.Windows.Forms.Cursor.Position);
-                //dialog.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
-                //Console.WriteLine("dialog result=" + dialog.Location.X + "," + dialog.Location.Y);
-                //dialog.Show();
+                int index = currentListBox.SelectedIndex;
+                if (currentListBox.Name == "lBoxReplaceOps")
+                    ReplaceOps.RemoveAt(index);
+                else
+                    Operations.RemoveAt(index);
+                currentListBox.Items.RemoveAt(index);
             }
         }
 
@@ -349,20 +366,25 @@ namespace SIL.AllomorphGenerator
 
         public void FillOperationsListBox()
         {
-            lBoxOperations.DataSource = Operations;
+            lBoxOperations.Items.Clear();
+            foreach (Operation op in Operations)
+            {
+                lBoxOperations.Items.Add(op);
+            }
             // select last used operation, if any
             if (LastOperation < 0 || LastOperation >= Operations.Count)
                 LastOperation = 1;
             var selectedOperation = Operations[LastOperation];
+            lBoxOperations.SetSelected(LastOperation, true);
         }
 
         private void lbOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Operation operation = lBoxOperations.SelectedItem as Operation;
+            Operation = lBoxOperations.SelectedItem as Operation;
             LastOperation = lBoxOperations.SelectedIndex;
-            tbName.Text = operation.Name;
-            tbDescription.Text = operation.Description;
-            Pattern pattern = operation.Pattern;
+            tbName.Text = Operation.Name;
+            tbDescription.Text = Operation.Description;
+            Pattern pattern = Operation.Pattern;
             tbMatch.Text = pattern.Match;
             cbRegEx.Checked = pattern.MatchMode;
             lBoxMorphTypes.DataSource = pattern.MorphTypes;
@@ -375,8 +397,15 @@ namespace SIL.AllomorphGenerator
             {
                 var selectedCategory = pattern.Categories[0];
             }
-            AlloGenModel.Action action = operation.Action;
-            lBoxReplaceOps.DataSource = action.ReplaceOps;
+            AlloGenModel.Action action = Operation.Action;
+            ReplaceOps = Operation.Action.ReplaceOps;
+            lBoxReplaceOps.Items.Clear();
+            foreach (Replace item in ReplaceOps)
+            {
+                lBoxReplaceOps.Items.Add(item);
+            }
+            if (ReplaceOps.Count > 0)
+                lBoxReplaceOps.SetSelected(0, true);
             if (action.ReplaceOps.Count > 0)
             {
                 var selectedReplace = action.ReplaceOps[0];
