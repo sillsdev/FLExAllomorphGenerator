@@ -43,6 +43,14 @@ namespace SIL.AllomorphGenerator
         AllomorphGenerators AlloGens { get; set; }
         List<Operation> Operations { get; set; }
 
+        private ContextMenuStrip replaceContextMenu;
+        const string cmEdit = "Edit";
+        const string cmInsertBefore = "Insert before";
+        const string cmInsertAfter = "Insert after";
+        const string cmMoveUp = "Move up";
+        const string cmMoveDown = "Move down";
+        const string cmDelete = "Delete";
+
         public AlloGenForm()
         {
             InitializeComponent();
@@ -57,12 +65,141 @@ namespace SIL.AllomorphGenerator
                     Operations = AlloGens.Operations;
                 }
                 FillOperationsListBox();
+                BuildReplaceContextMenu();
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.InnerException);
                 Console.WriteLine(e.StackTrace);
+            }
+        }
+
+        private void BuildReplaceContextMenu()
+        {
+            replaceContextMenu = new ContextMenuStrip();
+            ToolStripMenuItem editItem = new ToolStripMenuItem(cmEdit);
+            editItem.Click += new EventHandler(EditReplace_Click);
+            editItem.Name = cmEdit;
+            ToolStripMenuItem insertBefore = new ToolStripMenuItem(cmInsertBefore);
+            insertBefore.Click += new EventHandler(InsertBeforeReplace_Click);
+            insertBefore.Name = cmInsertBefore;
+            ToolStripMenuItem insertAfter = new ToolStripMenuItem(cmInsertAfter);
+            insertAfter.Click += new EventHandler(InsertAfterReplace_Click);
+            insertAfter.Name = cmInsertAfter;
+            ToolStripMenuItem moveUp = new ToolStripMenuItem(cmMoveUp);
+            moveUp.Click += new EventHandler(MoveUpReplace_Click);
+            moveUp.Name = cmMoveUp;
+            ToolStripMenuItem moveDown = new ToolStripMenuItem(cmMoveDown);
+            moveDown.Click += new EventHandler(MoveDownReplace_Click);
+            moveDown.Name = cmMoveDown;
+            ToolStripMenuItem deleteItem = new ToolStripMenuItem(cmDelete);
+            deleteItem.Click += new EventHandler(DeleteReplace_Click);
+            deleteItem.Name = cmDelete;
+            replaceContextMenu.Items.Add(editItem);
+            replaceContextMenu.Items.Add("-");
+            replaceContextMenu.Items.Add(insertBefore);
+            replaceContextMenu.Items.Add(insertAfter);
+            replaceContextMenu.Items.Add("-");
+            replaceContextMenu.Items.Add(moveUp);
+            replaceContextMenu.Items.Add(moveDown);
+            replaceContextMenu.Items.Add("-");
+            replaceContextMenu.Items.Add(deleteItem);
+        }
+
+        private void lBoxReplaceOps_MouseUp(object sender, MouseEventArgs e)
+        {
+            int location = lBoxReplaceOps.IndexFromPoint(e.Location);
+            if (e.Button == MouseButtons.Right)
+            {
+                ListBox lBoxSender = (ListBox)sender;
+                int indexAtMouse = lBoxSender.IndexFromPoint(e.X, e.Y);
+                if (indexAtMouse > -1)
+                {
+                    lBoxSender.SelectedIndex = indexAtMouse;
+                    Point ptClickedAt = e.Location;
+                    ptClickedAt = lBoxSender.PointToScreen(ptClickedAt);
+                    replaceContextMenu.Show(ptClickedAt);
+                }
+            }
+        }
+
+        void EditReplace_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmEdit)
+            {
+                MessageBox.Show(cmEdit);
+                //String basedir = GetAppBaseDir();
+                //Process.Start(Path.Combine(basedir, "doc", "pcpatr.html"));
+            }
+        }
+
+        void InsertBeforeReplace_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmInsertBefore)
+            {
+                MessageBox.Show(cmInsertBefore);
+                //var dialog = new AboutBox();
+                //// for some reason the following is needed to keep the dialog within the form
+                //Point pt = dialog.PointToClient(System.Windows.Forms.Cursor.Position);
+                //dialog.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
+                //Console.WriteLine("dialog result=" + dialog.Location.X + "," + dialog.Location.Y);
+                //dialog.Show();
+            }
+        }
+
+        void InsertAfterReplace_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmInsertAfter)
+            {
+                MessageBox.Show(cmInsertAfter);
+                //var dialog = new AboutBox();
+                //// for some reason the following is needed to keep the dialog within the form
+                //Point pt = dialog.PointToClient(System.Windows.Forms.Cursor.Position);
+                //dialog.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
+                //Console.WriteLine("dialog result=" + dialog.Location.X + "," + dialog.Location.Y);
+                //dialog.Show();
+            }
+        }
+
+        void MoveUpReplace_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmMoveUp)
+            {
+                MessageBox.Show(cmMoveUp);
+                //String basedir = GetAppBaseDir();
+                //Process.Start(Path.Combine(basedir, "doc", "pcpatr.html"));
+            }
+        }
+
+        void MoveDownReplace_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmMoveDown)
+            {
+                MessageBox.Show(cmMoveDown);
+                //String basedir = GetAppBaseDir();
+                //Process.Start(Path.Combine(basedir, "doc", "pcpatr.html"));
+            }
+        }
+
+        void DeleteReplace_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmDelete)
+            {
+                MessageBox.Show(cmDelete);
+                //var dialog = new AboutBox();
+                //// for some reason the following is needed to keep the dialog within the form
+                //Point pt = dialog.PointToClient(System.Windows.Forms.Cursor.Position);
+                //dialog.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
+                //Console.WriteLine("dialog result=" + dialog.Location.X + "," + dialog.Location.Y);
+                //dialog.Show();
             }
         }
 

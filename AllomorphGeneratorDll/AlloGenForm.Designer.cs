@@ -33,6 +33,8 @@ namespace SIL.AllomorphGenerator
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlloGenForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabEditOps = new System.Windows.Forms.TabPage();
+            this.btnCategories = new System.Windows.Forms.Button();
+            this.btnMorphTypes = new System.Windows.Forms.Button();
             this.lbReplaceOps = new System.Windows.Forms.Label();
             this.btnStemName = new System.Windows.Forms.Button();
             this.tbStemName = new System.Windows.Forms.TextBox();
@@ -63,8 +65,7 @@ namespace SIL.AllomorphGenerator
             this.tbFile = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.btnMorphTypes = new System.Windows.Forms.Button();
-            this.btnCategories = new System.Windows.Forms.Button();
+            this.lbRightClickToEdit = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.SuspendLayout();
@@ -84,6 +85,7 @@ namespace SIL.AllomorphGenerator
             // 
             // tabEditOps
             // 
+            this.tabEditOps.Controls.Add(this.lbRightClickToEdit);
             this.tabEditOps.Controls.Add(this.btnCategories);
             this.tabEditOps.Controls.Add(this.btnMorphTypes);
             this.tabEditOps.Controls.Add(this.lbReplaceOps);
@@ -118,6 +120,24 @@ namespace SIL.AllomorphGenerator
             this.tabEditOps.TabIndex = 0;
             this.tabEditOps.Text = "Edit Operations";
             this.tabEditOps.UseVisualStyleBackColor = true;
+            // 
+            // btnCategories
+            // 
+            this.btnCategories.Location = new System.Drawing.Point(917, 131);
+            this.btnCategories.Name = "btnCategories";
+            this.btnCategories.Size = new System.Drawing.Size(30, 28);
+            this.btnCategories.TabIndex = 26;
+            this.btnCategories.Text = "...";
+            this.btnCategories.UseVisualStyleBackColor = true;
+            // 
+            // btnMorphTypes
+            // 
+            this.btnMorphTypes.Location = new System.Drawing.Point(605, 131);
+            this.btnMorphTypes.Name = "btnMorphTypes";
+            this.btnMorphTypes.Size = new System.Drawing.Size(30, 28);
+            this.btnMorphTypes.TabIndex = 25;
+            this.btnMorphTypes.Text = "...";
+            this.btnMorphTypes.UseVisualStyleBackColor = true;
             // 
             // lbReplaceOps
             // 
@@ -214,10 +234,11 @@ namespace SIL.AllomorphGenerator
             // 
             this.lBoxReplaceOps.FormattingEnabled = true;
             this.lBoxReplaceOps.ItemHeight = 20;
-            this.lBoxReplaceOps.Location = new System.Drawing.Point(497, 391);
+            this.lBoxReplaceOps.Location = new System.Drawing.Point(497, 371);
             this.lBoxReplaceOps.Name = "lBoxReplaceOps";
-            this.lBoxReplaceOps.Size = new System.Drawing.Size(625, 164);
+            this.lBoxReplaceOps.Size = new System.Drawing.Size(625, 184);
             this.lBoxReplaceOps.TabIndex = 14;
+            this.lBoxReplaceOps.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxReplaceOps_MouseUp);
             // 
             // cbRegEx
             // 
@@ -389,23 +410,15 @@ namespace SIL.AllomorphGenerator
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
-            // btnMorphTypes
+            // lbRightClickToEdit
             // 
-            this.btnMorphTypes.Location = new System.Drawing.Point(605, 131);
-            this.btnMorphTypes.Name = "btnMorphTypes";
-            this.btnMorphTypes.Size = new System.Drawing.Size(30, 28);
-            this.btnMorphTypes.TabIndex = 25;
-            this.btnMorphTypes.Text = "...";
-            this.btnMorphTypes.UseVisualStyleBackColor = true;
-            // 
-            // btnCategories
-            // 
-            this.btnCategories.Location = new System.Drawing.Point(917, 131);
-            this.btnCategories.Name = "btnCategories";
-            this.btnCategories.Size = new System.Drawing.Size(30, 28);
-            this.btnCategories.TabIndex = 26;
-            this.btnCategories.Text = "...";
-            this.btnCategories.UseVisualStyleBackColor = true;
+            this.lbRightClickToEdit.AutoSize = true;
+            this.lbRightClickToEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbRightClickToEdit.Location = new System.Drawing.Point(677, 344);
+            this.lbRightClickToEdit.Name = "lbRightClickToEdit";
+            this.lbRightClickToEdit.Size = new System.Drawing.Size(140, 20);
+            this.lbRightClickToEdit.TabIndex = 27;
+            this.lbRightClickToEdit.Text = "(Right-click to edit)";
             // 
             // AlloGenForm
             // 
@@ -465,6 +478,7 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Label lbReplaceOps;
         private System.Windows.Forms.Button btnCategories;
         private System.Windows.Forms.Button btnMorphTypes;
+        private System.Windows.Forms.Label lbRightClickToEdit;
     }
 }
 
