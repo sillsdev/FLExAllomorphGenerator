@@ -176,20 +176,19 @@ namespace SIL.AllomorphGenerator
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmEdit)
             {
-                MessageBox.Show(cmEdit + currentListBox);
-                //ToolStrip toolStrip = menuItem.Owner;
-                //if (toolStrip == null)
-                //    MessageBox.Show("owner is null");
-                //else
-                //{
-                //    Control parent = toolStrip.Parent;
-                //    if (parent == null)
-                //        MessageBox.Show("parent is null");
-                //    else
-                //        MessageBox.Show(parent.ToString());
-                //}
-                //String basedir = GetAppBaseDir();
-                //Process.Start(Path.Combine(basedir, "doc", "pcpatr.html"));
+                using (var dialog = new EditReplaceOpForm())
+                {
+                    Replace replace = (Replace)lBoxReplaceOps.SelectedItem;
+                    dialog.Initialize(replace);
+                    dialog.ShowDialog();
+                    if (dialog.DialogResult == DialogResult.OK)
+                    {
+                        int index = lBoxReplaceOps.SelectedIndex;
+                        replace = dialog.ReplaceOp;
+                        ReplaceOps[index] = replace;
+                        lBoxReplaceOps.Items[index] = replace;
+                    }
+                }
             }
         }
 
@@ -382,7 +381,7 @@ namespace SIL.AllomorphGenerator
             lBoxOperations.SetSelected(LastOperation, true);
         }
 
-        private void lbOperations_SelectedIndexChanged(object sender, EventArgs e)
+        private void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
             Operation = lBoxOperations.SelectedItem as Operation;
             LastOperation = lBoxOperations.SelectedIndex;
@@ -403,18 +402,23 @@ namespace SIL.AllomorphGenerator
             }
             AlloGenModel.Action action = Operation.Action;
             ReplaceOps = Operation.Action.ReplaceOps;
+            RefreshReplaceListBox();
+            if (action.ReplaceOps.Count > 0)
+            {
+                var selectedReplace = action.ReplaceOps[0];
+            }
+        }
+
+        private void RefreshReplaceListBox()
+        {
+            int selectedItem = Math.Max(0,lBoxReplaceOps.SelectedIndex);
             lBoxReplaceOps.Items.Clear();
             foreach (Replace item in ReplaceOps)
             {
                 lBoxReplaceOps.Items.Add(item);
             }
             if (ReplaceOps.Count > 0)
-                lBoxReplaceOps.SetSelected(0, true);
-            if (action.ReplaceOps.Count > 0)
-            {
-                var selectedReplace = action.ReplaceOps[0];
-            }
-
+                lBoxReplaceOps.SetSelected(selectedItem, true);
         }
 
         private void lbMorphTypes_SelectedIndexChanged(object sender, EventArgs e)

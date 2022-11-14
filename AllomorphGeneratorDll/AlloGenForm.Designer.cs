@@ -335,7 +335,7 @@ namespace SIL.AllomorphGenerator
             this.lBoxOperations.Name = "lBoxOperations";
             this.lBoxOperations.Size = new System.Drawing.Size(355, 742);
             this.lBoxOperations.TabIndex = 0;
-            this.lBoxOperations.SelectedIndexChanged += new System.EventHandler(this.lbOperations_SelectedIndexChanged);
+            this.lBoxOperations.SelectedIndexChanged += new System.EventHandler(this.lBoxOperations_SelectedIndexChanged);
             this.lBoxOperations.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxOperations_MouseUp);
             // 
             // lbName
