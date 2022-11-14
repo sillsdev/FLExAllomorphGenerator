@@ -14,12 +14,13 @@ namespace SIL.AlloGenModel
     {
         public List<Replace> ReplaceOps { get; set; }
         public List<Environment> Environments { get; set; }
-        public InflectionFeature InflectionFeatures { get; set; }
-        public StemName StemName { get; set; }
+        public InflectionFeature InflectionFeatures { get; set; } = new InflectionFeature();
+        public StemName StemName { get; set; } = new StemName();
 
         public Action()
         {
             ReplaceOps = new List<Replace>();
+            Replace replace = new Replace();
             Environments = new List<Environment>();
         }
     }

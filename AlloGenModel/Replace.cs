@@ -16,8 +16,8 @@ namespace SIL.AlloGenModel
         // mode: false = plain; true = regular expression
         [XmlAttribute("mode")]
         public bool Mode { get; set; } = false;
-        public string From { get; set; }
-        public string To { get; set; }
+        public string From { get; set; } = "";
+        public string To { get; set; } = "";
         [XmlAttribute("ach")]
         public bool Ach { get; set; } = true;
         [XmlAttribute("acl")]

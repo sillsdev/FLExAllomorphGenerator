@@ -13,7 +13,7 @@ namespace SIL.AlloGenModel
 {
     public class Pattern
     {
-        public string Match { get; set; }
+        public string Match { get; set; } = "";
         // match mode: false = plain; true = regular expression
         [XmlAttribute("matchmode")]
         public bool MatchMode { get; set; } = false;

@@ -14,9 +14,9 @@ namespace SIL.AlloGenModel
     abstract public class AlloGenGuid : AlloGenBase
     {
         [XmlAttribute("guid")]
-        public string Guid { get; set; }
+        public string Guid { get; set; } = "";
         [XmlAttribute("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
         override public string ToString()
         {

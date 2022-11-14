@@ -33,6 +33,7 @@ namespace SIL.AllomorphGenerator
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlloGenForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabEditOps = new System.Windows.Forms.TabPage();
+            this.lbReplaceRightClickToEdit = new System.Windows.Forms.Label();
             this.btnCategories = new System.Windows.Forms.Button();
             this.btnMorphTypes = new System.Windows.Forms.Button();
             this.lbReplaceOps = new System.Windows.Forms.Label();
@@ -65,7 +66,8 @@ namespace SIL.AllomorphGenerator
             this.tbFile = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.lbRightClickToEdit = new System.Windows.Forms.Label();
+            this.lbOperations = new System.Windows.Forms.Label();
+            this.lbOpRightClickToEdit = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.SuspendLayout();
@@ -85,7 +87,9 @@ namespace SIL.AllomorphGenerator
             // 
             // tabEditOps
             // 
-            this.tabEditOps.Controls.Add(this.lbRightClickToEdit);
+            this.tabEditOps.Controls.Add(this.lbOpRightClickToEdit);
+            this.tabEditOps.Controls.Add(this.lbOperations);
+            this.tabEditOps.Controls.Add(this.lbReplaceRightClickToEdit);
             this.tabEditOps.Controls.Add(this.btnCategories);
             this.tabEditOps.Controls.Add(this.btnMorphTypes);
             this.tabEditOps.Controls.Add(this.lbReplaceOps);
@@ -120,6 +124,16 @@ namespace SIL.AllomorphGenerator
             this.tabEditOps.TabIndex = 0;
             this.tabEditOps.Text = "Edit Operations";
             this.tabEditOps.UseVisualStyleBackColor = true;
+            // 
+            // lbReplaceRightClickToEdit
+            // 
+            this.lbReplaceRightClickToEdit.AutoSize = true;
+            this.lbReplaceRightClickToEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbReplaceRightClickToEdit.Location = new System.Drawing.Point(677, 344);
+            this.lbReplaceRightClickToEdit.Name = "lbReplaceRightClickToEdit";
+            this.lbReplaceRightClickToEdit.Size = new System.Drawing.Size(140, 20);
+            this.lbReplaceRightClickToEdit.TabIndex = 27;
+            this.lbReplaceRightClickToEdit.Text = "(Right-click to edit)";
             // 
             // btnCategories
             // 
@@ -314,12 +328,12 @@ namespace SIL.AllomorphGenerator
             // 
             // lBoxOperations
             // 
-            this.lBoxOperations.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lBoxOperations.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lBoxOperations.FormattingEnabled = true;
             this.lBoxOperations.ItemHeight = 20;
-            this.lBoxOperations.Location = new System.Drawing.Point(3, 3);
+            this.lBoxOperations.Location = new System.Drawing.Point(3, 63);
             this.lBoxOperations.Name = "lBoxOperations";
-            this.lBoxOperations.Size = new System.Drawing.Size(355, 802);
+            this.lBoxOperations.Size = new System.Drawing.Size(355, 742);
             this.lBoxOperations.TabIndex = 0;
             this.lBoxOperations.SelectedIndexChanged += new System.EventHandler(this.lbOperations_SelectedIndexChanged);
             this.lBoxOperations.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxOperations_MouseUp);
@@ -411,15 +425,24 @@ namespace SIL.AllomorphGenerator
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
-            // lbRightClickToEdit
+            // lbOperations
             // 
-            this.lbRightClickToEdit.AutoSize = true;
-            this.lbRightClickToEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbRightClickToEdit.Location = new System.Drawing.Point(677, 344);
-            this.lbRightClickToEdit.Name = "lbRightClickToEdit";
-            this.lbRightClickToEdit.Size = new System.Drawing.Size(140, 20);
-            this.lbRightClickToEdit.TabIndex = 27;
-            this.lbRightClickToEdit.Text = "(Right-click to edit)";
+            this.lbOperations.AutoSize = true;
+            this.lbOperations.Location = new System.Drawing.Point(7, 7);
+            this.lbOperations.Name = "lbOperations";
+            this.lbOperations.Size = new System.Drawing.Size(87, 20);
+            this.lbOperations.TabIndex = 28;
+            this.lbOperations.Text = "Operations";
+            // 
+            // lbOpRightClickToEdit
+            // 
+            this.lbOpRightClickToEdit.AutoSize = true;
+            this.lbOpRightClickToEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbOpRightClickToEdit.Location = new System.Drawing.Point(109, 6);
+            this.lbOpRightClickToEdit.Name = "lbOpRightClickToEdit";
+            this.lbOpRightClickToEdit.Size = new System.Drawing.Size(140, 20);
+            this.lbOpRightClickToEdit.TabIndex = 29;
+            this.lbOpRightClickToEdit.Text = "(Right-click to edit)";
             // 
             // AlloGenForm
             // 
@@ -479,7 +502,9 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Label lbReplaceOps;
         private System.Windows.Forms.Button btnCategories;
         private System.Windows.Forms.Button btnMorphTypes;
-        private System.Windows.Forms.Label lbRightClickToEdit;
+        private System.Windows.Forms.Label lbReplaceRightClickToEdit;
+        private System.Windows.Forms.Label lbOpRightClickToEdit;
+        private System.Windows.Forms.Label lbOperations;
     }
 }
 

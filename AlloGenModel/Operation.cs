@@ -12,10 +12,10 @@ namespace SIL.AlloGenModel
 {
     public class Operation : AlloGenBase
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public Pattern Pattern { get; set; }
-        public Action Action { get; set; }
+        public string Name { get; set; } = "new operation";
+        public string Description { get; set; } = "";
+        public Pattern Pattern { get; set; } = new Pattern();
+        public Action Action { get; set; } = new Action();
 
         override public string ToString()
         {
