@@ -12,9 +12,7 @@
           <MorphType active="true" guid="d7f713e5-e8cf-11d3-9764-00c04f186933" name="root" />
           <MorphType active="true" guid="d7f713e8-e8cf-11d3-9764-00c04f186933" name="stem" />
         </MorphTypes>
-        <Categories>
-          <Category active="true" guid="d7f713e8-e8cf-11d3-9733-00c04f186933" name="verb" />
-        </Categories>
+        <Category active="true" guid="d7f713e8-e8cf-11d3-9733-00c04f186933" name="verb" />
       </Pattern>
       <Action>
         <ReplaceOps>

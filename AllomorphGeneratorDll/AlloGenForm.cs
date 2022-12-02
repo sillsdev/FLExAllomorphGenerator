@@ -5,6 +5,9 @@
 using Microsoft.Win32;
 using SIL.AlloGenModel;
 using SIL.AlloGenService;
+using SIL.FieldWorks.LexText.Controls;
+using SIL.LCModel;
+using SIL.LCModel.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,11 +17,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using XCore;
 
 namespace SIL.AllomorphGenerator
 {
     public partial class AlloGenForm : Form
     {
+        public LcmCache Cache { get; set; }
+        public Mediator Mediator { get; set; }
+        public PropertyTable PropTable { get; set;  }
 
         private RegistryKey regkey;
         public static string m_strRegKey = "Software\\SIL\\AllomorphGenerator";
@@ -44,6 +51,11 @@ namespace SIL.AllomorphGenerator
         List<Operation> Operations { get; set; }
         Operation Operation { get; set; }
         List<Replace> ReplaceOps { get; set; }
+        AlloGenModel.Action ActionOp { get; set; }
+        InflectionFeature InflectionFeatures { get; set; }
+        StemName StemName { get; set; }
+        Pattern Pattern { get; set; }
+        Category Category { get; set; }
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
@@ -387,25 +399,22 @@ namespace SIL.AllomorphGenerator
             LastOperation = lBoxOperations.SelectedIndex;
             tbName.Text = Operation.Name;
             tbDescription.Text = Operation.Description;
-            Pattern pattern = Operation.Pattern;
-            tbMatch.Text = pattern.Match;
-            cbRegEx.Checked = pattern.MatchMode;
-            lBoxMorphTypes.DataSource = pattern.MorphTypes;
-            if (pattern.MorphTypes.Count > 0)
+            Pattern = Operation.Pattern;
+            tbMatch.Text = Pattern.Match;
+            cbRegEx.Checked = Pattern.MatchMode;
+            lBoxMorphTypes.DataSource = Pattern.MorphTypes;
+            if (Pattern.MorphTypes.Count > 0)
             {
-                var selectedMorphType = pattern.MorphTypes[0];
+                var selectedMorphType = Pattern.MorphTypes[0];
             }
-            lBoxCategories.DataSource = pattern.Categories;
-            if (pattern.Categories.Count > 0)
-            {
-                var selectedCategory = pattern.Categories[0];
-            }
-            AlloGenModel.Action action = Operation.Action;
+            lBoxEnvironments.DataSource = ActionOp.Environments;
+            Category = Pattern.Category;
+            ActionOp = Operation.Action;
             ReplaceOps = Operation.Action.ReplaceOps;
             RefreshReplaceListBox();
-            if (action.ReplaceOps.Count > 0)
+            if (ActionOp.ReplaceOps.Count > 0)
             {
-                var selectedReplace = action.ReplaceOps[0];
+                var selectedReplace = ActionOp.ReplaceOps[0];
             }
         }
 
@@ -426,5 +435,110 @@ namespace SIL.AllomorphGenerator
             throw new NotImplementedException();
         }
 
+        private void btnCategory_Click(object sender, EventArgs e)
+        {
+            if (Cache != null)
+            {
+                ISet<ICmPossibility> allPoses = Cache.LanguageProject.PartsOfSpeechOA.ReallyReallyAllPossibilities;
+
+                CategoryChooser chooser = new CategoryChooser();
+                foreach (ICmPossibility pos in allPoses)
+                {
+                    chooser.Categories.Add(pos.Name.BestAnalysisAlternative.Text);
+                }
+                chooser.FillCategoriesListBox();
+                Category = Pattern.Category;
+                if (Category.Name.Length > 0)
+                {
+                    int index = chooser.Categories.IndexOf(Category.Name);
+                    if (index > -1)
+                        chooser.SelectCategory(index);
+                }
+                chooser.ShowDialog();
+                if (chooser.DialogResult == DialogResult.OK)
+                {
+                    Category.Name = chooser.SelectedCategory;
+                    tbCategory.Text = Category.Name;
+                }
+
+            }
+        }
+
+        private void btnInflectionFeatures_Click(object sender, EventArgs e)
+        {
+            InflectionFeatures = ActionOp.InflectionFeatures;
+            tbInflectionFeatures.Text = InflectionFeatures.Name;
+            if (InflectionFeatures.Guid.Length > 0)
+            {
+                //Guid guid = new Guid(InflectionFeatures.Guid.Replace("-", ""));
+                //    MessageBox.Show("guid before is " + InflectionFeatures.Guid);
+                //    var lastFsSeen = Cache.ServiceLocator.ObjectRepository.GetObject(new Guid(InflectionFeatures.Guid));
+                //    if (lastFsSeen == null)
+                //        MessageBox.Show("last seen is null");
+                //    else
+                //        MessageBox.Show("last seen is " + lastFsSeen.ToString());
+            }
+
+            MsaInflectionFeatureListDlg dlg = new MsaInflectionFeatureListDlg();
+            IPartOfSpeech pos = GetPartOfSpeechToUse("Verb");
+            dlg.SetDlgInfo(Cache, Mediator, PropTable, pos);
+            dlg.ShowDialog();
+            if (dlg.DialogResult == DialogResult.OK)
+            {
+                ILcmOwningCollection<IFsFeatStruc> result = pos.ReferenceFormsOC;
+                IFsFeatStruc fs = result.Objects.FirstOrDefault() as IFsFeatStruc;
+                if (fs != null)
+                {
+                    InflectionFeatures.Name = fs.ToString();
+                    InflectionFeatures.Guid = fs.Guid.ToString();
+                    //MessageBox.Show("fs=" + InflectionFeatures.Name + "; guid=" + InflectionFeatures.Guid);
+                    tbInflectionFeatures.Text = InflectionFeatures.Name;
+                }
+                //else
+                //    MessageBox.Show("OK");
+                NonUndoableUnitOfWorkHelper.Do(Cache.ActionHandlerAccessor, () =>
+                {
+                    pos.ReferenceFormsOC.Clear();
+                });
+            }
+            dlg.Close();
+        }
+
+        private void btnStemName_Click(object sender, EventArgs e)
+        {
+            IPartOfSpeech pos = GetPartOfSpeechToUse("Verb");
+            StemNameChooser chooser = new StemNameChooser();
+            foreach (IMoStemName sn in pos.StemNamesOC)
+            {
+                chooser.StemNames.Add(sn.Name.BestAnalysisAlternative.Text);
+            }
+            chooser.FillStemNamesListBox();
+            StemName = ActionOp.StemName;
+            if (StemName.Name.Length > 0)
+            {
+                int index = chooser.StemNames.IndexOf(StemName.Name);
+                if (index > -1)
+                    chooser.SelectStemName(index);
+            }
+            chooser.ShowDialog();
+            if (chooser.DialogResult == DialogResult.OK)
+            {
+                StemName.Name = chooser.SelectedStemName;
+                tbStemName.Text = StemName.Name;
+            }
+        }
+
+        private IPartOfSpeech GetPartOfSpeechToUse(string posName)
+        {
+            IPartOfSpeech pos = (IPartOfSpeech)Cache.LangProject.PartsOfSpeechOA.PossibilitiesOS.FirstOrDefault(p => p.Name.BestAnalysisAlternative.Text == posName);
+            return pos;
+
+        }
+
+        private void btnEnvironments_Click(object sender, EventArgs e)
+        {
+            ILcmOwningSequence<IPhEnvironment> envs = Cache.LanguageProject.PhonologicalDataOA.EnvironmentsOS;
+            MessageBox.Show("envs count=" + envs.Count);
+        }
     }
 }

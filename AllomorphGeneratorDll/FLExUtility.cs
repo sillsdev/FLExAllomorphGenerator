@@ -52,10 +52,10 @@ namespace SIL.AllomorphGenerator
 		void IUtility.Process()
 		{
 			var alloGenForm = new AlloGenForm();
-			//alloGenForm.Cache = m_dlg.PropTable.GetValue<LcmCache>("cache");
-			//alloGenForm.PrepareForm();
-			//pcpatrFlexForm.FillTextsListBox();
-			alloGenForm.Show();
+            alloGenForm.Cache = m_dlg.PropTable.GetValue<LcmCache>("cache");
+            alloGenForm.Mediator = m_dlg.Mediator;
+            alloGenForm.PropTable = m_dlg.PropTable;
+            alloGenForm.Show();
 			m_dlg.Close();
 		}
 		#endregion IUtility implementation

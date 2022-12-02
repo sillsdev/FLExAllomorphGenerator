@@ -33,8 +33,10 @@ namespace SIL.AllomorphGenerator
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlloGenForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabEditOps = new System.Windows.Forms.TabPage();
+            this.lbOpRightClickToEdit = new System.Windows.Forms.Label();
+            this.lbOperations = new System.Windows.Forms.Label();
             this.lbReplaceRightClickToEdit = new System.Windows.Forms.Label();
-            this.btnCategories = new System.Windows.Forms.Button();
+            this.btnEnvironments = new System.Windows.Forms.Button();
             this.btnMorphTypes = new System.Windows.Forms.Button();
             this.lbReplaceOps = new System.Windows.Forms.Label();
             this.btnStemName = new System.Windows.Forms.Button();
@@ -43,14 +45,14 @@ namespace SIL.AllomorphGenerator
             this.btnInflectionFeatures = new System.Windows.Forms.Button();
             this.tbInflectionFeatures = new System.Windows.Forms.TextBox();
             this.lbInflectionFeatures = new System.Windows.Forms.Label();
-            this.btnEnvironments = new System.Windows.Forms.Button();
-            this.tbEnvironments = new System.Windows.Forms.TextBox();
-            this.lbEnvironments = new System.Windows.Forms.Label();
+            this.btnCategory = new System.Windows.Forms.Button();
+            this.tbCategory = new System.Windows.Forms.TextBox();
+            this.lbCategory = new System.Windows.Forms.Label();
             this.lBoxReplaceOps = new System.Windows.Forms.ListBox();
             this.cbRegEx = new System.Windows.Forms.CheckBox();
-            this.lBoxCategories = new System.Windows.Forms.ListBox();
+            this.lBoxEnvironments = new System.Windows.Forms.ListBox();
             this.lBoxMorphTypes = new System.Windows.Forms.ListBox();
-            this.lbCategories = new System.Windows.Forms.Label();
+            this.lbCategoryddd = new System.Windows.Forms.Label();
             this.lbMorphTypes = new System.Windows.Forms.Label();
             this.tbMatch = new System.Windows.Forms.TextBox();
             this.lbMatch = new System.Windows.Forms.Label();
@@ -66,8 +68,6 @@ namespace SIL.AllomorphGenerator
             this.tbFile = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.lbOperations = new System.Windows.Forms.Label();
-            this.lbOpRightClickToEdit = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.SuspendLayout();
@@ -90,7 +90,7 @@ namespace SIL.AllomorphGenerator
             this.tabEditOps.Controls.Add(this.lbOpRightClickToEdit);
             this.tabEditOps.Controls.Add(this.lbOperations);
             this.tabEditOps.Controls.Add(this.lbReplaceRightClickToEdit);
-            this.tabEditOps.Controls.Add(this.btnCategories);
+            this.tabEditOps.Controls.Add(this.btnEnvironments);
             this.tabEditOps.Controls.Add(this.btnMorphTypes);
             this.tabEditOps.Controls.Add(this.lbReplaceOps);
             this.tabEditOps.Controls.Add(this.btnStemName);
@@ -99,14 +99,14 @@ namespace SIL.AllomorphGenerator
             this.tabEditOps.Controls.Add(this.btnInflectionFeatures);
             this.tabEditOps.Controls.Add(this.tbInflectionFeatures);
             this.tabEditOps.Controls.Add(this.lbInflectionFeatures);
-            this.tabEditOps.Controls.Add(this.btnEnvironments);
-            this.tabEditOps.Controls.Add(this.tbEnvironments);
-            this.tabEditOps.Controls.Add(this.lbEnvironments);
+            this.tabEditOps.Controls.Add(this.btnCategory);
+            this.tabEditOps.Controls.Add(this.tbCategory);
+            this.tabEditOps.Controls.Add(this.lbCategory);
             this.tabEditOps.Controls.Add(this.lBoxReplaceOps);
             this.tabEditOps.Controls.Add(this.cbRegEx);
-            this.tabEditOps.Controls.Add(this.lBoxCategories);
+            this.tabEditOps.Controls.Add(this.lBoxEnvironments);
             this.tabEditOps.Controls.Add(this.lBoxMorphTypes);
-            this.tabEditOps.Controls.Add(this.lbCategories);
+            this.tabEditOps.Controls.Add(this.lbCategoryddd);
             this.tabEditOps.Controls.Add(this.lbMorphTypes);
             this.tabEditOps.Controls.Add(this.tbMatch);
             this.tabEditOps.Controls.Add(this.lbMatch);
@@ -125,6 +125,25 @@ namespace SIL.AllomorphGenerator
             this.tabEditOps.Text = "Edit Operations";
             this.tabEditOps.UseVisualStyleBackColor = true;
             // 
+            // lbOpRightClickToEdit
+            // 
+            this.lbOpRightClickToEdit.AutoSize = true;
+            this.lbOpRightClickToEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbOpRightClickToEdit.Location = new System.Drawing.Point(109, 6);
+            this.lbOpRightClickToEdit.Name = "lbOpRightClickToEdit";
+            this.lbOpRightClickToEdit.Size = new System.Drawing.Size(140, 20);
+            this.lbOpRightClickToEdit.TabIndex = 29;
+            this.lbOpRightClickToEdit.Text = "(Right-click to edit)";
+            // 
+            // lbOperations
+            // 
+            this.lbOperations.AutoSize = true;
+            this.lbOperations.Location = new System.Drawing.Point(7, 7);
+            this.lbOperations.Name = "lbOperations";
+            this.lbOperations.Size = new System.Drawing.Size(87, 20);
+            this.lbOperations.TabIndex = 28;
+            this.lbOperations.Text = "Operations";
+            // 
             // lbReplaceRightClickToEdit
             // 
             this.lbReplaceRightClickToEdit.AutoSize = true;
@@ -135,14 +154,15 @@ namespace SIL.AllomorphGenerator
             this.lbReplaceRightClickToEdit.TabIndex = 27;
             this.lbReplaceRightClickToEdit.Text = "(Right-click to edit)";
             // 
-            // btnCategories
+            // btnEnvironments
             // 
-            this.btnCategories.Location = new System.Drawing.Point(917, 131);
-            this.btnCategories.Name = "btnCategories";
-            this.btnCategories.Size = new System.Drawing.Size(30, 28);
-            this.btnCategories.TabIndex = 26;
-            this.btnCategories.Text = "...";
-            this.btnCategories.UseVisualStyleBackColor = true;
+            this.btnEnvironments.Location = new System.Drawing.Point(927, 131);
+            this.btnEnvironments.Name = "btnEnvironments";
+            this.btnEnvironments.Size = new System.Drawing.Size(30, 28);
+            this.btnEnvironments.TabIndex = 26;
+            this.btnEnvironments.Text = "...";
+            this.btnEnvironments.UseVisualStyleBackColor = true;
+            this.btnEnvironments.Click += new System.EventHandler(this.btnEnvironments_Click);
             // 
             // btnMorphTypes
             // 
@@ -170,6 +190,7 @@ namespace SIL.AllomorphGenerator
             this.btnStemName.TabIndex = 23;
             this.btnStemName.Text = "...";
             this.btnStemName.UseVisualStyleBackColor = true;
+            this.btnStemName.Click += new System.EventHandler(this.btnStemName_Click);
             // 
             // tbStemName
             // 
@@ -197,6 +218,7 @@ namespace SIL.AllomorphGenerator
             this.btnInflectionFeatures.TabIndex = 20;
             this.btnInflectionFeatures.Text = "...";
             this.btnInflectionFeatures.UseVisualStyleBackColor = true;
+            this.btnInflectionFeatures.Click += new System.EventHandler(this.btnInflectionFeatures_Click);
             // 
             // tbInflectionFeatures
             // 
@@ -216,33 +238,34 @@ namespace SIL.AllomorphGenerator
             this.lbInflectionFeatures.TabIndex = 18;
             this.lbInflectionFeatures.Text = "Inflection Features";
             // 
-            // btnEnvironments
+            // btnCategory
             // 
-            this.btnEnvironments.Location = new System.Drawing.Point(1091, 591);
-            this.btnEnvironments.Name = "btnEnvironments";
-            this.btnEnvironments.Size = new System.Drawing.Size(30, 28);
-            this.btnEnvironments.TabIndex = 17;
-            this.btnEnvironments.Text = "...";
-            this.btnEnvironments.UseVisualStyleBackColor = true;
+            this.btnCategory.Location = new System.Drawing.Point(1091, 591);
+            this.btnCategory.Name = "btnCategory";
+            this.btnCategory.Size = new System.Drawing.Size(30, 28);
+            this.btnCategory.TabIndex = 17;
+            this.btnCategory.Text = "...";
+            this.btnCategory.UseVisualStyleBackColor = true;
+            this.btnCategory.Click += new System.EventHandler(this.btnCategory_Click);
             // 
-            // tbEnvironments
+            // tbCategory
             // 
-            this.tbEnvironments.Location = new System.Drawing.Point(660, 593);
-            this.tbEnvironments.Multiline = true;
-            this.tbEnvironments.Name = "tbEnvironments";
-            this.tbEnvironments.ReadOnly = true;
-            this.tbEnvironments.Size = new System.Drawing.Size(425, 26);
-            this.tbEnvironments.TabIndex = 16;
-            this.tbEnvironments.Text = "/ _ #";
+            this.tbCategory.Location = new System.Drawing.Point(660, 593);
+            this.tbCategory.Multiline = true;
+            this.tbCategory.Name = "tbCategory";
+            this.tbCategory.ReadOnly = true;
+            this.tbCategory.Size = new System.Drawing.Size(425, 26);
+            this.tbCategory.TabIndex = 16;
+            this.tbCategory.Text = "Verb";
             // 
-            // lbEnvironments
+            // lbCategory
             // 
-            this.lbEnvironments.AutoSize = true;
-            this.lbEnvironments.Location = new System.Drawing.Point(497, 593);
-            this.lbEnvironments.Name = "lbEnvironments";
-            this.lbEnvironments.Size = new System.Drawing.Size(106, 20);
-            this.lbEnvironments.TabIndex = 15;
-            this.lbEnvironments.Text = "Environments";
+            this.lbCategory.AutoSize = true;
+            this.lbCategory.Location = new System.Drawing.Point(497, 593);
+            this.lbCategory.Name = "lbCategory";
+            this.lbCategory.Size = new System.Drawing.Size(73, 20);
+            this.lbCategory.TabIndex = 15;
+            this.lbCategory.Text = "Category";
             // 
             // lBoxReplaceOps
             // 
@@ -264,14 +287,14 @@ namespace SIL.AllomorphGenerator
             this.cbRegEx.Text = "Regular expression";
             this.cbRegEx.UseVisualStyleBackColor = true;
             // 
-            // lBoxCategories
+            // lBoxEnvironments
             // 
-            this.lBoxCategories.FormattingEnabled = true;
-            this.lBoxCategories.ItemHeight = 20;
-            this.lBoxCategories.Location = new System.Drawing.Point(813, 175);
-            this.lBoxCategories.Name = "lBoxCategories";
-            this.lBoxCategories.Size = new System.Drawing.Size(309, 124);
-            this.lBoxCategories.TabIndex = 12;
+            this.lBoxEnvironments.FormattingEnabled = true;
+            this.lBoxEnvironments.ItemHeight = 20;
+            this.lBoxEnvironments.Location = new System.Drawing.Point(813, 175);
+            this.lBoxEnvironments.Name = "lBoxEnvironments";
+            this.lBoxEnvironments.Size = new System.Drawing.Size(309, 124);
+            this.lBoxEnvironments.TabIndex = 12;
             // 
             // lBoxMorphTypes
             // 
@@ -282,14 +305,14 @@ namespace SIL.AllomorphGenerator
             this.lBoxMorphTypes.Size = new System.Drawing.Size(264, 124);
             this.lBoxMorphTypes.TabIndex = 11;
             // 
-            // lbCategories
+            // lbCategoryddd
             // 
-            this.lbCategories.AutoSize = true;
-            this.lbCategories.Location = new System.Drawing.Point(809, 139);
-            this.lbCategories.Name = "lbCategories";
-            this.lbCategories.Size = new System.Drawing.Size(86, 20);
-            this.lbCategories.TabIndex = 10;
-            this.lbCategories.Text = "Categories";
+            this.lbCategoryddd.AutoSize = true;
+            this.lbCategoryddd.Location = new System.Drawing.Point(809, 139);
+            this.lbCategoryddd.Name = "lbCategoryddd";
+            this.lbCategoryddd.Size = new System.Drawing.Size(106, 20);
+            this.lbCategoryddd.TabIndex = 10;
+            this.lbCategoryddd.Text = "Environments";
             // 
             // lbMorphTypes
             // 
@@ -333,7 +356,7 @@ namespace SIL.AllomorphGenerator
             this.lBoxOperations.ItemHeight = 20;
             this.lBoxOperations.Location = new System.Drawing.Point(3, 63);
             this.lBoxOperations.Name = "lBoxOperations";
-            this.lBoxOperations.Size = new System.Drawing.Size(355, 742);
+            this.lBoxOperations.Size = new System.Drawing.Size(355, 724);
             this.lBoxOperations.TabIndex = 0;
             this.lBoxOperations.SelectedIndexChanged += new System.EventHandler(this.lBoxOperations_SelectedIndexChanged);
             this.lBoxOperations.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxOperations_MouseUp);
@@ -425,25 +448,6 @@ namespace SIL.AllomorphGenerator
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
-            // lbOperations
-            // 
-            this.lbOperations.AutoSize = true;
-            this.lbOperations.Location = new System.Drawing.Point(7, 7);
-            this.lbOperations.Name = "lbOperations";
-            this.lbOperations.Size = new System.Drawing.Size(87, 20);
-            this.lbOperations.TabIndex = 28;
-            this.lbOperations.Text = "Operations";
-            // 
-            // lbOpRightClickToEdit
-            // 
-            this.lbOpRightClickToEdit.AutoSize = true;
-            this.lbOpRightClickToEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbOpRightClickToEdit.Location = new System.Drawing.Point(109, 6);
-            this.lbOpRightClickToEdit.Name = "lbOpRightClickToEdit";
-            this.lbOpRightClickToEdit.Size = new System.Drawing.Size(140, 20);
-            this.lbOpRightClickToEdit.TabIndex = 29;
-            this.lbOpRightClickToEdit.Text = "(Right-click to edit)";
-            // 
             // AlloGenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -483,16 +487,16 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.Label lbDescription;
         private System.Windows.Forms.CheckBox cbRegEx;
-        private System.Windows.Forms.ListBox lBoxCategories;
+        private System.Windows.Forms.ListBox lBoxEnvironments;
         private System.Windows.Forms.ListBox lBoxMorphTypes;
-        private System.Windows.Forms.Label lbCategories;
+        private System.Windows.Forms.Label lbCategoryddd;
         private System.Windows.Forms.Label lbMorphTypes;
         private System.Windows.Forms.TextBox tbMatch;
         private System.Windows.Forms.Label lbMatch;
         private System.Windows.Forms.ListBox lBoxReplaceOps;
-        private System.Windows.Forms.Button btnEnvironments;
-        private System.Windows.Forms.TextBox tbEnvironments;
-        private System.Windows.Forms.Label lbEnvironments;
+        private System.Windows.Forms.Button btnCategory;
+        private System.Windows.Forms.TextBox tbCategory;
+        private System.Windows.Forms.Label lbCategory;
         private System.Windows.Forms.Button btnStemName;
         private System.Windows.Forms.TextBox tbStemName;
         private System.Windows.Forms.Label lbStemName;
@@ -500,7 +504,7 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.TextBox tbInflectionFeatures;
         private System.Windows.Forms.Label lbInflectionFeatures;
         private System.Windows.Forms.Label lbReplaceOps;
-        private System.Windows.Forms.Button btnCategories;
+        private System.Windows.Forms.Button btnEnvironments;
         private System.Windows.Forms.Button btnMorphTypes;
         private System.Windows.Forms.Label lbReplaceRightClickToEdit;
         private System.Windows.Forms.Label lbOpRightClickToEdit;

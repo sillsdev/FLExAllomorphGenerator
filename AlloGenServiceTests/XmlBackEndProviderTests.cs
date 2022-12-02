@@ -53,10 +53,9 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual("d7f713e4-e8cf-11d3-9764-00c04f186933", guid);
             string name = pattern.MorphTypes[0].Name;
             Assert.AreEqual("bound root", name);
-            Assert.AreEqual(1, pattern.Categories.Count);
-            guid = pattern.Categories[0].Guid;
+            guid = pattern.Category.Guid;
             Assert.AreEqual("d7f713e8-e8cf-11d3-9733-00c04f186933", guid);
-            name = pattern.Categories[0].Name;
+            name = pattern.Category.Name;
             Assert.AreEqual("verb", name);
             Action action = operation.Action;
             Assert.NotNull(action);
@@ -206,7 +205,7 @@ namespace SIL.AlloGenServiceTest
             Category cat = new Category();
             cat.Guid = "d7f713e8-e8cf-11d3-9733-00c04f186933";
             cat.Name = "verb";
-            pattern.Categories.Add(cat);
+            pattern.Category = cat;
             return pattern;
         }
     }
