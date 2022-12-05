@@ -23,11 +23,11 @@ namespace SIL.AllomorphGenerator
         {
             StemNames = new List<string>();
             InitializeComponent();
+            lBoxStemNames.Sorted = true;
         }
 
         public void FillStemNamesListBox()
         {
-            lBoxStemNames.Items.Clear();
             foreach (string stemName in StemNames)
             {
                 lBoxStemNames.Items.Add(stemName);

@@ -81,7 +81,8 @@ namespace SIL.AllomorphGenerator
                 }
                 FillOperationsListBox();
                 BuildReplaceContextMenu();
-
+                lBoxMorphTypes.ClearSelected();
+                lBoxEnvironments.ClearSelected();
             }
             catch (Exception e)
             {
@@ -402,14 +403,15 @@ namespace SIL.AllomorphGenerator
             Pattern = Operation.Pattern;
             tbMatch.Text = Pattern.Match;
             cbRegEx.Checked = Pattern.MatchMode;
-            lBoxMorphTypes.DataSource = Pattern.MorphTypes;
+            //lBoxMorphTypes.DataSource = Pattern.MorphTypes;
+            RefreshMorphTypesListBox();
             if (Pattern.MorphTypes.Count > 0)
             {
                 var selectedMorphType = Pattern.MorphTypes[0];
             }
-            lBoxEnvironments.DataSource = ActionOp.Environments;
             Category = Pattern.Category;
             ActionOp = Operation.Action;
+            lBoxEnvironments.DataSource = ActionOp.Environments;
             ReplaceOps = Operation.Action.ReplaceOps;
             RefreshReplaceListBox();
             if (ActionOp.ReplaceOps.Count > 0)
@@ -430,9 +432,13 @@ namespace SIL.AllomorphGenerator
                 lBoxReplaceOps.SetSelected(selectedItem, true);
         }
 
-        private void lbMorphTypes_SelectedIndexChanged(object sender, EventArgs e)
+        private void RefreshMorphTypesListBox()
         {
-            throw new NotImplementedException();
+            lBoxMorphTypes.Items.Clear();
+            foreach (MorphType item in Pattern.MorphTypes)
+            {
+                lBoxMorphTypes.Items.Add(item);
+            }
         }
 
         private void btnCategory_Click(object sender, EventArgs e)
@@ -539,6 +545,25 @@ namespace SIL.AllomorphGenerator
         {
             ILcmOwningSequence<IPhEnvironment> envs = Cache.LanguageProject.PhonologicalDataOA.EnvironmentsOS;
             MessageBox.Show("envs count=" + envs.Count);
+        }
+
+        private void btnMorphTypes_Click(object sender, EventArgs e)
+        {
+            if (Cache != null)
+            {
+                MorphTypesChooser chooser = new MorphTypesChooser(Cache);
+                chooser.setSelected(Pattern.MorphTypes);
+                chooser.FillMorphTypesListBox();
+                chooser.ShowDialog();
+                if (chooser.DialogResult == DialogResult.OK)
+                {
+                    Pattern.MorphTypes.Clear();
+                    Pattern.MorphTypes.AddRange(chooser.SelectedMorphTypes);
+                    RefreshMorphTypesListBox();
+                }
+
+            }
+
         }
     }
 }
