@@ -25,7 +25,7 @@ namespace SIL.AllomorphGenerator
     {
         public LcmCache Cache { get; set; }
         public Mediator Mediator { get; set; }
-        public PropertyTable PropTable { get; set;  }
+        public PropertyTable PropTable { get; set; }
 
         private RegistryKey regkey;
         public static string m_strRegKey = "Software\\SIL\\AllomorphGenerator";
@@ -57,9 +57,11 @@ namespace SIL.AllomorphGenerator
         StemName StemName { get; set; }
         Pattern Pattern { get; set; }
         Category Category { get; set; }
+        bool ChangesMade { get; set; } = false;
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
+        const string formTitle = "Allomorph Generator";
         const string cmEdit = "Edit";
         const string cmInsertBefore = "Insert before";
         const string cmInsertAfter = "Insert after";
@@ -206,6 +208,7 @@ namespace SIL.AllomorphGenerator
                         replace = dialog.ReplaceOp;
                         ReplaceOps[index] = replace;
                         lBoxReplaceOps.Items[index] = replace;
+                        MarkAsChanged();
                     }
                 }
             }
@@ -243,6 +246,7 @@ namespace SIL.AllomorphGenerator
                 Operations.Insert(index, op);
                 currentListBox.Items.Insert(index, op);
             }
+            MarkAsChanged();
         }
 
         void MoveUpContextMenu_Click(object sender, EventArgs e)
@@ -281,6 +285,7 @@ namespace SIL.AllomorphGenerator
             }
             currentListBox.Items[index] = otherItem;
             currentListBox.Items[otherIndex] = selectedItem;
+            MarkAsChanged();
         }
 
         void DeleteContextMenu_Click(object sender, EventArgs e)
@@ -295,6 +300,7 @@ namespace SIL.AllomorphGenerator
                     Operations.RemoveAt(index);
                 currentListBox.Items.RemoveAt(index);
             }
+            MarkAsChanged();
         }
 
         void DuplicateContextMenu_Click(object sender, EventArgs e)
@@ -316,7 +322,7 @@ namespace SIL.AllomorphGenerator
                     currentListBox.Items.Insert(index, op);
                 }
             }
-
+            MarkAsChanged();
         }
 
         private void RememberFormState()
@@ -390,7 +396,15 @@ namespace SIL.AllomorphGenerator
         }
         private void OnFormClosing(object sender, EventArgs e)
         {
-            Console.WriteLine("form closing");
+            if (ChangesMade)
+            {
+                DialogResult res = MessageBox.Show("Changes have been made.  Do you want to save them?", "Changes made", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+                if (res == DialogResult.Yes)
+                {
+                    Provider.SaveDataToFile(OperationsFile);
+                }
+            }
             SaveRegistryInfo();
         }
         protected override void OnMove(EventArgs ea)
@@ -452,7 +466,7 @@ namespace SIL.AllomorphGenerator
 
         private void RefreshReplaceListBox()
         {
-            int selectedItem = Math.Max(0,lBoxReplaceOps.SelectedIndex);
+            int selectedItem = Math.Max(0, lBoxReplaceOps.SelectedIndex);
             lBoxReplaceOps.Items.Clear();
             foreach (Replace item in ReplaceOps)
             {
@@ -504,6 +518,7 @@ namespace SIL.AllomorphGenerator
                 {
                     Category.Name = chooser.SelectedCategory;
                     tbCategory.Text = Category.Name;
+                    MarkAsChanged();
                 }
 
             }
@@ -545,6 +560,7 @@ namespace SIL.AllomorphGenerator
                 {
                     pos.ReferenceFormsOC.Clear();
                 });
+                MarkAsChanged();
             }
             dlg.Close();
         }
@@ -570,6 +586,7 @@ namespace SIL.AllomorphGenerator
             {
                 StemName.Name = chooser.SelectedStemName;
                 tbStemName.Text = StemName.Name;
+                MarkAsChanged();
             }
         }
 
@@ -593,6 +610,7 @@ namespace SIL.AllomorphGenerator
                     ActionOp.Environments.Clear();
                     ActionOp.Environments.AddRange(chooser.SelectedEnvironments);
                     RefreshEnvironmentsListBox();
+                    MarkAsChanged();
                 }
             }
         }
@@ -610,6 +628,7 @@ namespace SIL.AllomorphGenerator
                     Pattern.MorphTypes.Clear();
                     Pattern.MorphTypes.AddRange(chooser.SelectedMorphTypes);
                     RefreshMorphTypesListBox();
+                    MarkAsChanged();
                 }
             }
         }
@@ -620,7 +639,7 @@ namespace SIL.AllomorphGenerator
             if (tb != null)
             {
                 Operation.Name = tb.Text;
-
+                MarkAsChanged();
                 int selectedOp = lBoxOperations.SelectedIndex;
                 if (selectedOp > -1)
                 {
@@ -634,6 +653,31 @@ namespace SIL.AllomorphGenerator
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
             Provider.SaveDataToFile(OperationsFile);
+            ChangesMade = false;
+            ShowChangeStatusOnForm();
+        }
+
+        private void tbDescription_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            if (tb != null)
+            {
+                Operation.Description = tb.Text;
+                MarkAsChanged();
+            }
+        }
+
+        private void MarkAsChanged()
+        {
+            ChangesMade = true;
+            ShowChangeStatusOnForm();
+        }
+
+        private void ShowChangeStatusOnForm()
+        {
+            AlloGenForm.ActiveForm.Text = formTitle;
+            if (ChangesMade)
+                AlloGenForm.ActiveForm.Text += "*";
         }
     }
 }

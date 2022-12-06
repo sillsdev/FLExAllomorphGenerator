@@ -36,27 +36,6 @@ namespace SIL.AllomorphGenerator
             this.btnSaveChanges = new System.Windows.Forms.Button();
             this.lbOpRightClickToEdit = new System.Windows.Forms.Label();
             this.lbOperations = new System.Windows.Forms.Label();
-            this.lbReplaceRightClickToEdit = new System.Windows.Forms.Label();
-            this.btnEnvironments = new System.Windows.Forms.Button();
-            this.btnMorphTypes = new System.Windows.Forms.Button();
-            this.lbReplaceOps = new System.Windows.Forms.Label();
-            this.btnStemName = new System.Windows.Forms.Button();
-            this.tbStemName = new System.Windows.Forms.TextBox();
-            this.lbStemName = new System.Windows.Forms.Label();
-            this.btnInflectionFeatures = new System.Windows.Forms.Button();
-            this.tbInflectionFeatures = new System.Windows.Forms.TextBox();
-            this.lbInflectionFeatures = new System.Windows.Forms.Label();
-            this.btnCategory = new System.Windows.Forms.Button();
-            this.tbCategory = new System.Windows.Forms.TextBox();
-            this.lbCategory = new System.Windows.Forms.Label();
-            this.lBoxReplaceOps = new System.Windows.Forms.ListBox();
-            this.cbRegEx = new System.Windows.Forms.CheckBox();
-            this.lBoxEnvironments = new System.Windows.Forms.ListBox();
-            this.lBoxMorphTypes = new System.Windows.Forms.ListBox();
-            this.lbCategoryddd = new System.Windows.Forms.Label();
-            this.lbMorphTypes = new System.Windows.Forms.Label();
-            this.tbMatch = new System.Windows.Forms.TextBox();
-            this.lbMatch = new System.Windows.Forms.Label();
             this.lbPattern = new System.Windows.Forms.Label();
             this.lBoxOperations = new System.Windows.Forms.ListBox();
             this.lbName = new System.Windows.Forms.Label();
@@ -64,13 +43,34 @@ namespace SIL.AllomorphGenerator
             this.tbName = new System.Windows.Forms.TextBox();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.lbAction = new System.Windows.Forms.Label();
+            this.plPattern = new System.Windows.Forms.Panel();
+            this.btnMorphTypes = new System.Windows.Forms.Button();
+            this.btnCategory = new System.Windows.Forms.Button();
+            this.tbCategory = new System.Windows.Forms.TextBox();
+            this.lbCategory = new System.Windows.Forms.Label();
+            this.cbRegEx = new System.Windows.Forms.CheckBox();
+            this.lBoxMorphTypes = new System.Windows.Forms.ListBox();
+            this.lbMorphTypes = new System.Windows.Forms.Label();
+            this.tbMatch = new System.Windows.Forms.TextBox();
+            this.lbMatch = new System.Windows.Forms.Label();
+            this.plActions = new System.Windows.Forms.Panel();
+            this.lbReplaceRightClickToEdit = new System.Windows.Forms.Label();
+            this.btnEnvironments = new System.Windows.Forms.Button();
+            this.lbReplaceOps = new System.Windows.Forms.Label();
+            this.btnStemName = new System.Windows.Forms.Button();
+            this.tbStemName = new System.Windows.Forms.TextBox();
+            this.lbStemName = new System.Windows.Forms.Label();
+            this.btnInflectionFeatures = new System.Windows.Forms.Button();
+            this.tbInflectionFeatures = new System.Windows.Forms.TextBox();
+            this.lbInflectionFeatures = new System.Windows.Forms.Label();
+            this.lBoxReplaceOps = new System.Windows.Forms.ListBox();
+            this.lBoxEnvironments = new System.Windows.Forms.ListBox();
+            this.lbCategoryddd = new System.Windows.Forms.Label();
             this.tabRunOps = new System.Windows.Forms.TabPage();
             this.lbAlloGenFile = new System.Windows.Forms.Label();
             this.tbFile = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.plPattern = new System.Windows.Forms.Panel();
-            this.plActions = new System.Windows.Forms.Panel();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.plPattern.SuspendLayout();
@@ -141,6 +141,196 @@ namespace SIL.AllomorphGenerator
             this.lbOperations.TabIndex = 28;
             this.lbOperations.Text = "Operations";
             // 
+            // lbPattern
+            // 
+            this.lbPattern.AutoSize = true;
+            this.lbPattern.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbPattern.Location = new System.Drawing.Point(376, 100);
+            this.lbPattern.Name = "lbPattern";
+            this.lbPattern.Size = new System.Drawing.Size(68, 20);
+            this.lbPattern.TabIndex = 4;
+            this.lbPattern.Text = "Pattern";
+            // 
+            // lBoxOperations
+            // 
+            this.lBoxOperations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lBoxOperations.FormattingEnabled = true;
+            this.lBoxOperations.ItemHeight = 20;
+            this.lBoxOperations.Location = new System.Drawing.Point(3, 63);
+            this.lBoxOperations.Name = "lBoxOperations";
+            this.lBoxOperations.Size = new System.Drawing.Size(355, 864);
+            this.lBoxOperations.TabIndex = 0;
+            this.lBoxOperations.SelectedIndexChanged += new System.EventHandler(this.lBoxOperations_SelectedIndexChanged);
+            this.lBoxOperations.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxOperations_MouseUp);
+            // 
+            // lbName
+            // 
+            this.lbName.Location = new System.Drawing.Point(364, 6);
+            this.lbName.Name = "lbName";
+            this.lbName.Size = new System.Drawing.Size(89, 26);
+            this.lbName.TabIndex = 0;
+            this.lbName.Text = "Name";
+            // 
+            // lbDescription
+            // 
+            this.lbDescription.Location = new System.Drawing.Point(364, 48);
+            this.lbDescription.Name = "lbDescription";
+            this.lbDescription.Size = new System.Drawing.Size(89, 20);
+            this.lbDescription.TabIndex = 1;
+            this.lbDescription.Text = "Description";
+            // 
+            // tbName
+            // 
+            this.tbName.Location = new System.Drawing.Point(497, 3);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(648, 26);
+            this.tbName.TabIndex = 2;
+            this.tbName.Text = "My name";
+            this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
+            // 
+            // tbDescription
+            // 
+            this.tbDescription.Location = new System.Drawing.Point(497, 42);
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.Size = new System.Drawing.Size(648, 26);
+            this.tbDescription.TabIndex = 3;
+            this.tbDescription.Text = "My description";
+            this.tbDescription.TextChanged += new System.EventHandler(this.tbDescription_TextChanged);
+            // 
+            // lbAction
+            // 
+            this.lbAction.AutoSize = true;
+            this.lbAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbAction.Location = new System.Drawing.Point(380, 382);
+            this.lbAction.Name = "lbAction";
+            this.lbAction.Size = new System.Drawing.Size(69, 20);
+            this.lbAction.TabIndex = 6;
+            this.lbAction.Text = "Actions";
+            // 
+            // plPattern
+            // 
+            this.plPattern.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.plPattern.Controls.Add(this.btnMorphTypes);
+            this.plPattern.Controls.Add(this.btnCategory);
+            this.plPattern.Controls.Add(this.tbCategory);
+            this.plPattern.Controls.Add(this.lbCategory);
+            this.plPattern.Controls.Add(this.cbRegEx);
+            this.plPattern.Controls.Add(this.lBoxMorphTypes);
+            this.plPattern.Controls.Add(this.lbMorphTypes);
+            this.plPattern.Controls.Add(this.tbMatch);
+            this.plPattern.Controls.Add(this.lbMatch);
+            this.plPattern.Location = new System.Drawing.Point(370, 87);
+            this.plPattern.Name = "plPattern";
+            this.plPattern.Size = new System.Drawing.Size(776, 255);
+            this.plPattern.TabIndex = 31;
+            // 
+            // btnMorphTypes
+            // 
+            this.btnMorphTypes.Location = new System.Drawing.Point(534, 65);
+            this.btnMorphTypes.Name = "btnMorphTypes";
+            this.btnMorphTypes.Size = new System.Drawing.Size(59, 28);
+            this.btnMorphTypes.TabIndex = 25;
+            this.btnMorphTypes.Text = "Edit";
+            this.btnMorphTypes.UseVisualStyleBackColor = true;
+            this.btnMorphTypes.Click += new System.EventHandler(this.btnMorphTypes_Click);
+            // 
+            // btnCategory
+            // 
+            this.btnCategory.Location = new System.Drawing.Point(711, 205);
+            this.btnCategory.Name = "btnCategory";
+            this.btnCategory.Size = new System.Drawing.Size(30, 28);
+            this.btnCategory.TabIndex = 17;
+            this.btnCategory.Text = "...";
+            this.btnCategory.UseVisualStyleBackColor = true;
+            this.btnCategory.Click += new System.EventHandler(this.btnCategory_Click);
+            // 
+            // tbCategory
+            // 
+            this.tbCategory.Location = new System.Drawing.Point(248, 207);
+            this.tbCategory.Multiline = true;
+            this.tbCategory.Name = "tbCategory";
+            this.tbCategory.ReadOnly = true;
+            this.tbCategory.Size = new System.Drawing.Size(425, 26);
+            this.tbCategory.TabIndex = 16;
+            this.tbCategory.Text = "Verb";
+            // 
+            // lbCategory
+            // 
+            this.lbCategory.AutoSize = true;
+            this.lbCategory.Location = new System.Drawing.Point(127, 207);
+            this.lbCategory.Name = "lbCategory";
+            this.lbCategory.Size = new System.Drawing.Size(73, 20);
+            this.lbCategory.TabIndex = 15;
+            this.lbCategory.Text = "Category";
+            // 
+            // cbRegEx
+            // 
+            this.cbRegEx.AutoSize = true;
+            this.cbRegEx.Location = new System.Drawing.Point(467, 14);
+            this.cbRegEx.Name = "cbRegEx";
+            this.cbRegEx.Size = new System.Drawing.Size(171, 24);
+            this.cbRegEx.TabIndex = 13;
+            this.cbRegEx.Text = "Regular expression";
+            this.cbRegEx.UseVisualStyleBackColor = true;
+            // 
+            // lBoxMorphTypes
+            // 
+            this.lBoxMorphTypes.Enabled = false;
+            this.lBoxMorphTypes.FormattingEnabled = true;
+            this.lBoxMorphTypes.ItemHeight = 20;
+            this.lBoxMorphTypes.Location = new System.Drawing.Point(248, 65);
+            this.lBoxMorphTypes.Name = "lBoxMorphTypes";
+            this.lBoxMorphTypes.Size = new System.Drawing.Size(264, 124);
+            this.lBoxMorphTypes.Sorted = true;
+            this.lBoxMorphTypes.TabIndex = 11;
+            // 
+            // lbMorphTypes
+            // 
+            this.lbMorphTypes.AutoSize = true;
+            this.lbMorphTypes.Location = new System.Drawing.Point(127, 65);
+            this.lbMorphTypes.Name = "lbMorphTypes";
+            this.lbMorphTypes.Size = new System.Drawing.Size(100, 20);
+            this.lbMorphTypes.TabIndex = 9;
+            this.lbMorphTypes.Text = "Morph Types";
+            // 
+            // tbMatch
+            // 
+            this.tbMatch.Location = new System.Drawing.Point(222, 13);
+            this.tbMatch.Name = "tbMatch";
+            this.tbMatch.Size = new System.Drawing.Size(204, 26);
+            this.tbMatch.TabIndex = 8;
+            this.tbMatch.Text = "My match";
+            // 
+            // lbMatch
+            // 
+            this.lbMatch.AutoSize = true;
+            this.lbMatch.Location = new System.Drawing.Point(127, 13);
+            this.lbMatch.Name = "lbMatch";
+            this.lbMatch.Size = new System.Drawing.Size(53, 20);
+            this.lbMatch.TabIndex = 7;
+            this.lbMatch.Text = "Match";
+            // 
+            // plActions
+            // 
+            this.plActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.plActions.Controls.Add(this.lbReplaceRightClickToEdit);
+            this.plActions.Controls.Add(this.btnEnvironments);
+            this.plActions.Controls.Add(this.lbReplaceOps);
+            this.plActions.Controls.Add(this.btnStemName);
+            this.plActions.Controls.Add(this.tbStemName);
+            this.plActions.Controls.Add(this.lbStemName);
+            this.plActions.Controls.Add(this.btnInflectionFeatures);
+            this.plActions.Controls.Add(this.tbInflectionFeatures);
+            this.plActions.Controls.Add(this.lbInflectionFeatures);
+            this.plActions.Controls.Add(this.lBoxReplaceOps);
+            this.plActions.Controls.Add(this.lBoxEnvironments);
+            this.plActions.Controls.Add(this.lbCategoryddd);
+            this.plActions.Location = new System.Drawing.Point(372, 369);
+            this.plActions.Name = "plActions";
+            this.plActions.Size = new System.Drawing.Size(773, 499);
+            this.plActions.TabIndex = 32;
+            // 
             // lbReplaceRightClickToEdit
             // 
             this.lbReplaceRightClickToEdit.AutoSize = true;
@@ -160,16 +350,6 @@ namespace SIL.AllomorphGenerator
             this.btnEnvironments.Text = "Edit";
             this.btnEnvironments.UseVisualStyleBackColor = true;
             this.btnEnvironments.Click += new System.EventHandler(this.btnEnvironments_Click);
-            // 
-            // btnMorphTypes
-            // 
-            this.btnMorphTypes.Location = new System.Drawing.Point(534, 65);
-            this.btnMorphTypes.Name = "btnMorphTypes";
-            this.btnMorphTypes.Size = new System.Drawing.Size(59, 28);
-            this.btnMorphTypes.TabIndex = 25;
-            this.btnMorphTypes.Text = "Edit";
-            this.btnMorphTypes.UseVisualStyleBackColor = true;
-            this.btnMorphTypes.Click += new System.EventHandler(this.btnMorphTypes_Click);
             // 
             // lbReplaceOps
             // 
@@ -236,35 +416,6 @@ namespace SIL.AllomorphGenerator
             this.lbInflectionFeatures.TabIndex = 18;
             this.lbInflectionFeatures.Text = "Inflection Features";
             // 
-            // btnCategory
-            // 
-            this.btnCategory.Location = new System.Drawing.Point(711, 205);
-            this.btnCategory.Name = "btnCategory";
-            this.btnCategory.Size = new System.Drawing.Size(30, 28);
-            this.btnCategory.TabIndex = 17;
-            this.btnCategory.Text = "...";
-            this.btnCategory.UseVisualStyleBackColor = true;
-            this.btnCategory.Click += new System.EventHandler(this.btnCategory_Click);
-            // 
-            // tbCategory
-            // 
-            this.tbCategory.Location = new System.Drawing.Point(248, 207);
-            this.tbCategory.Multiline = true;
-            this.tbCategory.Name = "tbCategory";
-            this.tbCategory.ReadOnly = true;
-            this.tbCategory.Size = new System.Drawing.Size(425, 26);
-            this.tbCategory.TabIndex = 16;
-            this.tbCategory.Text = "Verb";
-            // 
-            // lbCategory
-            // 
-            this.lbCategory.AutoSize = true;
-            this.lbCategory.Location = new System.Drawing.Point(127, 207);
-            this.lbCategory.Name = "lbCategory";
-            this.lbCategory.Size = new System.Drawing.Size(73, 20);
-            this.lbCategory.TabIndex = 15;
-            this.lbCategory.Text = "Category";
-            // 
             // lBoxReplaceOps
             // 
             this.lBoxReplaceOps.FormattingEnabled = true;
@@ -274,16 +425,6 @@ namespace SIL.AllomorphGenerator
             this.lBoxReplaceOps.Size = new System.Drawing.Size(625, 184);
             this.lBoxReplaceOps.TabIndex = 14;
             this.lBoxReplaceOps.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxReplaceOps_MouseUp);
-            // 
-            // cbRegEx
-            // 
-            this.cbRegEx.AutoSize = true;
-            this.cbRegEx.Location = new System.Drawing.Point(467, 14);
-            this.cbRegEx.Name = "cbRegEx";
-            this.cbRegEx.Size = new System.Drawing.Size(171, 24);
-            this.cbRegEx.TabIndex = 13;
-            this.cbRegEx.Text = "Regular expression";
-            this.cbRegEx.UseVisualStyleBackColor = true;
             // 
             // lBoxEnvironments
             // 
@@ -295,17 +436,6 @@ namespace SIL.AllomorphGenerator
             this.lBoxEnvironments.Size = new System.Drawing.Size(309, 124);
             this.lBoxEnvironments.TabIndex = 12;
             // 
-            // lBoxMorphTypes
-            // 
-            this.lBoxMorphTypes.Enabled = false;
-            this.lBoxMorphTypes.FormattingEnabled = true;
-            this.lBoxMorphTypes.ItemHeight = 20;
-            this.lBoxMorphTypes.Location = new System.Drawing.Point(248, 65);
-            this.lBoxMorphTypes.Name = "lBoxMorphTypes";
-            this.lBoxMorphTypes.Size = new System.Drawing.Size(264, 124);
-            this.lBoxMorphTypes.Sorted = true;
-            this.lBoxMorphTypes.TabIndex = 11;
-            // 
             // lbCategoryddd
             // 
             this.lbCategoryddd.AutoSize = true;
@@ -314,98 +444,6 @@ namespace SIL.AllomorphGenerator
             this.lbCategoryddd.Size = new System.Drawing.Size(106, 20);
             this.lbCategoryddd.TabIndex = 10;
             this.lbCategoryddd.Text = "Environments";
-            // 
-            // lbMorphTypes
-            // 
-            this.lbMorphTypes.AutoSize = true;
-            this.lbMorphTypes.Location = new System.Drawing.Point(127, 65);
-            this.lbMorphTypes.Name = "lbMorphTypes";
-            this.lbMorphTypes.Size = new System.Drawing.Size(100, 20);
-            this.lbMorphTypes.TabIndex = 9;
-            this.lbMorphTypes.Text = "Morph Types";
-            // 
-            // tbMatch
-            // 
-            this.tbMatch.Location = new System.Drawing.Point(222, 13);
-            this.tbMatch.Name = "tbMatch";
-            this.tbMatch.Size = new System.Drawing.Size(204, 26);
-            this.tbMatch.TabIndex = 8;
-            this.tbMatch.Text = "My match";
-            // 
-            // lbMatch
-            // 
-            this.lbMatch.AutoSize = true;
-            this.lbMatch.Location = new System.Drawing.Point(127, 13);
-            this.lbMatch.Name = "lbMatch";
-            this.lbMatch.Size = new System.Drawing.Size(53, 20);
-            this.lbMatch.TabIndex = 7;
-            this.lbMatch.Text = "Match";
-            // 
-            // lbPattern
-            // 
-            this.lbPattern.AutoSize = true;
-            this.lbPattern.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbPattern.Location = new System.Drawing.Point(376, 100);
-            this.lbPattern.Name = "lbPattern";
-            this.lbPattern.Size = new System.Drawing.Size(68, 20);
-            this.lbPattern.TabIndex = 4;
-            this.lbPattern.Text = "Pattern";
-            // 
-            // lBoxOperations
-            // 
-            this.lBoxOperations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.lBoxOperations.FormattingEnabled = true;
-            this.lBoxOperations.ItemHeight = 20;
-            this.lBoxOperations.Location = new System.Drawing.Point(3, 63);
-            this.lBoxOperations.Name = "lBoxOperations";
-            this.lBoxOperations.Size = new System.Drawing.Size(355, 864);
-            this.lBoxOperations.TabIndex = 0;
-            this.lBoxOperations.SelectedIndexChanged += new System.EventHandler(this.lBoxOperations_SelectedIndexChanged);
-            this.lBoxOperations.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxOperations_MouseUp);
-            // 
-            // lbName
-            // 
-            this.lbName.Location = new System.Drawing.Point(364, 6);
-            this.lbName.Name = "lbName";
-            this.lbName.Size = new System.Drawing.Size(89, 26);
-            this.lbName.TabIndex = 0;
-            this.lbName.Text = "Name";
-            // 
-            // lbDescription
-            // 
-            this.lbDescription.Location = new System.Drawing.Point(364, 48);
-            this.lbDescription.Name = "lbDescription";
-            this.lbDescription.Size = new System.Drawing.Size(89, 20);
-            this.lbDescription.TabIndex = 1;
-            this.lbDescription.Text = "Description";
-            // 
-            // tbName
-            // 
-            this.tbName.Location = new System.Drawing.Point(497, 3);
-            this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(648, 26);
-            this.tbName.TabIndex = 2;
-            this.tbName.Text = "My name";
-            this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
-            // 
-            // tbDescription
-            // 
-            this.tbDescription.Location = new System.Drawing.Point(497, 42);
-            this.tbDescription.Name = "tbDescription";
-            this.tbDescription.Size = new System.Drawing.Size(648, 26);
-            this.tbDescription.TabIndex = 3;
-            this.tbDescription.Text = "My description";
-            // 
-            // lbAction
-            // 
-            this.lbAction.AutoSize = true;
-            this.lbAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbAction.Location = new System.Drawing.Point(380, 382);
-            this.lbAction.Name = "lbAction";
-            this.lbAction.Size = new System.Drawing.Size(69, 20);
-            this.lbAction.TabIndex = 6;
-            this.lbAction.Text = "Actions";
             // 
             // tabRunOps
             // 
@@ -452,43 +490,6 @@ namespace SIL.AllomorphGenerator
             this.btnHelp.TabIndex = 4;
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
-            // 
-            // plPattern
-            // 
-            this.plPattern.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.plPattern.Controls.Add(this.btnMorphTypes);
-            this.plPattern.Controls.Add(this.btnCategory);
-            this.plPattern.Controls.Add(this.tbCategory);
-            this.plPattern.Controls.Add(this.lbCategory);
-            this.plPattern.Controls.Add(this.cbRegEx);
-            this.plPattern.Controls.Add(this.lBoxMorphTypes);
-            this.plPattern.Controls.Add(this.lbMorphTypes);
-            this.plPattern.Controls.Add(this.tbMatch);
-            this.plPattern.Controls.Add(this.lbMatch);
-            this.plPattern.Location = new System.Drawing.Point(370, 87);
-            this.plPattern.Name = "plPattern";
-            this.plPattern.Size = new System.Drawing.Size(776, 255);
-            this.plPattern.TabIndex = 31;
-            // 
-            // plActions
-            // 
-            this.plActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.plActions.Controls.Add(this.lbReplaceRightClickToEdit);
-            this.plActions.Controls.Add(this.btnEnvironments);
-            this.plActions.Controls.Add(this.lbReplaceOps);
-            this.plActions.Controls.Add(this.btnStemName);
-            this.plActions.Controls.Add(this.tbStemName);
-            this.plActions.Controls.Add(this.lbStemName);
-            this.plActions.Controls.Add(this.btnInflectionFeatures);
-            this.plActions.Controls.Add(this.tbInflectionFeatures);
-            this.plActions.Controls.Add(this.lbInflectionFeatures);
-            this.plActions.Controls.Add(this.lBoxReplaceOps);
-            this.plActions.Controls.Add(this.lBoxEnvironments);
-            this.plActions.Controls.Add(this.lbCategoryddd);
-            this.plActions.Location = new System.Drawing.Point(372, 369);
-            this.plActions.Name = "plActions";
-            this.plActions.Size = new System.Drawing.Size(773, 499);
-            this.plActions.TabIndex = 32;
             // 
             // AlloGenForm
             // 
