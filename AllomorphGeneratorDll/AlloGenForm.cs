@@ -46,7 +46,8 @@ namespace SIL.AllomorphGenerator
         public string LastRootGlossSelection { get; set; }
         public int RetrievedLastOperation { get; set; }
 
-        private String OperationsFile { get; set; }
+        XmlBackEndProvider Provider { get; set; }
+        String OperationsFile { get; set; }
         AllomorphGenerators AlloGens { get; set; }
         List<Operation> Operations { get; set; }
         Operation Operation { get; set; }
@@ -65,6 +66,7 @@ namespace SIL.AllomorphGenerator
         const string cmMoveUp = "Move up";
         const string cmMoveDown = "Move down";
         const string cmDelete = "Delete";
+        const string cmDuplicate = "Duplicate";
 
         public AlloGenForm()
         {
@@ -72,9 +74,9 @@ namespace SIL.AllomorphGenerator
             try
             {
                 RememberFormState();
-                XmlBackEndProvider provider = new XmlBackEndProvider();
-                provider.LoadDataFromFile(OperationsFile);
-                AlloGens = provider.AlloGens;
+                Provider = new XmlBackEndProvider();
+                Provider.LoadDataFromFile(OperationsFile);
+                AlloGens = Provider.AlloGens;
                 if (AlloGens != null)
                 {
                     Operations = AlloGens.Operations;
@@ -114,8 +116,12 @@ namespace SIL.AllomorphGenerator
             ToolStripMenuItem deleteItem = new ToolStripMenuItem(cmDelete);
             deleteItem.Click += new EventHandler(DeleteContextMenu_Click);
             deleteItem.Name = cmDelete;
+            ToolStripMenuItem duplicateItem = new ToolStripMenuItem(cmDuplicate);
+            duplicateItem.Click += new EventHandler(DuplicateContextMenu_Click);
+            duplicateItem.Name = cmDuplicate;
             editContextMenu.Items.Add(editItem);
             editContextMenu.Items.Add("-");
+            editContextMenu.Items.Add(duplicateItem);
             editContextMenu.Items.Add(insertBefore);
             editContextMenu.Items.Add(insertAfter);
             editContextMenu.Items.Add("-");
@@ -291,6 +297,28 @@ namespace SIL.AllomorphGenerator
             }
         }
 
+        void DuplicateContextMenu_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmDuplicate)
+            {
+                int index = currentListBox.SelectedIndex + 1;
+                if (currentListBox.Name == "lBoxReplaceOps")
+                {
+                    Replace replace = new Replace();
+                    ReplaceOps.Insert(index, replace);
+                    currentListBox.Items.Insert(index, replace);
+                }
+                else
+                {
+                    Operation op = Operation.Duplicate();
+                    Operations.Insert(index, op);
+                    currentListBox.Items.Insert(index, op);
+                }
+            }
+
+        }
+
         private void RememberFormState()
         {
             regkey = Registry.CurrentUser.OpenSubKey(m_strRegKey);
@@ -322,7 +350,7 @@ namespace SIL.AllomorphGenerator
 
             LastDatabase = (string)regkey.GetValue(m_strLastDatabase);
             OperationsFile = LastOperationsFile = (string)regkey.GetValue(m_strLastOperationsFile);
-            RetrievedLastOperation = LastOperation = (int)regkey.GetValue(m_strLastOperation, 1);
+            RetrievedLastOperation = LastOperation = (int)regkey.GetValue(m_strLastOperation, 0);
 
         }
 
@@ -362,6 +390,7 @@ namespace SIL.AllomorphGenerator
         }
         private void OnFormClosing(object sender, EventArgs e)
         {
+            Provider.SaveDataToFile(OperationsFile);
             Console.WriteLine("form closing");
             SaveRegistryInfo();
         }
@@ -389,7 +418,7 @@ namespace SIL.AllomorphGenerator
             }
             // select last used operation, if any
             if (LastOperation < 0 || LastOperation >= Operations.Count)
-                LastOperation = 1;
+                LastOperation = 0;
             var selectedOperation = Operations[LastOperation];
             lBoxOperations.SetSelected(LastOperation, true);
         }
@@ -397,25 +426,28 @@ namespace SIL.AllomorphGenerator
         private void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
             Operation = lBoxOperations.SelectedItem as Operation;
-            LastOperation = lBoxOperations.SelectedIndex;
-            tbName.Text = Operation.Name;
-            tbDescription.Text = Operation.Description;
-            Pattern = Operation.Pattern;
-            tbMatch.Text = Pattern.Match;
-            cbRegEx.Checked = Pattern.MatchMode;
-            RefreshMorphTypesListBox();
-            if (Pattern.MorphTypes.Count > 0)
+            if (Operation != null)
             {
-                var selectedMorphType = Pattern.MorphTypes[0];
-            }
-            Category = Pattern.Category;
-            ActionOp = Operation.Action;
-            RefreshEnvironmentsListBox();
-            ReplaceOps = Operation.Action.ReplaceOps;
-            RefreshReplaceListBox();
-            if (ActionOp.ReplaceOps.Count > 0)
-            {
-                var selectedReplace = ActionOp.ReplaceOps[0];
+                LastOperation = lBoxOperations.SelectedIndex;
+                tbName.Text = Operation.Name;
+                tbDescription.Text = Operation.Description;
+                Pattern = Operation.Pattern;
+                tbMatch.Text = Pattern.Match;
+                cbRegEx.Checked = Pattern.MatchMode;
+                RefreshMorphTypesListBox();
+                if (Pattern.MorphTypes.Count > 0)
+                {
+                    var selectedMorphType = Pattern.MorphTypes[0];
+                }
+                Category = Pattern.Category;
+                ActionOp = Operation.Action;
+                RefreshEnvironmentsListBox();
+                ReplaceOps = Operation.Action.ReplaceOps;
+                RefreshReplaceListBox();
+                if (ActionOp.ReplaceOps.Count > 0)
+                {
+                    var selectedReplace = ActionOp.ReplaceOps[0];
+                }
             }
         }
 
@@ -579,6 +611,23 @@ namespace SIL.AllomorphGenerator
                     Pattern.MorphTypes.Clear();
                     Pattern.MorphTypes.AddRange(chooser.SelectedMorphTypes);
                     RefreshMorphTypesListBox();
+                }
+            }
+        }
+
+        private void tbName_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            if (tb != null)
+            {
+                Operation.Name = tb.Text;
+
+                int selectedOp = lBoxOperations.SelectedIndex;
+                if (selectedOp > -1)
+                {
+                    lBoxOperations.Items.Insert(selectedOp, Operation);
+                    lBoxOperations.Items.RemoveAt(selectedOp + 1);
+                    lBoxOperations.SelectedIndex = selectedOp;
                 }
             }
         }

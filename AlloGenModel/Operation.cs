@@ -17,6 +17,17 @@ namespace SIL.AlloGenModel
         public Pattern Pattern { get; set; } = new Pattern();
         public Action Action { get; set; } = new Action();
 
+        public Operation Duplicate()
+        {
+            Operation newOp = new Operation();
+            newOp.Action = Action;
+            newOp.Active = Active;
+            newOp.Description = Description;
+            newOp.Name = Name;
+            newOp.Pattern = Pattern;
+            return newOp;
+        }
+
         override public string ToString()
         {
             return Name;

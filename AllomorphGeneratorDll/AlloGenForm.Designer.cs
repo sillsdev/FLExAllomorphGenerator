@@ -389,6 +389,7 @@ namespace SIL.AllomorphGenerator
             this.tbName.Size = new System.Drawing.Size(625, 26);
             this.tbName.TabIndex = 2;
             this.tbName.Text = "My name";
+            this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
             // tbDescription
             // 
