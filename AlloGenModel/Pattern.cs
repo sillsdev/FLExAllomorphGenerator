@@ -19,9 +19,33 @@ namespace SIL.AlloGenModel
         public bool MatchMode { get; set; } = false;
         public List<MorphType> MorphTypes { get; set; }
         public Category Category { get; set; }
+
         public Pattern()
         {
             MorphTypes = new List<MorphType>();
+        }
+
+        public Pattern Duplicate()
+        {
+            var newPattern = new Pattern();
+            newPattern.Match = Match;
+            newPattern.MatchMode = MatchMode;
+            var newCat = new Category();
+            newCat.Active = Category.Active;
+            newCat.Guid = Category.Guid;
+            newCat.Name = Category.Name;
+            newPattern.Category = newCat;
+            var newMTs = new List<MorphType>();
+            foreach (MorphType mt in MorphTypes)
+            {
+                var newMT = new MorphType();
+                newMT.Active = mt.Active;
+                newMT.Guid = mt.Guid;
+                newMT.Name = mt.Name;
+                newMTs.Add(newMT);
+            }
+            newPattern.MorphTypes = newMTs;
+            return newPattern;
         }
     }
 }

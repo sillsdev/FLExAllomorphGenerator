@@ -273,6 +273,7 @@ namespace SIL.AllomorphGenerator
             this.cbRegEx.TabIndex = 13;
             this.cbRegEx.Text = "Regular expression";
             this.cbRegEx.UseVisualStyleBackColor = true;
+            this.cbRegEx.CheckedChanged += new System.EventHandler(this.cbRegEx_CheckedChanged);
             // 
             // lBoxMorphTypes
             // 

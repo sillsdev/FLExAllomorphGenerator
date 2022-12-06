@@ -29,6 +29,22 @@ namespace SIL.AlloGenModel
         [XmlAttribute("ame")]
         public bool Ame { get; set; } = true;
 
+        public Replace Duplicate()
+        {
+            Replace newReplace = new Replace();
+            newReplace.Ach = Ach;
+            newReplace.Ach = Ach;
+            newReplace.Acl = Acl;
+            newReplace.Akh = Akh;
+            newReplace.Akl = Akl;
+            newReplace.Ame = Ame;
+            newReplace.From = From;
+            newReplace.Mode = Mode;
+            newReplace.To = To;
+            newReplace.Active = Active;
+            return newReplace;
+        }
+
         override public string ToString()
         {
             StringBuilder sb = new StringBuilder();

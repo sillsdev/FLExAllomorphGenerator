@@ -311,7 +311,8 @@ namespace SIL.AllomorphGenerator
                 int index = currentListBox.SelectedIndex + 1;
                 if (currentListBox.Name == "lBoxReplaceOps")
                 {
-                    Replace replace = new Replace();
+                    Replace thisReplace = lBoxReplaceOps.SelectedItem as Replace;
+                    Replace replace = thisReplace.Duplicate();
                     ReplaceOps.Insert(index, replace);
                     currentListBox.Items.Insert(index, replace);
                 }
@@ -678,6 +679,11 @@ namespace SIL.AllomorphGenerator
             AlloGenForm.ActiveForm.Text = formTitle;
             if (ChangesMade)
                 AlloGenForm.ActiveForm.Text += "*";
+        }
+
+        private void cbRegEx_CheckedChanged(object sender, EventArgs e)
+        {
+            Pattern.MatchMode = ((CheckBox)sender).Checked;
         }
     }
 }

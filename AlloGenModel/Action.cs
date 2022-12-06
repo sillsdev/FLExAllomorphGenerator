@@ -23,5 +23,37 @@ namespace SIL.AlloGenModel
             Replace replace = new Replace();
             Environments = new List<Environment>();
         }
+
+        public Action Duplicate()
+        {
+            Action newAction = new Action();
+            List<Replace> newReplaceOps = new List<Replace>();
+            foreach (Replace rep in ReplaceOps)
+            {
+                newReplaceOps.Add(rep.Duplicate());
+            }
+            newAction.ReplaceOps = newReplaceOps;
+            List<Environment> newEnvironments = new List<Environment>();
+            foreach (Environment env in Environments)
+            {
+                var newEnv = new Environment();
+                newEnv.Active = env.Active;
+                newEnv.Guid = env.Guid;
+                newEnv.Name = env.Name;
+                newEnvironments.Add(newEnv);
+            }
+            newAction.Environments = newEnvironments;
+            var newIF = new InflectionFeature();
+            newIF.Active = InflectionFeatures.Active;
+            newIF.Guid = InflectionFeatures.Guid;
+            newIF.Name = InflectionFeatures.Name;
+            newAction.InflectionFeatures = newIF;
+            var newSN = new StemName();
+            newSN.Active = StemName.Active;
+            newSN.Guid = StemName.Guid;
+            newSN.Name = StemName.Name;
+            newAction.StemName = newSN;
+            return newAction;
+        }
     }
 }

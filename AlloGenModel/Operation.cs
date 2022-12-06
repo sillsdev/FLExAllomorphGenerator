@@ -20,11 +20,11 @@ namespace SIL.AlloGenModel
         public Operation Duplicate()
         {
             Operation newOp = new Operation();
-            newOp.Action = Action;
+            newOp.Action = Action.Duplicate();
             newOp.Active = Active;
             newOp.Description = Description;
             newOp.Name = Name;
-            newOp.Pattern = Pattern;
+            newOp.Pattern = Pattern.Duplicate();
             return newOp;
         }
 
