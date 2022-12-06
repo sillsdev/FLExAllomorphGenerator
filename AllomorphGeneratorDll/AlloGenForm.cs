@@ -403,7 +403,6 @@ namespace SIL.AllomorphGenerator
             Pattern = Operation.Pattern;
             tbMatch.Text = Pattern.Match;
             cbRegEx.Checked = Pattern.MatchMode;
-            //lBoxMorphTypes.DataSource = Pattern.MorphTypes;
             RefreshMorphTypesListBox();
             if (Pattern.MorphTypes.Count > 0)
             {
@@ -411,7 +410,7 @@ namespace SIL.AllomorphGenerator
             }
             Category = Pattern.Category;
             ActionOp = Operation.Action;
-            lBoxEnvironments.DataSource = ActionOp.Environments;
+            RefreshEnvironmentsListBox();
             ReplaceOps = Operation.Action.ReplaceOps;
             RefreshReplaceListBox();
             if (ActionOp.ReplaceOps.Count > 0)
@@ -438,6 +437,15 @@ namespace SIL.AllomorphGenerator
             foreach (MorphType item in Pattern.MorphTypes)
             {
                 lBoxMorphTypes.Items.Add(item);
+            }
+        }
+
+        private void RefreshEnvironmentsListBox()
+        {
+            lBoxEnvironments.Items.Clear();
+            foreach (AlloGenModel.Environment item in ActionOp.Environments)
+            {
+                lBoxEnvironments.Items.Add(item);
             }
         }
 
@@ -543,8 +551,19 @@ namespace SIL.AllomorphGenerator
 
         private void btnEnvironments_Click(object sender, EventArgs e)
         {
-            ILcmOwningSequence<IPhEnvironment> envs = Cache.LanguageProject.PhonologicalDataOA.EnvironmentsOS;
-            MessageBox.Show("envs count=" + envs.Count);
+            if (Cache != null)
+            {
+                EnvironmentsChooser chooser = new EnvironmentsChooser(Cache);
+                chooser.setSelected(ActionOp.Environments);
+                chooser.FillEnvironmentsListBox();
+                chooser.ShowDialog();
+                if (chooser.DialogResult == DialogResult.OK)
+                {
+                    ActionOp.Environments.Clear();
+                    ActionOp.Environments.AddRange(chooser.SelectedEnvironments);
+                    RefreshEnvironmentsListBox();
+                }
+            }
         }
 
         private void btnMorphTypes_Click(object sender, EventArgs e)
@@ -561,9 +580,7 @@ namespace SIL.AllomorphGenerator
                     Pattern.MorphTypes.AddRange(chooser.SelectedMorphTypes);
                     RefreshMorphTypesListBox();
                 }
-
             }
-
         }
     }
 }
