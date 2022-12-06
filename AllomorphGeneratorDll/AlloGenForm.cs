@@ -390,7 +390,6 @@ namespace SIL.AllomorphGenerator
         }
         private void OnFormClosing(object sender, EventArgs e)
         {
-            Provider.SaveDataToFile(OperationsFile);
             Console.WriteLine("form closing");
             SaveRegistryInfo();
         }
@@ -630,6 +629,11 @@ namespace SIL.AllomorphGenerator
                     lBoxOperations.SelectedIndex = selectedOp;
                 }
             }
+        }
+
+        private void btnSaveChanges_Click(object sender, EventArgs e)
+        {
+            Provider.SaveDataToFile(OperationsFile);
         }
     }
 }

@@ -68,6 +68,7 @@ namespace SIL.AllomorphGenerator
             this.tbFile = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.btnSaveChanges = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.SuspendLayout();
@@ -87,6 +88,7 @@ namespace SIL.AllomorphGenerator
             // 
             // tabEditOps
             // 
+            this.tabEditOps.Controls.Add(this.btnSaveChanges);
             this.tabEditOps.Controls.Add(this.lbOpRightClickToEdit);
             this.tabEditOps.Controls.Add(this.lbOperations);
             this.tabEditOps.Controls.Add(this.lbReplaceRightClickToEdit);
@@ -148,7 +150,7 @@ namespace SIL.AllomorphGenerator
             // 
             this.lbReplaceRightClickToEdit.AutoSize = true;
             this.lbReplaceRightClickToEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbReplaceRightClickToEdit.Location = new System.Drawing.Point(677, 394);
+            this.lbReplaceRightClickToEdit.Location = new System.Drawing.Point(677, 356);
             this.lbReplaceRightClickToEdit.Name = "lbReplaceRightClickToEdit";
             this.lbReplaceRightClickToEdit.Size = new System.Drawing.Size(140, 20);
             this.lbReplaceRightClickToEdit.TabIndex = 27;
@@ -156,28 +158,28 @@ namespace SIL.AllomorphGenerator
             // 
             // btnEnvironments
             // 
-            this.btnEnvironments.Location = new System.Drawing.Point(621, 628);
+            this.btnEnvironments.Location = new System.Drawing.Point(970, 632);
             this.btnEnvironments.Name = "btnEnvironments";
-            this.btnEnvironments.Size = new System.Drawing.Size(30, 28);
+            this.btnEnvironments.Size = new System.Drawing.Size(50, 31);
             this.btnEnvironments.TabIndex = 26;
-            this.btnEnvironments.Text = "...";
+            this.btnEnvironments.Text = "Edit";
             this.btnEnvironments.UseVisualStyleBackColor = true;
             this.btnEnvironments.Click += new System.EventHandler(this.btnEnvironments_Click);
             // 
             // btnMorphTypes
             // 
-            this.btnMorphTypes.Location = new System.Drawing.Point(605, 131);
+            this.btnMorphTypes.Location = new System.Drawing.Point(904, 137);
             this.btnMorphTypes.Name = "btnMorphTypes";
-            this.btnMorphTypes.Size = new System.Drawing.Size(30, 28);
+            this.btnMorphTypes.Size = new System.Drawing.Size(59, 28);
             this.btnMorphTypes.TabIndex = 25;
-            this.btnMorphTypes.Text = "...";
+            this.btnMorphTypes.Text = "Edit";
             this.btnMorphTypes.UseVisualStyleBackColor = true;
             this.btnMorphTypes.Click += new System.EventHandler(this.btnMorphTypes_Click);
             // 
             // lbReplaceOps
             // 
             this.lbReplaceOps.AutoSize = true;
-            this.lbReplaceOps.Location = new System.Drawing.Point(497, 395);
+            this.lbReplaceOps.Location = new System.Drawing.Point(497, 357);
             this.lbReplaceOps.Name = "lbReplaceOps";
             this.lbReplaceOps.Size = new System.Drawing.Size(147, 20);
             this.lbReplaceOps.TabIndex = 24;
@@ -185,7 +187,7 @@ namespace SIL.AllomorphGenerator
             // 
             // btnStemName
             // 
-            this.btnStemName.Location = new System.Drawing.Point(1092, 888);
+            this.btnStemName.Location = new System.Drawing.Point(1092, 850);
             this.btnStemName.Name = "btnStemName";
             this.btnStemName.Size = new System.Drawing.Size(30, 28);
             this.btnStemName.TabIndex = 23;
@@ -195,7 +197,7 @@ namespace SIL.AllomorphGenerator
             // 
             // tbStemName
             // 
-            this.tbStemName.Location = new System.Drawing.Point(660, 888);
+            this.tbStemName.Location = new System.Drawing.Point(660, 850);
             this.tbStemName.Name = "tbStemName";
             this.tbStemName.ReadOnly = true;
             this.tbStemName.Size = new System.Drawing.Size(425, 26);
@@ -205,7 +207,7 @@ namespace SIL.AllomorphGenerator
             // lbStemName
             // 
             this.lbStemName.AutoSize = true;
-            this.lbStemName.Location = new System.Drawing.Point(493, 888);
+            this.lbStemName.Location = new System.Drawing.Point(493, 850);
             this.lbStemName.Name = "lbStemName";
             this.lbStemName.Size = new System.Drawing.Size(91, 20);
             this.lbStemName.TabIndex = 21;
@@ -213,7 +215,7 @@ namespace SIL.AllomorphGenerator
             // 
             // btnInflectionFeatures
             // 
-            this.btnInflectionFeatures.Location = new System.Drawing.Point(1092, 830);
+            this.btnInflectionFeatures.Location = new System.Drawing.Point(1092, 805);
             this.btnInflectionFeatures.Name = "btnInflectionFeatures";
             this.btnInflectionFeatures.Size = new System.Drawing.Size(30, 28);
             this.btnInflectionFeatures.TabIndex = 20;
@@ -223,7 +225,7 @@ namespace SIL.AllomorphGenerator
             // 
             // tbInflectionFeatures
             // 
-            this.tbInflectionFeatures.Location = new System.Drawing.Point(660, 830);
+            this.tbInflectionFeatures.Location = new System.Drawing.Point(660, 805);
             this.tbInflectionFeatures.Name = "tbInflectionFeatures";
             this.tbInflectionFeatures.ReadOnly = true;
             this.tbInflectionFeatures.Size = new System.Drawing.Size(425, 26);
@@ -233,7 +235,7 @@ namespace SIL.AllomorphGenerator
             // lbInflectionFeatures
             // 
             this.lbInflectionFeatures.AutoSize = true;
-            this.lbInflectionFeatures.Location = new System.Drawing.Point(493, 830);
+            this.lbInflectionFeatures.Location = new System.Drawing.Point(493, 805);
             this.lbInflectionFeatures.Name = "lbInflectionFeatures";
             this.lbInflectionFeatures.Size = new System.Drawing.Size(142, 20);
             this.lbInflectionFeatures.TabIndex = 18;
@@ -241,7 +243,7 @@ namespace SIL.AllomorphGenerator
             // 
             // btnCategory
             // 
-            this.btnCategory.Location = new System.Drawing.Point(1091, 315);
+            this.btnCategory.Location = new System.Drawing.Point(1081, 277);
             this.btnCategory.Name = "btnCategory";
             this.btnCategory.Size = new System.Drawing.Size(30, 28);
             this.btnCategory.TabIndex = 17;
@@ -251,7 +253,7 @@ namespace SIL.AllomorphGenerator
             // 
             // tbCategory
             // 
-            this.tbCategory.Location = new System.Drawing.Point(660, 317);
+            this.tbCategory.Location = new System.Drawing.Point(618, 279);
             this.tbCategory.Multiline = true;
             this.tbCategory.Name = "tbCategory";
             this.tbCategory.ReadOnly = true;
@@ -262,7 +264,7 @@ namespace SIL.AllomorphGenerator
             // lbCategory
             // 
             this.lbCategory.AutoSize = true;
-            this.lbCategory.Location = new System.Drawing.Point(497, 317);
+            this.lbCategory.Location = new System.Drawing.Point(497, 279);
             this.lbCategory.Name = "lbCategory";
             this.lbCategory.Size = new System.Drawing.Size(73, 20);
             this.lbCategory.TabIndex = 15;
@@ -272,7 +274,7 @@ namespace SIL.AllomorphGenerator
             // 
             this.lBoxReplaceOps.FormattingEnabled = true;
             this.lBoxReplaceOps.ItemHeight = 20;
-            this.lBoxReplaceOps.Location = new System.Drawing.Point(497, 421);
+            this.lBoxReplaceOps.Location = new System.Drawing.Point(497, 383);
             this.lBoxReplaceOps.Name = "lBoxReplaceOps";
             this.lBoxReplaceOps.Size = new System.Drawing.Size(625, 184);
             this.lBoxReplaceOps.TabIndex = 14;
@@ -293,7 +295,7 @@ namespace SIL.AllomorphGenerator
             this.lBoxEnvironments.Enabled = false;
             this.lBoxEnvironments.FormattingEnabled = true;
             this.lBoxEnvironments.ItemHeight = 20;
-            this.lBoxEnvironments.Location = new System.Drawing.Point(507, 672);
+            this.lBoxEnvironments.Location = new System.Drawing.Point(637, 632);
             this.lBoxEnvironments.Name = "lBoxEnvironments";
             this.lBoxEnvironments.Size = new System.Drawing.Size(309, 124);
             this.lBoxEnvironments.TabIndex = 12;
@@ -303,7 +305,7 @@ namespace SIL.AllomorphGenerator
             this.lBoxMorphTypes.Enabled = false;
             this.lBoxMorphTypes.FormattingEnabled = true;
             this.lBoxMorphTypes.ItemHeight = 20;
-            this.lBoxMorphTypes.Location = new System.Drawing.Point(497, 175);
+            this.lBoxMorphTypes.Location = new System.Drawing.Point(618, 137);
             this.lBoxMorphTypes.Name = "lBoxMorphTypes";
             this.lBoxMorphTypes.Size = new System.Drawing.Size(264, 124);
             this.lBoxMorphTypes.Sorted = true;
@@ -312,7 +314,7 @@ namespace SIL.AllomorphGenerator
             // lbCategoryddd
             // 
             this.lbCategoryddd.AutoSize = true;
-            this.lbCategoryddd.Location = new System.Drawing.Point(503, 636);
+            this.lbCategoryddd.Location = new System.Drawing.Point(497, 632);
             this.lbCategoryddd.Name = "lbCategoryddd";
             this.lbCategoryddd.Size = new System.Drawing.Size(106, 20);
             this.lbCategoryddd.TabIndex = 10;
@@ -321,7 +323,7 @@ namespace SIL.AllomorphGenerator
             // lbMorphTypes
             // 
             this.lbMorphTypes.AutoSize = true;
-            this.lbMorphTypes.Location = new System.Drawing.Point(497, 139);
+            this.lbMorphTypes.Location = new System.Drawing.Point(497, 137);
             this.lbMorphTypes.Name = "lbMorphTypes";
             this.lbMorphTypes.Size = new System.Drawing.Size(100, 20);
             this.lbMorphTypes.TabIndex = 9;
@@ -376,7 +378,7 @@ namespace SIL.AllomorphGenerator
             // 
             // lbDescription
             // 
-            this.lbDescription.Location = new System.Drawing.Point(364, 43);
+            this.lbDescription.Location = new System.Drawing.Point(364, 48);
             this.lbDescription.Name = "lbDescription";
             this.lbDescription.Size = new System.Drawing.Size(89, 20);
             this.lbDescription.TabIndex = 1;
@@ -393,7 +395,7 @@ namespace SIL.AllomorphGenerator
             // 
             // tbDescription
             // 
-            this.tbDescription.Location = new System.Drawing.Point(497, 37);
+            this.tbDescription.Location = new System.Drawing.Point(497, 42);
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.Size = new System.Drawing.Size(625, 26);
             this.tbDescription.TabIndex = 3;
@@ -453,6 +455,16 @@ namespace SIL.AllomorphGenerator
             this.btnHelp.TabIndex = 4;
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveChanges
+            // 
+            this.btnSaveChanges.Location = new System.Drawing.Point(507, 892);
+            this.btnSaveChanges.Name = "btnSaveChanges";
+            this.btnSaveChanges.Size = new System.Drawing.Size(130, 34);
+            this.btnSaveChanges.TabIndex = 30;
+            this.btnSaveChanges.Text = "Save Changes";
+            this.btnSaveChanges.UseVisualStyleBackColor = true;
+            this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
             // 
             // AlloGenForm
             // 
@@ -515,6 +527,7 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Label lbReplaceRightClickToEdit;
         private System.Windows.Forms.Label lbOpRightClickToEdit;
         private System.Windows.Forms.Label lbOperations;
+        private System.Windows.Forms.Button btnSaveChanges;
     }
 }
 
