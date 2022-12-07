@@ -68,6 +68,7 @@ namespace SIL.AllomorphGenerator
             this.tbFile = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.btnNewFile = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.plPattern.SuspendLayout();
@@ -460,11 +461,22 @@ namespace SIL.AllomorphGenerator
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             // 
+            // btnNewFile
+            // 
+            this.btnNewFile.Location = new System.Drawing.Point(27, 61);
+            this.btnNewFile.Name = "btnNewFile";
+            this.btnNewFile.Size = new System.Drawing.Size(149, 30);
+            this.btnNewFile.TabIndex = 5;
+            this.btnNewFile.Text = "Create New File";
+            this.btnNewFile.UseVisualStyleBackColor = true;
+            this.btnNewFile.Click += new System.EventHandler(this.btnNewFile_Click);
+            // 
             // AlloGenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1289, 1083);
+            this.Controls.Add(this.btnNewFile);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.tbFile);
@@ -525,6 +537,7 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Button btnSaveChanges;
         private System.Windows.Forms.Panel plPattern;
         private System.Windows.Forms.Panel plActions;
+        private System.Windows.Forms.Button btnNewFile;
     }
 }
 

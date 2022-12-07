@@ -396,6 +396,12 @@ namespace SIL.AllomorphGenerator
         }
         private void OnFormClosing(object sender, EventArgs e)
         {
+            SaveAnyChanges();
+            SaveRegistryInfo();
+        }
+
+        private void SaveAnyChanges()
+        {
             if (ChangesMade)
             {
                 DialogResult res = MessageBox.Show("Changes have been made.  Do you want to save them?", "Changes made", MessageBoxButtons.YesNo,
@@ -405,8 +411,8 @@ namespace SIL.AllomorphGenerator
                     Provider.SaveDataToFile(OperationsFile);
                 }
             }
-            SaveRegistryInfo();
         }
+
         protected override void OnMove(EventArgs ea)
         {
             base.OnMove(ea);
@@ -680,6 +686,27 @@ namespace SIL.AllomorphGenerator
         private void cbRegEx_CheckedChanged(object sender, EventArgs e)
         {
             Pattern.MatchMode = ((CheckBox)sender).Checked;
+        }
+
+        private void btnNewFile_Click(object sender, EventArgs e)
+        {
+            SaveAnyChanges();
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "Allomorph Generator Operations File (*.agf)|*.agf|" +
+            "All Files (*.*)|*.*";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                OperationsFile = dlg.FileName;
+                LastOperationsFile = OperationsFile;
+                tbFile.Text = OperationsFile;
+                AlloGens = new AllomorphGenerators();
+                Operations = AlloGens.Operations;
+                //MessageBox.Show("Operation count=" + Operations.Count);
+                Operation op = new Operation();
+                Operations.Add(op);
+                FillOperationsListBox();
+            }
+
         }
     }
 }
