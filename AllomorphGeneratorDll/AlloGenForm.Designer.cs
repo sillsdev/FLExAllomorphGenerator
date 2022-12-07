@@ -460,6 +460,7 @@ namespace SIL.AllomorphGenerator
             this.btnHelp.TabIndex = 4;
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // btnNewFile
             // 

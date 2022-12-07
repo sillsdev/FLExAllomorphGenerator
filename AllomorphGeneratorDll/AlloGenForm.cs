@@ -38,6 +38,10 @@ namespace SIL.AllomorphGenerator
         const string m_strSizeWidth = "SizeWidth";
         const string m_strWindowState = "WindowState";
 
+        private ContextMenuStrip helpContextMenu;
+        const string UserDocumentation = "User Documentation";
+        const string About = "About";
+
         public Rectangle RectNormal { get; set; }
 
         public string LastDatabase { get; set; }
@@ -84,6 +88,7 @@ namespace SIL.AllomorphGenerator
                 }
                 FillOperationsListBox();
                 BuildReplaceContextMenu();
+                BuildHelpContextMenu();
                 lBoxMorphTypes.ClearSelected();
                 lBoxEnvironments.ClearSelected();
             }
@@ -130,6 +135,20 @@ namespace SIL.AllomorphGenerator
             editContextMenu.Items.Add(moveDown);
             editContextMenu.Items.Add("-");
             editContextMenu.Items.Add(deleteItem);
+        }
+
+        private void BuildHelpContextMenu()
+        {
+            helpContextMenu = new ContextMenuStrip();
+            ToolStripMenuItem userDoc = new ToolStripMenuItem(UserDocumentation);
+            userDoc.Click += new EventHandler(UserDoc_Click);
+            userDoc.Name = UserDocumentation;
+            ToolStripMenuItem about = new ToolStripMenuItem(About);
+            about.Click += new EventHandler(About_Click);
+            about.Name = About;
+            helpContextMenu.Items.Add(userDoc);
+            helpContextMenu.Items.Add("-");
+            helpContextMenu.Items.Add(about);
         }
 
         private void lBoxReplaceOps_MouseUp(object sender, MouseEventArgs e)
@@ -707,6 +726,39 @@ namespace SIL.AllomorphGenerator
                 FillOperationsListBox();
             }
 
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            Button btnSender = (Button)sender;
+            Point ptLowerLeft = new Point(0, btnSender.Height);
+            ptLowerLeft = btnSender.PointToScreen(ptLowerLeft);
+            helpContextMenu.Show(ptLowerLeft);
+        }
+
+		void About_Click(object sender, EventArgs e)
+		{
+			ToolStripItem menuItem = (ToolStripItem)sender;
+			if (menuItem.Name == About)
+			{
+				var dialog = new AboutBox();
+				// for some reason the following is needed to keep the dialog within the form
+				Point pt = dialog.PointToClient(System.Windows.Forms.Cursor.Position);
+				dialog.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
+				Console.WriteLine("dialog result=" + dialog.Location.X + "," + dialog.Location.Y);
+				dialog.Show();
+			}
+		}
+
+        void UserDoc_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == UserDocumentation)
+            {
+                //String basedir = GetAppBaseDir();
+                //Process.Start(Path.Combine(basedir, "doc", "UserDocumentation.pdf"));
+                MessageBox.Show("Sorry, the user documentation is not yet available.");
+            }
         }
     }
 }
