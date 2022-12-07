@@ -2,6 +2,7 @@
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
+using SIL.AlloGenModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,22 +17,25 @@ namespace SIL.AllomorphGenerator
 {
     public partial class StemNameChooser : Form
     {
-        public List<string> StemNames { get; set; }
-        public string SelectedStemName { get; set; } = "";
+        public List<StemName> StemNames { get; set; }
+        public StemName SelectedStemName { get; set; } = new StemName();
 
         public StemNameChooser()
         {
-            StemNames = new List<string>();
+            StemNames = new List<StemName>();
             InitializeComponent();
-            lBoxStemNames.Sorted = true;
+            FillStemNamesListBox();
         }
 
         public void FillStemNamesListBox()
         {
-            foreach (string stemName in StemNames)
+            lBoxStemNames.BeginUpdate();
+            lBoxStemNames.Items.Clear();
+            foreach (StemName stemName in StemNames)
             {
                 lBoxStemNames.Items.Add(stemName);
             }
+            lBoxStemNames.EndUpdate();
         }
 
         public void SelectStemName(int index)
@@ -44,7 +48,7 @@ namespace SIL.AllomorphGenerator
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            SelectedStemName = (string)lBoxStemNames.SelectedItem;
+            SelectedStemName = (StemName)lBoxStemNames.SelectedItem;
         }
 
     }

@@ -2,6 +2,7 @@
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
+using SIL.AlloGenModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,24 +17,25 @@ namespace SIL.AllomorphGenerator
 {
     public partial class CategoryChooser : Form
     {
-        public List<string> Categories { get; set; }
-        public string SelectedCategory { get; set; } = "";
+        public List<Category> Categories { get; set; }
+        public Category SelectedCategory { get; set; } = new Category();
 
         public CategoryChooser()
         {
-            Categories = new List<string>();
+            Categories = new List<Category>();
             InitializeComponent();
-            lBoxCategories.Sorted = true;
             FillCategoriesListBox();
         }
 
         public void FillCategoriesListBox()
         {
+            lBoxCategories.BeginUpdate();
             lBoxCategories.Items.Clear();
-            foreach (string category in Categories)
+            foreach (Category category in Categories)
             {
                 lBoxCategories.Items.Add(category);
             }
+            lBoxCategories.EndUpdate();
         }
 
         public void SelectCategory(int index)
@@ -46,7 +48,7 @@ namespace SIL.AllomorphGenerator
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            SelectedCategory = (string)lBoxCategories.SelectedItem;
+            SelectedCategory = (Category)lBoxCategories.SelectedItem;
         }
 
     }

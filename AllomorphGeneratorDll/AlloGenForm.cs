@@ -498,25 +498,32 @@ namespace SIL.AllomorphGenerator
         {
             if (Cache != null)
             {
-                ISet<ICmPossibility> allPoses = Cache.LanguageProject.PartsOfSpeechOA.ReallyReallyAllPossibilities;
+                var allPoses = Cache.LanguageProject.PartsOfSpeechOA.ReallyReallyAllPossibilities
+                    .OrderBy(pos => pos.Name.BestAnalysisAlternative.Text);
 
                 CategoryChooser chooser = new CategoryChooser();
                 foreach (ICmPossibility pos in allPoses)
                 {
-                    chooser.Categories.Add(pos.Name.BestAnalysisAlternative.Text);
+                    Category cat = new Category();
+                    cat.Name = pos.Name.BestAnalysisAlternative.Text;
+                    cat.Guid = pos.Guid.ToString();
+                    chooser.Categories.Add(cat);
                 }
                 chooser.FillCategoriesListBox();
                 Category = Pattern.Category;
                 if (Category.Name.Length > 0)
                 {
-                    int index = chooser.Categories.IndexOf(Category.Name);
+                    var catFound = chooser.Categories.FirstOrDefault(cat => cat.Name == Category.Name);
+                    int index = chooser.Categories.IndexOf(catFound);
                     if (index > -1)
                         chooser.SelectCategory(index);
                 }
                 chooser.ShowDialog();
                 if (chooser.DialogResult == DialogResult.OK)
                 {
-                    Category.Name = chooser.SelectedCategory;
+                    Category cat = chooser.SelectedCategory;
+                    Category.Name = cat.Name;
+                    Category.Guid = new Guid(cat.Guid).ToString();
                     tbCategory.Text = Category.Name;
                     MarkAsChanged();
                 }
@@ -526,32 +533,43 @@ namespace SIL.AllomorphGenerator
 
         private void btnStemName_Click(object sender, EventArgs e)
         {
-            IPartOfSpeech pos = GetPartOfSpeechToUse("Verb");
-            StemNameChooser chooser = new StemNameChooser();
-            foreach (IMoStemName sn in pos.StemNamesOC)
+            IPartOfSpeech pos = GetPartOfSpeechToUse(Pattern.Category.Guid);
+            if (pos == null)
             {
-                chooser.StemNames.Add(sn.Name.BestAnalysisAlternative.Text);
+                MessageBox.Show("The category '" + Pattern.Category.Name + "' was not found in the FLEx database");
+                return;
+            }
+            StemNameChooser chooser = new StemNameChooser();
+            foreach (IMoStemName msn in pos.AllStemNames.OrderBy(sn => sn.Name.BestAnalysisAlternative.Text))
+            {
+                StemName stemName = new StemName();
+                stemName.Name = msn.Name.BestAnalysisAlternative.Text;
+                stemName.Guid = msn.Guid.ToString();
+                chooser.StemNames.Add(stemName);
             }
             chooser.FillStemNamesListBox();
             StemName = ActionOp.StemName;
             if (StemName.Name.Length > 0)
             {
-                int index = chooser.StemNames.IndexOf(StemName.Name);
+                var snFound = chooser.StemNames.FirstOrDefault(sn => sn.Name == StemName.Name);
+                int index = chooser.StemNames.IndexOf(snFound);
                 if (index > -1)
                     chooser.SelectStemName(index);
             }
             chooser.ShowDialog();
             if (chooser.DialogResult == DialogResult.OK)
             {
-                StemName.Name = chooser.SelectedStemName;
+                StemName sn = chooser.SelectedStemName;
+                StemName.Name = sn.Name;
+                StemName.Guid = new Guid(sn.Guid).ToString();
                 tbStemName.Text = StemName.Name;
                 MarkAsChanged();
             }
         }
 
-        private IPartOfSpeech GetPartOfSpeechToUse(string posName)
+        private IPartOfSpeech GetPartOfSpeechToUse(string poaGuid)
         {
-            IPartOfSpeech pos = (IPartOfSpeech)Cache.LangProject.PartsOfSpeechOA.PossibilitiesOS.FirstOrDefault(p => p.Name.BestAnalysisAlternative.Text == posName);
+            IPartOfSpeech pos = (IPartOfSpeech)Cache.LangProject.PartsOfSpeechOA.ReallyReallyAllPossibilities.FirstOrDefault(p => p.Guid.ToString() == poaGuid);
             return pos;
 
         }
