@@ -511,19 +511,29 @@ namespace SIL.AllomorphGenerator
                 }
                 chooser.FillCategoriesListBox();
                 Category = Pattern.Category;
-                if (Category.Name.Length > 0)
+                if (Category.Name != null)
                 {
                     var catFound = chooser.Categories.FirstOrDefault(cat => cat.Name == Category.Name);
                     int index = chooser.Categories.IndexOf(catFound);
                     if (index > -1)
                         chooser.SelectCategory(index);
+                    else
+                        chooser.SelectCategory(chooser.Categories.Count);
                 }
                 chooser.ShowDialog();
                 if (chooser.DialogResult == DialogResult.OK)
                 {
                     Category cat = chooser.SelectedCategory;
-                    Category.Name = cat.Name;
-                    Category.Guid = new Guid(cat.Guid).ToString();
+                    if (cat == chooser.NoneChosen)
+                    {
+                        Category.Name = "";
+                        Category.Guid = "";
+                    }
+                    else
+                    {
+                        Category.Name = cat.Name;
+                        Category.Guid = new Guid(cat.Guid).ToString();
+                    }
                     tbCategory.Text = Category.Name;
                     MarkAsChanged();
                 }
@@ -549,19 +559,29 @@ namespace SIL.AllomorphGenerator
             }
             chooser.FillStemNamesListBox();
             StemName = ActionOp.StemName;
-            if (StemName.Name.Length > 0)
+            if (StemName.Name != null)
             {
                 var snFound = chooser.StemNames.FirstOrDefault(sn => sn.Name == StemName.Name);
                 int index = chooser.StemNames.IndexOf(snFound);
                 if (index > -1)
                     chooser.SelectStemName(index);
+                else
+                    chooser.SelectStemName(chooser.StemNames.Count);
             }
             chooser.ShowDialog();
             if (chooser.DialogResult == DialogResult.OK)
             {
                 StemName sn = chooser.SelectedStemName;
-                StemName.Name = sn.Name;
-                StemName.Guid = new Guid(sn.Guid).ToString();
+                if (sn == chooser.NoneChosen)
+                {
+                    StemName.Name = "";
+                    StemName.Guid = "";
+                }
+                else
+                {
+                    StemName.Name = sn.Name;
+                    StemName.Guid = new Guid(sn.Guid).ToString();
+                }
                 tbStemName.Text = StemName.Name;
                 MarkAsChanged();
             }

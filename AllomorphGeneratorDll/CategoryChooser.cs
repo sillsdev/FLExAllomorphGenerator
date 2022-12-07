@@ -19,10 +19,13 @@ namespace SIL.AllomorphGenerator
     {
         public List<Category> Categories { get; set; }
         public Category SelectedCategory { get; set; } = new Category();
+        public Category NoneChosen { get; set; } = new Category();
 
         public CategoryChooser()
         {
             Categories = new List<Category>();
+            NoneChosen.Name = "<None>";
+            NoneChosen.Guid = "";
             InitializeComponent();
             FillCategoriesListBox();
         }
@@ -35,12 +38,13 @@ namespace SIL.AllomorphGenerator
             {
                 lBoxCategories.Items.Add(category);
             }
+            lBoxCategories.Items.Add(NoneChosen);
             lBoxCategories.EndUpdate();
         }
 
         public void SelectCategory(int index)
         {
-            if (index > -1 && index < Categories.Count)
+            if (index > -1 && index <= Categories.Count)
             {
                 lBoxCategories.SelectedIndex = index;
             }

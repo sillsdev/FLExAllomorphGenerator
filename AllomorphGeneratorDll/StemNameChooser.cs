@@ -19,10 +19,13 @@ namespace SIL.AllomorphGenerator
     {
         public List<StemName> StemNames { get; set; }
         public StemName SelectedStemName { get; set; } = new StemName();
+        public StemName NoneChosen { get; set; } = new StemName();
 
         public StemNameChooser()
         {
             StemNames = new List<StemName>();
+            NoneChosen.Name = "<None>";
+            NoneChosen.Guid = "";
             InitializeComponent();
             FillStemNamesListBox();
         }
@@ -35,12 +38,13 @@ namespace SIL.AllomorphGenerator
             {
                 lBoxStemNames.Items.Add(stemName);
             }
+            lBoxStemNames.Items.Add(NoneChosen);
             lBoxStemNames.EndUpdate();
         }
 
         public void SelectStemName(int index)
         {
-            if (index > -1 && index < StemNames.Count)
+            if (index > -1 && index <= StemNames.Count)
             {
                 lBoxStemNames.SelectedIndex = index;
             }
