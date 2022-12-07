@@ -47,7 +47,6 @@
     <Compile Include="AllomorphGenerators.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Environment.cs" />
-    <Compile Include="InflectionFeature.cs" />
     <Compile Include="MorphType.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="Pattern.cs" />

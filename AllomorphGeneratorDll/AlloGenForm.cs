@@ -53,7 +53,6 @@ namespace SIL.AllomorphGenerator
         Operation Operation { get; set; }
         List<Replace> ReplaceOps { get; set; }
         AlloGenModel.Action ActionOp { get; set; }
-        InflectionFeature InflectionFeatures { get; set; }
         StemName StemName { get; set; }
         Pattern Pattern { get; set; }
         Category Category { get; set; }
@@ -523,47 +522,6 @@ namespace SIL.AllomorphGenerator
                 }
 
             }
-        }
-
-        private void btnInflectionFeatures_Click(object sender, EventArgs e)
-        {
-            InflectionFeatures = ActionOp.InflectionFeatures;
-            tbInflectionFeatures.Text = InflectionFeatures.Name;
-            if (InflectionFeatures.Guid.Length > 0)
-            {
-                //Guid guid = new Guid(InflectionFeatures.Guid.Replace("-", ""));
-                //    MessageBox.Show("guid before is " + InflectionFeatures.Guid);
-                //    var lastFsSeen = Cache.ServiceLocator.ObjectRepository.GetObject(new Guid(InflectionFeatures.Guid));
-                //    if (lastFsSeen == null)
-                //        MessageBox.Show("last seen is null");
-                //    else
-                //        MessageBox.Show("last seen is " + lastFsSeen.ToString());
-            }
-
-            MsaInflectionFeatureListDlg dlg = new MsaInflectionFeatureListDlg();
-            IPartOfSpeech pos = GetPartOfSpeechToUse("Verb");
-            dlg.SetDlgInfo(Cache, Mediator, PropTable, pos);
-            dlg.ShowDialog();
-            if (dlg.DialogResult == DialogResult.OK)
-            {
-                ILcmOwningCollection<IFsFeatStruc> result = pos.ReferenceFormsOC;
-                IFsFeatStruc fs = result.Objects.FirstOrDefault() as IFsFeatStruc;
-                if (fs != null)
-                {
-                    InflectionFeatures.Name = fs.ToString();
-                    InflectionFeatures.Guid = fs.Guid.ToString();
-                    //MessageBox.Show("fs=" + InflectionFeatures.Name + "; guid=" + InflectionFeatures.Guid);
-                    tbInflectionFeatures.Text = InflectionFeatures.Name;
-                }
-                //else
-                //    MessageBox.Show("OK");
-                NonUndoableUnitOfWorkHelper.Do(Cache.ActionHandlerAccessor, () =>
-                {
-                    pos.ReferenceFormsOC.Clear();
-                });
-                MarkAsChanged();
-            }
-            dlg.Close();
         }
 
         private void btnStemName_Click(object sender, EventArgs e)

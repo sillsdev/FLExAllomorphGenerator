@@ -60,9 +60,6 @@ namespace SIL.AllomorphGenerator
             this.btnStemName = new System.Windows.Forms.Button();
             this.tbStemName = new System.Windows.Forms.TextBox();
             this.lbStemName = new System.Windows.Forms.Label();
-            this.btnInflectionFeatures = new System.Windows.Forms.Button();
-            this.tbInflectionFeatures = new System.Windows.Forms.TextBox();
-            this.lbInflectionFeatures = new System.Windows.Forms.Label();
             this.lBoxReplaceOps = new System.Windows.Forms.ListBox();
             this.lBoxEnvironments = new System.Windows.Forms.ListBox();
             this.lbCategoryddd = new System.Windows.Forms.Label();
@@ -321,9 +318,6 @@ namespace SIL.AllomorphGenerator
             this.plActions.Controls.Add(this.btnStemName);
             this.plActions.Controls.Add(this.tbStemName);
             this.plActions.Controls.Add(this.lbStemName);
-            this.plActions.Controls.Add(this.btnInflectionFeatures);
-            this.plActions.Controls.Add(this.tbInflectionFeatures);
-            this.plActions.Controls.Add(this.lbInflectionFeatures);
             this.plActions.Controls.Add(this.lBoxReplaceOps);
             this.plActions.Controls.Add(this.lBoxEnvironments);
             this.plActions.Controls.Add(this.lbCategoryddd);
@@ -388,34 +382,6 @@ namespace SIL.AllomorphGenerator
             this.lbStemName.Size = new System.Drawing.Size(91, 20);
             this.lbStemName.TabIndex = 21;
             this.lbStemName.Text = "Stem name";
-            // 
-            // btnInflectionFeatures
-            // 
-            this.btnInflectionFeatures.Location = new System.Drawing.Point(720, 405);
-            this.btnInflectionFeatures.Name = "btnInflectionFeatures";
-            this.btnInflectionFeatures.Size = new System.Drawing.Size(30, 28);
-            this.btnInflectionFeatures.TabIndex = 20;
-            this.btnInflectionFeatures.Text = "...";
-            this.btnInflectionFeatures.UseVisualStyleBackColor = true;
-            this.btnInflectionFeatures.Click += new System.EventHandler(this.btnInflectionFeatures_Click);
-            // 
-            // tbInflectionFeatures
-            // 
-            this.tbInflectionFeatures.Location = new System.Drawing.Point(288, 405);
-            this.tbInflectionFeatures.Name = "tbInflectionFeatures";
-            this.tbInflectionFeatures.ReadOnly = true;
-            this.tbInflectionFeatures.Size = new System.Drawing.Size(425, 26);
-            this.tbInflectionFeatures.TabIndex = 19;
-            this.tbInflectionFeatures.Text = "[tense:past]";
-            // 
-            // lbInflectionFeatures
-            // 
-            this.lbInflectionFeatures.AutoSize = true;
-            this.lbInflectionFeatures.Location = new System.Drawing.Point(121, 405);
-            this.lbInflectionFeatures.Name = "lbInflectionFeatures";
-            this.lbInflectionFeatures.Size = new System.Drawing.Size(142, 20);
-            this.lbInflectionFeatures.TabIndex = 18;
-            this.lbInflectionFeatures.Text = "Inflection Features";
             // 
             // lBoxReplaceOps
             // 
@@ -548,9 +514,6 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Button btnStemName;
         private System.Windows.Forms.TextBox tbStemName;
         private System.Windows.Forms.Label lbStemName;
-        private System.Windows.Forms.Button btnInflectionFeatures;
-        private System.Windows.Forms.TextBox tbInflectionFeatures;
-        private System.Windows.Forms.Label lbInflectionFeatures;
         private System.Windows.Forms.Label lbReplaceOps;
         private System.Windows.Forms.Button btnEnvironments;
         private System.Windows.Forms.Button btnMorphTypes;

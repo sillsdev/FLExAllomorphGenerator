@@ -37,7 +37,6 @@
           <Environment active="true" guid="d7f7123-e8cf-11d3-9733-00c04f186933" name="/ _ #" />
           <Environment active="true" guid="d7f7456-e8cf-11d3-9733-00c04f186933" name="/ ([C])[C]_ [V]" />
         </Environments>
-        <InflectionFeatures active="true" guid="d7f7436-e8cf-11d3-9733-00c04f186933" name="[tense:present]" />
         <StemName active="true" guid="d2cf436-e8cf-11d3-9733-00c04f186933" name="no lowering" />
       </Action>
     </Operation>

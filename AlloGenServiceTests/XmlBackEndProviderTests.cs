@@ -100,10 +100,6 @@ namespace SIL.AlloGenServiceTest
             env = envs[1];
             Assert.AreEqual("d7f7456-e8cf-11d3-9733-00c04f186933", env.Guid);
             Assert.AreEqual("/ ([C])[C]_ [V]", env.Name);
-            InflectionFeature feat = action.InflectionFeatures;
-            Assert.NotNull(feat);
-            Assert.AreEqual("d7f7436-e8cf-11d3-9733-00c04f186933", feat.Guid);
-            Assert.AreEqual("[tense:present]", feat.Name);
             StemName sn = action.StemName;
             Assert.NotNull(sn);
             Assert.AreEqual("d2cf436-e8cf-11d3-9733-00c04f186933", sn.Guid);
@@ -170,10 +166,6 @@ namespace SIL.AlloGenServiceTest
             env2.Guid = "d7f7456-e8cf-11d3-9733-00c04f186933";
             env2.Name = "/ ([C])[C]_ [V]";
             action.Environments.Add(env2);
-            InflectionFeature feat = new InflectionFeature();
-            feat.Guid = "d7f7436-e8cf-11d3-9733-00c04f186933";
-            feat.Name = "[tense:present]";
-            action.InflectionFeatures = feat;
             StemName sn = new StemName();
             sn.Guid = "d2cf436-e8cf-11d3-9733-00c04f186933";
             sn.Name = "no lowering";

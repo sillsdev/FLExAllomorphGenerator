@@ -14,7 +14,6 @@ namespace SIL.AlloGenModel
     {
         public List<Replace> ReplaceOps { get; set; }
         public List<Environment> Environments { get; set; }
-        public InflectionFeature InflectionFeatures { get; set; } = new InflectionFeature();
         public StemName StemName { get; set; } = new StemName();
 
         public Action()
@@ -43,11 +42,6 @@ namespace SIL.AlloGenModel
                 newEnvironments.Add(newEnv);
             }
             newAction.Environments = newEnvironments;
-            var newIF = new InflectionFeature();
-            newIF.Active = InflectionFeatures.Active;
-            newIF.Guid = InflectionFeatures.Guid;
-            newIF.Name = InflectionFeatures.Name;
-            newAction.InflectionFeatures = newIF;
             var newSN = new StemName();
             newSN.Active = StemName.Active;
             newSN.Guid = StemName.Guid;
