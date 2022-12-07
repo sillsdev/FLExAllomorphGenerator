@@ -163,6 +163,7 @@ namespace SIL.AllomorphGenerator
             // 
             // lbName
             // 
+            this.lbName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbName.Location = new System.Drawing.Point(364, 6);
             this.lbName.Name = "lbName";
             this.lbName.Size = new System.Drawing.Size(89, 26);
@@ -171,9 +172,10 @@ namespace SIL.AllomorphGenerator
             // 
             // lbDescription
             // 
+            this.lbDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbDescription.Location = new System.Drawing.Point(364, 48);
             this.lbDescription.Name = "lbDescription";
-            this.lbDescription.Size = new System.Drawing.Size(89, 20);
+            this.lbDescription.Size = new System.Drawing.Size(116, 20);
             this.lbDescription.TabIndex = 1;
             this.lbDescription.Text = "Description";
             // 
