@@ -19,8 +19,6 @@ namespace SIL.AlloGenModel
         public Action()
         {
             ReplaceOps = new List<Replace>();
-            Replace replace = new Replace();
-            ReplaceOps.Add(replace);
             Environments = new List<Environment>();
         }
 

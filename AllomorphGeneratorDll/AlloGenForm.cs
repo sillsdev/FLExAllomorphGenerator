@@ -487,6 +487,12 @@ namespace SIL.AllomorphGenerator
                 {
                     var selectedReplace = ActionOp.ReplaceOps[0];
                 }
+                else
+                {
+                    // need at least one replace action
+                    Replace replace = new Replace();
+                    ActionOp.ReplaceOps.Add(replace);
+                }
                 StemName = ActionOp.StemName;
                 tbStemName.Text = StemName.Name;
             }
