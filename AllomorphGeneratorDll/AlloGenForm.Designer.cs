@@ -253,7 +253,6 @@ namespace SIL.AllomorphGenerator
             this.tbCategory.ReadOnly = true;
             this.tbCategory.Size = new System.Drawing.Size(425, 26);
             this.tbCategory.TabIndex = 16;
-            this.tbCategory.Text = "Verb";
             // 
             // lbCategory
             // 
@@ -375,7 +374,6 @@ namespace SIL.AllomorphGenerator
             this.tbStemName.ReadOnly = true;
             this.tbStemName.Size = new System.Drawing.Size(425, 26);
             this.tbStemName.TabIndex = 22;
-            this.tbStemName.Text = "undergoes lowering";
             // 
             // lbStemName
             // 

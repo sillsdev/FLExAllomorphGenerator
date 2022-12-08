@@ -478,6 +478,7 @@ namespace SIL.AllomorphGenerator
                     var selectedMorphType = Pattern.MorphTypes[0];
                 }
                 Category = Pattern.Category;
+                tbCategory.Text = Category.Name;
                 ActionOp = Operation.Action;
                 RefreshEnvironmentsListBox();
                 ReplaceOps = Operation.Action.ReplaceOps;
@@ -486,6 +487,8 @@ namespace SIL.AllomorphGenerator
                 {
                     var selectedReplace = ActionOp.ReplaceOps[0];
                 }
+                StemName = ActionOp.StemName;
+                tbStemName.Text = StemName.Name;
             }
         }
 
@@ -553,9 +556,18 @@ namespace SIL.AllomorphGenerator
                     {
                         Category.Name = "";
                         Category.Guid = "";
+                        StemName = ActionOp.StemName;
+                        ClearStemNameValues();
+                        // if there's no category, there's no stem name
+                        tbStemName.Text = StemName.Name;
                     }
                     else
                     {
+                        if (Category.Guid != cat.Guid)
+                        {
+                            ClearStemNameValues();
+                            tbStemName.Text = "";
+                        }
                         Category.Name = cat.Name;
                         Category.Guid = new Guid(cat.Guid).ToString();
                     }
@@ -564,6 +576,12 @@ namespace SIL.AllomorphGenerator
                 }
 
             }
+        }
+
+        private void ClearStemNameValues()
+        {
+            StemName.Name = "";
+            StemName.Guid = "";
         }
 
         private void btnStemName_Click(object sender, EventArgs e)
@@ -599,8 +617,7 @@ namespace SIL.AllomorphGenerator
                 StemName sn = chooser.SelectedStemName;
                 if (sn == chooser.NoneChosen)
                 {
-                    StemName.Name = "";
-                    StemName.Guid = "";
+                    ClearStemNameValues();
                 }
                 else
                 {
