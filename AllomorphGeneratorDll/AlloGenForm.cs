@@ -411,6 +411,9 @@ namespace SIL.AllomorphGenerator
                 OperationsFile = dlg.FileName;
                 LastOperationsFile = OperationsFile;
                 tbFile.Text = OperationsFile;
+                Provider.LoadDataFromFile(OperationsFile);
+                AlloGens = Provider.AlloGens;
+                FillOperationsListBox();
             }
         }
         private void OnFormClosing(object sender, EventArgs e)

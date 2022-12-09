@@ -18,7 +18,7 @@ namespace SIL.AlloGenModel
         [XmlAttribute("matchmode")]
         public bool MatchMode { get; set; } = false;
         public List<MorphType> MorphTypes { get; set; }
-        public Category Category { get; set; }
+        public Category Category { get; set; } = new Category();
 
         public Pattern()
         {
