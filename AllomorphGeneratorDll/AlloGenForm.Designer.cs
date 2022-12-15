@@ -69,10 +69,12 @@ namespace SIL.AllomorphGenerator
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnNewFile = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.plPattern.SuspendLayout();
             this.plActions.SuspendLayout();
+            this.tabRunOps.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -415,6 +417,7 @@ namespace SIL.AllomorphGenerator
             // 
             // tabRunOps
             // 
+            this.tabRunOps.Controls.Add(this.button1);
             this.tabRunOps.Location = new System.Drawing.Point(4, 29);
             this.tabRunOps.Name = "tabRunOps";
             this.tabRunOps.Padding = new System.Windows.Forms.Padding(3);
@@ -470,6 +473,16 @@ namespace SIL.AllomorphGenerator
             this.btnNewFile.UseVisualStyleBackColor = true;
             this.btnNewFile.Click += new System.EventHandler(this.btnNewFile_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(110, 76);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(113, 50);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // AlloGenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -492,6 +505,7 @@ namespace SIL.AllomorphGenerator
             this.plPattern.PerformLayout();
             this.plActions.ResumeLayout(false);
             this.plActions.PerformLayout();
+            this.tabRunOps.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -537,6 +551,7 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Panel plPattern;
         private System.Windows.Forms.Panel plActions;
         private System.Windows.Forms.Button btnNewFile;
+        private System.Windows.Forms.Button button1;
     }
 }
 

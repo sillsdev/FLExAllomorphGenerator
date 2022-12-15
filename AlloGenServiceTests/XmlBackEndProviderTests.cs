@@ -54,9 +54,9 @@ namespace SIL.AlloGenServiceTest
             string name = pattern.MorphTypes[0].Name;
             Assert.AreEqual("bound root", name);
             guid = pattern.Category.Guid;
-            Assert.AreEqual("d7f713e8-e8cf-11d3-9733-00c04f186933", guid);
+            Assert.AreEqual("54712931-442f-42d5-8634-f12bd2e310ce", guid);
             name = pattern.Category.Name;
-            Assert.AreEqual("verb", name);
+            Assert.AreEqual("Transitive verb", name);
             Action action = operation.Action;
             Assert.NotNull(action);
             List<Replace> replaceOps = action.ReplaceOps;
@@ -195,8 +195,8 @@ namespace SIL.AlloGenServiceTest
             pattern.MorphTypes.Add(morphType3);
             pattern.MorphTypes.Add(morphType4);
             Category cat = new Category();
-            cat.Guid = "d7f713e8-e8cf-11d3-9733-00c04f186933";
-            cat.Name = "verb";
+            cat.Guid = "54712931-442f-42d5-8634-f12bd2e310ce";
+            cat.Name = "Transitive verb";
             pattern.Category = cat;
             return pattern;
         }

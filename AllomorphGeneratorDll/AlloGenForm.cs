@@ -786,5 +786,25 @@ namespace SIL.AllomorphGenerator
                 MessageBox.Show("Sorry, the user documentation is not yet available.");
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            PatternMatcher pm = new PatternMatcher(Pattern, Cache);
+            var mts = pm.MatchMorphTypes();
+            MessageBox.Show("mt=" + pm.morphType.AbbrAndName + "mts size=" + mts.Count());
+
+            //MessageBox.Show("all size=" + pm.AllEntries.Count());
+            //MessageBox.Show("zero allo size=" + pm.ZeroAllomorphs.Count());
+            //MessageBox.Show("single allo size=" + pm.SingleAllomorphs.Count());
+            //MessageBox.Show("double allo size=" + pm.DoubleAllomorphs.Count());
+            //MessageBox.Show("triple allo size=" + pm.TripleAllomorphs.Count());
+            //MessageBox.Show("quad or more allo size=" + pm.QuadrupleOrMoreAllomorphs.Count());
+            //MessageBox.Show("multi allo size=" + pm.MultiAllomorphs.Count());
+            ////StringBuilder sb = new StringBuilder();
+            //foreach (ILexEntry en in pm.MultiAllomorphs)
+            //{
+            //    sb.Append(en.)
+            //}
+        }
     }
 }
