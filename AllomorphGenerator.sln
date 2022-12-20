@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlloGenServiceTests", "Allo
 		{58F631E4-3FD2-4FFD-9981-5621DCC22D2A} = {58F631E4-3FD2-4FFD-9981-5621DCC22D2A}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlloGenModelTests", "AlloGenModelTests\AlloGenModelTests.csproj", "{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,14 @@ Global
 		{B67758BD-BC0D-4F2B-9BF2-1C2A5D2E01E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B67758BD-BC0D-4F2B-9BF2-1C2A5D2E01E1}.Release|x64.ActiveCfg = Release|x64
 		{B67758BD-BC0D-4F2B-9BF2-1C2A5D2E01E1}.Release|x64.Build.0 = Release|x64
+		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Debug|x64.ActiveCfg = Debug|x64
+		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Debug|x64.Build.0 = Debug|x64
+		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Release|x64.ActiveCfg = Release|x64
+		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

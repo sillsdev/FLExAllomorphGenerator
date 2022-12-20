@@ -44,11 +44,11 @@ namespace SIL.AllomorphGenerator
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.lbAction = new System.Windows.Forms.Label();
             this.plPattern = new System.Windows.Forms.Panel();
+            this.btnMatch = new System.Windows.Forms.Button();
             this.btnMorphTypes = new System.Windows.Forms.Button();
             this.btnCategory = new System.Windows.Forms.Button();
             this.tbCategory = new System.Windows.Forms.TextBox();
             this.lbCategory = new System.Windows.Forms.Label();
-            this.cbRegEx = new System.Windows.Forms.CheckBox();
             this.lBoxMorphTypes = new System.Windows.Forms.ListBox();
             this.lbMorphTypes = new System.Windows.Forms.Label();
             this.tbMatch = new System.Windows.Forms.TextBox();
@@ -69,12 +69,10 @@ namespace SIL.AllomorphGenerator
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnNewFile = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.plPattern.SuspendLayout();
             this.plActions.SuspendLayout();
-            this.tabRunOps.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -213,11 +211,11 @@ namespace SIL.AllomorphGenerator
             // plPattern
             // 
             this.plPattern.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.plPattern.Controls.Add(this.btnMatch);
             this.plPattern.Controls.Add(this.btnMorphTypes);
             this.plPattern.Controls.Add(this.btnCategory);
             this.plPattern.Controls.Add(this.tbCategory);
             this.plPattern.Controls.Add(this.lbCategory);
-            this.plPattern.Controls.Add(this.cbRegEx);
             this.plPattern.Controls.Add(this.lBoxMorphTypes);
             this.plPattern.Controls.Add(this.lbMorphTypes);
             this.plPattern.Controls.Add(this.tbMatch);
@@ -226,6 +224,16 @@ namespace SIL.AllomorphGenerator
             this.plPattern.Name = "plPattern";
             this.plPattern.Size = new System.Drawing.Size(776, 255);
             this.plPattern.TabIndex = 31;
+            // 
+            // btnMatch
+            // 
+            this.btnMatch.Location = new System.Drawing.Point(506, 14);
+            this.btnMatch.Name = "btnMatch";
+            this.btnMatch.Size = new System.Drawing.Size(144, 33);
+            this.btnMatch.TabIndex = 26;
+            this.btnMatch.Text = "Define match";
+            this.btnMatch.UseVisualStyleBackColor = true;
+            this.btnMatch.Click += new System.EventHandler(this.btnMatch_Click);
             // 
             // btnMorphTypes
             // 
@@ -265,17 +273,6 @@ namespace SIL.AllomorphGenerator
             this.lbCategory.TabIndex = 15;
             this.lbCategory.Text = "Category";
             // 
-            // cbRegEx
-            // 
-            this.cbRegEx.AutoSize = true;
-            this.cbRegEx.Location = new System.Drawing.Point(467, 14);
-            this.cbRegEx.Name = "cbRegEx";
-            this.cbRegEx.Size = new System.Drawing.Size(171, 24);
-            this.cbRegEx.TabIndex = 13;
-            this.cbRegEx.Text = "Regular expression";
-            this.cbRegEx.UseVisualStyleBackColor = true;
-            this.cbRegEx.CheckedChanged += new System.EventHandler(this.cbRegEx_CheckedChanged);
-            // 
             // lBoxMorphTypes
             // 
             this.lBoxMorphTypes.Enabled = false;
@@ -298,7 +295,7 @@ namespace SIL.AllomorphGenerator
             // 
             // tbMatch
             // 
-            this.tbMatch.Location = new System.Drawing.Point(222, 13);
+            this.tbMatch.Location = new System.Drawing.Point(248, 14);
             this.tbMatch.Name = "tbMatch";
             this.tbMatch.Size = new System.Drawing.Size(204, 26);
             this.tbMatch.TabIndex = 8;
@@ -417,7 +414,6 @@ namespace SIL.AllomorphGenerator
             // 
             // tabRunOps
             // 
-            this.tabRunOps.Controls.Add(this.button1);
             this.tabRunOps.Location = new System.Drawing.Point(4, 29);
             this.tabRunOps.Name = "tabRunOps";
             this.tabRunOps.Padding = new System.Windows.Forms.Padding(3);
@@ -473,16 +469,6 @@ namespace SIL.AllomorphGenerator
             this.btnNewFile.UseVisualStyleBackColor = true;
             this.btnNewFile.Click += new System.EventHandler(this.btnNewFile_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(110, 76);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(113, 50);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // AlloGenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -505,7 +491,6 @@ namespace SIL.AllomorphGenerator
             this.plPattern.PerformLayout();
             this.plActions.ResumeLayout(false);
             this.plActions.PerformLayout();
-            this.tabRunOps.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -527,7 +512,6 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Label lbAction;
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.Label lbDescription;
-        private System.Windows.Forms.CheckBox cbRegEx;
         private System.Windows.Forms.ListBox lBoxEnvironments;
         private System.Windows.Forms.ListBox lBoxMorphTypes;
         private System.Windows.Forms.Label lbCategoryddd;
@@ -551,7 +535,7 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Panel plPattern;
         private System.Windows.Forms.Panel plActions;
         private System.Windows.Forms.Button btnNewFile;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnMatch;
     }
 }
 

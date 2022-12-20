@@ -65,8 +65,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="Filters, Version=9.1.19.16481, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\Filters.dll</HintPath>
+    </Reference>
     <Reference Include="FwCoreDlgs">
       <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\FwCoreDlgs.dll</HintPath>
+    </Reference>
+    <Reference Include="FwUtils, Version=9.1.19.16724, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\FwUtils.dll</HintPath>
     </Reference>
     <Reference Include="icu.net">
       <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\icu.net.dll</HintPath>
@@ -114,8 +122,24 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="ViewsInterfaces, Version=9.1.19.16465, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\ViewsInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Widgets, Version=9.1.19.16484, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\Widgets.dll</HintPath>
+    </Reference>
     <Reference Include="xCoreInterfaces">
       <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\xCoreInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="XMLUtils, Version=9.1.19.16724, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\XMLUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="XMLViews, Version=9.1.19.16486, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\XMLViews.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -158,12 +182,16 @@
     <Compile Include="CategoryChooser.Designer.cs">
       <DependentUpon>CategoryChooser.cs</DependentUpon>
     </Compile>
+    <Compile Include="SimpleMatchDlgAlloGen.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="StemNameChooser.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="StemNameChooser.Designer.cs">
       <DependentUpon>StemNameChooser.cs</DependentUpon>
     </Compile>
+    <Compile Include="XMLViewsStringsAlloGen.Designer.cs" />
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -192,9 +220,13 @@
     <EmbeddedResource Include="CategoryChooser.resx">
       <DependentUpon>CategoryChooser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SimpleMatchDlgAlloGen.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="StemNameChooser.resx">
       <DependentUpon>StemNameChooser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="XMLViewsStringsAlloGen.resx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -13,10 +13,7 @@ namespace SIL.AlloGenModel
 {
     public class Pattern
     {
-        public string Match { get; set; } = "";
-        // match mode: false = plain; true = regular expression
-        [XmlAttribute("matchmode")]
-        public bool MatchMode { get; set; } = false;
+        public Matcher Matcher { get; set; } = new Matcher();
         public List<MorphType> MorphTypes { get; set; }
         public Category Category { get; set; } = new Category();
 
@@ -28,8 +25,7 @@ namespace SIL.AlloGenModel
         public Pattern Duplicate()
         {
             var newPattern = new Pattern();
-            newPattern.Match = Match;
-            newPattern.MatchMode = MatchMode;
+            newPattern.Matcher = Matcher;
             var newCat = new Category();
             newCat.Active = Category.Active;
             newCat.Guid = Category.Guid;

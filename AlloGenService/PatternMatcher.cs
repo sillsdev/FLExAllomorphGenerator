@@ -3,6 +3,7 @@
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
 using SIL.AlloGenModel;
+using SIL.FieldWorks.Filters;
 using SIL.LCModel;
 using System;
 using System.Collections.Generic;
@@ -75,5 +76,20 @@ namespace SIL.AlloGenService
             return lexEntriesForCategory;
         }
 
+        public IEnumerable<ILexEntry> MatchMatchString(IEnumerable<ILexEntry> lexEntries)
+        {
+            int ws = Cache.DefaultVernWs;
+            Matcher agMatcher = Pattern.Matcher;
+            IMatcher fwMatcher = agMatcher.GetFwMatcher(ws);
+            var lexEntriesPerMatchString = new List<ILexEntry>();
+            foreach (ILexEntry e in lexEntries)
+            {
+                if (fwMatcher.Matches(e.CitationForm.VernacularDefaultWritingSystem))
+                {
+                    lexEntriesPerMatchString.Add(e);
+                }
+            }
+            return lexEntriesPerMatchString;
+        }
     }
 }

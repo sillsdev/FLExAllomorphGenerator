@@ -5,9 +5,17 @@
 using Microsoft.Win32;
 using SIL.AlloGenModel;
 using SIL.AlloGenService;
+using SIL.FieldWorks.Common.Controls;
+using SIL.FieldWorks.Common.FwUtils;
+using SIL.FieldWorks.Common.ViewsInterfaces;
+using SIL.FieldWorks.Common.Widgets;
+using SIL.FieldWorks.Filters;
+using SIL.FieldWorks.FwCoreDlgs;
 using SIL.FieldWorks.LexText.Controls;
 using SIL.LCModel;
+using SIL.LCModel.Core.KernelInterfaces;
 using SIL.LCModel.Infrastructure;
+using SIL.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -473,8 +481,7 @@ namespace SIL.AllomorphGenerator
                 tbName.Text = Operation.Name;
                 tbDescription.Text = Operation.Description;
                 Pattern = Operation.Pattern;
-                tbMatch.Text = Pattern.Match;
-                cbRegEx.Checked = Pattern.MatchMode;
+                tbMatch.Text = Pattern.Matcher.Pattern;
                 RefreshMorphTypesListBox();
                 if (Pattern.MorphTypes.Count > 0)
                 {
@@ -787,24 +794,21 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnMatch_Click(object sender, EventArgs e)
         {
-            PatternMatcher pm = new PatternMatcher(Pattern, Cache);
-            var mts = pm.MatchMorphTypes();
-            MessageBox.Show("mt=" + pm.morphType.AbbrAndName + "mts size=" + mts.Count());
-
-            //MessageBox.Show("all size=" + pm.AllEntries.Count());
-            //MessageBox.Show("zero allo size=" + pm.ZeroAllomorphs.Count());
-            //MessageBox.Show("single allo size=" + pm.SingleAllomorphs.Count());
-            //MessageBox.Show("double allo size=" + pm.DoubleAllomorphs.Count());
-            //MessageBox.Show("triple allo size=" + pm.TripleAllomorphs.Count());
-            //MessageBox.Show("quad or more allo size=" + pm.QuadrupleOrMoreAllomorphs.Count());
-            //MessageBox.Show("multi allo size=" + pm.MultiAllomorphs.Count());
-            ////StringBuilder sb = new StringBuilder();
-            //foreach (ILexEntry en in pm.MultiAllomorphs)
-            //{
-            //    sb.Append(en.)
-            //}
+            IVwStylesheet stylesheet = FontHeightAdjuster.StyleSheetFromPropertyTable(PropTable);
+            
+            using (SimpleMatchDlgAlloGen dlg = new SimpleMatchDlgAlloGen(Cache.WritingSystemFactory,
+                PropTable.GetValue<IHelpTopicProvider>("HelpTopicProvider"), Cache.DefaultVernWs, stylesheet, Cache))
+            {
+                Matcher agMatcher = Pattern.Matcher;
+                dlg.SetDlgValues(agMatcher, stylesheet);
+                if (dlg.ShowDialog() != DialogResult.OK || dlg.Pattern.Length == 0)
+                    return;
+                agMatcher = dlg.GetMatcher();
+                Pattern.Matcher = agMatcher;
+                tbMatch.Text = agMatcher.Pattern;
+           }
         }
     }
 }

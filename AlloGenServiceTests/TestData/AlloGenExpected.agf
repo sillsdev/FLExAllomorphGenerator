@@ -4,8 +4,13 @@
     <Operation active="true">
       <Name>foreshortening</Name>
       <Description>Add allomorphs for entries which undergo foreshortening</Description>
-      <Pattern matchmode="true">
-        <Match>:$|:\..+$</Match>
+      <Pattern>
+        <Matcher>
+          <Type>Begin</Type>
+          <Pattern>:$|:\..+$</Pattern>
+          <MatchCase>true</MatchCase>
+          <MatchDiacritics>false</MatchDiacritics>
+        </Matcher>
         <MorphTypes>
           <MorphType active="true" guid="d7f713e4-e8cf-11d3-9764-00c04f186933" name="bound root" />
           <MorphType active="true" guid="d7f713e7-e8cf-11d3-9764-00c04f186933" name="bound stem" />

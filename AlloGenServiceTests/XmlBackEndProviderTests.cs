@@ -46,8 +46,12 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual("Add allomorphs for entries which undergo foreshortening", operation.Description);
             Pattern pattern = operation.Pattern;
             Assert.NotNull(pattern);
-            Assert.AreEqual(@":$|:\..+$", pattern.Match);
-            Assert.AreEqual(true, pattern.MatchMode);
+            Matcher matcher = pattern.Matcher;
+            Assert.AreEqual(MatcherType.Begin, matcher.Type);
+            Assert.AreEqual(@":$|:\..+$", matcher.Pattern);
+            Assert.AreEqual(true, matcher.MatchCase);
+            Assert.AreEqual(false, matcher.MatchDiacritics);
+            Assert.AreEqual(@":$|:\..+$", matcher.Pattern);
             Assert.AreEqual(4, pattern.MorphTypes.Count);
             string guid = pattern.MorphTypes[0].Guid;
             Assert.AreEqual("d7f713e4-e8cf-11d3-9764-00c04f186933", guid);
@@ -176,8 +180,11 @@ namespace SIL.AlloGenServiceTest
         private static Pattern MakePattern()
         {
             Pattern pattern = new Pattern();
-            pattern.Match = @":$|:\..+$";
-            pattern.MatchMode = true;
+            Matcher matcher = new Matcher(MatcherType.Begin);
+            matcher.MatchCase = true;
+            matcher.MatchDiacritics = false;
+            matcher.Pattern = @":$|:\..+$";
+            pattern.Matcher = matcher;
             MorphType morphType1 = new MorphType();
             morphType1.Guid = "d7f713e4-e8cf-11d3-9764-00c04f186933";
             morphType1.Name = "bound root";

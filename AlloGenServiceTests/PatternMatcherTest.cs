@@ -102,5 +102,13 @@ namespace SIL.AlloGenServiceTest
             lexEntriesPerCategory = pm.MatchCategory(pm.SingleAllomorphs);
             Assert.AreEqual(0, lexEntriesPerCategory.Count());
         }
+
+        // Cannot get Filters.dll to be found by tester
+        //[Test]
+        //public void LexEntriesPerMatchStringTest()
+        //{
+        //    var lexEntriesPerMatchString = pm.MatchMatchString(pm.SingleAllomorphs);
+        //    Assert.AreEqual(1234, lexEntriesPerMatchString.Count());
+        //}
     }
 }

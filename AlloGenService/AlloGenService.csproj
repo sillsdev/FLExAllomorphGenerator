@@ -50,6 +50,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Filters, Version=9.1.19.25511, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\Filters.dll</HintPath>
+    </Reference>
     <Reference Include="SIL.LCModel">
       <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.LCModel.dll</HintPath>
     </Reference>
