@@ -63,56 +63,56 @@
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=1.4.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\CommonServiceLocator.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="Filters, Version=9.1.19.16481, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\Filters.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\Filters.dll</HintPath>
     </Reference>
     <Reference Include="FwCoreDlgs">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\FwCoreDlgs.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\FwCoreDlgs.dll</HintPath>
     </Reference>
     <Reference Include="FwUtils, Version=9.1.19.16724, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\FwUtils.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\FwUtils.dll</HintPath>
     </Reference>
     <Reference Include="icu.net">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\icu.net.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\icu.net.dll</HintPath>
     </Reference>
     <Reference Include="LexTextControls">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\LexTextControls.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\LexTextControls.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyModel">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\Microsoft.Extensions.DependencyModel.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\Microsoft.Extensions.DependencyModel.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.13.3.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.13.3\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="SIL.Core">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.Core.dll</HintPath>
     </Reference>
     <Reference Include="SIL.Core.Desktop">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.Core.Desktop.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.Core.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="SIL.LCModel">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.LCModel.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.LCModel.dll</HintPath>
     </Reference>
     <Reference Include="SIL.LCModel.Core">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.LCModel.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.LCModel.Core.dll</HintPath>
     </Reference>
     <Reference Include="SIL.LCModel.Utils">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.LCModel.Utils.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.LCModel.Utils.dll</HintPath>
     </Reference>
     <Reference Include="SIL.Lexicon">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.Lexicon.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.Lexicon.dll</HintPath>
     </Reference>
     <Reference Include="SIL.WritingSystems">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.WritingSystems.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.WritingSystems.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\System.Net.Http.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\System.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -124,22 +124,22 @@
     <Reference Include="System.Xml" />
     <Reference Include="ViewsInterfaces, Version=9.1.19.16465, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\ViewsInterfaces.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\ViewsInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Widgets, Version=9.1.19.16484, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\Widgets.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\Widgets.dll</HintPath>
     </Reference>
     <Reference Include="xCoreInterfaces">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\xCoreInterfaces.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\xCoreInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="XMLUtils, Version=9.1.19.16724, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\XMLUtils.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\XMLUtils.dll</HintPath>
     </Reference>
     <Reference Include="XMLViews, Version=9.1.19.16486, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\XMLViews.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\XMLViews.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -257,7 +257,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd "$(SolutionDir)"\Installer
-DevInstall.bat
+DevInstallDebug.bat
 </PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

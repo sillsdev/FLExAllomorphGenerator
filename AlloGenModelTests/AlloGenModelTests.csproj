@@ -51,50 +51,50 @@
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=1.4.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\CommonServiceLocator.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="Filters, Version=9.1.19.25511, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\Filters.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\Filters.dll</HintPath>
     </Reference>
     <Reference Include="FwCoreDlgs, Version=9.1.19.25517, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\FwCoreDlgs.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\FwCoreDlgs.dll</HintPath>
     </Reference>
     <Reference Include="FwUtils, Version=9.1.19.25498, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\FwUtils.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\FwUtils.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyModel, Version=2.0.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\Microsoft.Extensions.DependencyModel.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\Microsoft.Extensions.DependencyModel.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="SIL.Core, Version=11.0.0.0, Culture=neutral, PublicKeyToken=cab3c8c5232dfcf2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.Core.dll</HintPath>
     </Reference>
     <Reference Include="SIL.Core.Desktop, Version=11.0.0.0, Culture=neutral, PublicKeyToken=cab3c8c5232dfcf2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.Core.Desktop.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.Core.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="SIL.LCModel, Version=9.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.LCModel.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.LCModel.dll</HintPath>
     </Reference>
     <Reference Include="SIL.LCModel.Core, Version=10.2.0.0, Culture=neutral, PublicKeyToken=f245775b81dcfaab, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.LCModel.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.LCModel.Core.dll</HintPath>
     </Reference>
     <Reference Include="SIL.LCModel.Utils, Version=10.2.0.0, Culture=neutral, PublicKeyToken=f245775b81dcfaab, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.LCModel.Utils.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.LCModel.Utils.dll</HintPath>
     </Reference>
     <Reference Include="SIL.WritingSystems, Version=11.0.0.0, Culture=neutral, PublicKeyToken=cab3c8c5232dfcf2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\SIL.WritingSystems.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\SIL.WritingSystems.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -106,28 +106,29 @@
     <Reference Include="System.Xml" />
     <Reference Include="ViewsInterfaces, Version=9.1.19.25497, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\ViewsInterfaces.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\ViewsInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Widgets, Version=9.1.19.25513, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\Widgets.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\Widgets.dll</HintPath>
     </Reference>
     <Reference Include="xCore">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\xCore.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\xCore.dll</HintPath>
     </Reference>
     <Reference Include="xCoreInterfaces, Version=9.1.19.25498, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\xCoreInterfaces.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\xCoreInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="XMLUtils, Version=9.1.19.25498, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\XMLUtils.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\XMLUtils.dll</HintPath>
     </Reference>
     <Reference Include="XMLViews">
-      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Release\XMLViews.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\XMLViews.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DuplicateTests.cs" />
     <Compile Include="MatcherTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -136,10 +137,14 @@
       <Project>{4D7C07A3-BDA7-4C91-967B-7ACC736E6586}</Project>
       <Name>AlloGenModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AlloGenService\AlloGenService.csproj">
+      <Project>{58F631E4-3FD2-4FFD-9981-5621DCC22D2A}</Project>
+      <Name>AlloGenService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy C:\fwrepo\fw\Output\Release\Filters.dll "$(TargetDir)"\Filters.dll
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

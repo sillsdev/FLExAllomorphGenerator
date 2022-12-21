@@ -2,7 +2,9 @@
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
+using SIL.FieldWorks.Common.ViewsInterfaces;
 using SIL.FieldWorks.Filters;
+using SIL.LCModel.Core.Text;
 using SIL.Utils;
 using System;
 using System.Collections.Generic;
@@ -33,9 +35,6 @@ namespace SIL.AlloGenModel
         public string CreateFwXmlString(int ws)
         {
             StringBuilder sb = new StringBuilder();
-            //< matcher assemblyPath = "Filters.dll" class="SIL.FieldWorks.Filters.BeginMatcher" 
-            //label ="&amp;lt;Str&amp;gt;&amp;#xD;&amp;#xA;&amp;lt;Run ws=&amp;quot;en&amp;quot;&amp;gt;to&amp;lt;/Run&amp;gt;&amp;#xD;&amp;#xA;&amp;lt;/Str&amp;gt;"
-            // pattern ="to" ws="999000001" matchCase="False" matchDiacritics="False" />
             sb.Append("<matcher assemblyPath=\"Filters.dll\" class=\"SIL.FieldWorks.Filters.");
             sb.Append(GetMatcherTypeName());
             sb.Append("\" label=\"\"");
@@ -81,7 +80,51 @@ namespace SIL.AlloGenModel
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(CreateFwXmlString(ws));
             IMatcher fwMatcher = DynamicLoader.RestoreObject(doc.FirstChild) as IMatcher;
+            IVwPattern fwPattern = CreateFwPattern(ws);
+            if (fwMatcher is BeginMatcher)
+                fwMatcher = new BeginMatcher(fwPattern);
+            else if (fwMatcher is EndMatcher)
+                fwMatcher = new EndMatcher(fwPattern);
+            else if (fwMatcher is ExactMatcher)
+                fwMatcher = new ExactMatcher(fwPattern);
+            else if (fwMatcher is RegExpMatcher)
+                fwMatcher = new RegExpMatcher(fwPattern);
+            else
+                fwMatcher = new AnywhereMatcher(fwPattern);
             return fwMatcher;
+        }
+
+        IVwPattern CreateFwPattern(int ws)
+        {
+            IVwPattern fwPattern = VwPatternClass.Create();
+            fwPattern.MatchCase = MatchCase;
+            fwPattern.MatchDiacritics = MatchDiacritics;
+            fwPattern.MatchOldWritingSystem = false;
+            fwPattern.Pattern = TsStringUtils.MakeString(Pattern, ws);
+            switch (Type)
+            {
+                case MatcherType.Anywhere:
+                    fwPattern.MatchWholeWord = false;
+                    fwPattern.UseRegularExpressions = false;
+                    break;
+                case MatcherType.Begin:
+                    fwPattern.MatchWholeWord = false;
+                    fwPattern.UseRegularExpressions = false;
+                    break;
+                case MatcherType.End:
+                    fwPattern.MatchWholeWord = false;
+                    fwPattern.UseRegularExpressions = false;
+                    break;
+                case MatcherType.Exact:
+                    fwPattern.MatchWholeWord = true;
+                    fwPattern.UseRegularExpressions = false;
+                    break;
+                case MatcherType.RegularExpression:
+                    fwPattern.MatchWholeWord = false;
+                    fwPattern.UseRegularExpressions = true;
+                    break;
+            }
+            return fwPattern;
         }
     }
 

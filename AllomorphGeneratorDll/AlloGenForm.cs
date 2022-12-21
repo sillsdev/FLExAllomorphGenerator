@@ -735,11 +735,6 @@ namespace SIL.AllomorphGenerator
                 AlloGenForm.ActiveForm.Text += "*";
         }
 
-        private void cbRegEx_CheckedChanged(object sender, EventArgs e)
-        {
-            Pattern.MatchMode = ((CheckBox)sender).Checked;
-        }
-
         private void btnNewFile_Click(object sender, EventArgs e)
         {
             SaveAnyChanges();
@@ -809,6 +804,24 @@ namespace SIL.AllomorphGenerator
                 Pattern.Matcher = agMatcher;
                 tbMatch.Text = agMatcher.Pattern;
            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            PatternMatcher patMatcher = new PatternMatcher(Pattern, Cache);
+            MessageBox.Show("single count=" + patMatcher.SingleAllomorphs.Count());
+            IEnumerable<ILexEntry> lexEntries = patMatcher.MatchMatchString(patMatcher.SingleAllomorphs);
+            MessageBox.Show("string match count=" + lexEntries.Count());
+            if (Pattern.Category != null && Pattern.Category.Active && Pattern.Category.Guid.Length > 0)
+            {
+                lexEntries = patMatcher.MatchCategory(lexEntries);
+                MessageBox.Show("category match count=" + lexEntries.Count());
+            }
+            if (Pattern.MorphTypes.Count > 0)
+            {
+                lexEntries = patMatcher.MatchMorphTypes(lexEntries);
+                MessageBox.Show("morph types match count=" + lexEntries.Count());
+            }
         }
     }
 }
