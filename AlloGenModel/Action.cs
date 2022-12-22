@@ -48,5 +48,27 @@ namespace SIL.AlloGenModel
             newAction.StemName = newSN;
             return newAction;
         }
+
+        public override bool Equals(Object obj)
+        {
+            //Check for null and compare run-time types.
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Action act = (Action)obj;
+                return (ReplaceOps.SequenceEqual(act.ReplaceOps))
+                    && (Environments.SequenceEqual(act.Environments))
+                    && (StemName.Equals(act.StemName))
+                    ;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Tuple.Create(ReplaceOps, Environments, StemName).GetHashCode();
+        }
     }
 }

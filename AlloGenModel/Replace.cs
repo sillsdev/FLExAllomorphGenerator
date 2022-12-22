@@ -67,5 +67,32 @@ namespace SIL.AlloGenModel
             return sb.ToString();
         }
 
+        public override bool Equals(Object obj)
+        {
+            //Check for null and compare run-time types.
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Replace act = (Replace)obj;
+                return (Mode == act.Mode)
+                    && (From == act.From)
+                    && (To == act.To)
+                    && (Ach == act.Ach)
+                    && (Acl == act.Acl)
+                    && (Akh == act.Akh)
+                    && (Akl == act.Akl)
+                    && (Ame == act.Ame)
+                    ;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Tuple.Create(Mode, From, To, Ach, Acl, Akh, Akl, Ame).GetHashCode();
+        }
+
     }
 }

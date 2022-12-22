@@ -32,5 +32,30 @@ namespace SIL.AlloGenModel
         {
             return Name;
         }
+
+        public override bool Equals(Object obj)
+        {
+            if (!base.Equals(obj))
+                return false;
+
+            //Check for null and compare run-time types.
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+                return false;
+            else
+            {
+                Operation op = (Operation)obj;
+                return (Name == op.Name)
+                    && (Description == op.Description)
+                    && (Pattern.Equals(op.Pattern))
+                    && (Action.Equals(op.Action))
+                    ;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            int result = base.GetHashCode();
+            return result + Tuple.Create(Name, Description, Pattern, Action).GetHashCode();
+        }
     }
 }

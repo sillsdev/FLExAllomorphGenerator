@@ -23,5 +23,28 @@ namespace SIL.AlloGenModel
             return Name;
         }
 
+        public override bool Equals(Object obj)
+        {
+            if (!base.Equals(obj))
+                return false;
+
+            //Check for null and compare run-time types.
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+                return false;
+            else
+            {
+                AlloGenGuid agg = (AlloGenGuid)obj;
+                return (Guid == agg.Guid)
+                    && (Name == agg.Name)
+                    ;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            int result = base.GetHashCode();
+            return result + Tuple.Create(Guid, Name).GetHashCode();
+        }
+
     }
 }

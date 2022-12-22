@@ -25,7 +25,7 @@ namespace SIL.AlloGenModel
         public Pattern Duplicate()
         {
             var newPattern = new Pattern();
-            newPattern.Matcher = Matcher;
+            newPattern.Matcher = Matcher.Duplicate();
             var newCat = new Category();
             newCat.Active = Category.Active;
             newCat.Guid = Category.Guid;
@@ -42,6 +42,28 @@ namespace SIL.AlloGenModel
             }
             newPattern.MorphTypes = newMTs;
             return newPattern;
+        }
+
+        public override bool Equals(Object obj)
+        {
+            //Check for null and compare run-time types.
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Pattern pat = (Pattern)obj;
+                return (Matcher.Equals(pat.Matcher))
+                    && (MorphTypes.SequenceEqual(pat.MorphTypes))
+                    && (Category.Equals(pat.Category))
+                    ;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Tuple.Create(Matcher, MorphTypes, Category).GetHashCode();
         }
     }
 }

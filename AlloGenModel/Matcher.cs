@@ -32,6 +32,39 @@ namespace SIL.AlloGenModel
             Type = type;
         }
 
+        public Matcher Duplicate()
+        {
+            Matcher newMatcher = new Matcher();
+            newMatcher.Type = Type;
+            newMatcher.Pattern = Pattern;
+            newMatcher.MatchCase = MatchCase;
+            newMatcher.MatchDiacritics = MatchDiacritics;
+            return newMatcher;
+        }
+
+        public override bool Equals(Object obj)
+        {
+            //Check for null and compare run-time types.
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Matcher matcher = (Matcher)obj;
+                return (Type == matcher.Type)
+                    && (Pattern == matcher.Pattern)
+                    && (MatchCase == matcher.MatchCase)
+                    && (MatchDiacritics == matcher.MatchDiacritics)
+                    ;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Tuple.Create(Type, Pattern, MatchCase, MatchDiacritics).GetHashCode();
+        }
+
         public string CreateFwXmlString(int ws)
         {
             StringBuilder sb = new StringBuilder();

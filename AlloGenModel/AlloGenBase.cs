@@ -15,5 +15,23 @@ namespace SIL.AlloGenModel
     {
         [XmlAttribute("active")]
         public bool Active { get; set; } = true;
+
+        public override bool Equals(Object obj)
+        {
+            //Check for null and compare run-time types.
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+                return false;
+            else
+            {
+                AlloGenBase agb = (AlloGenBase)obj;
+                return (Active == agb.Active)
+                    ;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Active.GetHashCode();
+        }
     }
 }

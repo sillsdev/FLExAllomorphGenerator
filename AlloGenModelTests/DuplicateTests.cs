@@ -43,15 +43,17 @@ namespace AlloGenModelTests
             Assert.NotNull(allomorphGenerators);
             Operation operation = allomorphGenerators.Operations[0];
             Operation opCopy = operation.Duplicate();
-            Assert.AreEqual(operation.Name, opCopy.Name);
-            Assert.AreEqual(operation.Description, opCopy.Description);
-            Assert.AreEqual(operation.Active, opCopy.Active);
+            Assert.AreEqual(true, operation.Equals(opCopy));
+            opCopy.Description = "";
+            Assert.AreEqual(false, operation.Equals(opCopy));
             Pattern pattern = operation.Pattern;
             Pattern patCopy = opCopy.Pattern;
-            Assert.AreEqual(pattern.Category.Name, patCopy.Category.Name);
+            Assert.AreEqual(true, pattern.Equals(patCopy));
+            patCopy.Matcher.MatchCase = !pattern.Matcher.MatchCase;
+            Assert.AreEqual(false, pattern.Equals(patCopy));
             Action action = operation.Action;
             Action actCopy = opCopy.Action;
-            Assert.AreEqual(action.StemName.Name, actCopy.StemName.Name);
+            Assert.AreEqual(true, action.Equals(actCopy));
         }
     }
 }
