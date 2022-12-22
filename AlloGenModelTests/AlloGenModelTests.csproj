@@ -129,7 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DuplicateTests.cs" />
-    <Compile Include="MatcherTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -65,23 +65,23 @@ namespace SIL.AlloGenModel
             return Tuple.Create(Type, Pattern, MatchCase, MatchDiacritics).GetHashCode();
         }
 
-        public string CreateFwXmlString(int ws)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("<matcher assemblyPath=\"Filters.dll\" class=\"SIL.FieldWorks.Filters.");
-            sb.Append(GetMatcherTypeName());
-            sb.Append("\" label=\"\"");
-            sb.Append(" pattern=\"");
-            sb.Append(Pattern);
-            sb.Append("\" ws=\"");
-            sb.Append(ws.ToString());
-            sb.Append("\" matchCase=\"");
-            sb.Append(MatchCase.ToString());
-            sb.Append("\" matchDiacritics=\"");
-            sb.Append(MatchDiacritics);
-            sb.Append("\"/>");
-            return sb.ToString();
-        }
+        //public string CreateFwXmlString(int ws)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    sb.Append("<matcher assemblyPath=\"Filters.dll\" class=\"SIL.FieldWorks.Filters.");
+        //    sb.Append(GetMatcherTypeName());
+        //    sb.Append("\" label=\"\"");
+        //    sb.Append(" pattern=\"");
+        //    sb.Append(Pattern);
+        //    sb.Append("\" ws=\"");
+        //    sb.Append(ws.ToString());
+        //    sb.Append("\" matchCase=\"");
+        //    sb.Append(MatchCase.ToString());
+        //    sb.Append("\" matchDiacritics=\"");
+        //    sb.Append(MatchDiacritics);
+        //    sb.Append("\"/>");
+        //    return sb.ToString();
+        //}
 
         string GetMatcherTypeName()
         {
@@ -110,17 +110,15 @@ namespace SIL.AlloGenModel
 
         public IMatcher GetFwMatcher(int ws)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(CreateFwXmlString(ws));
-            IMatcher fwMatcher = DynamicLoader.RestoreObject(doc.FirstChild) as IMatcher;
             IVwPattern fwPattern = CreateFwPattern(ws);
-            if (fwMatcher is BeginMatcher)
+            IMatcher fwMatcher = null;
+            if (Type == MatcherType.Begin)
                 fwMatcher = new BeginMatcher(fwPattern);
-            else if (fwMatcher is EndMatcher)
+            else if (Type == MatcherType.End)
                 fwMatcher = new EndMatcher(fwPattern);
-            else if (fwMatcher is ExactMatcher)
+            else if (Type == MatcherType.Exact)
                 fwMatcher = new ExactMatcher(fwPattern);
-            else if (fwMatcher is RegExpMatcher)
+            else if (Type == MatcherType.RegularExpression)
                 fwMatcher = new RegExpMatcher(fwPattern);
             else
                 fwMatcher = new AnywhereMatcher(fwPattern);

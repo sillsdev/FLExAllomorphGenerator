@@ -103,7 +103,7 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual(0, lexEntriesPerCategory.Count());
         }
 
-        // Cannot get Filters.dll to be found by tester
+        // Cannot get IVwPattern to work with tester
         //[Test]
         //public void LexEntriesPerMatchStringTest()
         //{
