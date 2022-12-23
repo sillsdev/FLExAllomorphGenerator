@@ -40,6 +40,8 @@ namespace SIL.AllomorphGenerator
         const string m_strLastDatabase = "LastDatabase";
         const string m_strLastOperationsFile = "LastOperationsFile";
         const string m_strLastOperation = "Lastoperation";
+        const string m_strLastApplyOperation = "LastApplyOperation";
+        const string m_strLastTab= "LastTab";
         const string m_strLocationX = "LocationX";
         const string m_strLocationY = "LocationY";
         const string m_strSizeHeight = "SizeHeight";
@@ -55,14 +57,17 @@ namespace SIL.AllomorphGenerator
         public string LastDatabase { get; set; }
         public string LastOperationsFile { get; set; }
         public int LastOperation { get; set; }
-        public string LastRootGlossSelection { get; set; }
+        public int LastApplyOperation { get; set; }
+        public int LastTab { get; set; }
         public int RetrievedLastOperation { get; set; }
+        public int RetrievedLastApplyOperation { get; set; }
 
         XmlBackEndProvider Provider { get; set; }
         String OperationsFile { get; set; }
         AllomorphGenerators AlloGens { get; set; }
         List<Operation> Operations { get; set; }
         Operation Operation { get; set; }
+        Operation ApplyOperation { get; set; }
         List<Replace> ReplaceOps { get; set; }
         AlloGenModel.Action ActionOp { get; set; }
         StemName StemName { get; set; }
@@ -95,10 +100,13 @@ namespace SIL.AllomorphGenerator
                     Operations = AlloGens.Operations;
                 }
                 FillOperationsListBox();
+                FillApplyOperationsListBox();
                 BuildReplaceContextMenu();
                 BuildHelpContextMenu();
                 lBoxMorphTypes.ClearSelected();
                 lBoxEnvironments.ClearSelected();
+                RememberTabSelection();
+
             }
             catch (Exception e)
             {
@@ -106,6 +114,13 @@ namespace SIL.AllomorphGenerator
                 Console.WriteLine(e.InnerException);
                 Console.WriteLine(e.StackTrace);
             }
+        }
+
+        private void RememberTabSelection()
+        {
+            if (LastTab < 0 || LastTab > tabControl.TabCount)
+                LastTab = 0;
+            tabControl.SelectedIndex = LastTab;
         }
 
         private void BuildReplaceContextMenu()
@@ -384,7 +399,8 @@ namespace SIL.AllomorphGenerator
             LastDatabase = (string)regkey.GetValue(m_strLastDatabase);
             OperationsFile = LastOperationsFile = (string)regkey.GetValue(m_strLastOperationsFile);
             RetrievedLastOperation = LastOperation = (int)regkey.GetValue(m_strLastOperation, 0);
-
+            RetrievedLastApplyOperation = LastApplyOperation = (int)regkey.GetValue(m_strLastApplyOperation, 0);
+            LastTab = (int)regkey.GetValue(m_strLastTab, 0);
         }
 
         public void SaveRegistryInfo()
@@ -400,6 +416,8 @@ namespace SIL.AllomorphGenerator
             if (LastOperationsFile != null)
                 regkey.SetValue(m_strLastOperationsFile, LastOperationsFile);
             regkey.SetValue(m_strLastOperation, LastOperation);
+            regkey.SetValue(m_strLastApplyOperation, LastApplyOperation);
+            regkey.SetValue(m_strLastTab, LastTab);
             // Window position and location
             regkey.SetValue(m_strWindowState, (int)WindowState);
             regkey.SetValue(m_strLocationX, RectNormal.X);
@@ -468,8 +486,20 @@ namespace SIL.AllomorphGenerator
             // select last used operation, if any
             if (LastOperation < 0 || LastOperation >= Operations.Count)
                 LastOperation = 0;
-            var selectedOperation = Operations[LastOperation];
             lBoxOperations.SetSelected(LastOperation, true);
+        }
+
+        public void FillApplyOperationsListBox()
+        {
+            clbOperations.Items.Clear();
+            foreach (Operation op in Operations)
+            {
+                clbOperations.Items.Add(op);
+            }
+            // select last used operation, if any
+            if (LastApplyOperation < 0 || LastApplyOperation >= Operations.Count)
+                LastApplyOperation = 0;
+            clbOperations.SetSelected(LastApplyOperation, true);
         }
 
         private void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
@@ -822,6 +852,24 @@ namespace SIL.AllomorphGenerator
                 lexEntries = patMatcher.MatchMorphTypes(lexEntries);
                 MessageBox.Show("morph types match count=" + lexEntries.Count());
             }
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabPage page = (sender as TabControl).SelectedTab;
+            if (page != null)
+            {
+                LastTab = tabControl.SelectedIndex;
+                if (LastTab == 0)
+                    FillOperationsListBox();
+                else
+                    FillApplyOperationsListBox();
+            }
+        }
+
+        private void btnApplyOperations_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("apply ops clicked");
         }
     }
 }
