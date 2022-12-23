@@ -64,15 +64,17 @@ namespace SIL.AllomorphGenerator
             this.lBoxEnvironments = new System.Windows.Forms.ListBox();
             this.lbCategoryddd = new System.Windows.Forms.Label();
             this.tabRunOps = new System.Windows.Forms.TabPage();
+            this.lvPreview = new System.Windows.Forms.ListView();
+            this.lbPreview = new System.Windows.Forms.Label();
+            this.btnApplyOperations = new System.Windows.Forms.Button();
+            this.clbOperations = new System.Windows.Forms.CheckedListBox();
+            this.lbOperationsToApply = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.lbAlloGenFile = new System.Windows.Forms.Label();
             this.tbFile = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnNewFile = new System.Windows.Forms.Button();
-            this.lbOperationsToApply = new System.Windows.Forms.Label();
-            this.clbOperations = new System.Windows.Forms.CheckedListBox();
-            this.btnApplyOperations = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.plPattern.SuspendLayout();
@@ -93,7 +95,6 @@ namespace SIL.AllomorphGenerator
             this.tabControl.Size = new System.Drawing.Size(1289, 978);
             this.tabControl.TabIndex = 0;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
-
             // 
             // tabEditOps
             // 
@@ -421,6 +422,8 @@ namespace SIL.AllomorphGenerator
             // 
             // tabRunOps
             // 
+            this.tabRunOps.Controls.Add(this.lvPreview);
+            this.tabRunOps.Controls.Add(this.lbPreview);
             this.tabRunOps.Controls.Add(this.btnApplyOperations);
             this.tabRunOps.Controls.Add(this.clbOperations);
             this.tabRunOps.Controls.Add(this.lbOperationsToApply);
@@ -433,9 +436,65 @@ namespace SIL.AllomorphGenerator
             this.tabRunOps.Text = "Run Operations";
             this.tabRunOps.UseVisualStyleBackColor = true;
             // 
+            // lvPreview
+            // 
+            this.lvPreview.AllowColumnReorder = true;
+            this.lvPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvPreview.CheckBoxes = true;
+            this.lvPreview.FullRowSelect = true;
+            this.lvPreview.GridLines = true;
+            this.lvPreview.HideSelection = false;
+            this.lvPreview.Location = new System.Drawing.Point(437, 49);
+            this.lvPreview.Name = "lvPreview";
+            this.lvPreview.Size = new System.Drawing.Size(818, 823);
+            this.lvPreview.TabIndex = 6;
+            this.lvPreview.UseCompatibleStateImageBehavior = false;
+            this.lvPreview.View = System.Windows.Forms.View.Details;
+            // 
+            // lbPreview
+            // 
+            this.lbPreview.AutoSize = true;
+            this.lbPreview.Location = new System.Drawing.Point(433, 21);
+            this.lbPreview.Name = "lbPreview";
+            this.lbPreview.Size = new System.Drawing.Size(63, 20);
+            this.lbPreview.TabIndex = 5;
+            this.lbPreview.Text = "Preview";
+            // 
+            // btnApplyOperations
+            // 
+            this.btnApplyOperations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnApplyOperations.Location = new System.Drawing.Point(23, 889);
+            this.btnApplyOperations.Name = "btnApplyOperations";
+            this.btnApplyOperations.Size = new System.Drawing.Size(142, 42);
+            this.btnApplyOperations.TabIndex = 3;
+            this.btnApplyOperations.Text = "Apply Operations";
+            this.btnApplyOperations.UseVisualStyleBackColor = true;
+            this.btnApplyOperations.Click += new System.EventHandler(this.btnApplyOperations_Click);
+            // 
+            // clbOperations
+            // 
+            this.clbOperations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.clbOperations.FormattingEnabled = true;
+            this.clbOperations.Location = new System.Drawing.Point(23, 49);
+            this.clbOperations.Name = "clbOperations";
+            this.clbOperations.Size = new System.Drawing.Size(379, 823);
+            this.clbOperations.TabIndex = 2;
+            // 
+            // lbOperationsToApply
+            // 
+            this.lbOperationsToApply.AutoSize = true;
+            this.lbOperationsToApply.Location = new System.Drawing.Point(19, 22);
+            this.lbOperationsToApply.Name = "lbOperationsToApply";
+            this.lbOperationsToApply.Size = new System.Drawing.Size(146, 20);
+            this.lbOperationsToApply.TabIndex = 1;
+            this.lbOperationsToApply.Text = "Operations to apply";
+            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1141, 49);
+            this.button1.Location = new System.Drawing.Point(247, 889);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 73);
             this.button1.TabIndex = 0;
@@ -489,36 +548,6 @@ namespace SIL.AllomorphGenerator
             this.btnNewFile.Text = "Create New File";
             this.btnNewFile.UseVisualStyleBackColor = true;
             this.btnNewFile.Click += new System.EventHandler(this.btnNewFile_Click);
-            // 
-            // lbOperationsToApply
-            // 
-            this.lbOperationsToApply.AutoSize = true;
-            this.lbOperationsToApply.Location = new System.Drawing.Point(19, 22);
-            this.lbOperationsToApply.Name = "lbOperationsToApply";
-            this.lbOperationsToApply.Size = new System.Drawing.Size(146, 20);
-            this.lbOperationsToApply.TabIndex = 1;
-            this.lbOperationsToApply.Text = "Operations to apply";
-            // 
-            // clbOperations
-            // 
-            this.clbOperations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.clbOperations.FormattingEnabled = true;
-            this.clbOperations.Location = new System.Drawing.Point(23, 49);
-            this.clbOperations.Name = "clbOperations";
-            this.clbOperations.Size = new System.Drawing.Size(379, 823);
-            this.clbOperations.TabIndex = 2;
-            // 
-            // btnApplyOperations
-            // 
-            this.btnApplyOperations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnApplyOperations.Location = new System.Drawing.Point(23, 889);
-            this.btnApplyOperations.Name = "btnApplyOperations";
-            this.btnApplyOperations.Size = new System.Drawing.Size(142, 42);
-            this.btnApplyOperations.TabIndex = 3;
-            this.btnApplyOperations.Text = "Apply Operations";
-            this.btnApplyOperations.UseVisualStyleBackColor = true;
-            this.btnApplyOperations.Click += new System.EventHandler(this.btnApplyOperations_Click);
             // 
             // AlloGenForm
             // 
@@ -593,6 +622,8 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.CheckedListBox clbOperations;
         private System.Windows.Forms.Label lbOperationsToApply;
         private System.Windows.Forms.Button btnApplyOperations;
+        private System.Windows.Forms.Label lbPreview;
+        private System.Windows.Forms.ListView lvPreview;
     }
 }
 

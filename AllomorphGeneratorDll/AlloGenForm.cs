@@ -106,7 +106,7 @@ namespace SIL.AllomorphGenerator
                 lBoxMorphTypes.ClearSelected();
                 lBoxEnvironments.ClearSelected();
                 RememberTabSelection();
-
+                SetupPreviewCheckedListBox();
             }
             catch (Exception e)
             {
@@ -114,6 +114,46 @@ namespace SIL.AllomorphGenerator
                 Console.WriteLine(e.InnerException);
                 Console.WriteLine(e.StackTrace);
             }
+        }
+
+        private void SetupPreviewCheckedListBox()
+        {
+            lvPreview.Columns.Add("cb", -2, HorizontalAlignment.Left);
+            lvPreview.Columns.Add("Citation Form", -2, HorizontalAlignment.Left);
+            lvPreview.Columns.Add("Ach          ", -2, HorizontalAlignment.Left);
+            lvPreview.Columns.Add("Acl          ", -2, HorizontalAlignment.Left);
+            lvPreview.Columns.Add("Akh          ", -2, HorizontalAlignment.Left);
+            lvPreview.Columns.Add("Akl          ", -2, HorizontalAlignment.Left);
+            lvPreview.Columns.Add("Ame          ", -2, HorizontalAlignment.Left);
+
+            // following is play to learn
+            ListViewItem item1 = new ListViewItem("");
+            ListViewItem item2 = new ListViewItem("");
+            ListViewItem item3 = new ListViewItem("");
+            item3.Checked = true;
+            item1.SubItems.Add("cf 1");
+            item1.SubItems.Add("ach 1");
+            item1.SubItems.Add("acl 1");
+            item1.SubItems.Add("akh 1");
+            item1.SubItems.Add("akl 1");
+            item1.SubItems.Add("ame 1");
+
+            item2.SubItems.Add("cf 2");
+            item2.SubItems.Add("ach 2");
+            item2.SubItems.Add("acl 2");
+            item2.SubItems.Add("akh 2");
+            item2.SubItems.Add("akl 2");
+            item2.SubItems.Add("ame 2");
+
+            item3.SubItems.Add("cf 3");
+            item3.SubItems.Add("ach 3");
+            item3.SubItems.Add("acl 3");
+            item3.SubItems.Add("akh 3");
+            item3.SubItems.Add("akl 3");
+            item3.SubItems.Add("ame 3");
+            item1.Checked = true;
+            lvPreview.Items.AddRange(new ListViewItem[] { item1, item2, item3 });
+
         }
 
         private void RememberTabSelection()
