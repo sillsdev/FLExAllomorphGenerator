@@ -14,6 +14,8 @@ using SIL.FieldWorks.FwCoreDlgs;
 using SIL.FieldWorks.LexText.Controls;
 using SIL.LCModel;
 using SIL.LCModel.Core.KernelInterfaces;
+using SIL.LCModel.Core.WritingSystems;
+using SIL.LCModel.DomainServices;
 using SIL.LCModel.Infrastructure;
 using SIL.Utils;
 using System;
@@ -74,6 +76,21 @@ namespace SIL.AllomorphGenerator
         Pattern Pattern { get; set; }
         Category Category { get; set; }
         bool ChangesMade { get; set; } = false;
+        Font fontForAkh;
+        FontInfo fontInfoForAkh;
+        Color colorForAkh;
+        Font fontForAcl;
+        FontInfo fontInfoForAcl;
+        Color colorForAcl;
+        Font fontForAkl;
+        FontInfo fontInfoForAkl;
+        Color colorForAkl;
+        Font fontForAch;
+        FontInfo fontInfoForAch;
+        Color colorForAch;
+        Font fontForAme;
+        FontInfo fontInfoForAme;
+        Color colorForAme;
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
@@ -86,7 +103,20 @@ namespace SIL.AllomorphGenerator
         const string cmDelete = "Delete";
         const string cmDuplicate = "Duplicate";
 
+        public AlloGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
+        {
+            Cache = cache;
+            PropTable = propTable;
+            Mediator = mediator;
+            InitForm();
+        }
+
         public AlloGenForm()
+        {
+            InitForm();
+        }
+
+        private void InitForm()
         {
             InitializeComponent();
             try
@@ -106,6 +136,7 @@ namespace SIL.AllomorphGenerator
                 lBoxMorphTypes.ClearSelected();
                 lBoxEnvironments.ClearSelected();
                 RememberTabSelection();
+                SetupFontAndStyleInfo();
                 SetupPreviewCheckedListBox();
             }
             catch (Exception e)
@@ -120,39 +151,111 @@ namespace SIL.AllomorphGenerator
         {
             lvPreview.Columns.Add("cb", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Citation Form", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Ach          ", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Acl          ", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Akh          ", -2, HorizontalAlignment.Left);
+            lvPreview.Columns.Add("Acl          ", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Akl          ", -2, HorizontalAlignment.Left);
+            lvPreview.Columns.Add("Ach          ", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Ame          ", -2, HorizontalAlignment.Left);
 
             // following is play to learn
             ListViewItem item1 = new ListViewItem("");
             ListViewItem item2 = new ListViewItem("");
             ListViewItem item3 = new ListViewItem("");
+            item1.UseItemStyleForSubItems = false;
+            item2.UseItemStyleForSubItems = false;
+            item3.UseItemStyleForSubItems = false;
             item3.Checked = true;
             item1.SubItems.Add("cf 1");
-            item1.SubItems.Add("ach 1");
-            item1.SubItems.Add("acl 1");
+
+            //ListViewItem.ListViewSubItem subitemakh1 = new ListViewItem.ListViewSubItem(item1, "akh 1 New");
+            //subitemakh1.ForeColor = colorForAkh;
             item1.SubItems.Add("akh 1");
+            item1.SubItems.Add("acl 1");
             item1.SubItems.Add("akl 1");
+            item1.SubItems.Add("ach 1");
             item1.SubItems.Add("ame 1");
+            item1 = SetFontInfoForItem(item1);
 
             item2.SubItems.Add("cf 2");
-            item2.SubItems.Add("ach 2");
-            item2.SubItems.Add("acl 2");
             item2.SubItems.Add("akh 2");
+            item2.SubItems.Add("acl 2");
             item2.SubItems.Add("akl 2");
+            item2.SubItems.Add("ach 2");
             item2.SubItems.Add("ame 2");
+            item2 = SetFontInfoForItem(item2);
 
             item3.SubItems.Add("cf 3");
-            item3.SubItems.Add("ach 3");
-            item3.SubItems.Add("acl 3");
             item3.SubItems.Add("akh 3");
+            item3.SubItems.Add("acl 3");
             item3.SubItems.Add("akl 3");
+            item3.SubItems.Add("ach 3");
             item3.SubItems.Add("ame 3");
+            item3 = SetFontInfoForItem(item3);
             item1.Checked = true;
             lvPreview.Items.AddRange(new ListViewItem[] { item1, item2, item3 });
+
+        }
+
+        private ListViewItem SetFontInfoForItem(ListViewItem item)
+        {
+            item.SubItems[2].Font = fontForAkh;
+            item.SubItems[2].ForeColor = colorForAkh;
+            item.SubItems[3].Font = fontForAcl;
+            item.SubItems[3].ForeColor = colorForAcl;
+            item.SubItems[4].Font = fontForAkl;
+            item.SubItems[4].ForeColor = colorForAkl;
+            item.SubItems[5].Font = fontForAch;
+            item.SubItems[5].ForeColor = colorForAch;
+            item.SubItems[6].Font = fontForAme;
+            item.SubItems[6].ForeColor = colorForAme;
+            return item;
+        }
+
+        private void SetupFontAndStyleInfo()
+        {
+            if (Cache != null)
+            {
+                var styles = Cache.LangProject.StylesOC.ToDictionary(style => style.Name);
+                IStStyle normal = Cache.LangProject.StylesOC.FirstOrDefault(style => style.Name == "Normal");
+                if (normal != null)
+                {
+                    SIL.FieldWorks.FwCoreDlgControls.StyleInfo styleInfo = new SIL.FieldWorks.FwCoreDlgControls.StyleInfo(normal);
+                    IList<CoreWritingSystemDefinition> vernWses = Cache.LangProject.CurrentVernacularWritingSystems;
+                    foreach (CoreWritingSystemDefinition def in vernWses)
+                    {
+                        float fontSize = Math.Max(def.DefaultFontSize, 10);
+                        // TODO: consider using a dictionary for these
+                        switch (def.Abbreviation.Substring(def.Abbreviation.Length-3))
+                        {
+                            case "akh":
+                                fontForAkh = new Font(def.DefaultFontName, fontSize);
+                                fontInfoForAkh = styleInfo.FontInfoForWs(def.Handle);
+                                colorForAkh = fontInfoForAkh.FontColor.Value;
+                                break;
+                            case "acl":
+                                fontForAcl = new Font(def.DefaultFontName, fontSize);
+                                fontInfoForAcl = styleInfo.FontInfoForWs(def.Handle);
+                                colorForAcl = fontInfoForAcl.FontColor.Value;
+                                break;
+                            case "akl":
+                                fontForAkl = new Font(def.DefaultFontName, fontSize);
+                                fontInfoForAkl = styleInfo.FontInfoForWs(def.Handle);
+                                colorForAkl = fontInfoForAkl.FontColor.Value;
+                                break;
+                            case "ach":
+                                fontForAch = new Font(def.DefaultFontName, fontSize);
+                                fontInfoForAch = styleInfo.FontInfoForWs(def.Handle);
+                                colorForAch = fontInfoForAch.FontColor.Value;
+                                break;
+                            case "ame":
+                                fontForAme = new Font(def.DefaultFontName, fontSize);
+                                fontInfoForAme = styleInfo.FontInfoForWs(def.Handle);
+                                colorForAme = fontInfoForAme.FontColor.Value;
+                                break;
+                        }
+                    }
+                }
+            }
 
         }
 

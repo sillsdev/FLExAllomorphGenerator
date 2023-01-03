@@ -69,6 +69,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\Filters.dll</HintPath>
     </Reference>
+    <Reference Include="FwCoreDlgControls, Version=9.1.19.20363, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\FwCoreDlgControls.dll</HintPath>
+    </Reference>
     <Reference Include="FwCoreDlgs">
       <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\FwCoreDlgs.dll</HintPath>
     </Reference>
