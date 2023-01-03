@@ -32,48 +32,56 @@ namespace SIL.AlloGenService
 
         public IEnumerable<ILexEntry> MatchMorphTypes(IEnumerable<ILexEntry> lexEntries)
         {
-            morphTypes.Clear();
-            foreach (IMoMorphType mt in Cache.LangProject.LexDbOA.MorphTypesOA.PossibilitiesOS)
+            if (Pattern.MorphTypes.Count > 0)
             {
-                if (Pattern.MorphTypes.Where(m => m.Guid == mt.Guid.ToString()).Count() > 0)
+                morphTypes.Clear();
+                foreach (IMoMorphType mt in Cache.LangProject.LexDbOA.MorphTypesOA.PossibilitiesOS)
                 {
-                    morphTypes.Add(mt);
-                }
-            }
-            var lexEntriesForMorphTypes = new List<ILexEntry>();
-            foreach (ILexEntry e in lexEntries)
-            {
-                foreach (IMoMorphType mt in morphTypes)
-                {
-                    if (e.MorphTypes.Contains(mt))
+                    if (Pattern.MorphTypes.Where(m => m.Guid == mt.Guid.ToString()).Count() > 0)
                     {
-                        lexEntriesForMorphTypes.Add(e);
-                        break;
+                        morphTypes.Add(mt);
                     }
                 }
+                var lexEntriesForMorphTypes = new List<ILexEntry>();
+                foreach (ILexEntry e in lexEntries)
+                {
+                    foreach (IMoMorphType mt in morphTypes)
+                    {
+                        if (e.MorphTypes.Contains(mt))
+                        {
+                            lexEntriesForMorphTypes.Add(e);
+                            break;
+                        }
+                    }
+                }
+                return lexEntriesForMorphTypes;
             }
-            return lexEntriesForMorphTypes;
+            return lexEntries;
         }
 
         public IEnumerable<ILexEntry> MatchCategory(IEnumerable<ILexEntry> lexEntries)
         {
             var lexEntriesForCategory = new List<ILexEntry>();
-            foreach (ILexEntry e in lexEntries)
+            if (Pattern.Category != null && Pattern.Category.Active && Pattern.Category.Guid.Length > 0)
             {
-                foreach (IMoMorphSynAnalysis msa in e.MorphoSyntaxAnalysesOC)
+                foreach (ILexEntry e in lexEntries)
                 {
-                    IMoStemMsa stemMsa = msa as IMoStemMsa;
-                    if (stemMsa != null && stemMsa.PartOfSpeechRA != null)
+                    foreach (IMoMorphSynAnalysis msa in e.MorphoSyntaxAnalysesOC)
                     {
-                        if (stemMsa.PartOfSpeechRA.Guid.ToString() == Pattern.Category.Guid)
+                        IMoStemMsa stemMsa = msa as IMoStemMsa;
+                        if (stemMsa != null && stemMsa.PartOfSpeechRA != null)
                         {
-                            lexEntriesForCategory.Add(e);
-                            break;
+                            if (stemMsa.PartOfSpeechRA.Guid.ToString() == Pattern.Category.Guid)
+                            {
+                                lexEntriesForCategory.Add(e);
+                                break;
+                            }
                         }
                     }
                 }
+                return lexEntriesForCategory;
             }
-            return lexEntriesForCategory;
+            return lexEntries;
         }
 
         public IEnumerable<ILexEntry> MatchMatchString(IEnumerable<ILexEntry> lexEntries)
@@ -90,6 +98,14 @@ namespace SIL.AlloGenService
                 }
             }
             return lexEntriesPerMatchString;
+        }
+
+        public IEnumerable<ILexEntry> MatchPattern(IEnumerable<ILexEntry> lexEntries)
+        {
+            var lexEntriesThatMatch = MatchMatchString(lexEntries);
+            lexEntriesThatMatch = MatchCategory(lexEntriesThatMatch);
+            lexEntriesThatMatch = MatchMorphTypes(lexEntriesThatMatch);
+            return lexEntriesThatMatch;
         }
     }
 }

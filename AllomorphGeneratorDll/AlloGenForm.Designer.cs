@@ -64,6 +64,7 @@ namespace SIL.AllomorphGenerator
             this.lBoxEnvironments = new System.Windows.Forms.ListBox();
             this.lbCategoryddd = new System.Windows.Forms.Label();
             this.tabRunOps = new System.Windows.Forms.TabPage();
+            this.lbCount = new System.Windows.Forms.Label();
             this.lvPreview = new System.Windows.Forms.ListView();
             this.lbPreview = new System.Windows.Forms.Label();
             this.btnApplyOperations = new System.Windows.Forms.Button();
@@ -422,6 +423,7 @@ namespace SIL.AllomorphGenerator
             // 
             // tabRunOps
             // 
+            this.tabRunOps.Controls.Add(this.lbCount);
             this.tabRunOps.Controls.Add(this.lvPreview);
             this.tabRunOps.Controls.Add(this.lbPreview);
             this.tabRunOps.Controls.Add(this.btnApplyOperations);
@@ -436,6 +438,16 @@ namespace SIL.AllomorphGenerator
             this.tabRunOps.Text = "Run Operations";
             this.tabRunOps.UseVisualStyleBackColor = true;
             // 
+            // lbCount
+            // 
+            this.lbCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbCount.AutoSize = true;
+            this.lbCount.Location = new System.Drawing.Point(1204, 889);
+            this.lbCount.Name = "lbCount";
+            this.lbCount.Size = new System.Drawing.Size(57, 20);
+            this.lbCount.TabIndex = 7;
+            this.lbCount.Text = "1 / 160";
+            // 
             // lvPreview
             // 
             this.lvPreview.AllowColumnReorder = true;
@@ -446,9 +458,9 @@ namespace SIL.AllomorphGenerator
             this.lvPreview.FullRowSelect = true;
             this.lvPreview.GridLines = true;
             this.lvPreview.HideSelection = false;
-            this.lvPreview.Location = new System.Drawing.Point(437, 49);
+            this.lvPreview.Location = new System.Drawing.Point(383, 49);
             this.lvPreview.Name = "lvPreview";
-            this.lvPreview.Size = new System.Drawing.Size(818, 823);
+            this.lvPreview.Size = new System.Drawing.Size(872, 823);
             this.lvPreview.TabIndex = 6;
             this.lvPreview.UseCompatibleStateImageBehavior = false;
             this.lvPreview.View = System.Windows.Forms.View.Details;
@@ -456,7 +468,7 @@ namespace SIL.AllomorphGenerator
             // lbPreview
             // 
             this.lbPreview.AutoSize = true;
-            this.lbPreview.Location = new System.Drawing.Point(433, 21);
+            this.lbPreview.Location = new System.Drawing.Point(390, 22);
             this.lbPreview.Name = "lbPreview";
             this.lbPreview.Size = new System.Drawing.Size(63, 20);
             this.lbPreview.TabIndex = 5;
@@ -480,8 +492,9 @@ namespace SIL.AllomorphGenerator
             this.clbOperations.FormattingEnabled = true;
             this.clbOperations.Location = new System.Drawing.Point(23, 49);
             this.clbOperations.Name = "clbOperations";
-            this.clbOperations.Size = new System.Drawing.Size(379, 823);
+            this.clbOperations.Size = new System.Drawing.Size(354, 823);
             this.clbOperations.TabIndex = 2;
+            this.clbOperations.SelectedIndexChanged += new System.EventHandler(this.clbOperations_SelectedIndexChanged);
             // 
             // lbOperationsToApply
             // 
@@ -624,6 +637,7 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Button btnApplyOperations;
         private System.Windows.Forms.Label lbPreview;
         private System.Windows.Forms.ListView lvPreview;
+        private System.Windows.Forms.Label lbCount;
     }
 }
 

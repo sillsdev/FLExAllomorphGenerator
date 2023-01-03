@@ -43,7 +43,7 @@ namespace SIL.AllomorphGenerator
         const string m_strLastOperationsFile = "LastOperationsFile";
         const string m_strLastOperation = "Lastoperation";
         const string m_strLastApplyOperation = "LastApplyOperation";
-        const string m_strLastTab= "LastTab";
+        const string m_strLastTab = "LastTab";
         const string m_strLocationX = "LocationX";
         const string m_strLocationY = "LocationY";
         const string m_strSizeHeight = "SizeHeight";
@@ -76,21 +76,29 @@ namespace SIL.AllomorphGenerator
         Pattern Pattern { get; set; }
         Category Category { get; set; }
         bool ChangesMade { get; set; } = false;
+        Font fontForDefaultCitationForm;
+        FontInfo fontInfoForDefaultCitationForm;
+        Color colorForDefaultCitationForm;
         Font fontForAkh;
         FontInfo fontInfoForAkh;
         Color colorForAkh;
+        int wsForAkh = -1;
         Font fontForAcl;
         FontInfo fontInfoForAcl;
         Color colorForAcl;
+        int wsForAcl = -1;
         Font fontForAkl;
         FontInfo fontInfoForAkl;
         Color colorForAkl;
+        int wsForAkl = -1;
         Font fontForAch;
         FontInfo fontInfoForAch;
         Color colorForAch;
+        int wsForAch = -1;
         Font fontForAme;
         FontInfo fontInfoForAme;
         Color colorForAme;
+        int wsForAme = -1;
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
@@ -130,14 +138,14 @@ namespace SIL.AllomorphGenerator
                     Operations = AlloGens.Operations;
                 }
                 FillOperationsListBox();
+                SetupFontAndStyleInfo();
+                SetupPreviewCheckedListBox();
                 FillApplyOperationsListBox();
                 BuildReplaceContextMenu();
                 BuildHelpContextMenu();
                 lBoxMorphTypes.ClearSelected();
                 lBoxEnvironments.ClearSelected();
                 RememberTabSelection();
-                SetupFontAndStyleInfo();
-                SetupPreviewCheckedListBox();
             }
             catch (Exception e)
             {
@@ -156,48 +164,12 @@ namespace SIL.AllomorphGenerator
             lvPreview.Columns.Add("Akl          ", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Ach          ", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Ame          ", -2, HorizontalAlignment.Left);
-
-            // following is play to learn
-            ListViewItem item1 = new ListViewItem("");
-            ListViewItem item2 = new ListViewItem("");
-            ListViewItem item3 = new ListViewItem("");
-            item1.UseItemStyleForSubItems = false;
-            item2.UseItemStyleForSubItems = false;
-            item3.UseItemStyleForSubItems = false;
-            item3.Checked = true;
-            item1.SubItems.Add("cf 1");
-
-            //ListViewItem.ListViewSubItem subitemakh1 = new ListViewItem.ListViewSubItem(item1, "akh 1 New");
-            //subitemakh1.ForeColor = colorForAkh;
-            item1.SubItems.Add("akh 1");
-            item1.SubItems.Add("acl 1");
-            item1.SubItems.Add("akl 1");
-            item1.SubItems.Add("ach 1");
-            item1.SubItems.Add("ame 1");
-            item1 = SetFontInfoForItem(item1);
-
-            item2.SubItems.Add("cf 2");
-            item2.SubItems.Add("akh 2");
-            item2.SubItems.Add("acl 2");
-            item2.SubItems.Add("akl 2");
-            item2.SubItems.Add("ach 2");
-            item2.SubItems.Add("ame 2");
-            item2 = SetFontInfoForItem(item2);
-
-            item3.SubItems.Add("cf 3");
-            item3.SubItems.Add("akh 3");
-            item3.SubItems.Add("acl 3");
-            item3.SubItems.Add("akl 3");
-            item3.SubItems.Add("ach 3");
-            item3.SubItems.Add("ame 3");
-            item3 = SetFontInfoForItem(item3);
-            item1.Checked = true;
-            lvPreview.Items.AddRange(new ListViewItem[] { item1, item2, item3 });
-
-        }
+            }
 
         private ListViewItem SetFontInfoForItem(ListViewItem item)
         {
+            item.SubItems[1].Font = fontForDefaultCitationForm;
+            item.SubItems[1].ForeColor = colorForDefaultCitationForm;
             item.SubItems[2].Font = fontForAkh;
             item.SubItems[2].ForeColor = colorForAkh;
             item.SubItems[3].Font = fontForAcl;
@@ -225,38 +197,57 @@ namespace SIL.AllomorphGenerator
                     {
                         float fontSize = Math.Max(def.DefaultFontSize, 10);
                         // TODO: consider using a dictionary for these
-                        switch (def.Abbreviation.Substring(def.Abbreviation.Length-3))
+                        switch (def.Abbreviation.Substring(def.Abbreviation.Length - 3))
                         {
                             case "akh":
+                                wsForAkh = def.Handle;
                                 fontForAkh = new Font(def.DefaultFontName, fontSize);
                                 fontInfoForAkh = styleInfo.FontInfoForWs(def.Handle);
                                 colorForAkh = fontInfoForAkh.FontColor.Value;
+                                SetFontAndStyleInfoForDefaultCitationForm(wsForAkh, fontForAkh, fontInfoForAkh, colorForAkh);
                                 break;
                             case "acl":
+                                wsForAcl = def.Handle;
                                 fontForAcl = new Font(def.DefaultFontName, fontSize);
                                 fontInfoForAcl = styleInfo.FontInfoForWs(def.Handle);
                                 colorForAcl = fontInfoForAcl.FontColor.Value;
+                                SetFontAndStyleInfoForDefaultCitationForm(wsForAcl, fontForAcl, fontInfoForAcl, colorForAcl);
                                 break;
                             case "akl":
+                                wsForAkl = def.Handle;
                                 fontForAkl = new Font(def.DefaultFontName, fontSize);
                                 fontInfoForAkl = styleInfo.FontInfoForWs(def.Handle);
                                 colorForAkl = fontInfoForAkl.FontColor.Value;
+                                SetFontAndStyleInfoForDefaultCitationForm(wsForAkl, fontForAkl, fontInfoForAkl, colorForAkl);
                                 break;
                             case "ach":
+                                wsForAch = def.Handle;
                                 fontForAch = new Font(def.DefaultFontName, fontSize);
                                 fontInfoForAch = styleInfo.FontInfoForWs(def.Handle);
                                 colorForAch = fontInfoForAch.FontColor.Value;
+                                SetFontAndStyleInfoForDefaultCitationForm(wsForAch, fontForAch, fontInfoForAch, colorForAch);
                                 break;
                             case "ame":
+                                wsForAme = def.Handle;
                                 fontForAme = new Font(def.DefaultFontName, fontSize);
                                 fontInfoForAme = styleInfo.FontInfoForWs(def.Handle);
                                 colorForAme = fontInfoForAme.FontColor.Value;
+                                SetFontAndStyleInfoForDefaultCitationForm(wsForAme, fontForAme, fontInfoForAme, colorForAme);
                                 break;
                         }
                     }
                 }
             }
+        }
 
+        private void SetFontAndStyleInfoForDefaultCitationForm(int ws, Font font, FontInfo fontInfo, Color color)
+        {
+            if (ws == Cache.DefaultVernWs)
+            {
+                fontForDefaultCitationForm = font;
+                fontInfoForDefaultCitationForm = fontInfo;
+                colorForDefaultCitationForm = color;
+            }
         }
 
         private void RememberTabSelection()
@@ -937,19 +928,19 @@ namespace SIL.AllomorphGenerator
             helpContextMenu.Show(ptLowerLeft);
         }
 
-		void About_Click(object sender, EventArgs e)
-		{
-			ToolStripItem menuItem = (ToolStripItem)sender;
-			if (menuItem.Name == About)
-			{
-				var dialog = new AboutBox();
-				// for some reason the following is needed to keep the dialog within the form
-				Point pt = dialog.PointToClient(System.Windows.Forms.Cursor.Position);
-				dialog.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
-				Console.WriteLine("dialog result=" + dialog.Location.X + "," + dialog.Location.Y);
-				dialog.Show();
-			}
-		}
+        void About_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == About)
+            {
+                var dialog = new AboutBox();
+                // for some reason the following is needed to keep the dialog within the form
+                Point pt = dialog.PointToClient(System.Windows.Forms.Cursor.Position);
+                dialog.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
+                Console.WriteLine("dialog result=" + dialog.Location.X + "," + dialog.Location.Y);
+                dialog.Show();
+            }
+        }
 
         void UserDoc_Click(object sender, EventArgs e)
         {
@@ -965,7 +956,7 @@ namespace SIL.AllomorphGenerator
         private void btnMatch_Click(object sender, EventArgs e)
         {
             IVwStylesheet stylesheet = FontHeightAdjuster.StyleSheetFromPropertyTable(PropTable);
-            
+
             using (SimpleMatchDlgAlloGen dlg = new SimpleMatchDlgAlloGen(Cache.WritingSystemFactory,
                 PropTable.GetValue<IHelpTopicProvider>("HelpTopicProvider"), Cache.DefaultVernWs, stylesheet, Cache))
             {
@@ -976,7 +967,7 @@ namespace SIL.AllomorphGenerator
                 agMatcher = dlg.GetMatcher();
                 Pattern.Matcher = agMatcher;
                 tbMatch.Text = agMatcher.Pattern;
-           }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1013,6 +1004,34 @@ namespace SIL.AllomorphGenerator
         private void btnApplyOperations_Click(object sender, EventArgs e)
         {
             MessageBox.Show("apply ops clicked");
+        }
+
+        private void clbOperations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string sCount = "0";
+            Operation = clbOperations.SelectedItem as Operation;
+            if (Operation != null)
+            {
+                PatternMatcher patMatcher = new PatternMatcher(Pattern, Cache);
+                IEnumerable<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.SingleAllomorphs);
+                lvPreview.Items.Clear();
+                foreach (ILexEntry entry in matchingEntries)
+                {
+                    int wsOut = 0;
+                    ListViewItem lvItem = new ListViewItem("");
+                    lvItem.UseItemStyleForSubItems = false;
+                    lvItem.SubItems.Add(entry.CitationForm.VernacularDefaultWritingSystem.Text);
+                    lvItem.SubItems.Add(entry.LexemeFormOA.Form.GetAlternativeOrBestTss(wsForAkh, out wsOut).Text);
+                    lvItem.SubItems.Add(entry.LexemeFormOA.Form.GetAlternativeOrBestTss(wsForAcl, out wsOut).Text);
+                    lvItem.SubItems.Add(entry.LexemeFormOA.Form.GetAlternativeOrBestTss(wsForAkl, out wsOut).Text);
+                    lvItem.SubItems.Add(entry.LexemeFormOA.Form.GetAlternativeOrBestTss(wsForAch, out wsOut).Text);
+                    lvItem.SubItems.Add(entry.LexemeFormOA.Form.GetAlternativeOrBestTss(wsForAme, out wsOut).Text);
+                    lvItem = SetFontInfoForItem(lvItem);
+                    lvPreview.Items.Add(lvItem);
+                }
+                sCount = matchingEntries.Count().ToString(); ;
+            }
+            lbCount.Text = sCount;
         }
     }
 }
