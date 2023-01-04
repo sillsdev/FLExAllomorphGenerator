@@ -372,21 +372,31 @@ namespace SIL.AllomorphGenerator
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmEdit)
             {
-                using (var dialog = new EditReplaceOpForm())
+                InvokeEditRelaceOpForm();
+            }
+        }
+
+        private void InvokeEditRelaceOpForm()
+        {
+            using (var dialog = new EditReplaceOpForm())
+            {
+                Replace replace = (Replace)lBoxReplaceOps.SelectedItem;
+                dialog.Initialize(replace);
+                dialog.ShowDialog();
+                if (dialog.DialogResult == DialogResult.OK)
                 {
-                    Replace replace = (Replace)lBoxReplaceOps.SelectedItem;
-                    dialog.Initialize(replace);
-                    dialog.ShowDialog();
-                    if (dialog.DialogResult == DialogResult.OK)
-                    {
-                        int index = lBoxReplaceOps.SelectedIndex;
-                        replace = dialog.ReplaceOp;
-                        ReplaceOps[index] = replace;
-                        lBoxReplaceOps.Items[index] = replace;
-                        MarkAsChanged();
-                    }
+                    int index = lBoxReplaceOps.SelectedIndex;
+                    replace = dialog.ReplaceOp;
+                    ReplaceOps[index] = replace;
+                    lBoxReplaceOps.Items[index] = replace;
+                    MarkAsChanged();
                 }
             }
+        }
+
+        void lBoxReplaceOps_DoubleClick(object sender, EventArgs e)
+        {
+            InvokeEditRelaceOpForm();
         }
 
         void InsertBeforeContextMenu_Click(object sender, EventArgs e)

@@ -400,6 +400,7 @@ namespace SIL.AllomorphGenerator
             this.lBoxReplaceOps.Size = new System.Drawing.Size(625, 184);
             this.lBoxReplaceOps.TabIndex = 14;
             this.lBoxReplaceOps.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxReplaceOps_MouseUp);
+            this.lBoxReplaceOps.DoubleClick += new EventHandler(this.lBoxReplaceOps_DoubleClick);
             // 
             // lBoxEnvironments
             // 
