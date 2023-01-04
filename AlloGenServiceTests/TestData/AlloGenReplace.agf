@@ -22,6 +22,10 @@
       <Action>
         <ReplaceOps>
           <Replace active="true" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
+            <From />
+            <To />
+          </Replace>
+          <Replace active="true" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
             <From>*</From>
             <To />
           </Replace>

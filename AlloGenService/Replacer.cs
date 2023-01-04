@@ -26,7 +26,7 @@ namespace SIL.AlloGenService
             string result = input;
             foreach (Replace replace in ReplaceOps)
             {
-                if (!replace.Active)
+                if (!replace.Active || replace.From.Length == 0)
                     continue;
                 switch (dialect)
                 {

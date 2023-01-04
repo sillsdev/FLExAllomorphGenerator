@@ -43,6 +43,11 @@ namespace SIL.AlloGenServiceTest
             Operation operation = allomorphGenerators.Operations[0];
             replacer = new Replacer(operation.Action.ReplaceOps);
             string input = "";
+            compareResult(input, "", Dialect.Ach);
+            compareResult(input, "", Dialect.Acl);
+            compareResult(input, "", Dialect.Akh);
+            compareResult(input, "", Dialect.Akl);
+            compareResult(input, "", Dialect.Ame);
             input = "*a:";
             compareResult(input, "a", Dialect.Ach);
             compareResult(input, "a", Dialect.Acl);
