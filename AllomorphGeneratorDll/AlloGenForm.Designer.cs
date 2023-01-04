@@ -31,6 +31,7 @@ namespace SIL.AllomorphGenerator
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlloGenForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabEditOps = new System.Windows.Forms.TabPage();
@@ -76,6 +77,7 @@ namespace SIL.AllomorphGenerator
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnNewFile = new System.Windows.Forms.Button();
+            this.ilPreview = new System.Windows.Forms.ImageList(this.components);
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.plPattern.SuspendLayout();
@@ -400,8 +402,8 @@ namespace SIL.AllomorphGenerator
             this.lBoxReplaceOps.Name = "lBoxReplaceOps";
             this.lBoxReplaceOps.Size = new System.Drawing.Size(625, 184);
             this.lBoxReplaceOps.TabIndex = 14;
+            this.lBoxReplaceOps.DoubleClick += new System.EventHandler(this.lBoxReplaceOps_DoubleClick);
             this.lBoxReplaceOps.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxReplaceOps_MouseUp);
-            this.lBoxReplaceOps.DoubleClick += new EventHandler(this.lBoxReplaceOps_DoubleClick);
             // 
             // lBoxEnvironments
             // 
@@ -464,7 +466,7 @@ namespace SIL.AllomorphGenerator
             this.lvPreview.TabIndex = 6;
             this.lvPreview.UseCompatibleStateImageBehavior = false;
             this.lvPreview.View = System.Windows.Forms.View.Details;
-            this.lvPreview.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(lvPreview_ColumnClick);
+            this.lvPreview.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvPreview_ColumnClick);
             // 
             // lbPreview
             // 
@@ -553,6 +555,12 @@ namespace SIL.AllomorphGenerator
             this.btnNewFile.UseVisualStyleBackColor = true;
             this.btnNewFile.Click += new System.EventHandler(this.btnNewFile_Click);
             // 
+            // ilPreview
+            // 
+            this.ilPreview.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilPreview.ImageStream")));
+            this.ilPreview.TransparentColor = System.Drawing.Color.Transparent;
+            this.ilPreview.Images.SetKeyName(0, "CheckedCheckbox.bmp");
+            // 
             // AlloGenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -628,6 +636,7 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Label lbPreview;
         private System.Windows.Forms.ListView lvPreview;
         private System.Windows.Forms.Label lbCount;
+        private ImageList ilPreview;
     }
 }
 

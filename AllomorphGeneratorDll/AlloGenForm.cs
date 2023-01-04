@@ -168,16 +168,8 @@ namespace SIL.AllomorphGenerator
 
         private void SetupPreviewCheckedListBox()
         {
-            //var element = VisualStyleElement.Button.CheckBox.CheckedNormal;
-            //var renderer = new VisualStyleRenderer(element);
-            //using (var g = m_grid.CreateGraphics())
-            //    m_szCheckBox = renderer.GetPartSize(g, ThemeSizeType.True);
-
-            //var imageList = new ImageList();
-            //Image image = new Bitmap()
-            //imageList.Images.Add("itemImageKey", image);
-
-            lvPreview.Columns.Add("cb", -2, HorizontalAlignment.Left);
+            lvPreview.SmallImageList = ilPreview;
+            lvPreview.Columns.Add("", "", 25, HorizontalAlignment.Left, 0);
             lvPreview.Columns.Add("Citation Form", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Akh          ", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Acl          ", -2, HorizontalAlignment.Left);
