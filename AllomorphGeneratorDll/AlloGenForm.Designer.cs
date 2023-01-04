@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace SIL.AllomorphGenerator
 {
@@ -463,6 +464,7 @@ namespace SIL.AllomorphGenerator
             this.lvPreview.TabIndex = 6;
             this.lvPreview.UseCompatibleStateImageBehavior = false;
             this.lvPreview.View = System.Windows.Forms.View.Details;
+            this.lvPreview.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(lvPreview_ColumnClick);
             // 
             // lbPreview
             // 

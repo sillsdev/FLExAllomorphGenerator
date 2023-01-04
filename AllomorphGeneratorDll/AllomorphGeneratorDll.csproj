@@ -172,6 +172,7 @@
     <Compile Include="EnvironmentsChooser.Designer.cs">
       <DependentUpon>EnvironmentsChooser.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListViewColumnSorter.cs" />
     <Compile Include="MorphTypesChooser.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -111,6 +111,8 @@ namespace SIL.AllomorphGenerator
         const string cmDelete = "Delete";
         const string cmDuplicate = "Duplicate";
 
+        private ListViewColumnSorter lvwColumnSorter;
+
         public AlloGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
         {
             Cache = cache;
@@ -127,6 +129,10 @@ namespace SIL.AllomorphGenerator
         private void InitForm()
         {
             InitializeComponent();
+            // Create an instance of a ListView column sorter and assign it
+            // to the ListView control.
+            lvwColumnSorter = new ListViewColumnSorter();
+            this.lvPreview.ListViewItemSorter = lvwColumnSorter;
             try
             {
                 RememberFormState();
@@ -1062,5 +1068,39 @@ namespace SIL.AllomorphGenerator
             string previewForm = replacer.ApplyReplaceOpToOneDialect(citationForm, dialect);
             return previewForm;
         }
+
+        private void lvPreview_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Do not sort the checkboxes column
+            if (e.Column == 0)
+                return;
+            // Following code taken from
+            // https://learn.microsoft.com/en-us/troubleshoot/developer/visualstudio/csharp/language-compilers/sort-listview-by-column
+            // on 2023.01.04
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == lvwColumnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    lvwColumnSorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                lvwColumnSorter.SortColumn = e.Column;
+                lvwColumnSorter.Order = SortOrder.Ascending;
+            }
+
+            // Perform the sort with these new sort options.
+            this.lvPreview.Sort();
+        }
+
+
     }
 }
