@@ -70,7 +70,6 @@ namespace SIL.AllomorphGenerator
             this.btnApplyOperations = new System.Windows.Forms.Button();
             this.clbOperations = new System.Windows.Forms.CheckedListBox();
             this.lbOperationsToApply = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.lbAlloGenFile = new System.Windows.Forms.Label();
             this.tbFile = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
@@ -429,7 +428,6 @@ namespace SIL.AllomorphGenerator
             this.tabRunOps.Controls.Add(this.btnApplyOperations);
             this.tabRunOps.Controls.Add(this.clbOperations);
             this.tabRunOps.Controls.Add(this.lbOperationsToApply);
-            this.tabRunOps.Controls.Add(this.button1);
             this.tabRunOps.Location = new System.Drawing.Point(4, 29);
             this.tabRunOps.Name = "tabRunOps";
             this.tabRunOps.Padding = new System.Windows.Forms.Padding(3);
@@ -477,11 +475,11 @@ namespace SIL.AllomorphGenerator
             // btnApplyOperations
             // 
             this.btnApplyOperations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnApplyOperations.Location = new System.Drawing.Point(23, 889);
+            this.btnApplyOperations.Location = new System.Drawing.Point(23, 883);
             this.btnApplyOperations.Name = "btnApplyOperations";
-            this.btnApplyOperations.Size = new System.Drawing.Size(142, 42);
+            this.btnApplyOperations.Size = new System.Drawing.Size(337, 59);
             this.btnApplyOperations.TabIndex = 3;
-            this.btnApplyOperations.Text = "Apply Operations";
+            this.btnApplyOperations.Text = "Apply Checked Operations";
             this.btnApplyOperations.UseVisualStyleBackColor = true;
             this.btnApplyOperations.Click += new System.EventHandler(this.btnApplyOperations_Click);
             // 
@@ -504,16 +502,6 @@ namespace SIL.AllomorphGenerator
             this.lbOperationsToApply.Size = new System.Drawing.Size(146, 20);
             this.lbOperationsToApply.TabIndex = 1;
             this.lbOperationsToApply.Text = "Operations to apply";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(247, 889);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 73);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // lbAlloGenFile
             // 
@@ -631,7 +619,6 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Panel plActions;
         private System.Windows.Forms.Button btnNewFile;
         private System.Windows.Forms.Button btnMatch;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckedListBox clbOperations;
         private System.Windows.Forms.Label lbOperationsToApply;
         private System.Windows.Forms.Button btnApplyOperations;

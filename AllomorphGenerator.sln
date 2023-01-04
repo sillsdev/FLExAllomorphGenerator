@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlloGenServiceTests", "Allo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlloGenModelTests", "AlloGenModelTests\AlloGenModelTests.csproj", "{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FwCoreDlgs", "..\..\..\..\..\fwrepo\fw\Src\FwCoreDlgs\FwCoreDlgs.csproj", "{17090FC0-6BDA-409A-A99A-5AE7F35647ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,16 @@ Global
 		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Release|x64.Build.0 = Release|x64
 		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Release|x86.ActiveCfg = Release|Any CPU
 		{77A26455-98D4-4E69-8D4D-2B6FEC70BB94}.Release|x86.Build.0 = Release|Any CPU
+		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Debug|x64.ActiveCfg = Debug|x64
+		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Debug|x64.Build.0 = Debug|x64
+		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Debug|x86.ActiveCfg = Debug|x86
+		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Debug|x86.Build.0 = Debug|x86
+		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Release|Any CPU.ActiveCfg = Release|x86
+		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Release|x64.ActiveCfg = Release|x64
+		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Release|x64.Build.0 = Release|x64
+		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Release|x86.ActiveCfg = Release|x86
+		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

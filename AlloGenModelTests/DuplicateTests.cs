@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 SIL International
+﻿// Copyright (c) 2022-2023 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
@@ -22,7 +22,6 @@ namespace AlloGenModelTests
         string TestDataDir { get; set; }
         string AlloGenFile { get; set; }
         string AlloGenExpected { get; set; }
-        string AlloGenProduced { get; set; }
 
         [SetUp]
         public void Setup()

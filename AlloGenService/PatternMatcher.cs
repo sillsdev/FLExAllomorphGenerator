@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 SIL International
+﻿// Copyright (c) 2022-2023 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
@@ -21,6 +21,7 @@ namespace SIL.AlloGenService
         public IEnumerable<ILexEntry> SingleAllomorphs { get; set; }
         public IMoMorphType morphType { get; set; }
         public List<IMoMorphType> morphTypes { get; set; } = new List<IMoMorphType>();
+        public string ErrorMessage { get; set; } = "";
 
         public PatternMatcher(Pattern pattern, LcmCache cache)
         {
@@ -88,7 +89,11 @@ namespace SIL.AlloGenService
         {
             int ws = Cache.DefaultVernWs;
             Matcher agMatcher = Pattern.Matcher;
-            IMatcher fwMatcher = agMatcher.GetFwMatcher(ws);
+            string errorMessage = "";
+            IMatcher fwMatcher = agMatcher.GetFwMatcher(ws, out errorMessage);
+            ErrorMessage = errorMessage;
+            if (fwMatcher == null)
+                return null;
             var lexEntriesPerMatchString = new List<ILexEntry>();
             foreach (ILexEntry e in lexEntries)
             {
@@ -103,6 +108,8 @@ namespace SIL.AlloGenService
         public IEnumerable<ILexEntry> MatchPattern(IEnumerable<ILexEntry> lexEntries)
         {
             var lexEntriesThatMatch = MatchMatchString(lexEntries);
+            if (lexEntriesThatMatch == null)
+                return null;
             lexEntriesThatMatch = MatchCategory(lexEntriesThatMatch);
             lexEntriesThatMatch = MatchMorphTypes(lexEntriesThatMatch);
             return lexEntriesThatMatch;

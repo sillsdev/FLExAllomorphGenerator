@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 SIL International
+﻿// Copyright (c) 2022-2023 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
@@ -65,24 +65,6 @@ namespace SIL.AlloGenModel
             return Tuple.Create(Type, Pattern, MatchCase, MatchDiacritics).GetHashCode();
         }
 
-        //public string CreateFwXmlString(int ws)
-        //{
-        //    StringBuilder sb = new StringBuilder();
-        //    sb.Append("<matcher assemblyPath=\"Filters.dll\" class=\"SIL.FieldWorks.Filters.");
-        //    sb.Append(GetMatcherTypeName());
-        //    sb.Append("\" label=\"\"");
-        //    sb.Append(" pattern=\"");
-        //    sb.Append(Pattern);
-        //    sb.Append("\" ws=\"");
-        //    sb.Append(ws.ToString());
-        //    sb.Append("\" matchCase=\"");
-        //    sb.Append(MatchCase.ToString());
-        //    sb.Append("\" matchDiacritics=\"");
-        //    sb.Append(MatchDiacritics);
-        //    sb.Append("\"/>");
-        //    return sb.ToString();
-        //}
-
         string GetMatcherTypeName()
         {
             StringBuilder sb = new StringBuilder();
@@ -108,8 +90,9 @@ namespace SIL.AlloGenModel
             return sb.ToString();
         }
 
-        public IMatcher GetFwMatcher(int ws)
+        public IMatcher GetFwMatcher(int ws, out string errorMessage)
         {
+            errorMessage = "";
             IVwPattern fwPattern = CreateFwPattern(ws);
             IMatcher fwMatcher = null;
             if (Type == MatcherType.Begin)
@@ -119,7 +102,14 @@ namespace SIL.AlloGenModel
             else if (Type == MatcherType.Exact)
                 fwMatcher = new ExactMatcher(fwPattern);
             else if (Type == MatcherType.RegularExpression)
+            {
                 fwMatcher = new RegExpMatcher(fwPattern);
+                if (!fwMatcher.IsValid())
+                {
+                    fwMatcher = null;
+                    errorMessage = fwMatcher.ErrorMessage();
+                }
+            }
             else
                 fwMatcher = new AnywhereMatcher(fwPattern);
             return fwMatcher;

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 SIL International
+﻿// Copyright (c) 2022-2023 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
@@ -1014,24 +1014,43 @@ namespace SIL.AllomorphGenerator
             {
                 PatternMatcher patMatcher = new PatternMatcher(Pattern, Cache);
                 IEnumerable<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.SingleAllomorphs);
+                if (matchingEntries == null)
+                {
+                    string errMsg = string.Format(FwCoreDlgs.kstidErrorInRegEx, patMatcher.ErrorMessage);
+                    MessageBox.Show(this, errMsg, FwCoreDlgs.kstidErrorInRegExHeader,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                Replacer replacer = new Replacer(Operation.Action.ReplaceOps);
                 lvPreview.Items.Clear();
                 foreach (ILexEntry entry in matchingEntries)
                 {
-                    int wsOut = 0;
                     ListViewItem lvItem = new ListViewItem("");
                     lvItem.UseItemStyleForSubItems = false;
-                    lvItem.SubItems.Add(entry.CitationForm.VernacularDefaultWritingSystem.Text);
-                    lvItem.SubItems.Add(entry.LexemeFormOA.Form.GetAlternativeOrBestTss(wsForAkh, out wsOut).Text);
-                    lvItem.SubItems.Add(entry.LexemeFormOA.Form.GetAlternativeOrBestTss(wsForAcl, out wsOut).Text);
-                    lvItem.SubItems.Add(entry.LexemeFormOA.Form.GetAlternativeOrBestTss(wsForAkl, out wsOut).Text);
-                    lvItem.SubItems.Add(entry.LexemeFormOA.Form.GetAlternativeOrBestTss(wsForAch, out wsOut).Text);
-                    lvItem.SubItems.Add(entry.LexemeFormOA.Form.GetAlternativeOrBestTss(wsForAme, out wsOut).Text);
+                    string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
+                    lvItem.SubItems.Add(citationForm);
+                    string previewForm = GetPreviewForm(replacer, citationForm, Dialect.Akh);
+                    lvItem.SubItems.Add(previewForm);
+                    previewForm = GetPreviewForm(replacer, citationForm, Dialect.Acl);
+                    lvItem.SubItems.Add(previewForm);
+                    previewForm = GetPreviewForm(replacer, citationForm, Dialect.Akl);
+                    lvItem.SubItems.Add(previewForm);
+                    previewForm = GetPreviewForm(replacer, citationForm, Dialect.Ach);
+                    lvItem.SubItems.Add(previewForm);
+                    previewForm = GetPreviewForm(replacer, citationForm, Dialect.Ame);
+                    lvItem.SubItems.Add(previewForm);
                     lvItem = SetFontInfoForItem(lvItem);
                     lvPreview.Items.Add(lvItem);
                 }
                 sCount = matchingEntries.Count().ToString(); ;
             }
             lbCount.Text = sCount;
+        }
+
+        private string GetPreviewForm(Replacer replacer, string citationForm, Dialect dialect)
+        {
+            string previewForm = replacer.ApplyReplaceOpToOneDialect(citationForm, dialect);
+            return previewForm;
         }
     }
 }
