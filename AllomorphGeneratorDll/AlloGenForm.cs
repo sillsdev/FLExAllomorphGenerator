@@ -111,6 +111,10 @@ namespace SIL.AllomorphGenerator
         const string cmDelete = "Delete";
         const string cmDuplicate = "Duplicate";
 
+        private ContextMenuStrip checkBoxContextMenu;
+        const string cmSelectAll = "Select All";
+        const string cmClearAll = "Clear All";
+        const string cmToggle = "Toggle";
         private ListViewColumnSorter lvwColumnSorter;
 
         public AlloGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
@@ -149,6 +153,7 @@ namespace SIL.AllomorphGenerator
                 FillApplyOperationsListBox();
                 BuildReplaceContextMenu();
                 BuildHelpContextMenu();
+                BuildCheckBoxContextMenu();
                 lBoxMorphTypes.ClearSelected();
                 lBoxEnvironments.ClearSelected();
                 RememberTabSelection();
@@ -163,6 +168,15 @@ namespace SIL.AllomorphGenerator
 
         private void SetupPreviewCheckedListBox()
         {
+            //var element = VisualStyleElement.Button.CheckBox.CheckedNormal;
+            //var renderer = new VisualStyleRenderer(element);
+            //using (var g = m_grid.CreateGraphics())
+            //    m_szCheckBox = renderer.GetPartSize(g, ThemeSizeType.True);
+
+            //var imageList = new ImageList();
+            //Image image = new Bitmap()
+            //imageList.Images.Add("itemImageKey", image);
+
             lvPreview.Columns.Add("cb", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Citation Form", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Akh          ", -2, HorizontalAlignment.Left);
@@ -312,6 +326,38 @@ namespace SIL.AllomorphGenerator
             helpContextMenu.Items.Add(userDoc);
             helpContextMenu.Items.Add("-");
             helpContextMenu.Items.Add(about);
+        }
+
+        private void BuildCheckBoxContextMenu()
+        {
+            checkBoxContextMenu = new ContextMenuStrip();
+            ToolStripMenuItem selectAll = new ToolStripMenuItem(cmSelectAll);
+            selectAll.Click += new EventHandler(SelectAll_Click);
+            selectAll.Name = cmSelectAll;
+            ToolStripMenuItem clearAll = new ToolStripMenuItem(cmClearAll);
+            clearAll.Click += new EventHandler(ClearAll_Click);
+            clearAll.Name = cmClearAll;
+            ToolStripMenuItem toggle = new ToolStripMenuItem(cmToggle);
+            toggle.Click += new EventHandler(Toggle_Click);
+            toggle.Name = cmToggle;
+            checkBoxContextMenu.Items.Add(selectAll);
+            checkBoxContextMenu.Items.Add(clearAll);
+            checkBoxContextMenu.Items.Add(toggle);
+        }
+
+        private void ClearAll_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SelectAll_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Toggle_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void lBoxReplaceOps_MouseUp(object sender, MouseEventArgs e)
@@ -1071,9 +1117,15 @@ namespace SIL.AllomorphGenerator
 
         private void lvPreview_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            // Do not sort the checkboxes column
+            // Do not sort the checkboxes column; instead show context menu
             if (e.Column == 0)
+            {
+                ListView lvSender = (ListView)sender;
+                Point ptLowerLeft = new Point(0, 10);
+                ptLowerLeft =lvSender.PointToScreen(ptLowerLeft);
+                checkBoxContextMenu.Show(ptLowerLeft);
                 return;
+            }
             // Following code taken from
             // https://learn.microsoft.com/en-us/troubleshoot/developer/visualstudio/csharp/language-compilers/sort-listview-by-column
             // on 2023.01.04
@@ -1100,7 +1152,6 @@ namespace SIL.AllomorphGenerator
             // Perform the sort with these new sort options.
             this.lvPreview.Sort();
         }
-
 
     }
 }
