@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PatternMatcher.cs" />
+    <Compile Include="Replacer.cs" />
     <Compile Include="XmlBackEndProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
