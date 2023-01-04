@@ -347,17 +347,26 @@ namespace SIL.AllomorphGenerator
 
         private void ClearAll_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            foreach (ListViewItem lvItem in lvPreview.Items)
+            {
+                lvItem.Checked = false;
+            }
         }
 
         private void SelectAll_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            foreach (ListViewItem lvItem in lvPreview.Items)
+            {
+                lvItem.Checked = true;
+            }
         }
 
         private void Toggle_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            foreach (ListViewItem lvItem in lvPreview.Items)
+            {
+                lvItem.Checked = !lvItem.Checked;
+            }
         }
 
         private void lBoxReplaceOps_MouseUp(object sender, MouseEventArgs e)
