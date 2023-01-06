@@ -536,6 +536,7 @@ namespace SIL.AllomorphGenerator
                 Operations.Insert(index, op);
                 currentListBox.Items.Insert(index, op);
             }
+            currentListBox.SetSelected(index, true);
             MarkAsChanged();
         }
 
@@ -732,10 +733,13 @@ namespace SIL.AllomorphGenerator
             {
                 lBoxOperations.Items.Add(op);
             }
-            // select last used operation, if any
-            if (LastOperation < 0 || LastOperation >= Operations.Count)
-                LastOperation = 0;
-            lBoxOperations.SetSelected(LastOperation, true);
+            if (Operations.Count > 0)
+            {
+                // select last used operation, if any
+                if (LastOperation < 0 || LastOperation >= Operations.Count)
+                    LastOperation = 0;
+                lBoxOperations.SetSelected(LastOperation, true);
+            }
         }
 
         public void FillApplyOperationsListBox()
@@ -750,11 +754,14 @@ namespace SIL.AllomorphGenerator
                 lvItem.Checked = op.Active;
                 lvOperations.Items.Add(lvItem);
             }
-            // select last used operation, if any
-            if (LastApplyOperation < 0 || LastApplyOperation >= Operations.Count)
-                LastApplyOperation = 0;
-            lvOperations.Items[LastApplyOperation].Selected = true;
-            lvOperations.Select();
+            if(Operations.Count > 0)
+            {
+                // select last used operation, if any
+                if (LastApplyOperation < 0 || LastApplyOperation >= Operations.Count)
+                    LastApplyOperation = 0;
+                lvOperations.Items[LastApplyOperation].Selected = true;
+                lvOperations.Select();
+            }
         }
 
         private void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
@@ -1091,24 +1098,6 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            PatternMatcher patMatcher = new PatternMatcher(Pattern, Cache);
-            MessageBox.Show("single count=" + patMatcher.SingleAllomorphs.Count());
-            IEnumerable<ILexEntry> lexEntries = patMatcher.MatchMatchString(patMatcher.SingleAllomorphs);
-            MessageBox.Show("string match count=" + lexEntries.Count());
-            if (Pattern.Category != null && Pattern.Category.Active && Pattern.Category.Guid.Length > 0)
-            {
-                lexEntries = patMatcher.MatchCategory(lexEntries);
-                MessageBox.Show("category match count=" + lexEntries.Count());
-            }
-            if (Pattern.MorphTypes.Count > 0)
-            {
-                lexEntries = patMatcher.MatchMorphTypes(lexEntries);
-                MessageBox.Show("morph types match count=" + lexEntries.Count());
-            }
-        }
-
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             TabPage page = (sender as TabControl).SelectedTab;
@@ -1203,6 +1192,7 @@ namespace SIL.AllomorphGenerator
             }
             ListViewItem lvItem = lvOperations.SelectedItems[0];
             Operation = lvItem.Tag as Operation;
+            Pattern = Operation.Pattern;
             if (Operation != null)
             {
                 PatternMatcher patMatcher = new PatternMatcher(Pattern, Cache);
