@@ -69,7 +69,7 @@ namespace SIL.AllomorphGenerator
         AllomorphGenerators AlloGens { get; set; }
         List<Operation> Operations { get; set; }
         Operation Operation { get; set; }
-        Operation ApplyOperation { get; set; }
+        Operation LastOperationShown { get; set; } = null;
         List<Replace> ReplaceOps { get; set; }
         AlloGenModel.Action ActionOp { get; set; }
         StemName StemName { get; set; }
@@ -99,6 +99,7 @@ namespace SIL.AllomorphGenerator
         FontInfo fontInfoForAme;
         Color colorForAme;
         int wsForAme = -1;
+        Dictionary<Operation, List<ILexEntry>> dictNonChosen = new Dictionary<Operation, List<ILexEntry>>();
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
@@ -1066,11 +1067,63 @@ namespace SIL.AllomorphGenerator
 
         private void btnApplyOperations_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("apply ops clicked");
+            RememberNonChosenEntries(Operation);
+            if (clbOperations.CheckedItems.Count == 0)
+            {
+                // nothing to do
+                return;
+            }
+            AllomorphCreator ac = new AllomorphCreator(Cache, wsForAkh, wsForAcl, wsForAkl, wsForAch, wsForAme);
+            string undoRedoPrompt = " Allomorph Generation for '" + Operation.Name;
+            UndoableUnitOfWorkHelper.Do("Undo" + undoRedoPrompt, "Redo" + undoRedoPrompt, Cache.ActionHandlerAccessor, () =>
+            {
+                foreach (Operation op in clbOperations.CheckedItems)
+                {
+                    List<ILexEntry> nonChosenEntries = new List<ILexEntry>();
+                    if (dictNonChosen.ContainsKey(op))
+                    {
+                        nonChosenEntries = dictNonChosen[op];
+                    }
+                    PatternMatcher patMatcher = new PatternMatcher(op.Pattern, Cache);
+                    IEnumerable<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.SingleAllomorphs);
+                    if (matchingEntries == null || matchingEntries.Count() == 0 || nonChosenEntries.Count == 0)
+                    {
+                        continue;
+                    }
+                    Replacer replacer = new Replacer(Operation.Action.ReplaceOps);
+                    lvPreview.Items.Clear();
+                    foreach (ILexEntry entry in matchingEntries)
+                    {
+                        if (nonChosenEntries.Contains(entry))
+                        {
+                            continue;
+                        }
+                        string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
+                        IMoStemAllomorph form = ac.CreateAllomorph(entry,
+                            GetPreviewForm(replacer, citationForm, Dialect.Akh),
+                            GetPreviewForm(replacer, citationForm, Dialect.Acl),
+                            GetPreviewForm(replacer, citationForm, Dialect.Akl),
+                            GetPreviewForm(replacer, citationForm, Dialect.Ach),
+                            GetPreviewForm(replacer, citationForm, Dialect.Ame));
+                        if (op.Action.StemName.Guid.Length > 0)
+                        {
+                            ac.AddStemName(form, op.Action.StemName.Guid);
+                        }
+                        if (op.Action.Environments.Count > 0)
+                        {
+                            ac.AddEnvironments(form, op.Action.Environments);
+                        }
+                    }
+                }
+            });
         }
 
         private void clbOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (LastOperationShown != null)
+            {
+                RememberNonChosenEntries(LastOperationShown);
+            }
             string sCount = "0";
             Operation = clbOperations.SelectedItem as Operation;
             if (Operation != null)
@@ -1089,6 +1142,7 @@ namespace SIL.AllomorphGenerator
                 foreach (ILexEntry entry in matchingEntries)
                 {
                     ListViewItem lvItem = new ListViewItem("");
+                    lvItem.Tag = entry;
                     lvItem.UseItemStyleForSubItems = false;
                     string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
                     lvItem.SubItems.Add(citationForm);
@@ -1105,9 +1159,28 @@ namespace SIL.AllomorphGenerator
                     lvItem = SetFontInfoForItem(lvItem);
                     lvPreview.Items.Add(lvItem);
                 }
-                sCount = matchingEntries.Count().ToString(); ;
+                sCount = matchingEntries.Count().ToString();
+                SelectAll_Click(null, null);
             }
             lbCount.Text = sCount;
+            LastOperationShown = Operation;
+        }
+
+        private void RememberNonChosenEntries(Operation op)
+        {
+            List<ILexEntry> uncheckedEntries = new List<ILexEntry>();
+            foreach (ListViewItem item in lvPreview.Items)
+            {
+                if (!item.Checked)
+                {
+                    uncheckedEntries.Add((ILexEntry)item.Tag);
+                }
+            }
+            if (dictNonChosen.ContainsKey(op))
+            {
+                dictNonChosen.Remove(op);
+            }
+            dictNonChosen.Add(op, uncheckedEntries);
         }
 
         private string GetPreviewForm(Replacer replacer, string citationForm, Dialect dialect)

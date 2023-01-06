@@ -50,6 +50,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=1.4.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\CommonServiceLocator.dll</HintPath>
+    </Reference>
     <Reference Include="Filters, Version=9.1.19.25511, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\Filters.dll</HintPath>
@@ -75,6 +79,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllomorphCreator.cs" />
     <Compile Include="PatternMatcher.cs" />
     <Compile Include="Replacer.cs" />
     <Compile Include="XmlBackEndProvider.cs" />

@@ -97,6 +97,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllomorphCreatorTests.cs" />
+    <Compile Include="FwTestBase.cs" />
     <Compile Include="PatternMatcherTest.cs" />
     <Compile Include="ReplacerTests.cs" />
     <Compile Include="TestLcmDirectories.cs" />
