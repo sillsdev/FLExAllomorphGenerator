@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 SIL International
+﻿// Copyright (c) 2022-2023 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
@@ -47,7 +47,7 @@ namespace SIL.AlloGenServiceTest
             Pattern pattern = operation.Pattern;
             Assert.NotNull(pattern);
             Matcher matcher = pattern.Matcher;
-            Assert.AreEqual(MatcherType.Begin, matcher.Type);
+            Assert.AreEqual(MatcherType.RegularExpression, matcher.Type);
             Assert.AreEqual(@":$|:\..+$", matcher.Pattern);
             Assert.AreEqual(true, matcher.MatchCase);
             Assert.AreEqual(false, matcher.MatchDiacritics);
@@ -180,7 +180,7 @@ namespace SIL.AlloGenServiceTest
         private static Pattern MakePattern()
         {
             Pattern pattern = new Pattern();
-            Matcher matcher = new Matcher(MatcherType.Begin);
+            Matcher matcher = new Matcher(MatcherType.RegularExpression);
             matcher.MatchCase = true;
             matcher.MatchDiacritics = false;
             matcher.Pattern = @":$|:\..+$";

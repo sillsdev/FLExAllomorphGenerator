@@ -6,7 +6,7 @@
       <Description>Add allomorphs for entries which undergo foreshortening</Description>
       <Pattern>
         <Matcher>
-          <Type>Begin</Type>
+          <Type>RegularExpression</Type>
           <Pattern>:$|:\..+$</Pattern>
           <MatchCase>true</MatchCase>
           <MatchDiacritics>false</MatchDiacritics>

@@ -31,7 +31,7 @@ namespace SIL.AlloGenServiceTest
         protected string AlloGenExpected { get; set; }
         protected AllomorphGenerators allomorphGenerators;
         protected Pattern pattern { get; set; }
-        protected PatternMatcher pm { get; set; }
+        protected PatternMatcher patternMatcher { get; set; }
 
         public override void FixtureSetup()
         {
@@ -63,7 +63,7 @@ namespace SIL.AlloGenServiceTest
             provider.LoadDataFromFile(AlloGenExpected);
             allomorphGenerators = provider.AlloGens;
             pattern = allomorphGenerators.Operations[0].Pattern;
-            pm = new PatternMatcher(pattern, myCache);
+            patternMatcher = new PatternMatcher(pattern, myCache);
         }
     }
 }

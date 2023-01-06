@@ -65,17 +65,23 @@ namespace SIL.AlloGenService
             var lexEntriesForCategory = new List<ILexEntry>();
             if (Pattern.Category != null && Pattern.Category.Active && Pattern.Category.Guid.Length > 0)
             {
-                foreach (ILexEntry e in lexEntries)
+                IPartOfSpeech patternPos = GetPatternsPartOfSpeech();
+                if (patternPos != null)
                 {
-                    foreach (IMoMorphSynAnalysis msa in e.MorphoSyntaxAnalysesOC)
+                    foreach (ILexEntry entry in lexEntries)
                     {
-                        IMoStemMsa stemMsa = msa as IMoStemMsa;
-                        if (stemMsa != null && stemMsa.PartOfSpeechRA != null)
+                        foreach (IMoMorphSynAnalysis msa in entry.MorphoSyntaxAnalysesOC)
                         {
-                            if (stemMsa.PartOfSpeechRA.Guid.ToString() == Pattern.Category.Guid)
+                            IMoStemMsa stemMsa = msa as IMoStemMsa;
+                            if (stemMsa != null && stemMsa.PartOfSpeechRA != null)
                             {
-                                lexEntriesForCategory.Add(e);
-                                break;
+                                if (stemMsa.PartOfSpeechRA == patternPos || patternPos.ReallyReallyAllPossibilities.Contains(stemMsa.PartOfSpeechRA))
+                                {
+                                    {
+                                        lexEntriesForCategory.Add(entry);
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
@@ -83,6 +89,18 @@ namespace SIL.AlloGenService
                 return lexEntriesForCategory;
             }
             return lexEntries;
+        }
+
+        private IPartOfSpeech GetPatternsPartOfSpeech()
+        {
+            foreach (IPartOfSpeech pos in Cache.LangProject.AllPartsOfSpeech)
+            {
+                if (pos.Guid.ToString() == Pattern.Category.Guid)
+                {
+                    return pos;
+                }
+            }
+            return null;
         }
 
         public IEnumerable<ILexEntry> MatchMatchString(IEnumerable<ILexEntry> lexEntries)
