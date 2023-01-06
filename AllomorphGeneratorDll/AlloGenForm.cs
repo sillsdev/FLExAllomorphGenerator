@@ -112,7 +112,8 @@ namespace SIL.AllomorphGenerator
         const string cmDelete = "Delete";
         const string cmDuplicate = "Duplicate";
 
-        private ContextMenuStrip checkBoxContextMenu;
+        private ContextMenuStrip operationsCheckBoxContextMenu;
+        private ContextMenuStrip previewCheckBoxContextMenu;
         const string cmSelectAll = "Select All";
         const string cmClearAll = "Clear All";
         const string cmToggle = "Toggle";
@@ -150,11 +151,13 @@ namespace SIL.AllomorphGenerator
                 }
                 FillOperationsListBox();
                 SetupFontAndStyleInfo();
-                SetupPreviewCheckedListBox();
+                SetUpOperationsCheckedListBox();
+                SetUpPreviewCheckedListBox();
                 FillApplyOperationsListBox();
                 BuildReplaceContextMenu();
                 BuildHelpContextMenu();
-                BuildCheckBoxContextMenu();
+                BuildOperationsCheckBoxContextMenu();
+                BuildPreviewCheckBoxContextMenu();
                 lBoxMorphTypes.ClearSelected();
                 lBoxEnvironments.ClearSelected();
                 RememberTabSelection();
@@ -167,7 +170,14 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void SetupPreviewCheckedListBox()
+        private void SetUpOperationsCheckedListBox()
+        {
+            lvOperations.SmallImageList = ilPreview;
+            lvOperations.Columns.Add("", "", 25, HorizontalAlignment.Left, 0);
+            lvOperations.Columns.Add("Operations", -2, HorizontalAlignment.Left);
+        }
+
+        private void SetUpPreviewCheckedListBox()
         {
             lvPreview.SmallImageList = ilPreview;
             lvPreview.Columns.Add("", "", 25, HorizontalAlignment.Left, 0);
@@ -177,7 +187,7 @@ namespace SIL.AllomorphGenerator
             lvPreview.Columns.Add("Akl          ", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Ach          ", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Ame          ", -2, HorizontalAlignment.Left);
-            }
+        }
 
         private ListViewItem SetFontInfoForItem(ListViewItem item)
         {
@@ -321,24 +331,65 @@ namespace SIL.AllomorphGenerator
             helpContextMenu.Items.Add(about);
         }
 
-        private void BuildCheckBoxContextMenu()
+        private void BuildOperationsCheckBoxContextMenu()
         {
-            checkBoxContextMenu = new ContextMenuStrip();
+            operationsCheckBoxContextMenu = new ContextMenuStrip();
             ToolStripMenuItem selectAll = new ToolStripMenuItem(cmSelectAll);
-            selectAll.Click += new EventHandler(SelectAll_Click);
+            selectAll.Click += new EventHandler(OperationsSelectAll_Click);
             selectAll.Name = cmSelectAll;
             ToolStripMenuItem clearAll = new ToolStripMenuItem(cmClearAll);
-            clearAll.Click += new EventHandler(ClearAll_Click);
+            clearAll.Click += new EventHandler(OperationsClearAll_Click);
             clearAll.Name = cmClearAll;
             ToolStripMenuItem toggle = new ToolStripMenuItem(cmToggle);
-            toggle.Click += new EventHandler(Toggle_Click);
+            toggle.Click += new EventHandler(OperationsToggle_Click);
             toggle.Name = cmToggle;
-            checkBoxContextMenu.Items.Add(selectAll);
-            checkBoxContextMenu.Items.Add(clearAll);
-            checkBoxContextMenu.Items.Add(toggle);
+            operationsCheckBoxContextMenu.Items.Add(selectAll);
+            operationsCheckBoxContextMenu.Items.Add(clearAll);
+            operationsCheckBoxContextMenu.Items.Add(toggle);
         }
 
-        private void ClearAll_Click(object sender, EventArgs e)
+        private void OperationsClearAll_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem lvItem in lvOperations.Items)
+            {
+                lvItem.Checked = false;
+            }
+        }
+
+        private void OperationsSelectAll_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem lvItem in lvOperations.Items)
+            {
+                lvItem.Checked = true;
+            }
+        }
+
+        private void OperationsToggle_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem lvItem in lvOperations.Items)
+            {
+                lvItem.Checked = !lvItem.Checked;
+            }
+        }
+
+        private void BuildPreviewCheckBoxContextMenu()
+        {
+            previewCheckBoxContextMenu = new ContextMenuStrip();
+            ToolStripMenuItem selectAll = new ToolStripMenuItem(cmSelectAll);
+            selectAll.Click += new EventHandler(PreviewSelectAll_Click);
+            selectAll.Name = cmSelectAll;
+            ToolStripMenuItem clearAll = new ToolStripMenuItem(cmClearAll);
+            clearAll.Click += new EventHandler(PreviewClearAll_Click);
+            clearAll.Name = cmClearAll;
+            ToolStripMenuItem toggle = new ToolStripMenuItem(cmToggle);
+            toggle.Click += new EventHandler(PreviewToggle_Click);
+            toggle.Name = cmToggle;
+            previewCheckBoxContextMenu.Items.Add(selectAll);
+            previewCheckBoxContextMenu.Items.Add(clearAll);
+            previewCheckBoxContextMenu.Items.Add(toggle);
+        }
+
+        private void PreviewClearAll_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem lvItem in lvPreview.Items)
             {
@@ -346,7 +397,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void SelectAll_Click(object sender, EventArgs e)
+        private void PreviewSelectAll_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem lvItem in lvPreview.Items)
             {
@@ -354,7 +405,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void Toggle_Click(object sender, EventArgs e)
+        private void PreviewToggle_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem lvItem in lvPreview.Items)
             {
@@ -689,15 +740,21 @@ namespace SIL.AllomorphGenerator
 
         public void FillApplyOperationsListBox()
         {
-            clbOperations.Items.Clear();
+            lvOperations.Items.Clear();
             foreach (Operation op in Operations)
             {
-                clbOperations.Items.Add(op);
+                ListViewItem lvItem = new ListViewItem("");
+                lvItem.UseItemStyleForSubItems = false;
+                lvItem.Tag = op;
+                lvItem.SubItems.Add(op.Name);
+                lvItem.Checked = op.Active;
+                lvOperations.Items.Add(lvItem);
             }
             // select last used operation, if any
             if (LastApplyOperation < 0 || LastApplyOperation >= Operations.Count)
                 LastApplyOperation = 0;
-            clbOperations.SetSelected(LastApplyOperation, true);
+            lvOperations.Items[LastApplyOperation].Selected = true;
+            lvOperations.Select();
         }
 
         private void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
@@ -1068,8 +1125,9 @@ namespace SIL.AllomorphGenerator
         private void btnApplyOperations_Click(object sender, EventArgs e)
         {
             RememberNonChosenEntries(Operation);
-            if (clbOperations.CheckedItems.Count == 0)
+            if (lvOperations.CheckedItems.Count == 0)
             {
+                MessageBox.Show("No operations are selected, so there's nothing to do");
                 // nothing to do
                 return;
             }
@@ -1077,8 +1135,9 @@ namespace SIL.AllomorphGenerator
             string undoRedoPrompt = " Allomorph Generation for '" + Operation.Name;
             UndoableUnitOfWorkHelper.Do("Undo" + undoRedoPrompt, "Redo" + undoRedoPrompt, Cache.ActionHandlerAccessor, () =>
             {
-                foreach (Operation op in clbOperations.CheckedItems)
+                foreach (ListViewItem lvItem in lvOperations.CheckedItems)
                 {
+                    Operation op = (Operation)lvItem.Tag;
                     List<ILexEntry> nonChosenEntries = new List<ILexEntry>();
                     if (dictNonChosen.ContainsKey(op))
                     {
@@ -1091,7 +1150,6 @@ namespace SIL.AllomorphGenerator
                         continue;
                     }
                     Replacer replacer = new Replacer(Operation.Action.ReplaceOps);
-                    lvPreview.Items.Clear();
                     foreach (ILexEntry entry in matchingEntries)
                     {
                         if (nonChosenEntries.Contains(entry))
@@ -1118,14 +1176,33 @@ namespace SIL.AllomorphGenerator
             });
         }
 
-        private void clbOperations_SelectedIndexChanged(object sender, EventArgs e)
+        private void lvOperations_ItemCheck(object sender, EventArgs e)
+        {
+            if (lvOperations.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            ListViewItem lvItem = lvOperations.SelectedItems[0];
+            Operation = lvItem.Tag as Operation;
+            if (Operation != null)
+            {
+                Operation.Active = lvItem.Checked;
+            }
+        }
+
+        private void lvOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (LastOperationShown != null)
             {
                 RememberNonChosenEntries(LastOperationShown);
             }
             string sCount = "0";
-            Operation = clbOperations.SelectedItem as Operation;
+            if (lvOperations.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            ListViewItem lvItem = lvOperations.SelectedItems[0];
+            Operation = lvItem.Tag as Operation;
             if (Operation != null)
             {
                 PatternMatcher patMatcher = new PatternMatcher(Pattern, Cache);
@@ -1141,7 +1218,7 @@ namespace SIL.AllomorphGenerator
                 lvPreview.Items.Clear();
                 foreach (ILexEntry entry in matchingEntries)
                 {
-                    ListViewItem lvItem = new ListViewItem("");
+                    lvItem = new ListViewItem("");
                     lvItem.Tag = entry;
                     lvItem.UseItemStyleForSubItems = false;
                     string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
@@ -1160,7 +1237,7 @@ namespace SIL.AllomorphGenerator
                     lvPreview.Items.Add(lvItem);
                 }
                 sCount = matchingEntries.Count().ToString();
-                SelectAll_Click(null, null);
+                PreviewSelectAll_Click(null, null);
             }
             lbCount.Text = sCount;
             LastOperationShown = Operation;
@@ -1189,6 +1266,19 @@ namespace SIL.AllomorphGenerator
             return previewForm;
         }
 
+        private void lvOperations_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Only show the context menu
+            if (e.Column == 0)
+            {
+                ListView lvSender = (ListView)sender;
+                Point ptLowerLeft = new Point(0, 10);
+                ptLowerLeft = lvSender.PointToScreen(ptLowerLeft);
+                operationsCheckBoxContextMenu.Show(ptLowerLeft);
+                return;
+            }
+        }
+
         private void lvPreview_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Do not sort the checkboxes column; instead show context menu
@@ -1197,7 +1287,7 @@ namespace SIL.AllomorphGenerator
                 ListView lvSender = (ListView)sender;
                 Point ptLowerLeft = new Point(0, 10);
                 ptLowerLeft =lvSender.PointToScreen(ptLowerLeft);
-                checkBoxContextMenu.Show(ptLowerLeft);
+                previewCheckBoxContextMenu.Show(ptLowerLeft);
                 return;
             }
             // Following code taken from

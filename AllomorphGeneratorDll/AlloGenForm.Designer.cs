@@ -66,11 +66,11 @@ namespace SIL.AllomorphGenerator
             this.lBoxEnvironments = new System.Windows.Forms.ListBox();
             this.lbCategoryddd = new System.Windows.Forms.Label();
             this.tabRunOps = new System.Windows.Forms.TabPage();
+            this.lvOperations = new System.Windows.Forms.ListView();
             this.lbCount = new System.Windows.Forms.Label();
             this.lvPreview = new System.Windows.Forms.ListView();
             this.lbPreview = new System.Windows.Forms.Label();
             this.btnApplyOperations = new System.Windows.Forms.Button();
-            this.clbOperations = new System.Windows.Forms.CheckedListBox();
             this.lbOperationsToApply = new System.Windows.Forms.Label();
             this.lbAlloGenFile = new System.Windows.Forms.Label();
             this.tbFile = new System.Windows.Forms.TextBox();
@@ -426,11 +426,11 @@ namespace SIL.AllomorphGenerator
             // 
             // tabRunOps
             // 
+            this.tabRunOps.Controls.Add(this.lvOperations);
             this.tabRunOps.Controls.Add(this.lbCount);
             this.tabRunOps.Controls.Add(this.lvPreview);
             this.tabRunOps.Controls.Add(this.lbPreview);
             this.tabRunOps.Controls.Add(this.btnApplyOperations);
-            this.tabRunOps.Controls.Add(this.clbOperations);
             this.tabRunOps.Controls.Add(this.lbOperationsToApply);
             this.tabRunOps.Location = new System.Drawing.Point(4, 29);
             this.tabRunOps.Name = "tabRunOps";
@@ -439,6 +439,25 @@ namespace SIL.AllomorphGenerator
             this.tabRunOps.TabIndex = 1;
             this.tabRunOps.Text = "Run Operations";
             this.tabRunOps.UseVisualStyleBackColor = true;
+            // 
+            // lvOperations
+            // 
+            this.lvOperations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lvOperations.CheckBoxes = true;
+            this.lvOperations.FullRowSelect = true;
+            this.lvOperations.GridLines = true;
+            this.lvOperations.HideSelection = false;
+            this.lvOperations.Location = new System.Drawing.Point(23, 49);
+            this.lvOperations.MultiSelect = false;
+            this.lvOperations.Name = "lvOperations";
+            this.lvOperations.Size = new System.Drawing.Size(354, 823);
+            this.lvOperations.TabIndex = 8;
+            this.lvOperations.UseCompatibleStateImageBehavior = false;
+            this.lvOperations.View = System.Windows.Forms.View.Details;
+            this.lvOperations.SelectedIndexChanged += new System.EventHandler(this.lvOperations_SelectedIndexChanged);
+            this.lvOperations.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lvOperations_ItemCheck);
+            this.lvOperations.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvOperations_ColumnClick);
             // 
             // lbCount
             // 
@@ -452,7 +471,6 @@ namespace SIL.AllomorphGenerator
             // 
             // lvPreview
             // 
-            this.lvPreview.AllowColumnReorder = true;
             this.lvPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -473,9 +491,9 @@ namespace SIL.AllomorphGenerator
             this.lbPreview.AutoSize = true;
             this.lbPreview.Location = new System.Drawing.Point(390, 22);
             this.lbPreview.Name = "lbPreview";
-            this.lbPreview.Size = new System.Drawing.Size(63, 20);
+            this.lbPreview.Size = new System.Drawing.Size(216, 20);
             this.lbPreview.TabIndex = 5;
-            this.lbPreview.Text = "Preview";
+            this.lbPreview.Text = "Preview of selected operation";
             // 
             // btnApplyOperations
             // 
@@ -487,17 +505,6 @@ namespace SIL.AllomorphGenerator
             this.btnApplyOperations.Text = "Apply Checked Operations";
             this.btnApplyOperations.UseVisualStyleBackColor = true;
             this.btnApplyOperations.Click += new System.EventHandler(this.btnApplyOperations_Click);
-            // 
-            // clbOperations
-            // 
-            this.clbOperations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.clbOperations.FormattingEnabled = true;
-            this.clbOperations.Location = new System.Drawing.Point(23, 49);
-            this.clbOperations.Name = "clbOperations";
-            this.clbOperations.Size = new System.Drawing.Size(354, 823);
-            this.clbOperations.TabIndex = 2;
-            this.clbOperations.SelectedIndexChanged += new System.EventHandler(this.clbOperations_SelectedIndexChanged);
             // 
             // lbOperationsToApply
             // 
@@ -630,13 +637,13 @@ namespace SIL.AllomorphGenerator
         private System.Windows.Forms.Panel plActions;
         private System.Windows.Forms.Button btnNewFile;
         private System.Windows.Forms.Button btnMatch;
-        private System.Windows.Forms.CheckedListBox clbOperations;
         private System.Windows.Forms.Label lbOperationsToApply;
         private System.Windows.Forms.Button btnApplyOperations;
         private System.Windows.Forms.Label lbPreview;
         private System.Windows.Forms.ListView lvPreview;
         private System.Windows.Forms.Label lbCount;
         private ImageList ilPreview;
+        private ListView lvOperations;
     }
 }
 
