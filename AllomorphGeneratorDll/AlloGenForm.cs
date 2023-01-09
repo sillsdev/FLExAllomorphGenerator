@@ -1120,6 +1120,7 @@ namespace SIL.AllomorphGenerator
                 // nothing to do
                 return;
             }
+            this.Cursor = Cursors.WaitCursor;
             AllomorphCreator ac = new AllomorphCreator(Cache, wsForAkh, wsForAcl, wsForAkl, wsForAch, wsForAme);
             foreach (ListViewItem lvItem in lvOperations.CheckedItems)
             {
@@ -1164,6 +1165,7 @@ namespace SIL.AllomorphGenerator
                 });
             }
             ShowPreview();
+            this.Cursor = Cursors.Arrow;
         }
 
         private void lvOperations_ItemChecked(object sender, EventArgs e)
