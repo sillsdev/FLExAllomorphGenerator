@@ -1121,24 +1121,24 @@ namespace SIL.AllomorphGenerator
                 return;
             }
             AllomorphCreator ac = new AllomorphCreator(Cache, wsForAkh, wsForAcl, wsForAkl, wsForAch, wsForAme);
-            string undoRedoPrompt = " Allomorph Generation for '" + Operation.Name;
-            UndoableUnitOfWorkHelper.Do("Undo" + undoRedoPrompt, "Redo" + undoRedoPrompt, Cache.ActionHandlerAccessor, () =>
+            foreach (ListViewItem lvItem in lvOperations.CheckedItems)
             {
-                foreach (ListViewItem lvItem in lvOperations.CheckedItems)
+                Operation op = (Operation)lvItem.Tag;
+                List<ILexEntry> nonChosenEntries = new List<ILexEntry>();
+                if (dictNonChosen.ContainsKey(op))
                 {
-                    Operation op = (Operation)lvItem.Tag;
-                    List<ILexEntry> nonChosenEntries = new List<ILexEntry>();
-                    if (dictNonChosen.ContainsKey(op))
-                    {
-                        nonChosenEntries = dictNonChosen[op];
-                    }
-                    PatternMatcher patMatcher = new PatternMatcher(op.Pattern, Cache);
-                    IEnumerable<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.SingleAllomorphs);
-                    if (matchingEntries == null || matchingEntries.Count() == 0 || nonChosenEntries.Count == 0)
-                    {
-                        continue;
-                    }
-                    Replacer replacer = new Replacer(Operation.Action.ReplaceOps);
+                    nonChosenEntries = dictNonChosen[op];
+                }
+                PatternMatcher patMatcher = new PatternMatcher(op.Pattern, Cache);
+                IEnumerable<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.SingleAllomorphs);
+                if (matchingEntries == null || matchingEntries.Count() == 0)
+                {
+                    continue;
+                }
+                Replacer replacer = new Replacer(Operation.Action.ReplaceOps);
+                string undoRedoPrompt = " Allomorph Generation for '" + op.Name;
+                UndoableUnitOfWorkHelper.Do("Undo" + undoRedoPrompt, "Redo" + undoRedoPrompt, Cache.ActionHandlerAccessor, () =>
+                {
                     foreach (ILexEntry entry in matchingEntries)
                     {
                         if (nonChosenEntries.Contains(entry))
@@ -1147,11 +1147,11 @@ namespace SIL.AllomorphGenerator
                         }
                         string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
                         IMoStemAllomorph form = ac.CreateAllomorph(entry,
-                            GetPreviewForm(replacer, citationForm, Dialect.Akh),
-                            GetPreviewForm(replacer, citationForm, Dialect.Acl),
-                            GetPreviewForm(replacer, citationForm, Dialect.Akl),
-                            GetPreviewForm(replacer, citationForm, Dialect.Ach),
-                            GetPreviewForm(replacer, citationForm, Dialect.Ame));
+                                GetPreviewForm(replacer, citationForm, Dialect.Akh),
+                                GetPreviewForm(replacer, citationForm, Dialect.Acl),
+                                GetPreviewForm(replacer, citationForm, Dialect.Akl),
+                                GetPreviewForm(replacer, citationForm, Dialect.Ach),
+                                GetPreviewForm(replacer, citationForm, Dialect.Ame));
                         if (op.Action.StemName.Guid.Length > 0)
                         {
                             ac.AddStemName(form, op.Action.StemName.Guid);
@@ -1161,8 +1161,9 @@ namespace SIL.AllomorphGenerator
                             ac.AddEnvironments(form, op.Action.Environments);
                         }
                     }
-                }
-            });
+                });
+            }
+            ShowPreview();
         }
 
         private void lvOperations_ItemChecked(object sender, EventArgs e)
@@ -1180,6 +1181,11 @@ namespace SIL.AllomorphGenerator
         }
 
         private void lvOperations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowPreview();
+        }
+
+        private void ShowPreview()
         {
             if (LastOperationShown != null)
             {
