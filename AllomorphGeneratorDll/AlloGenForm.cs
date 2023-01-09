@@ -153,7 +153,7 @@ namespace SIL.AllomorphGenerator
                 SetupFontAndStyleInfo();
                 SetUpOperationsCheckedListBox();
                 SetUpPreviewCheckedListBox();
-                FillApplyOperationsListBox();
+                FillApplyOperationsListView();
                 BuildReplaceContextMenu();
                 BuildHelpContextMenu();
                 BuildOperationsCheckBoxContextMenu();
@@ -689,7 +689,16 @@ namespace SIL.AllomorphGenerator
                 tbFile.Text = OperationsFile;
                 Provider.LoadDataFromFile(OperationsFile);
                 AlloGens = Provider.AlloGens;
+                Operations = AlloGens.Operations;
+                if (Operations.Count > 0)
+                    Operation = Operations[0];
+                LastOperation = 0;
+                LastApplyOperation = 0;
                 FillOperationsListBox();
+                if (lvOperations.Visible)
+                {
+                    FillApplyOperationsListView();
+                }
             }
         }
         private void OnFormClosing(object sender, EventArgs e)
@@ -739,10 +748,12 @@ namespace SIL.AllomorphGenerator
                 if (LastOperation < 0 || LastOperation >= Operations.Count)
                     LastOperation = 0;
                 lBoxOperations.SetSelected(LastOperation, true);
+                Operation = AlloGens.Operations[LastOperation];
+                Pattern = Operation.Pattern;
             }
         }
 
-        public void FillApplyOperationsListBox()
+        public void FillApplyOperationsListView()
         {
             lvOperations.Items.Clear();
             foreach (Operation op in Operations)
@@ -761,6 +772,8 @@ namespace SIL.AllomorphGenerator
                     LastApplyOperation = 0;
                 lvOperations.Items[LastApplyOperation].Selected = true;
                 lvOperations.Select();
+                Operation = AlloGens.Operations[LastApplyOperation];
+                Pattern = Operation.Pattern;
             }
         }
 
@@ -999,6 +1012,7 @@ namespace SIL.AllomorphGenerator
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
+            Provider.AlloGens = AlloGens;
             Provider.SaveDataToFile(OperationsFile);
             ChangesMade = false;
             ShowChangeStatusOnForm();
@@ -1040,10 +1054,13 @@ namespace SIL.AllomorphGenerator
                 tbFile.Text = OperationsFile;
                 AlloGens = new AllomorphGenerators();
                 Operations = AlloGens.Operations;
-                //MessageBox.Show("Operation count=" + Operations.Count);
                 Operation op = new Operation();
                 Operations.Add(op);
                 FillOperationsListBox();
+                if (lvOperations.Visible)
+                {
+                    FillApplyOperationsListView();
+                }
             }
 
         }
@@ -1107,7 +1124,7 @@ namespace SIL.AllomorphGenerator
                 if (LastTab == 0)
                     FillOperationsListBox();
                 else
-                    FillApplyOperationsListBox();
+                    FillApplyOperationsListView();
             }
         }
 
