@@ -62,6 +62,11 @@ namespace SIL.AlloGenService
                     result = result.Replace(replace.From, replace.To);
                 }
             }
+            if (result.Length == 0)
+            {
+                // Use a non-breaking space when it is empty to avoid FLEx using a non-empty value in some other writing system
+                result = "\u00A0";
+            }
             return result;
         }
     }

@@ -35,21 +35,12 @@ namespace SIL.AlloGenService
         public IMoStemAllomorph CreateAllomorph(ILexEntry entry, string sAkh, string sAcl, string sAkl, string sAch, string sAme)
         {
             IMoStemAllomorph form = entry.Services.GetInstance<IMoStemAllomorphFactory>().Create();
-            Console.WriteLine("form.Form=" + form.Form);
-            //ITsString newForm = TsStringUtils.MakeString(sAkh, wsForAkh);
-            //Console.WriteLine("newForm=" + newForm);
             entry.AlternateFormsOS.Add(form);
-            Console.WriteLine("after adding form");
             form.Form.set_String(wsForAkh, sAkh);
-            Console.WriteLine("after set akh");
             form.Form.set_String(wsForAcl, sAcl);
-            Console.WriteLine("after set acl");
             form.Form.set_String(wsForAkl, sAkl);
-            Console.WriteLine("after set akl");
             form.Form.set_String(wsForAch, sAch);
-            Console.WriteLine("after set ach");
             form.Form.set_String(wsForAme, sAme);
-            Console.WriteLine("after set ame");
             return form;
         }
 
