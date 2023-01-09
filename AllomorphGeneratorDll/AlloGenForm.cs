@@ -1013,9 +1013,11 @@ namespace SIL.AllomorphGenerator
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             Provider.AlloGens = AlloGens;
             Provider.SaveDataToFile(OperationsFile);
             MarkAsChanged(false);
+            this.Cursor = Cursors.Arrow;
         }
 
         private void tbDescription_TextChanged(object sender, EventArgs e)
@@ -1118,6 +1120,7 @@ namespace SIL.AllomorphGenerator
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             TabPage page = (sender as TabControl).SelectedTab;
             if (page != null)
             {
@@ -1127,6 +1130,7 @@ namespace SIL.AllomorphGenerator
                 else
                     FillApplyOperationsListView();
             }
+            this.Cursor = Cursors.Arrow;
         }
 
         private void btnApplyOperations_Click(object sender, EventArgs e)
@@ -1214,8 +1218,10 @@ namespace SIL.AllomorphGenerator
             string sCount = "0";
             if (lvOperations.SelectedItems.Count == 0)
             {
+
                 return;
             }
+            this.Cursor = Cursors.WaitCursor;
             ListViewItem lvItem = lvOperations.SelectedItems[0];
             LastApplyOperation = lvOperations.Items.IndexOf(lvItem);
             Operation = lvItem.Tag as Operation;
@@ -1258,6 +1264,7 @@ namespace SIL.AllomorphGenerator
             }
             lbCount.Text = sCount;
             LastOperationShown = Operation;
+            this.Cursor = Cursors.Arrow;
         }
 
         private void RememberNonChosenEntries(Operation op)
