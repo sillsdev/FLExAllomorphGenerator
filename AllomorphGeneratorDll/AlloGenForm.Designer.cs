@@ -456,7 +456,7 @@ namespace SIL.AllomorphGenerator
             this.lvOperations.UseCompatibleStateImageBehavior = false;
             this.lvOperations.View = System.Windows.Forms.View.Details;
             this.lvOperations.SelectedIndexChanged += new System.EventHandler(this.lvOperations_SelectedIndexChanged);
-            this.lvOperations.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lvOperations_ItemCheck);
+            this.lvOperations.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvOperations_ItemChecked);
             this.lvOperations.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvOperations_ColumnClick);
             // 
             // lbCount

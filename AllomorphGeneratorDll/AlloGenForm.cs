@@ -1165,7 +1165,7 @@ namespace SIL.AllomorphGenerator
             });
         }
 
-        private void lvOperations_ItemCheck(object sender, EventArgs e)
+        private void lvOperations_ItemChecked(object sender, EventArgs e)
         {
             if (lvOperations.SelectedItems.Count == 0)
             {
@@ -1191,6 +1191,7 @@ namespace SIL.AllomorphGenerator
                 return;
             }
             ListViewItem lvItem = lvOperations.SelectedItems[0];
+            LastApplyOperation = lvOperations.Items.IndexOf(lvItem);
             Operation = lvItem.Tag as Operation;
             Pattern = Operation.Pattern;
             if (Operation != null)

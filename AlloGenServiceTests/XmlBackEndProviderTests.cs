@@ -42,6 +42,7 @@ namespace SIL.AlloGenServiceTest
             Assert.NotNull(allomorphGenerators);
             Assert.AreEqual(1, allomorphGenerators.Operations.Count);
             Operation operation = allomorphGenerators.Operations[0];
+            Assert.AreEqual(true, operation.Active);
             Assert.AreEqual("foreshortening", operation.Name);
             Assert.AreEqual("Add allomorphs for entries which undergo foreshortening", operation.Description);
             Pattern pattern = operation.Pattern;
@@ -116,6 +117,7 @@ namespace SIL.AlloGenServiceTest
         {
             AllomorphGenerators allomorphGenerators = new AllomorphGenerators();
             Operation operation = new Operation();
+            operation.Active = true;
             operation.Name = "foreshortening";
             operation.Description = "Add allomorphs for entries which undergo foreshortening";
             Pattern pattern = MakePattern();
