@@ -161,6 +161,7 @@ namespace SIL.AllomorphGenerator
                 lBoxMorphTypes.ClearSelected();
                 lBoxEnvironments.ClearSelected();
                 RememberTabSelection();
+                MarkAsChanged(false);
             }
             catch (Exception e)
             {
@@ -494,7 +495,7 @@ namespace SIL.AllomorphGenerator
                     replace = dialog.ReplaceOp;
                     ReplaceOps[index] = replace;
                     lBoxReplaceOps.Items[index] = replace;
-                    MarkAsChanged();
+                    MarkAsChanged(true);
                 }
             }
         }
@@ -537,7 +538,7 @@ namespace SIL.AllomorphGenerator
                 currentListBox.Items.Insert(index, op);
             }
             currentListBox.SetSelected(index, true);
-            MarkAsChanged();
+            MarkAsChanged(true);
         }
 
         void MoveUpContextMenu_Click(object sender, EventArgs e)
@@ -576,7 +577,7 @@ namespace SIL.AllomorphGenerator
             }
             currentListBox.Items[index] = otherItem;
             currentListBox.Items[otherIndex] = selectedItem;
-            MarkAsChanged();
+            MarkAsChanged(true);
         }
 
         void DeleteContextMenu_Click(object sender, EventArgs e)
@@ -591,7 +592,7 @@ namespace SIL.AllomorphGenerator
                     Operations.RemoveAt(index);
                 currentListBox.Items.RemoveAt(index);
             }
-            MarkAsChanged();
+            MarkAsChanged(true);
         }
 
         void DuplicateContextMenu_Click(object sender, EventArgs e)
@@ -614,7 +615,7 @@ namespace SIL.AllomorphGenerator
                     currentListBox.Items.Insert(index, op);
                 }
             }
-            MarkAsChanged();
+            MarkAsChanged(true);
         }
 
         private void RememberFormState()
@@ -893,7 +894,7 @@ namespace SIL.AllomorphGenerator
                         Category.Guid = new Guid(cat.Guid).ToString();
                     }
                     tbCategory.Text = Category.Name;
-                    MarkAsChanged();
+                    MarkAsChanged(true);
                 }
 
             }
@@ -946,7 +947,7 @@ namespace SIL.AllomorphGenerator
                     StemName.Guid = new Guid(sn.Guid).ToString();
                 }
                 tbStemName.Text = StemName.Name;
-                MarkAsChanged();
+                MarkAsChanged(true);
             }
         }
 
@@ -970,7 +971,7 @@ namespace SIL.AllomorphGenerator
                     ActionOp.Environments.Clear();
                     ActionOp.Environments.AddRange(chooser.SelectedEnvironments);
                     RefreshEnvironmentsListBox();
-                    MarkAsChanged();
+                    MarkAsChanged(true);
                 }
             }
         }
@@ -988,7 +989,7 @@ namespace SIL.AllomorphGenerator
                     Pattern.MorphTypes.Clear();
                     Pattern.MorphTypes.AddRange(chooser.SelectedMorphTypes);
                     RefreshMorphTypesListBox();
-                    MarkAsChanged();
+                    MarkAsChanged(true);
                 }
             }
         }
@@ -999,7 +1000,7 @@ namespace SIL.AllomorphGenerator
             if (tb != null)
             {
                 Operation.Name = tb.Text;
-                MarkAsChanged();
+                MarkAsChanged(true);
                 int selectedOp = lBoxOperations.SelectedIndex;
                 if (selectedOp > -1)
                 {
@@ -1014,8 +1015,7 @@ namespace SIL.AllomorphGenerator
         {
             Provider.AlloGens = AlloGens;
             Provider.SaveDataToFile(OperationsFile);
-            ChangesMade = false;
-            ShowChangeStatusOnForm();
+            MarkAsChanged(false);
         }
 
         private void tbDescription_TextChanged(object sender, EventArgs e)
@@ -1024,13 +1024,13 @@ namespace SIL.AllomorphGenerator
             if (tb != null)
             {
                 Operation.Description = tb.Text;
-                MarkAsChanged();
+                MarkAsChanged(true);
             }
         }
 
-        private void MarkAsChanged()
+        private void MarkAsChanged(bool value)
         {
-            ChangesMade = true;
+            ChangesMade = value;
             ShowChangeStatusOnForm();
         }
 
@@ -1112,6 +1112,7 @@ namespace SIL.AllomorphGenerator
                 agMatcher = dlg.GetMatcher();
                 Pattern.Matcher = agMatcher;
                 tbMatch.Text = agMatcher.Pattern;
+                MarkAsChanged(true);
             }
         }
 
