@@ -1142,6 +1142,10 @@ namespace SIL.AllomorphGenerator
                 // nothing to do
                 return;
             }
+            if (!CheckForInvalidEnvironmentsAndStemNames())
+            {
+                return;
+            }
             this.Cursor = Cursors.WaitCursor;
             AllomorphCreator ac = new AllomorphCreator(Cache, wsForAkh, wsForAcl, wsForAkl, wsForAch, wsForAme);
             foreach (ListViewItem lvItem in lvOperations.CheckedItems)
@@ -1188,6 +1192,51 @@ namespace SIL.AllomorphGenerator
             }
             ShowPreview();
             this.Cursor = Cursors.Arrow;
+        }
+
+        private bool CheckForInvalidEnvironmentsAndStemNames()
+        {
+            bool allIsGood = true;
+            foreach (ListViewItem lvItem in lvOperations.CheckedItems)
+            {
+                Operation op = (Operation)lvItem.Tag;
+                string stemNameGuid = op.Action.StemName.Guid;
+                if (stemNameGuid.Length > 0)
+                {
+                    var stemName = Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(new Guid(stemNameGuid));
+                    if (stemName == null)
+                    {
+                        ReportMissingFLExItem("The stem name '", op.Action.StemName.Name, op.Name);
+                        allIsGood = false;
+                    }
+
+                }
+                if (op.Action.Environments.Count > 0)
+                {
+                    foreach (AlloGenModel.Environment env in op.Action.Environments)
+                    {
+                        var phEnv = Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(new Guid(env.Guid));
+                        if (phEnv == null)
+                        {
+                            ReportMissingFLExItem("The environment '", env.Name, op.Name);
+                            allIsGood = false;
+                        }
+                    }
+                }
+
+            }
+            return allIsGood;
+        }
+
+        private void ReportMissingFLExItem(string missingItem, string itemName, string operationName)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(missingItem);
+            sb.Append(itemName);
+            sb.Append("' is no longer found.  Please fix it in operation '");
+            sb.Append(operationName);
+            sb.Append("'.");
+            MessageBox.Show(sb.ToString());
         }
 
         private void lvOperations_ItemChecked(object sender, EventArgs e)
