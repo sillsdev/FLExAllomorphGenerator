@@ -22,8 +22,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -1094,11 +1097,31 @@ namespace SIL.AllomorphGenerator
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == UserDocumentation)
             {
-                //String basedir = GetAppBaseDir();
-                //Process.Start(Path.Combine(basedir, "doc", "UserDocumentation.pdf"));
-                MessageBox.Show("Sorry, the user documentation is not yet available.");
+                String basedir = GetAppBaseDir();
+                Process.Start(Path.Combine(basedir, "doc", "AlloGenUserDocumentation.pdf"));
             }
         }
+
+        private static string GetAppBaseDir()
+        {
+            string basedir;
+            string rootdir;
+            int indexOfBinInPath;
+            DetermineIndexOfBinInExecutablesPath(out rootdir, out indexOfBinInPath);
+            if (indexOfBinInPath >= 0)
+                basedir = rootdir.Substring(0, indexOfBinInPath);
+            else
+                basedir = rootdir;
+            return basedir;
+        }
+
+        private static void DetermineIndexOfBinInExecutablesPath(out string rootdir, out int indexOfBinInPath)
+        {
+            Uri uriBase = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+            rootdir = Path.GetDirectoryName(Uri.UnescapeDataString(uriBase.AbsolutePath));
+            indexOfBinInPath = rootdir.LastIndexOf("bin");
+        }
+
 
         private void btnMatch_Click(object sender, EventArgs e)
         {

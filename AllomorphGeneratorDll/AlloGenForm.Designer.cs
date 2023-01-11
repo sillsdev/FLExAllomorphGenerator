@@ -96,7 +96,7 @@ namespace SIL.AllomorphGenerator
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(1289, 978);
-            this.tabControl.TabIndex = 0;
+            this.tabControl.TabIndex = 5;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // tabEditOps
@@ -126,8 +126,8 @@ namespace SIL.AllomorphGenerator
             this.btnSaveChanges.Location = new System.Drawing.Point(507, 892);
             this.btnSaveChanges.Name = "btnSaveChanges";
             this.btnSaveChanges.Size = new System.Drawing.Size(130, 34);
-            this.btnSaveChanges.TabIndex = 30;
-            this.btnSaveChanges.Text = "Save Changes";
+            this.btnSaveChanges.TabIndex = 3;
+            this.btnSaveChanges.Text = "&Save Changes";
             this.btnSaveChanges.UseVisualStyleBackColor = true;
             this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
             // 
@@ -135,7 +135,7 @@ namespace SIL.AllomorphGenerator
             // 
             this.lbOpRightClickToEdit.AutoSize = true;
             this.lbOpRightClickToEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbOpRightClickToEdit.Location = new System.Drawing.Point(109, 6);
+            this.lbOpRightClickToEdit.Location = new System.Drawing.Point(109, 11);
             this.lbOpRightClickToEdit.Name = "lbOpRightClickToEdit";
             this.lbOpRightClickToEdit.Size = new System.Drawing.Size(140, 20);
             this.lbOpRightClickToEdit.TabIndex = 29;
@@ -144,7 +144,7 @@ namespace SIL.AllomorphGenerator
             // lbOperations
             // 
             this.lbOperations.AutoSize = true;
-            this.lbOperations.Location = new System.Drawing.Point(7, 7);
+            this.lbOperations.Location = new System.Drawing.Point(7, 12);
             this.lbOperations.Name = "lbOperations";
             this.lbOperations.Size = new System.Drawing.Size(87, 20);
             this.lbOperations.TabIndex = 28;
@@ -166,9 +166,9 @@ namespace SIL.AllomorphGenerator
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lBoxOperations.FormattingEnabled = true;
             this.lBoxOperations.ItemHeight = 20;
-            this.lBoxOperations.Location = new System.Drawing.Point(3, 63);
+            this.lBoxOperations.Location = new System.Drawing.Point(3, 43);
             this.lBoxOperations.Name = "lBoxOperations";
-            this.lBoxOperations.Size = new System.Drawing.Size(355, 864);
+            this.lBoxOperations.Size = new System.Drawing.Size(355, 884);
             this.lBoxOperations.TabIndex = 0;
             this.lBoxOperations.SelectedIndexChanged += new System.EventHandler(this.lBoxOperations_SelectedIndexChanged);
             this.lBoxOperations.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxOperations_MouseUp);
@@ -196,7 +196,7 @@ namespace SIL.AllomorphGenerator
             this.tbName.Location = new System.Drawing.Point(497, 3);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(648, 26);
-            this.tbName.TabIndex = 2;
+            this.tbName.TabIndex = 1;
             this.tbName.Text = "My name";
             this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
@@ -205,7 +205,7 @@ namespace SIL.AllomorphGenerator
             this.tbDescription.Location = new System.Drawing.Point(497, 42);
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.Size = new System.Drawing.Size(648, 26);
-            this.tbDescription.TabIndex = 3;
+            this.tbDescription.TabIndex = 2;
             this.tbDescription.Text = "My description";
             this.tbDescription.TextChanged += new System.EventHandler(this.tbDescription_TextChanged);
             // 
@@ -241,8 +241,8 @@ namespace SIL.AllomorphGenerator
             this.btnMatch.Location = new System.Drawing.Point(506, 14);
             this.btnMatch.Name = "btnMatch";
             this.btnMatch.Size = new System.Drawing.Size(144, 33);
-            this.btnMatch.TabIndex = 26;
-            this.btnMatch.Text = "Define match";
+            this.btnMatch.TabIndex = 0;
+            this.btnMatch.Text = "&Define match";
             this.btnMatch.UseVisualStyleBackColor = true;
             this.btnMatch.Click += new System.EventHandler(this.btnMatch_Click);
             // 
@@ -251,8 +251,8 @@ namespace SIL.AllomorphGenerator
             this.btnMorphTypes.Location = new System.Drawing.Point(534, 65);
             this.btnMorphTypes.Name = "btnMorphTypes";
             this.btnMorphTypes.Size = new System.Drawing.Size(59, 28);
-            this.btnMorphTypes.TabIndex = 25;
-            this.btnMorphTypes.Text = "Edit";
+            this.btnMorphTypes.TabIndex = 1;
+            this.btnMorphTypes.Text = "&Edit";
             this.btnMorphTypes.UseVisualStyleBackColor = true;
             this.btnMorphTypes.Click += new System.EventHandler(this.btnMorphTypes_Click);
             // 
@@ -261,7 +261,7 @@ namespace SIL.AllomorphGenerator
             this.btnCategory.Location = new System.Drawing.Point(711, 205);
             this.btnCategory.Name = "btnCategory";
             this.btnCategory.Size = new System.Drawing.Size(30, 28);
-            this.btnCategory.TabIndex = 17;
+            this.btnCategory.TabIndex = 2;
             this.btnCategory.Text = "...";
             this.btnCategory.UseVisualStyleBackColor = true;
             this.btnCategory.Click += new System.EventHandler(this.btnCategory_Click);
@@ -353,8 +353,8 @@ namespace SIL.AllomorphGenerator
             this.btnEnvironments.Location = new System.Drawing.Point(598, 250);
             this.btnEnvironments.Name = "btnEnvironments";
             this.btnEnvironments.Size = new System.Drawing.Size(50, 31);
-            this.btnEnvironments.TabIndex = 26;
-            this.btnEnvironments.Text = "Edit";
+            this.btnEnvironments.TabIndex = 1;
+            this.btnEnvironments.Text = "Ed&it";
             this.btnEnvironments.UseVisualStyleBackColor = true;
             this.btnEnvironments.Click += new System.EventHandler(this.btnEnvironments_Click);
             // 
@@ -372,7 +372,7 @@ namespace SIL.AllomorphGenerator
             this.btnStemName.Location = new System.Drawing.Point(720, 450);
             this.btnStemName.Name = "btnStemName";
             this.btnStemName.Size = new System.Drawing.Size(30, 28);
-            this.btnStemName.TabIndex = 23;
+            this.btnStemName.TabIndex = 2;
             this.btnStemName.Text = "...";
             this.btnStemName.UseVisualStyleBackColor = true;
             this.btnStemName.Click += new System.EventHandler(this.btnStemName_Click);
@@ -401,7 +401,7 @@ namespace SIL.AllomorphGenerator
             this.lBoxReplaceOps.Location = new System.Drawing.Point(125, 32);
             this.lBoxReplaceOps.Name = "lBoxReplaceOps";
             this.lBoxReplaceOps.Size = new System.Drawing.Size(625, 184);
-            this.lBoxReplaceOps.TabIndex = 14;
+            this.lBoxReplaceOps.TabIndex = 0;
             this.lBoxReplaceOps.DoubleClick += new System.EventHandler(this.lBoxReplaceOps_DoubleClick);
             this.lBoxReplaceOps.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxReplaceOps_MouseUp);
             // 
@@ -452,12 +452,12 @@ namespace SIL.AllomorphGenerator
             this.lvOperations.MultiSelect = false;
             this.lvOperations.Name = "lvOperations";
             this.lvOperations.Size = new System.Drawing.Size(354, 823);
-            this.lvOperations.TabIndex = 8;
+            this.lvOperations.TabIndex = 0;
             this.lvOperations.UseCompatibleStateImageBehavior = false;
             this.lvOperations.View = System.Windows.Forms.View.Details;
-            this.lvOperations.SelectedIndexChanged += new System.EventHandler(this.lvOperations_SelectedIndexChanged);
-            this.lvOperations.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvOperations_ItemChecked);
             this.lvOperations.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvOperations_ColumnClick);
+            this.lvOperations.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvOperations_ItemChecked);
+            this.lvOperations.SelectedIndexChanged += new System.EventHandler(this.lvOperations_SelectedIndexChanged);
             // 
             // lbCount
             // 
@@ -501,7 +501,7 @@ namespace SIL.AllomorphGenerator
             this.btnApplyOperations.Location = new System.Drawing.Point(23, 883);
             this.btnApplyOperations.Name = "btnApplyOperations";
             this.btnApplyOperations.Size = new System.Drawing.Size(337, 59);
-            this.btnApplyOperations.TabIndex = 3;
+            this.btnApplyOperations.TabIndex = 1;
             this.btnApplyOperations.Text = "Apply Checked Operations";
             this.btnApplyOperations.UseVisualStyleBackColor = true;
             this.btnApplyOperations.Click += new System.EventHandler(this.btnApplyOperations_Click);
@@ -557,8 +557,8 @@ namespace SIL.AllomorphGenerator
             this.btnNewFile.Location = new System.Drawing.Point(27, 61);
             this.btnNewFile.Name = "btnNewFile";
             this.btnNewFile.Size = new System.Drawing.Size(149, 30);
-            this.btnNewFile.TabIndex = 5;
-            this.btnNewFile.Text = "Create New File";
+            this.btnNewFile.TabIndex = 0;
+            this.btnNewFile.Text = "&Create New File";
             this.btnNewFile.UseVisualStyleBackColor = true;
             this.btnNewFile.Click += new System.EventHandler(this.btnNewFile_Click);
             // 
