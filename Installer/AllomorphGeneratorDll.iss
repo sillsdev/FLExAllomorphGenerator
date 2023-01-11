@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Allomorph Generator for FLEx"
-#define MyAppVersion "0.0.1 Beta"
+#define MyAppVersion "1.0.0 Beta"
 #define MyAppPublisher "SIL Iternational"
 #define MyAppURL "https://software.sil.org/"
 #define MyAppExeName "AllomorphGeneratorDll.dll"
@@ -11,7 +11,7 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={78A81F33-7DA5-4AE7-BE88-5C7B4751374E}
+AppId={{78A81F33-7DA5-4AE7-BE88-5C7B4751374E}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -34,9 +34,13 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 ;Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: 
 
 [Files]
-Source: "..\AllomorphGeneratorDll\bin\x64\Release\AllomorphGeneratorDll.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\AllomorphGeneratorDll\bin\x64\Release\AllomorphGeneratorDll.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\AllomorphGeneratorDll\doc\UserDocumentation.pdf"; DestDir: "{app}\doc"; Flags: ignoreversion; AfterInstall: SetLineInFile('C:\Program Files\SIL\FieldWorks 9\Language Explorer\Configuration\UtilityCatalogInclude.xml', '<utility assemblyPath=''C:\Program Files\SIL\AllomorphGenerator\AllomorphGeneratorDll.dll'' class=''SIL.AllomorphGenerator.FLExUtility''/>');
+Source: "..\AlloGenModel\bin\x64\Release\AlloGenModel.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AlloGenModel\bin\x64\Release\AlloGenModel.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AlloGenService\bin\x64\Release\AlloGenService.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AlloGenService\bin\x64\Release\AlloGenService.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AllomorphGeneratorDll\bin\x64\Release\AllomorphGenerator.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AllomorphGeneratorDll\bin\x64\Release\AllomorphGenerator.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AllomorphGeneratorDll\doc\AlloGenUserDocumentation.pdf"; DestDir: "{app}\doc"; Flags: ignoreversion; AfterInstall: SetLineInFile('C:\Program Files\SIL\FieldWorks 9\Language Explorer\Configuration\UtilityCatalogInclude.xml', '<utility assemblyPath=''C:\Program Files\SIL\AllomorphGenerator\AllomorphGenerator.dll'' class=''SIL.AllomorphGenerator.FLExUtility''/>');
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
