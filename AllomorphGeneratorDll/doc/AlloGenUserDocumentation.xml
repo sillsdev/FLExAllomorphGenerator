@@ -409,7 +409,10 @@ type="tCitationForms"
 > which currently have no allomorphs.  In addition, the <object
 type="tCitationForms"
 ></object
-> shown are for the default vernacular writing system.</p
+> shown are for the default vernacular writing system.  You can click on a column header to sort the rows by the content of that column.  Note that it sorts by code points, not the way it might in <object
+type="tFLEx"
+></object
+>.</p
 ><p
 >Both of the items in the <object
 type="tRunTab"
