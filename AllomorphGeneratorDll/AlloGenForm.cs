@@ -1162,7 +1162,6 @@ namespace SIL.AllomorphGenerator
             if (lvOperations.CheckedItems.Count == 0)
             {
                 MessageBox.Show("No operations are selected, so there's nothing to do");
-                // nothing to do
                 return;
             }
             if (!CheckForInvalidEnvironmentsAndStemNames())
@@ -1185,7 +1184,7 @@ namespace SIL.AllomorphGenerator
                 {
                     continue;
                 }
-                Replacer replacer = new Replacer(Operation.Action.ReplaceOps);
+                Replacer replacer = new Replacer(op.Action.ReplaceOps);
                 string undoRedoPrompt = " Allomorph Generation for '" + op.Name;
                 UndoableUnitOfWorkHelper.Do("Undo" + undoRedoPrompt, "Redo" + undoRedoPrompt, Cache.ActionHandlerAccessor, () =>
                 {
@@ -1309,6 +1308,11 @@ namespace SIL.AllomorphGenerator
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                List<ILexEntry> nonChosenEntries = new List<ILexEntry>();
+                if (dictNonChosen.ContainsKey(Operation))
+                {
+                    nonChosenEntries = dictNonChosen[Operation];
+                }
                 Replacer replacer = new Replacer(Operation.Action.ReplaceOps);
                 lvPreview.Items.Clear();
                 foreach (ILexEntry entry in matchingEntries)
@@ -1330,9 +1334,9 @@ namespace SIL.AllomorphGenerator
                     lvItem.SubItems.Add(previewForm);
                     lvItem = SetFontInfoForItem(lvItem);
                     lvPreview.Items.Add(lvItem);
+                    lvItem.Checked = !nonChosenEntries.Contains(entry);
                 }
                 sCount = matchingEntries.Count().ToString();
-                PreviewSelectAll_Click(null, null);
             }
             lbCount.Text = sCount;
             LastOperationShown = Operation;
