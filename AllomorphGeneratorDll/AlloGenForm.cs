@@ -1029,6 +1029,11 @@ namespace SIL.AllomorphGenerator
             this.Cursor = Cursors.Arrow;
         }
 
+        private void btnSaveChanges2_Click(object sender, EventArgs e)
+        {
+            btnSaveChanges_Click(sender, e);
+        }
+
         private void tbDescription_TextChanged(object sender, EventArgs e)
         {
             TextBox tb = sender as TextBox;
@@ -1428,6 +1433,5 @@ namespace SIL.AllomorphGenerator
             // Perform the sort with these new sort options.
             this.lvPreview.Sort();
         }
-
     }
 }
