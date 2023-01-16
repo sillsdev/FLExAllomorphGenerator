@@ -30,8 +30,16 @@ namespace SIL.AlloGenServiceTest
         protected XmlBackEndProvider provider = new XmlBackEndProvider();
         protected string AlloGenExpected { get; set; }
         protected AllomorphGenerators allomorphGenerators;
+        protected Operation operation;
         protected Pattern pattern { get; set; }
         protected PatternMatcher patternMatcher { get; set; }
+
+        protected int wsForAkh = 999000005;
+        protected int wsForAcl = 999000004;
+        protected int wsForAkl = 999000006;
+        protected int wsForAch = 999000003;
+        protected int wsForAme = 999000007;
+        Dictionary<Dialect, int> dictWritingSystems = new Dictionary<Dialect, int>();
 
         public override void FixtureSetup()
         {
@@ -42,6 +50,16 @@ namespace SIL.AlloGenServiceTest
             Directory.CreateDirectory(m_projectsDirectory);
             m_ui = new DummyLcmUI();
             m_lcmDirectories = new TestLcmDirectories(m_projectsDirectory);
+            CreateWritingSystemDictionary();
+        }
+
+        private void CreateWritingSystemDictionary()
+        {
+            dictWritingSystems.Add(Dialect.Akh, wsForAkh);
+            dictWritingSystems.Add(Dialect.Acl, wsForAcl);
+            dictWritingSystems.Add(Dialect.Akl, wsForAkl);
+            dictWritingSystems.Add(Dialect.Ach, wsForAch);
+            dictWritingSystems.Add(Dialect.Ame, wsForAme);
         }
 
         [SetUp]
@@ -62,8 +80,9 @@ namespace SIL.AlloGenServiceTest
 
             provider.LoadDataFromFile(AlloGenExpected);
             allomorphGenerators = provider.AlloGens;
-            pattern = allomorphGenerators.Operations[0].Pattern;
-            patternMatcher = new PatternMatcher(pattern, myCache);
+            operation = allomorphGenerators.Operations[0];
+            pattern = operation.Pattern;
+            patternMatcher = new PatternMatcher(myCache, dictWritingSystems);
         }
     }
 }

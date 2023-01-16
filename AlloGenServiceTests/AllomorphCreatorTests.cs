@@ -15,11 +15,6 @@ namespace SIL.AlloGenServiceTest
     class AllomorphCreatorTests : FwTestBase
     {
         protected AllomorphCreator ac;
-        int wsForAkh = 999000005;
-        int wsForAcl = 999000004;
-        int wsForAkl = 999000006;
-        int wsForAch = 999000003;
-        int wsForAme = 999000007;
 
         [SetUp]
         override public void Setup()

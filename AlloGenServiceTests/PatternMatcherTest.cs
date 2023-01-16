@@ -30,7 +30,7 @@ namespace SIL.AlloGenServiceTest
         [Test]
         public void LexEntriesPerMorphTypesTest()
         {
-            var lexEntriesPerMorphTypes = patternMatcher.MatchMorphTypes(patternMatcher.SingleAllomorphs);
+            var lexEntriesPerMorphTypes = patternMatcher.MatchMorphTypes(patternMatcher.EntriesWithNoAllomorphs, pattern);
             Assert.AreEqual(4360, lexEntriesPerMorphTypes.Count());
         }
 
@@ -39,18 +39,15 @@ namespace SIL.AlloGenServiceTest
         {
             // Verb
             pattern.Category.Guid = "86ff66f6-0774-407a-a0dc-3eeaf873daf7";
-            patternMatcher.Pattern = pattern;
-            var lexEntriesPerCategory = patternMatcher.MatchCategory(patternMatcher.SingleAllomorphs);
+            var lexEntriesPerCategory = patternMatcher.MatchCategory(patternMatcher.EntriesWithNoAllomorphs, pattern);
             Assert.AreEqual(1491, lexEntriesPerCategory.Count());
             // transitive verb
             pattern.Category.Guid = "54712931-442f-42d5-8634-f12bd2e310ce";
-            patternMatcher.Pattern = pattern;
-            lexEntriesPerCategory = patternMatcher.MatchCategory(patternMatcher.SingleAllomorphs);
+            lexEntriesPerCategory = patternMatcher.MatchCategory(patternMatcher.EntriesWithNoAllomorphs, pattern);
             Assert.AreEqual(664, lexEntriesPerCategory.Count());
             // Intranitive verb
             pattern.Category.Guid = "4459ff09-9ee0-4b50-8787-ae40fd76d3b7";
-            patternMatcher.Pattern = pattern;
-            lexEntriesPerCategory = patternMatcher.MatchCategory(patternMatcher.SingleAllomorphs);
+            lexEntriesPerCategory = patternMatcher.MatchCategory(patternMatcher.EntriesWithNoAllomorphs, pattern);
             Assert.AreEqual(827, lexEntriesPerCategory.Count());
         }
 
@@ -60,6 +57,13 @@ namespace SIL.AlloGenServiceTest
         //{
         //    var lexEntriesPerMatchString = pm.MatchMatchString(pm.SingleAllomorphs);
         //    Assert.AreEqual(1234, lexEntriesPerMatchString.Count());
+        //}
+        // Cannot get IVwPattern to work with tester
+        //[Test]
+        //public void LexEntriesWithAllosPerPatternTest()
+        //{
+        //    var lexEntriesWithAllosThatDoNotMatch = patternMatcher.MatchEntriesWithAllosPerPattern(operation, pattern);
+        //    Assert.AreEqual(2, lexEntriesWithAllosThatDoNotMatch.Count());
         //}
     }
 }

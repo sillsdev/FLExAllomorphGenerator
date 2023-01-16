@@ -15,30 +15,33 @@ namespace SIL.AlloGenService
 {
     public class PatternMatcher
     {
-        public Pattern Pattern { get; set; }
+        //public Pattern Pattern { get; set; }
         LcmCache Cache { get; set; }
         public IEnumerable<ILexEntry> AllEntries { get; set; }
-        public IEnumerable<ILexEntry> SingleAllomorphs { get; set; }
+        public IEnumerable<ILexEntry> EntriesWithNoAllomorphs { get; set; }
+        public IEnumerable<ILexEntry> MultiAllomorphEntries { get; set; }
         public IMoMorphType morphType { get; set; }
         public List<IMoMorphType> morphTypes { get; set; } = new List<IMoMorphType>();
         public string ErrorMessage { get; set; } = "";
+        Dictionary<Dialect, int> dictWritingSystems = new Dictionary<Dialect, int>();
 
-        public PatternMatcher(Pattern pattern, LcmCache cache)
+        public PatternMatcher(LcmCache cache, Dictionary<Dialect, int> dictWS)
         {
-            Pattern = pattern;
             Cache = cache;
+            dictWritingSystems = dictWS;
             AllEntries = Cache.LanguageProject.LexDbOA.Entries;
-            SingleAllomorphs = AllEntries.Where(e => e.AllAllomorphs.Length == 1);
+            EntriesWithNoAllomorphs = AllEntries.Where(e => e.AlternateFormsOS.Count == 0);
+            MultiAllomorphEntries = AllEntries.Where(e => e.AlternateFormsOS.Count > 0);
         }
 
-        public IEnumerable<ILexEntry> MatchMorphTypes(IEnumerable<ILexEntry> lexEntries)
+        public IEnumerable<ILexEntry> MatchMorphTypes(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
         {
-            if (Pattern.MorphTypes.Count > 0)
+            if (pattern.MorphTypes.Count > 0)
             {
                 morphTypes.Clear();
                 foreach (IMoMorphType mt in Cache.LangProject.LexDbOA.MorphTypesOA.PossibilitiesOS)
                 {
-                    if (Pattern.MorphTypes.Where(m => m.Guid == mt.Guid.ToString()).Count() > 0)
+                    if (pattern.MorphTypes.Where(m => m.Guid == mt.Guid.ToString()).Count() > 0)
                     {
                         morphTypes.Add(mt);
                     }
@@ -60,12 +63,12 @@ namespace SIL.AlloGenService
             return lexEntries;
         }
 
-        public IEnumerable<ILexEntry> MatchCategory(IEnumerable<ILexEntry> lexEntries)
+        public IEnumerable<ILexEntry> MatchCategory(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
         {
             var lexEntriesForCategory = new List<ILexEntry>();
-            if (Pattern.Category != null && Pattern.Category.Active && Pattern.Category.Guid.Length > 0)
+            if (pattern.Category != null && pattern.Category.Active && pattern.Category.Guid.Length > 0)
             {
-                IPartOfSpeech patternPos = GetPatternsPartOfSpeech();
+                IPartOfSpeech patternPos = GetPatternsPartOfSpeech(pattern);
                 if (patternPos != null)
                 {
                     foreach (ILexEntry entry in lexEntries)
@@ -91,11 +94,11 @@ namespace SIL.AlloGenService
             return lexEntries;
         }
 
-        private IPartOfSpeech GetPatternsPartOfSpeech()
+        private IPartOfSpeech GetPatternsPartOfSpeech(Pattern pattern)
         {
             foreach (IPartOfSpeech pos in Cache.LangProject.AllPartsOfSpeech)
             {
-                if (pos.Guid.ToString() == Pattern.Category.Guid)
+                if (pos.Guid.ToString() == pattern.Category.Guid)
                 {
                     return pos;
                 }
@@ -103,10 +106,10 @@ namespace SIL.AlloGenService
             return null;
         }
 
-        public IEnumerable<ILexEntry> MatchMatchString(IEnumerable<ILexEntry> lexEntries)
+        public IEnumerable<ILexEntry> MatchMatchString(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
         {
             int ws = Cache.DefaultVernWs;
-            Matcher agMatcher = Pattern.Matcher;
+            Matcher agMatcher = pattern.Matcher;
             string errorMessage = "";
             IMatcher fwMatcher = agMatcher.GetFwMatcher(ws, out errorMessage);
             ErrorMessage = errorMessage;
@@ -123,13 +126,110 @@ namespace SIL.AlloGenService
             return lexEntriesPerMatchString;
         }
 
-        public IEnumerable<ILexEntry> MatchPattern(IEnumerable<ILexEntry> lexEntries)
+        public IEnumerable<ILexEntry> MatchEntriesWithAllosPerPattern(Operation operation, Pattern pattern)
         {
-            var lexEntriesThatMatch = MatchMatchString(lexEntries);
+            var lexEntriesThatMatch = MatchMatchString(MultiAllomorphEntries, pattern);
             if (lexEntriesThatMatch == null)
                 return null;
-            lexEntriesThatMatch = MatchCategory(lexEntriesThatMatch);
-            lexEntriesThatMatch = MatchMorphTypes(lexEntriesThatMatch);
+            lexEntriesThatMatch = MatchCategory(lexEntriesThatMatch, pattern);
+            lexEntriesThatMatch = MatchMorphTypes(lexEntriesThatMatch, pattern);
+
+            AlloGenModel.Action action = operation.Action;
+            Replacer replacer = new Replacer(action.ReplaceOps);
+            IList<ILexEntry> lexEntriesWithAllosThatDoNotMatch = new List<ILexEntry>();
+            foreach (ILexEntry entry in lexEntriesThatMatch)
+            {
+                if (!HaveSameAllomorphs(replacer, entry, action))
+                {
+                    lexEntriesWithAllosThatDoNotMatch.Add(entry);
+                }
+            }
+            return lexEntriesWithAllosThatDoNotMatch;
+        }
+
+        private bool HaveSameAllomorphs(Replacer replacer, ILexEntry entry, AlloGenModel.Action action)
+        {
+            foreach (IMoStemAllomorph allo in entry.AlternateFormsOS)
+            {
+                if (HasSameAllomorph(replacer, entry, action, allo))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool HasSameAllomorph(Replacer replacer, ILexEntry entry, AlloGenModel.Action action, IMoStemAllomorph allo)
+        {
+            if (allo.StemNameRA!= null &&  allo.StemNameRA.Guid.ToString() != action.StemName.Guid)
+            {
+                return false;
+            }
+            if (!HaveSameEnvironments(allo.AllomorphEnvironments, action.Environments))
+            {
+                return false;
+            }
+            string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
+            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Akh))
+            {
+                return false;
+            }
+            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Acl))
+            {
+                return false;
+            }
+            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Akl))
+            {
+                return false;
+            }
+            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Akh))
+            {
+                return false;
+            }
+            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Ame))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool HaveSameAllomorphForm(Replacer replacer, string citationForm, IMoStemAllomorph allo, Dialect dialect)
+        {
+            string previewForm = replacer.ApplyReplaceOpToOneDialect(citationForm, dialect);
+            int ws = -1;
+            if (!dictWritingSystems.TryGetValue(dialect, out ws))
+            {
+                return false;
+            }
+            string alloForm = allo.Form.get_String(ws).Text;
+            if (alloForm != previewForm)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool HaveSameEnvironments(ILcmReferenceCollection<IPhEnvironment> allosEnvs, List<AlloGenModel.Environment> actionsEnvs)
+        {
+            if (allosEnvs.Count != actionsEnvs.Count)
+                return false;
+            foreach (IPhEnvironment env in allosEnvs)
+            {
+                if (actionsEnvs.FindIndex(e => e.Guid == env.Guid.ToString()) == -1)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public IEnumerable<ILexEntry> MatchPattern(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
+        {
+            var lexEntriesThatMatch = MatchMatchString(lexEntries, pattern);
+            if (lexEntriesThatMatch == null)
+                return null;
+            lexEntriesThatMatch = MatchCategory(lexEntriesThatMatch, pattern);
+            lexEntriesThatMatch = MatchMorphTypes(lexEntriesThatMatch, pattern);
             return lexEntriesThatMatch;
         }
     }

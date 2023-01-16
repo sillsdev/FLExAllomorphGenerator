@@ -103,6 +103,7 @@ namespace SIL.AllomorphGenerator
         Color colorForAme;
         int wsForAme = -1;
         Dictionary<Operation, List<ILexEntry>> dictNonChosen = new Dictionary<Operation, List<ILexEntry>>();
+        Dictionary<Dialect, int> dictWritingSystems = new Dictionary<Dialect, int>();
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
@@ -228,6 +229,7 @@ namespace SIL.AllomorphGenerator
                         {
                             case "akh":
                                 wsForAkh = def.Handle;
+                                dictWritingSystems.Add(Dialect.Akh, wsForAkh);
                                 fontForAkh = new Font(def.DefaultFontName, fontSize);
                                 fontInfoForAkh = styleInfo.FontInfoForWs(def.Handle);
                                 colorForAkh = fontInfoForAkh.FontColor.Value;
@@ -235,6 +237,7 @@ namespace SIL.AllomorphGenerator
                                 break;
                             case "acl":
                                 wsForAcl = def.Handle;
+                                dictWritingSystems.Add(Dialect.Acl, wsForAcl);
                                 fontForAcl = new Font(def.DefaultFontName, fontSize);
                                 fontInfoForAcl = styleInfo.FontInfoForWs(def.Handle);
                                 colorForAcl = fontInfoForAcl.FontColor.Value;
@@ -242,6 +245,7 @@ namespace SIL.AllomorphGenerator
                                 break;
                             case "akl":
                                 wsForAkl = def.Handle;
+                                dictWritingSystems.Add(Dialect.Akl, wsForAkl);
                                 fontForAkl = new Font(def.DefaultFontName, fontSize);
                                 fontInfoForAkl = styleInfo.FontInfoForWs(def.Handle);
                                 colorForAkl = fontInfoForAkl.FontColor.Value;
@@ -249,6 +253,7 @@ namespace SIL.AllomorphGenerator
                                 break;
                             case "ach":
                                 wsForAch = def.Handle;
+                                dictWritingSystems.Add(Dialect.Ach, wsForAch);
                                 fontForAch = new Font(def.DefaultFontName, fontSize);
                                 fontInfoForAch = styleInfo.FontInfoForWs(def.Handle);
                                 colorForAch = fontInfoForAch.FontColor.Value;
@@ -256,6 +261,7 @@ namespace SIL.AllomorphGenerator
                                 break;
                             case "ame":
                                 wsForAme = def.Handle;
+                                dictWritingSystems.Add(Dialect.Ame, wsForAme);
                                 fontForAme = new Font(def.DefaultFontName, fontSize);
                                 fontInfoForAme = styleInfo.FontInfoForWs(def.Handle);
                                 colorForAme = fontInfoForAme.FontColor.Value;
@@ -1169,7 +1175,7 @@ namespace SIL.AllomorphGenerator
                 return;
             }
             this.Cursor = Cursors.WaitCursor;
-            AllomorphCreator ac = new AllomorphCreator(Cache, wsForAkh, wsForAcl, wsForAkl, wsForAch, wsForAme);
+            AllomorphCreator alloCreator = new AllomorphCreator(Cache, wsForAkh, wsForAcl, wsForAkl, wsForAch, wsForAme);
             foreach (ListViewItem lvItem in lvOperations.CheckedItems)
             {
                 Operation op = (Operation)lvItem.Tag;
@@ -1178,13 +1184,14 @@ namespace SIL.AllomorphGenerator
                 {
                     nonChosenEntries = dictNonChosen[op];
                 }
-                PatternMatcher patMatcher = new PatternMatcher(op.Pattern, Cache);
-                IEnumerable<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.SingleAllomorphs);
+                PatternMatcher patMatcher = new PatternMatcher(Cache, dictWritingSystems);
+                IEnumerable<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern);
                 if (matchingEntries == null || matchingEntries.Count() == 0)
                 {
                     continue;
                 }
                 Replacer replacer = new Replacer(op.Action.ReplaceOps);
+                IEnumerable<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(op, op.Pattern);
                 string undoRedoPrompt = " Allomorph Generation for '" + op.Name;
                 UndoableUnitOfWorkHelper.Do("Undo" + undoRedoPrompt, "Redo" + undoRedoPrompt, Cache.ActionHandlerAccessor, () =>
                 {
@@ -1195,7 +1202,7 @@ namespace SIL.AllomorphGenerator
                             continue;
                         }
                         string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
-                        IMoStemAllomorph form = ac.CreateAllomorph(entry,
+                        IMoStemAllomorph form = alloCreator.CreateAllomorph(entry,
                                 GetPreviewForm(replacer, citationForm, Dialect.Akh),
                                 GetPreviewForm(replacer, citationForm, Dialect.Acl),
                                 GetPreviewForm(replacer, citationForm, Dialect.Akl),
@@ -1203,11 +1210,11 @@ namespace SIL.AllomorphGenerator
                                 GetPreviewForm(replacer, citationForm, Dialect.Ame));
                         if (op.Action.StemName.Guid.Length > 0)
                         {
-                            ac.AddStemName(form, op.Action.StemName.Guid);
+                            alloCreator.AddStemName(form, op.Action.StemName.Guid);
                         }
                         if (op.Action.Environments.Count > 0)
                         {
-                            ac.AddEnvironments(form, op.Action.Environments);
+                            alloCreator.AddEnvironments(form, op.Action.Environments);
                         }
                     }
                 });
@@ -1299,8 +1306,13 @@ namespace SIL.AllomorphGenerator
             Pattern = Operation.Pattern;
             if (Operation != null)
             {
-                PatternMatcher patMatcher = new PatternMatcher(Pattern, Cache);
-                IEnumerable<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.SingleAllomorphs);
+                PatternMatcher patMatcher = new PatternMatcher(Cache, dictWritingSystems);
+                IList<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, Operation.Pattern).ToList();
+                IList<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(Operation, Pattern).ToList();
+                foreach (ILexEntry entry in matchingEntriesWithAllos)
+                {
+                    matchingEntries.Add(entry);
+                }
                 if (matchingEntries == null)
                 {
                     string errMsg = string.Format(FwCoreDlgs.kstidErrorInRegEx, patMatcher.ErrorMessage);
