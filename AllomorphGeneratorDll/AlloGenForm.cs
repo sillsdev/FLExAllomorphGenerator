@@ -1190,13 +1190,17 @@ namespace SIL.AllomorphGenerator
                     nonChosenEntries = dictNonChosen[op];
                 }
                 PatternMatcher patMatcher = new PatternMatcher(Cache, dictWritingSystems);
-                IEnumerable<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern);
+                IList<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern).ToList();
+                IList<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(Operation, Pattern).ToList();
+                foreach (ILexEntry entry in matchingEntriesWithAllos)
+                {
+                    matchingEntries.Add(entry);
+                }
                 if (matchingEntries == null || matchingEntries.Count() == 0)
                 {
                     continue;
                 }
                 Replacer replacer = new Replacer(op.Action.ReplaceOps);
-                IEnumerable<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(op, op.Pattern);
                 string undoRedoPrompt = " Allomorph Generation for '" + op.Name;
                 UndoableUnitOfWorkHelper.Do("Undo" + undoRedoPrompt, "Redo" + undoRedoPrompt, Cache.ActionHandlerAccessor, () =>
                 {
