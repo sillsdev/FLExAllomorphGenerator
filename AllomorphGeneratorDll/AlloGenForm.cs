@@ -1339,6 +1339,10 @@ namespace SIL.AllomorphGenerator
                     lvItem.UseItemStyleForSubItems = false;
                     string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
                     lvItem.SubItems.Add(citationForm);
+                    if (matchingEntriesWithAllos.Contains(entry))
+                    {
+                        lvItem.SubItems[1].BackColor = Color.Yellow;
+                    }
                     string previewForm = GetPreviewForm(replacer, citationForm, Dialect.Akh);
                     lvItem.SubItems.Add(previewForm);
                     previewForm = GetPreviewForm(replacer, citationForm, Dialect.Acl);

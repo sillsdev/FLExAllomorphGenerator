@@ -20,9 +20,9 @@ type="tAlloGen"
 ><emailAddress
 >blackhandrew@gmail.com</emailAddress
 ><date
->11 January, 2023</date
+>17 January, 2023</date
 ><version
->Version 1.0.0 Beta</version
+>Version 1.1.0 Beta</version
 ><version
 >Copyright © 2023 SIL International</version
 ><contents
@@ -302,7 +302,7 @@ id="sActReplaceOp"
 ><secTitle
 >Replace operations</secTitle
 ><p
->The first box in the actions section contains an ordered set of replace operations. They are ordered in the sense that the output of one is the input to the next.  You can edit one by double-clicking on it or by right-clicking and choosing an appropriate option from the ensuing context menu. Example <exampleRef
+>The first box in the actions section contains an ordered set of replace operations. They are ordered in the sense that the output of one is the input to the next. You can edit one by double-clicking on it or by right-clicking and choosing an appropriate option from the ensuing context menu. Example <exampleRef
 letter="xReplaceContextMenu"
 num="xReplaceContextMenu"
 ></exampleRef
@@ -333,7 +333,7 @@ src="resources/ReplaceDialog.png"
 >There are two text boxes: one for what to look for (“Replace”) and one for what to change what matches ("To”). The replace can be a portion of the content of the <object
 type="tCitationForm"
 ></object
->.  That is, you do not have to try to match the entire content.  There is an option to use regular expressions for what to replace and what to change it to. Simply check the “Regular expression” check box or leave it unchecked.</p
+>. That is, you do not have to try to match the entire content. There is an option to use regular expressions for what to replace and what to change it to. Simply check the “Regular expression” check box or leave it unchecked.</p
 ><p
 >Each replace operation can be applied to one or more of the five writing systems we're using. Check all that apply.</p
 ></section3
@@ -406,10 +406,17 @@ type="tStemAllo"
 >Note that the preview portion only shows <object
 type="tCitationForms"
 ></object
-> which currently have no allomorphs.  In addition, the <object
+> which currently have no allomorphs or those which have some allomorphs but the allomorph that will be generated is not already there.  In the latter case, the citation form has a yellow background.<comment
+><endnote
+id="nMissingReplaceOp"
+><p
+>For those which already have some allomorphs, you may want to check them to see if maybe there is a missing replace operation.</p
+></endnote
+></comment
+> In addition, the <object
 type="tCitationForms"
 ></object
-> shown are for the default vernacular writing system.  You can click on a column header to sort the rows by the content of that column.  Note that it sorts by code points, not the way it might in <object
+> shown are for the default vernacular writing system. You can click on a column header to sort the rows by the content of that column. Note that it sorts by code points, not the way it might in <object
 type="tFLEx"
 ></object
 >.</p
@@ -711,7 +718,7 @@ type="tFLEx"
 > is showing as full screen, you may not see the <object
 type="tAlloGen"
 ></object
-> dialog.  You may have to either make <object
+> dialog. You may have to either make <object
 type="tFLEx"
 ></object
 > be in its “Restore” mode or find the <object
