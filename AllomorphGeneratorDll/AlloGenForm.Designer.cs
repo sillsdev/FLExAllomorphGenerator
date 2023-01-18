@@ -66,6 +66,7 @@ namespace SIL.AllomorphGenerator
             this.lBoxEnvironments = new System.Windows.Forms.ListBox();
             this.lbCategoryddd = new System.Windows.Forms.Label();
             this.tabRunOps = new System.Windows.Forms.TabPage();
+            this.btnSaveChanges2 = new System.Windows.Forms.Button();
             this.lvOperations = new System.Windows.Forms.ListView();
             this.lbCount = new System.Windows.Forms.Label();
             this.lvPreview = new System.Windows.Forms.ListView();
@@ -78,7 +79,6 @@ namespace SIL.AllomorphGenerator
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnNewFile = new System.Windows.Forms.Button();
             this.ilPreview = new System.Windows.Forms.ImageList(this.components);
-            this.btnSaveChanges2 = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.plPattern.SuspendLayout();
@@ -307,6 +307,7 @@ namespace SIL.AllomorphGenerator
             // 
             // tbMatch
             // 
+            this.tbMatch.Enabled = false;
             this.tbMatch.Location = new System.Drawing.Point(248, 14);
             this.tbMatch.Name = "tbMatch";
             this.tbMatch.Size = new System.Drawing.Size(204, 26);
@@ -442,6 +443,16 @@ namespace SIL.AllomorphGenerator
             this.tabRunOps.Text = "Run Operations";
             this.tabRunOps.UseVisualStyleBackColor = true;
             // 
+            // btnSaveChanges2
+            // 
+            this.btnSaveChanges2.Location = new System.Drawing.Point(453, 895);
+            this.btnSaveChanges2.Name = "btnSaveChanges2";
+            this.btnSaveChanges2.Size = new System.Drawing.Size(130, 34);
+            this.btnSaveChanges2.TabIndex = 8;
+            this.btnSaveChanges2.Text = "&Save Changes";
+            this.btnSaveChanges2.UseVisualStyleBackColor = true;
+            this.btnSaveChanges2.Click += new System.EventHandler(this.btnSaveChanges2_Click);
+            // 
             // lvOperations
             // 
             this.lvOperations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -569,16 +580,6 @@ namespace SIL.AllomorphGenerator
             this.ilPreview.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilPreview.ImageStream")));
             this.ilPreview.TransparentColor = System.Drawing.Color.Transparent;
             this.ilPreview.Images.SetKeyName(0, "CheckedCheckbox.bmp");
-            // 
-            // btnSaveChanges2
-            // 
-            this.btnSaveChanges2.Location = new System.Drawing.Point(453, 895);
-            this.btnSaveChanges2.Name = "btnSaveChanges2";
-            this.btnSaveChanges2.Size = new System.Drawing.Size(130, 34);
-            this.btnSaveChanges2.TabIndex = 8;
-            this.btnSaveChanges2.Text = "&Save Changes";
-            this.btnSaveChanges2.UseVisualStyleBackColor = true;
-            this.btnSaveChanges2.Click += new System.EventHandler(this.btnSaveChanges2_Click);
             // 
             // AlloGenForm
             // 
