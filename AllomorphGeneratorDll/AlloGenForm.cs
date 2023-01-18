@@ -104,6 +104,8 @@ namespace SIL.AllomorphGenerator
         int wsForAme = -1;
         Dictionary<Operation, List<ILexEntry>> dictNonChosen = new Dictionary<Operation, List<ILexEntry>>();
         Dictionary<Dialect, int> dictWritingSystems = new Dictionary<Dialect, int>();
+        Dictionary<Operation, bool> dictOperationActiveState = new Dictionary<Operation, bool>();
+
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
@@ -772,7 +774,16 @@ namespace SIL.AllomorphGenerator
                 lvItem.UseItemStyleForSubItems = false;
                 lvItem.Tag = op;
                 lvItem.SubItems.Add(op.Name);
-                lvItem.Checked = op.Active;
+                if (dictOperationActiveState.ContainsKey(op))
+                {
+                    bool value = false;
+                    dictOperationActiveState.TryGetValue(op, out value);
+                    lvItem.Checked = value;
+                }
+                else
+                {
+                    lvItem.Checked = op.Active;
+                }
                 lvOperations.Items.Add(lvItem);
             }
             if(Operations.Count > 0)
@@ -1023,6 +1034,7 @@ namespace SIL.AllomorphGenerator
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
+            SetOperationActiveStatus();
             Provider.AlloGens = AlloGens;
             Provider.SaveDataToFile(OperationsFile);
             MarkAsChanged(false);
@@ -1032,6 +1044,20 @@ namespace SIL.AllomorphGenerator
         private void btnSaveChanges2_Click(object sender, EventArgs e)
         {
             btnSaveChanges_Click(sender, e);
+        }
+
+        private void SetOperationActiveStatus()
+        {
+            for (int i = 0; i < dictOperationActiveState.Count; i++)
+            {
+                KeyValuePair<Operation, bool> keyValuePair = dictOperationActiveState.ElementAt(i);
+                int index = Operations.IndexOf(keyValuePair.Key);
+                if (index > -1)
+                {
+                    Operations[index].Active = keyValuePair.Value;
+                }
+            }
+            AlloGens.Operations = Operations;
         }
 
         private void tbDescription_TextChanged(object sender, EventArgs e)
@@ -1277,17 +1303,21 @@ namespace SIL.AllomorphGenerator
             MessageBox.Show(sb.ToString());
         }
 
-        private void lvOperations_ItemChecked(object sender, EventArgs e)
+        private void lvOperations_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            if (lvOperations.SelectedItems.Count == 0)
+            ListViewItem itemChecked = e.Item;
+            if (itemChecked == null)
             {
                 return;
             }
-            ListViewItem lvItem = lvOperations.SelectedItems[0];
-            Operation = lvItem.Tag as Operation;
-            if (Operation != null)
+            Operation op = itemChecked.Tag as Operation;
+            if (op != null)
             {
-                Operation.Active = lvItem.Checked;
+                if (dictOperationActiveState.ContainsKey(op))
+                {
+                    dictOperationActiveState.Remove(op);
+                }
+                dictOperationActiveState.Add(op, itemChecked.Checked);
             }
         }
 
