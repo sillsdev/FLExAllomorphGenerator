@@ -469,19 +469,19 @@ namespace SIL.AllomorphGenerator
             }
             if (indexAtMouse == 0)
                 // move up does not work
-                editContextMenu.Items[5].Enabled = false;
-            else
-                editContextMenu.Items[5].Enabled = true;
-            if (indexAtMouse == 0 && indexLast == 0)
-                // delete does not work
-                editContextMenu.Items[8].Enabled = false;
-            else
-                editContextMenu.Items[8].Enabled = true;
-            if (indexAtMouse == indexLast)
-                // move down does not work
                 editContextMenu.Items[6].Enabled = false;
             else
                 editContextMenu.Items[6].Enabled = true;
+            if (indexAtMouse == 0 && indexLast == 0)
+                // delete does not work
+                editContextMenu.Items[9].Enabled = false;
+            else
+                editContextMenu.Items[9].Enabled = true;
+            if (indexAtMouse == indexLast)
+                // move down does not work
+                editContextMenu.Items[7].Enabled = false;
+            else
+                editContextMenu.Items[7].Enabled = true;
         }
 
         void EditContextMenuReplace_Click(object sender, EventArgs e)
@@ -588,6 +588,7 @@ namespace SIL.AllomorphGenerator
             }
             currentListBox.Items[index] = otherItem;
             currentListBox.Items[otherIndex] = selectedItem;
+            currentListBox.SelectedIndex = otherIndex;
             MarkAsChanged(true);
         }
 
