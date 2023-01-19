@@ -20,6 +20,23 @@ namespace SIL.AlloGenModel
         public Pattern()
         {
             MorphTypes = new List<MorphType>();
+            MorphType mtBoundRoot = CreateMorphType("bound root", "d7f713e4-e8cf-11d3-9764-00c04f186933");
+            MorphTypes.Add(mtBoundRoot);
+            MorphType mtBoundStem = CreateMorphType("bound stem", "d7f713e7-e8cf-11d3-9764-00c04f186933");
+            MorphTypes.Add(mtBoundStem);
+            MorphType mtRoot = CreateMorphType("root", "d7f713e5-e8cf-11d3-9764-00c04f186933");
+            MorphTypes.Add(mtRoot);
+            MorphType mtStem = CreateMorphType("stem", "d7f713e8-e8cf-11d3-9764-00c04f186933");
+            MorphTypes.Add(mtStem);
+        }
+
+        private MorphType CreateMorphType(string name, string guid)
+        {
+            MorphType morphType = new MorphType();
+            morphType.Name = name;
+            morphType.Guid = guid;
+            morphType.Active = true;
+            return morphType;
         }
 
         public Pattern Duplicate()
