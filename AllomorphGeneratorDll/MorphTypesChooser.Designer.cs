@@ -1,4 +1,4 @@
-﻿namespace SIL.AllomorphGenerator
+﻿    namespace SIL.AllomorphGenerator
 {
     partial class MorphTypesChooser
     {
@@ -33,13 +33,14 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // clbMorphTpes
+            // clbMorphTypes
             // 
             this.clbMorphTypes.FormattingEnabled = true;
             this.clbMorphTypes.Location = new System.Drawing.Point(13, 13);
-            this.clbMorphTypes.Name = "clbMorphTpes";
+            this.clbMorphTypes.Name = "clbMorphTypes";
             this.clbMorphTypes.Size = new System.Drawing.Size(760, 361);
             this.clbMorphTypes.TabIndex = 0;
+            this.clbMorphTypes.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbMorphTypes_ItemCheckChanged);
             // 
             // btnCancel
             // 

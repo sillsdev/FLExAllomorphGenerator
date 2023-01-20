@@ -97,5 +97,14 @@ namespace SIL.AllomorphGenerator
                 }
             }
         }
+
+        private void clbMorphTypes_ItemCheckChanged(object sender, ItemCheckEventArgs e)
+        {
+            int augment = (e.NewValue == CheckState.Unchecked) ? -1 : 1;
+            if ((clbMorphTypes.CheckedItems.Count + augment) > 0)
+                btnOK.Enabled = true;
+            else
+                btnOK.Enabled = false;
+        }
     }
 }
