@@ -544,12 +544,20 @@ namespace SIL.AllomorphGenerator
             }
             else
             {
-                Operation op = new Operation();
+                Operation op = CreateNewOperation();
                 Operations.Insert(index, op);
                 currentListBox.Items.Insert(index, op);
             }
             currentListBox.SetSelected(index, true);
             MarkAsChanged(true);
+        }
+
+        private Operation CreateNewOperation()
+        {
+            Operation op = new Operation();
+            Pattern = op.Pattern;
+            Pattern.SetDefaultMorphTypes();
+            return op;
         }
 
         void MoveUpContextMenu_Click(object sender, EventArgs e)
@@ -1097,7 +1105,7 @@ namespace SIL.AllomorphGenerator
                 tbFile.Text = OperationsFile;
                 AlloGens = new AllomorphGenerators();
                 Operations = AlloGens.Operations;
-                Operation op = new Operation();
+                Operation op = CreateNewOperation();
                 Operations.Add(op);
                 FillOperationsListBox();
                 if (lvOperations.Visible)

@@ -24,6 +24,7 @@ namespace AlloGenModelTests
         public void CreationTest()
         {
             Pattern pattern = new Pattern();
+            pattern.SetDefaultMorphTypes();
             var mts = pattern.MorphTypes;
             Assert.AreEqual(4, mts.Count);
             var mt = mts[0];

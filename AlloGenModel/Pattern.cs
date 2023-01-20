@@ -20,6 +20,10 @@ namespace SIL.AlloGenModel
         public Pattern()
         {
             MorphTypes = new List<MorphType>();
+        }
+
+        public void SetDefaultMorphTypes()
+        {
             MorphType mtBoundRoot = CreateMorphType("bound root", "d7f713e4-e8cf-11d3-9764-00c04f186933");
             MorphTypes.Add(mtBoundRoot);
             MorphType mtBoundStem = CreateMorphType("bound stem", "d7f713e7-e8cf-11d3-9764-00c04f186933");
