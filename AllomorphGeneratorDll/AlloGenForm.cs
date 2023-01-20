@@ -1393,6 +1393,8 @@ namespace SIL.AllomorphGenerator
                     lvItem.Checked = !nonChosenEntries.Contains(entry);
                 }
                 sCount = matchingEntries.Count().ToString();
+                lvPreview.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                lvPreview.Columns[0].Width = 25;
             }
             lbCount.Text = sCount;
             LastOperationShown = Operation;
