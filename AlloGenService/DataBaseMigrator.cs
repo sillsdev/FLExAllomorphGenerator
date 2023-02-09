@@ -22,17 +22,25 @@ namespace SIL.AlloGenService
             // special case since we did not add a db version until version 2
             if (oldDatabase.ReplaceOperations.Count == 0)
                 version = 1;
+            bool didMigration = false;
             while (version < latestVersion)
             {
                 switch (version)
                 {
                     case 1:
                         newDatabase = Migrate01to02(oldDatabase);
+                        didMigration = true;
+                        break;
+                    default:
+                        Console.WriteLine("Migrator: version=" + version);
                         break;
                 }
                 version++;
             }
-            return newDatabase;
+            if (didMigration)
+                return newDatabase;
+            else
+                return oldDatabase;
         }
 
         AllomorphGenerators Migrate01to02(AllomorphGenerators oldDatabase)

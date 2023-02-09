@@ -21,19 +21,46 @@ namespace SIL.AlloGenServiceTest
         string AlloGenProduced { get; set; }
         DatabaseMigrator migrator = new DatabaseMigrator();
 
-        public DatabaseMigratorTest()
-        {
-            ExpectedFileName = "AlloGenVersion01.agf";
-        }
-
         [Test]
-        public void MigrateTest()
+        public void Migrate01to02Test()
         {
+            AlloGenExpected = Path.Combine(TestDataDir, "AlloGenVersion01.agf");
             provider.LoadDataFromFile(AlloGenExpected);
             AllomorphGenerators oldAlloGen = provider.AlloGens;
             Assert.NotNull(oldAlloGen);
             Assert.AreEqual(2, oldAlloGen.DbVersion);
             Assert.AreEqual(0, oldAlloGen.ReplaceOperations.Count);
+
+            AllomorphGenerators newAlloGen = migrator.Migrate(oldAlloGen);
+            Assert.AreEqual(2, newAlloGen.DbVersion);
+            Assert.AreEqual(4, newAlloGen.ReplaceOperations.Count);
+            Operation operation = oldAlloGen.Operations[0];
+            AlloGenModel.Action action = operation.Action;
+            Assert.AreEqual(4, action.ReplaceOpRefs.Count);
+            string replaceOpRef = action.ReplaceOpRefs[0];
+            Replace replace = newAlloGen.ReplaceOperations[0];
+            CheckReplaceValues(replace, "*", "", replaceOpRef);
+            replaceOpRef = action.ReplaceOpRefs[1];
+            replace = newAlloGen.ReplaceOperations[1];
+            CheckReplaceValues(replace, "+", "", replaceOpRef);
+            replaceOpRef = action.ReplaceOpRefs[2];
+            replace = newAlloGen.ReplaceOperations[2];
+            CheckReplaceValues(replace, ":", "", replaceOpRef);
+            replaceOpRef = action.ReplaceOpRefs[3];
+            replace = newAlloGen.ReplaceOperations[3];
+            CheckReplaceValues(replace, ":", "a", replaceOpRef);
+            Assert.AreEqual(0, action.ReplaceOps.Count);
+        }
+
+        [Test]
+        public void Migrate02to02Test()
+        {
+            AlloGenExpected = Path.Combine(TestDataDir, "AlloGenVersion02.agf");
+            provider.LoadDataFromFile(AlloGenExpected);
+            AllomorphGenerators oldAlloGen = provider.AlloGens;
+            Assert.NotNull(oldAlloGen);
+            Assert.AreEqual(2, oldAlloGen.DbVersion);
+            Assert.AreEqual(4, oldAlloGen.ReplaceOperations.Count);
 
             AllomorphGenerators newAlloGen = migrator.Migrate(oldAlloGen);
             Assert.AreEqual(2, newAlloGen.DbVersion);
