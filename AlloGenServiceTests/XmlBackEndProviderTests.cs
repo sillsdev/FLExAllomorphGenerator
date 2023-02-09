@@ -15,24 +15,9 @@ using Environment = SIL.AlloGenModel.Environment;
 
 namespace SIL.AlloGenServiceTest
 {
-    public class XmlBackEndProviderTests
+    public class XmlBackEndProviderTests : AlloGenTestBase
     {
-        XmlBackEndProvider provider = new XmlBackEndProvider();
-        string TestDataDir { get; set; }
-        string AlloGenFile { get; set; }
-        string AlloGenExpected { get; set; }
         string AlloGenProduced { get; set; }
-
-        [SetUp]
-        public void Setup()
-        {
-            Uri uriBase = new Uri(Assembly.GetExecutingAssembly().CodeBase);
-            var rootdir = Path.GetDirectoryName(Uri.UnescapeDataString(uriBase.AbsolutePath));
-            int i = rootdir.LastIndexOf("AlloGenServiceTests");
-            string basedir = rootdir.Substring(0, i);
-            TestDataDir = Path.Combine(basedir, "AlloGenServiceTests", "TestData");
-            AlloGenExpected = Path.Combine(TestDataDir, "AlloGenExpected.agf");
-        }
 
         [Test]
         public void LoadTest()
@@ -145,15 +130,18 @@ namespace SIL.AlloGenServiceTest
             Replace replace1 = new Replace();
             replace1.From = "*";
             replace1.To = "";
+            replace1.Guid = "9d20f7b0-4855-426b-992d-ebf2de3799c9";
             action.ReplaceOps.Add(replace1);
             Replace replace2 = new Replace();
             replace2.From = "+";
             replace2.To = "";
+            replace2.Guid = "69e9da7c-2e02-4d2a-8f7c-dfdac7aac02d";
             action.ReplaceOps.Add(replace2);
             Replace replace3 = new Replace();
             replace3.From = ":";
             replace3.To = "";
             replace3.Ame = false;
+            replace3.Guid = "3b20ac87-9494-4b8b-8e24-e3d2df0877a4";
             action.ReplaceOps.Add(replace3);
             Replace replace4 = new Replace();
             replace4.From = ":";
@@ -163,6 +151,7 @@ namespace SIL.AlloGenServiceTest
             replace4.Akh = false;
             replace4.Akl = false;
             replace4.Ame = true;
+            replace4.Guid = "e4d05bdf-ef48-4bb7-afda-05a61913ecf9";
             action.ReplaceOps.Add(replace4);
             Environment env1 = new Environment();
             env1.Guid = "d7f7123-e8cf-11d3-9733-00c04f186933";

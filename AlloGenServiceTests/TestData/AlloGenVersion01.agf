@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AllomorphGenerators xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" dbVersion="2">
+<AllomorphGenerators xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Operations>
     <Operation active="true">
       <Name>foreshortening</Name>
@@ -21,28 +21,23 @@
       </Pattern>
       <Action>
         <ReplaceOps>
-          <Replace active="true" guid="9d20f7b0-4855-426b-992d-ebf2de3799c9" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
+          <Replace active="true" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
             <From>*</From>
             <To />
-            <Description />
           </Replace>
-          <Replace active="true" guid="69e9da7c-2e02-4d2a-8f7c-dfdac7aac02d" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
+          <Replace active="true" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
             <From>+</From>
             <To />
-            <Description />
           </Replace>
-          <Replace active="true" guid="3b20ac87-9494-4b8b-8e24-e3d2df0877a4" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="false">
+          <Replace active="true" mode="false" ach="true" acl="true" akh="true" akl="true" ame="false">
             <From>:</From>
             <To />
-            <Description />
           </Replace>
-          <Replace active="true" guid="e4d05bdf-ef48-4bb7-afda-05a61913ecf9" name="" mode="false" ach="false" acl="false" akh="false" akl="false" ame="true">
+          <Replace active="true" mode="false" ach="false" acl="false" akh="false" akl="false" ame="true">
             <From>:</From>
             <To>a</To>
-            <Description />
           </Replace>
         </ReplaceOps>
-        <ReplaceOpRefs />
         <Environments>
           <Environment active="true" guid="d7f7123-e8cf-11d3-9733-00c04f186933" name="/ _ #" />
           <Environment active="true" guid="d7f7456-e8cf-11d3-9733-00c04f186933" name="/ ([C])[C]_ [V]" />
@@ -51,5 +46,4 @@
       </Action>
     </Operation>
   </Operations>
-  <ReplaceOperations />
 </AllomorphGenerators>

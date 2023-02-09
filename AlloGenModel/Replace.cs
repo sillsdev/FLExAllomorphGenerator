@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 SIL International
+﻿// Copyright (c) 2022-2023 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 
 namespace SIL.AlloGenModel
 {
-    public class Replace : AlloGenBase
+    public class Replace : AlloGenGuid
     {
         // mode: false = plain; true = regular expression
         [XmlAttribute("mode")]
@@ -29,6 +29,16 @@ namespace SIL.AlloGenModel
         [XmlAttribute("ame")]
         public bool Ame { get; set; } = true;
 
+        public string Description { get; set; } = "";
+
+        public Replace()
+        {
+            if (Guid == "")
+            {  // make sure it has a value
+                Guid = System.Guid.NewGuid().ToString();
+            };
+        }
+
         public Replace Duplicate()
         {
             Replace newReplace = new Replace();
@@ -42,6 +52,10 @@ namespace SIL.AlloGenModel
             newReplace.Mode = Mode;
             newReplace.To = To;
             newReplace.Active = Active;
+            newReplace.Description = Description;
+            newReplace.Name = Name;
+            newReplace.Guid = Guid;
+
             return newReplace;
         }
 
@@ -76,22 +90,25 @@ namespace SIL.AlloGenModel
             }
             else
             {
-                Replace act = (Replace)obj;
-                return (Mode == act.Mode)
-                    && (From == act.From)
-                    && (To == act.To)
-                    && (Ach == act.Ach)
-                    && (Acl == act.Acl)
-                    && (Akh == act.Akh)
-                    && (Akl == act.Akl)
-                    && (Ame == act.Ame)
+                Replace replace = (Replace)obj;
+                return base.Equals(obj)
+                    && (Description == replace.Description)
+                    && (Mode == replace.Mode)
+                    && (From == replace.From)
+                    && (To == replace.To)
+                    && (Ach == replace.Ach)
+                    && (Acl == replace.Acl)
+                    && (Akh == replace.Akh)
+                    && (Akl == replace.Akl)
+                    && (Ame == replace.Ame)
                     ;
             }
         }
 
         public override int GetHashCode()
         {
-            return Tuple.Create(Mode, From, To, Ach, Acl, Akh, Akl, Ame).GetHashCode();
+            int result = base.GetHashCode() + Tuple.Create(Description, Mode).GetHashCode();
+            return result + Tuple.Create(From, To, Ach, Acl, Akh, Akl, Ame).GetHashCode();
         }
 
     }

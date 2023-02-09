@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllomorphCreator.cs" />
+    <Compile Include="DatabaseMigrator.cs" />
     <Compile Include="PatternMatcher.cs" />
     <Compile Include="Replacer.cs" />
     <Compile Include="XmlBackEndProvider.cs" />
