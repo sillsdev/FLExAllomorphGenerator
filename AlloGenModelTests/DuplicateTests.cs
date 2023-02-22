@@ -53,6 +53,22 @@ namespace AlloGenModelTests
             Action action = operation.Action;
             Action actCopy = opCopy.Action;
             Assert.AreEqual(true, action.Equals(actCopy));
+
+            string guid = action.ReplaceOpRefs[0];
+            Replace replace = allomorphGenerators.FindReplaceOp(guid);
+            Assert.NotNull(replace);
+            Replace replaceCopy = replace.Duplicate();
+            Assert.AreEqual(replace.Name, replaceCopy.Name);
+            Assert.AreEqual(replace.Description, replaceCopy.Description);
+            Assert.AreEqual(replace.From, replaceCopy.From);
+            Assert.AreEqual(replace.To, replaceCopy.To);
+            Assert.AreEqual(replace.Mode, replaceCopy.Mode);
+            Assert.AreEqual(replace.Ach, replaceCopy.Ach);
+            Assert.AreEqual(replace.Acl, replaceCopy.Acl);
+            Assert.AreEqual(replace.Akh, replaceCopy.Akh);
+            Assert.AreEqual(replace.Akl, replaceCopy.Akl);
+            Assert.AreEqual(replace.Ame, replaceCopy.Ame);
+            Assert.AreEqual(replace.Active, replaceCopy.Active);
         }
     }
 }

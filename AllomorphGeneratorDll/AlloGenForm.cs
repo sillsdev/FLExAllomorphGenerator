@@ -68,12 +68,14 @@ namespace SIL.AllomorphGenerator
         public int RetrievedLastApplyOperation { get; set; }
 
         XmlBackEndProvider Provider { get; set; }
+        DatabaseMigrator Migrator { get; set; }
         String OperationsFile { get; set; }
         AllomorphGenerators AlloGens { get; set; }
         List<Operation> Operations { get; set; }
         Operation Operation { get; set; }
         Operation LastOperationShown { get; set; } = null;
         List<Replace> ReplaceOps { get; set; }
+        List<string> ReplaceOpRefs { get; set; }
         AlloGenModel.Action ActionOp { get; set; }
         StemName StemName { get; set; }
         Pattern Pattern { get; set; }
@@ -111,8 +113,10 @@ namespace SIL.AllomorphGenerator
         private ContextMenuStrip editContextMenu;
         const string formTitle = "Allomorph Generator";
         const string cmEdit = "Edit";
-        const string cmInsertBefore = "Insert before";
-        const string cmInsertAfter = "Insert after";
+        const string cmInsertBefore = "Insert new before";
+        const string cmInsertExistingBefore = "Insert existing before";
+        const string cmInsertAfter = "Insert new after";
+        const string cmInsertExistingAfter = "Insert existing after";
         const string cmMoveUp = "Move up";
         const string cmMoveDown = "Move down";
         const string cmDelete = "Delete";
@@ -149,12 +153,8 @@ namespace SIL.AllomorphGenerator
             {
                 RememberFormState();
                 Provider = new XmlBackEndProvider();
-                Provider.LoadDataFromFile(OperationsFile);
-                AlloGens = Provider.AlloGens;
-                if (AlloGens != null)
-                {
-                    Operations = AlloGens.Operations;
-                }
+                Migrator = new DatabaseMigrator();
+                LoadMigrateGetOperations();
                 FillOperationsListBox();
                 SetupFontAndStyleInfo();
                 SetUpOperationsCheckedListBox();
@@ -302,9 +302,15 @@ namespace SIL.AllomorphGenerator
             ToolStripMenuItem insertBefore = new ToolStripMenuItem(cmInsertBefore);
             insertBefore.Click += new EventHandler(InsertBeforeContextMenu_Click);
             insertBefore.Name = cmInsertBefore;
+            ToolStripMenuItem insertExistingBefore = new ToolStripMenuItem(cmInsertExistingBefore);
+            insertExistingBefore.Click += new EventHandler(InsertExistingBeforeContextMenu_Click);
+            insertBefore.Name = cmInsertBefore;
             ToolStripMenuItem insertAfter = new ToolStripMenuItem(cmInsertAfter);
             insertAfter.Click += new EventHandler(InsertAfterContextMenu_Click);
             insertAfter.Name = cmInsertAfter;
+            ToolStripMenuItem insertExistingAfter = new ToolStripMenuItem(cmInsertExistingAfter);
+            insertExistingAfter.Click += new EventHandler(InsertExistingAfterContextMenu_Click);
+            insertExistingAfter.Name = cmInsertExistingAfter;
             ToolStripMenuItem moveUp = new ToolStripMenuItem(cmMoveUp);
             moveUp.Click += new EventHandler(MoveUpContextMenu_Click);
             moveUp.Name = cmMoveUp;
@@ -321,7 +327,9 @@ namespace SIL.AllomorphGenerator
             editContextMenu.Items.Add("-");
             editContextMenu.Items.Add(duplicateItem);
             editContextMenu.Items.Add(insertBefore);
+            editContextMenu.Items.Add(insertExistingBefore);
             editContextMenu.Items.Add(insertAfter);
+            editContextMenu.Items.Add(insertExistingAfter);
             editContextMenu.Items.Add("-");
             editContextMenu.Items.Add(moveUp);
             editContextMenu.Items.Add(moveDown);
@@ -461,27 +469,32 @@ namespace SIL.AllomorphGenerator
                 // Do not show Edit and its separator
                 editContextMenu.Items[0].Visible = false;
                 editContextMenu.Items[1].Visible = false;
+                // Do not show "Insert existing before" or "Insert existing after"
+                editContextMenu.Items[4].Visible = false;
+                editContextMenu.Items[6].Visible = false;
             }
             else
             {
                 editContextMenu.Items[0].Visible = true;
                 editContextMenu.Items[1].Visible = true;
+                editContextMenu.Items[4].Visible = true;
+                editContextMenu.Items[6].Visible = true;
             }
             if (indexAtMouse == 0)
                 // move up does not work
-                editContextMenu.Items[6].Enabled = false;
+                editContextMenu.Items[8].Enabled = false;
             else
-                editContextMenu.Items[6].Enabled = true;
+                editContextMenu.Items[8].Enabled = true;
             if (indexAtMouse == 0 && indexLast == 0)
                 // delete does not work
+                editContextMenu.Items[11].Enabled = false;
+            else
+                editContextMenu.Items[11].Enabled = true;
+            if (indexAtMouse == indexLast)
+                // move down does not work
                 editContextMenu.Items[9].Enabled = false;
             else
                 editContextMenu.Items[9].Enabled = true;
-            if (indexAtMouse == indexLast)
-                // move down does not work
-                editContextMenu.Items[7].Enabled = false;
-            else
-                editContextMenu.Items[7].Enabled = true;
         }
 
         void EditContextMenuReplace_Click(object sender, EventArgs e)
@@ -504,7 +517,7 @@ namespace SIL.AllomorphGenerator
                 {
                     int index = lBoxReplaceOps.SelectedIndex;
                     replace = dialog.ReplaceOp;
-                    ReplaceOps[index] = replace;
+                    AlloGens.ReplaceOpAdd(replace);
                     lBoxReplaceOps.Items[index] = replace;
                     MarkAsChanged(true);
                 }
@@ -539,8 +552,11 @@ namespace SIL.AllomorphGenerator
             if (currentListBox.Name == "lBoxReplaceOps")
             {
                 Replace replace = new Replace();
-                ReplaceOps.Insert(index, replace);
+                AlloGens.ReplaceOpAdd(replace);
+                ReplaceOpRefs.Insert(index, replace.Guid);
                 currentListBox.Items.Insert(index, replace);
+                currentListBox.SelectedIndex = index;
+                InvokeEditRelaceOpForm();
             }
             else
             {
@@ -550,6 +566,16 @@ namespace SIL.AllomorphGenerator
             }
             currentListBox.SetSelected(index, true);
             MarkAsChanged(true);
+        }
+
+        private void InsertExistingAfterContextMenu_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void InsertExistingBeforeContextMenu_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private Operation CreateNewOperation()
@@ -586,8 +612,8 @@ namespace SIL.AllomorphGenerator
             Object otherItem = currentListBox.Items[otherIndex];
             if (currentListBox.Name == "lBoxReplaceOps")
             {
-                ReplaceOps[index] = (Replace)otherItem;
-                ReplaceOps[otherIndex] = (Replace)selectedItem;
+                ReplaceOpRefs[index] = ((Replace)otherItem).Guid;
+                ReplaceOpRefs[otherIndex] = ((Replace)selectedItem).Guid;
             }
             else
             {
@@ -607,9 +633,13 @@ namespace SIL.AllomorphGenerator
             {
                 int index = currentListBox.SelectedIndex;
                 if (currentListBox.Name == "lBoxReplaceOps")
-                    ReplaceOps.RemoveAt(index);
+                {
+                    ReplaceOpRefs.RemoveAt(index);
+                }
                 else
+                {
                     Operations.RemoveAt(index);
+                }
                 currentListBox.Items.RemoveAt(index);
             }
             MarkAsChanged(true);
@@ -625,7 +655,8 @@ namespace SIL.AllomorphGenerator
                 {
                     Replace thisReplace = lBoxReplaceOps.SelectedItem as Replace;
                     Replace replace = thisReplace.Duplicate();
-                    ReplaceOps.Insert(index, replace);
+                    AlloGens.ReplaceOpAdd(replace);
+                    ReplaceOpRefs.Insert(index, replace.Guid);
                     currentListBox.Items.Insert(index, replace);
                 }
                 else
@@ -708,9 +739,7 @@ namespace SIL.AllomorphGenerator
                 OperationsFile = dlg.FileName;
                 LastOperationsFile = OperationsFile;
                 tbFile.Text = OperationsFile;
-                Provider.LoadDataFromFile(OperationsFile);
-                AlloGens = Provider.AlloGens;
-                Operations = AlloGens.Operations;
+                LoadMigrateGetOperations();
                 if (Operations.Count > 0)
                     Operation = Operations[0];
                 LastOperation = 0;
@@ -722,6 +751,19 @@ namespace SIL.AllomorphGenerator
                 }
             }
         }
+
+        private void LoadMigrateGetOperations()
+        {
+            Provider.LoadDataFromFile(OperationsFile);
+            AlloGens = Provider.AlloGens;
+            if (AlloGens != null)
+            {
+                AlloGens = Migrator.Migrate(AlloGens);
+                Operations = AlloGens.Operations;
+                //AlloGens.ReplaceOpsInit();
+            }
+        }
+
         private void OnFormClosing(object sender, EventArgs e)
         {
             SaveAnyChanges();
@@ -736,6 +778,7 @@ namespace SIL.AllomorphGenerator
                     MessageBoxIcon.Question);
                 if (res == DialogResult.Yes)
                 {
+                    Provider.AlloGens = AlloGens;
                     Provider.SaveDataToFile(OperationsFile);
                 }
             }
@@ -826,17 +869,14 @@ namespace SIL.AllomorphGenerator
                 tbCategory.Text = Category.Name;
                 ActionOp = Operation.Action;
                 RefreshEnvironmentsListBox();
-                ReplaceOps = Operation.Action.ReplaceOps;
+                ReplaceOpRefs = ActionOp.ReplaceOpRefs;
                 RefreshReplaceListBox();
-                if (ActionOp.ReplaceOps.Count > 0)
-                {
-                    var selectedReplace = ActionOp.ReplaceOps[0];
-                }
-                else
+                if (ActionOp.ReplaceOpRefs.Count == 0)
                 {
                     // need at least one replace action
                     Replace replace = new Replace();
-                    ActionOp.ReplaceOps.Add(replace);
+                    AlloGens.ReplaceOpAdd(replace);
+                    lBoxReplaceOps.Items.Add(replace);
                 }
                 StemName = ActionOp.StemName;
                 tbStemName.Text = StemName.Name;
@@ -845,14 +885,17 @@ namespace SIL.AllomorphGenerator
 
         private void RefreshReplaceListBox()
         {
-            int selectedItem = Math.Max(0, lBoxReplaceOps.SelectedIndex);
             lBoxReplaceOps.Items.Clear();
-            foreach (Replace item in ReplaceOps)
+            foreach (string guid in ReplaceOpRefs)
             {
-                lBoxReplaceOps.Items.Add(item);
+                Replace replace = AlloGens.FindReplaceOp(guid);
+                if (replace != null)
+                {
+                    lBoxReplaceOps.Items.Add(replace);
+                }
             }
-            if (ReplaceOps.Count > 0)
-                lBoxReplaceOps.SetSelected(selectedItem, true);
+            if (ReplaceOpRefs.Count > 0)
+                lBoxReplaceOps.SetSelected(0, true);
         }
 
         private void RefreshMorphTypesListBox()
@@ -1215,6 +1258,7 @@ namespace SIL.AllomorphGenerator
                 return;
             }
             this.Cursor = Cursors.WaitCursor;
+            List<Replace> replaceOpsToUse = new List<Replace>();
             AllomorphCreator alloCreator = new AllomorphCreator(Cache, wsForAkh, wsForAcl, wsForAkl, wsForAch, wsForAme);
             foreach (ListViewItem lvItem in lvOperations.CheckedItems)
             {
@@ -1235,7 +1279,8 @@ namespace SIL.AllomorphGenerator
                 {
                     continue;
                 }
-                Replacer replacer = new Replacer(op.Action.ReplaceOps);
+                GetRepaceOpsToUse(replaceOpsToUse, op);
+                Replacer replacer = new Replacer(replaceOpsToUse);
                 string undoRedoPrompt = " Allomorph Generation for '" + op.Name;
                 UndoableUnitOfWorkHelper.Do("Undo" + undoRedoPrompt, "Redo" + undoRedoPrompt, Cache.ActionHandlerAccessor, () =>
                 {
@@ -1265,6 +1310,19 @@ namespace SIL.AllomorphGenerator
             }
             ShowPreview();
             this.Cursor = Cursors.Arrow;
+        }
+
+        private void GetRepaceOpsToUse(List<Replace> replaceOpsToUse, Operation op)
+        {
+            replaceOpsToUse.Clear();
+            foreach (string guid in op.Action.ReplaceOpRefs)
+            {
+                Replace replace = AlloGens.FindReplaceOp(guid);
+                if (replace != null)
+                {
+                    replaceOpsToUse.Add(replace);
+                }
+            }
         }
 
         private bool CheckForInvalidEnvironmentsAndStemNames()
@@ -1348,6 +1406,7 @@ namespace SIL.AllomorphGenerator
                 return;
             }
             this.Cursor = Cursors.WaitCursor;
+            List<Replace> replaceOpsToUse = new List<Replace>();
             ListViewItem lvItem = lvOperations.SelectedItems[0];
             LastApplyOperation = lvOperations.Items.IndexOf(lvItem);
             Operation = lvItem.Tag as Operation;
@@ -1373,7 +1432,8 @@ namespace SIL.AllomorphGenerator
                 {
                     nonChosenEntries = dictNonChosen[Operation];
                 }
-                Replacer replacer = new Replacer(Operation.Action.ReplaceOps);
+                GetRepaceOpsToUse(replaceOpsToUse, Operation);
+                Replacer replacer = new Replacer(replaceOpsToUse);
                 lvPreview.Items.Clear();
                 foreach (ILexEntry entry in matchingEntries)
                 {

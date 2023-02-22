@@ -131,11 +131,16 @@
     <Compile Include="DuplicateTests.cs" />
     <Compile Include="PatternTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReplaceOpsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AlloGenModel\AlloGenModel.csproj">
       <Project>{4D7C07A3-BDA7-4C91-967B-7ACC736E6586}</Project>
       <Name>AlloGenModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AlloGenServiceTests\AlloGenServiceTests.csproj">
+      <Project>{B67758BD-BC0D-4F2B-9BF2-1C2A5D2E01E1}</Project>
+      <Name>AlloGenServiceTests</Name>
     </ProjectReference>
     <ProjectReference Include="..\AlloGenService\AlloGenService.csproj">
       <Project>{58F631E4-3FD2-4FFD-9981-5621DCC22D2A}</Project>

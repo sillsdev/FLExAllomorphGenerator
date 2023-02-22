@@ -42,12 +42,16 @@
             this.cbAkh = new System.Windows.Forms.CheckBox();
             this.cbAkl = new System.Windows.Forms.CheckBox();
             this.cbAme = new System.Windows.Forms.CheckBox();
+            this.lbName = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbDescription = new System.Windows.Forms.TextBox();
+            this.tbName = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(693, 403);
+            this.btnCancel.Location = new System.Drawing.Point(693, 527);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(95, 35);
             this.btnCancel.TabIndex = 0;
@@ -58,7 +62,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(561, 403);
+            this.btnOK.Location = new System.Drawing.Point(561, 527);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(97, 34);
             this.btnOK.TabIndex = 1;
@@ -69,7 +73,7 @@
             // lbReplace
             // 
             this.lbReplace.AutoSize = true;
-            this.lbReplace.Location = new System.Drawing.Point(51, 36);
+            this.lbReplace.Location = new System.Drawing.Point(51, 160);
             this.lbReplace.Name = "lbReplace";
             this.lbReplace.Size = new System.Drawing.Size(68, 20);
             this.lbReplace.TabIndex = 2;
@@ -77,7 +81,7 @@
             // 
             // tbFrom
             // 
-            this.tbFrom.Location = new System.Drawing.Point(125, 36);
+            this.tbFrom.Location = new System.Drawing.Point(158, 160);
             this.tbFrom.Name = "tbFrom";
             this.tbFrom.Size = new System.Drawing.Size(352, 26);
             this.tbFrom.TabIndex = 3;
@@ -85,7 +89,7 @@
             // cbRegEx
             // 
             this.cbRegEx.AutoSize = true;
-            this.cbRegEx.Location = new System.Drawing.Point(509, 38);
+            this.cbRegEx.Location = new System.Drawing.Point(542, 162);
             this.cbRegEx.Name = "cbRegEx";
             this.cbRegEx.Size = new System.Drawing.Size(171, 24);
             this.cbRegEx.TabIndex = 14;
@@ -96,7 +100,7 @@
             // lbTo
             // 
             this.lbTo.AutoSize = true;
-            this.lbTo.Location = new System.Drawing.Point(55, 90);
+            this.lbTo.Location = new System.Drawing.Point(55, 214);
             this.lbTo.Name = "lbTo";
             this.lbTo.Size = new System.Drawing.Size(27, 20);
             this.lbTo.TabIndex = 15;
@@ -104,7 +108,7 @@
             // 
             // tbTo
             // 
-            this.tbTo.Location = new System.Drawing.Point(125, 83);
+            this.tbTo.Location = new System.Drawing.Point(158, 207);
             this.tbTo.Name = "tbTo";
             this.tbTo.Size = new System.Drawing.Size(352, 26);
             this.tbTo.TabIndex = 16;
@@ -112,7 +116,7 @@
             // lbVarieties
             // 
             this.lbVarieties.AutoSize = true;
-            this.lbVarieties.Location = new System.Drawing.Point(55, 148);
+            this.lbVarieties.Location = new System.Drawing.Point(55, 272);
             this.lbVarieties.Name = "lbVarieties";
             this.lbVarieties.Size = new System.Drawing.Size(75, 20);
             this.lbVarieties.TabIndex = 17;
@@ -121,7 +125,7 @@
             // cbAch
             // 
             this.cbAch.AutoSize = true;
-            this.cbAch.Location = new System.Drawing.Point(189, 148);
+            this.cbAch.Location = new System.Drawing.Point(189, 272);
             this.cbAch.Name = "cbAch";
             this.cbAch.Size = new System.Drawing.Size(61, 24);
             this.cbAch.TabIndex = 18;
@@ -132,7 +136,7 @@
             // cbAcl
             // 
             this.cbAcl.AutoSize = true;
-            this.cbAcl.Location = new System.Drawing.Point(189, 195);
+            this.cbAcl.Location = new System.Drawing.Point(189, 319);
             this.cbAcl.Name = "cbAcl";
             this.cbAcl.Size = new System.Drawing.Size(55, 24);
             this.cbAcl.TabIndex = 19;
@@ -143,7 +147,7 @@
             // cbAkh
             // 
             this.cbAkh.AutoSize = true;
-            this.cbAkh.Location = new System.Drawing.Point(189, 242);
+            this.cbAkh.Location = new System.Drawing.Point(189, 366);
             this.cbAkh.Name = "cbAkh";
             this.cbAkh.Size = new System.Drawing.Size(61, 24);
             this.cbAkh.TabIndex = 20;
@@ -154,7 +158,7 @@
             // cbAkl
             // 
             this.cbAkl.AutoSize = true;
-            this.cbAkl.Location = new System.Drawing.Point(189, 289);
+            this.cbAkl.Location = new System.Drawing.Point(189, 413);
             this.cbAkl.Name = "cbAkl";
             this.cbAkl.Size = new System.Drawing.Size(55, 24);
             this.cbAkl.TabIndex = 21;
@@ -165,7 +169,7 @@
             // cbAme
             // 
             this.cbAme.AutoSize = true;
-            this.cbAme.Location = new System.Drawing.Point(189, 336);
+            this.cbAme.Location = new System.Drawing.Point(189, 460);
             this.cbAme.Name = "cbAme";
             this.cbAme.Size = new System.Drawing.Size(66, 24);
             this.cbAme.TabIndex = 22;
@@ -173,11 +177,48 @@
             this.cbAme.UseVisualStyleBackColor = true;
             this.cbAme.CheckedChanged += new System.EventHandler(this.cbAme_CheckedChanged);
             // 
+            // lbName
+            // 
+            this.lbName.AutoSize = true;
+            this.lbName.Location = new System.Drawing.Point(55, 21);
+            this.lbName.Name = "lbName";
+            this.lbName.Size = new System.Drawing.Size(51, 20);
+            this.lbName.TabIndex = 23;
+            this.lbName.Text = "Name";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(55, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 20);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "Description";
+            // 
+            // tbDescription
+            // 
+            this.tbDescription.Location = new System.Drawing.Point(158, 72);
+            this.tbDescription.Multiline = true;
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.Size = new System.Drawing.Size(607, 26);
+            this.tbDescription.TabIndex = 25;
+            // 
+            // tbName
+            // 
+            this.tbName.Location = new System.Drawing.Point(158, 21);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(607, 26);
+            this.tbName.TabIndex = 26;
+            // 
             // EditReplaceOpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 579);
+            this.Controls.Add(this.tbName);
+            this.Controls.Add(this.tbDescription);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbName);
             this.Controls.Add(this.cbAme);
             this.Controls.Add(this.cbAkl);
             this.Controls.Add(this.cbAkh);
@@ -214,5 +255,9 @@
         private System.Windows.Forms.CheckBox cbAkh;
         private System.Windows.Forms.CheckBox cbAkl;
         private System.Windows.Forms.CheckBox cbAme;
+        private System.Windows.Forms.Label lbName;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbDescription;
+        private System.Windows.Forms.TextBox tbName;
     }
 }

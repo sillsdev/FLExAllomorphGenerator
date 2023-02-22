@@ -24,6 +24,8 @@ namespace SIL.AllomorphGenerator
         public void Initialize(Replace replace)
         {
             ReplaceOp = replace;
+            tbName.Text = replace.Name;
+            tbDescription.Text = replace.Description;
             tbFrom.Text = replace.From;
             tbTo.Text = replace.To;
             cbRegEx.Checked = replace.Mode;
@@ -36,6 +38,8 @@ namespace SIL.AllomorphGenerator
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            ReplaceOp.Name = tbName.Text;
+            ReplaceOp.Description = tbDescription.Text;
             ReplaceOp.From = tbFrom.Text;
             ReplaceOp.To = tbTo.Text;
             ReplaceOp.Mode = cbRegEx.Checked;

@@ -15,11 +15,38 @@ namespace SIL.AlloGenModel
     {
         [XmlAttribute("dbVersion")]
         public int DbVersion { get; set; } = 2;
-        public List<Operation> Operations { get; set; }
+        public List<Operation> Operations { get; set; } = new List<Operation>();
         public List<Replace> ReplaceOperations { get; set; } = new List<Replace>();
+
         public AllomorphGenerators()
         {
-            Operations = new List<Operation>();
+        }
+
+        public bool ReplaceOpExists(Replace replace)
+        {
+            if (replace == null)
+            {
+                return false;
+            }
+            return ReplaceOperations.Contains(replace);
+        }
+
+        public void ReplaceOpAdd(Replace replace)
+        {
+            if (replace != null)
+            {
+                if (ReplaceOpExists(replace))
+                {
+                    ReplaceOperations.Remove(replace);
+                }
+                ReplaceOperations.Add(replace);
+            }
+        }
+
+        public Replace FindReplaceOp(string guid)
+        {
+            Replace replace = ReplaceOperations.FirstOrDefault(r => r.Guid == guid);
+            return replace;
         }
     }
 }

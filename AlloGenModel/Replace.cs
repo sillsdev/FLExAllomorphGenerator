@@ -54,14 +54,14 @@ namespace SIL.AlloGenModel
             newReplace.Active = Active;
             newReplace.Description = Description;
             newReplace.Name = Name;
-            newReplace.Guid = Guid;
-
             return newReplace;
         }
 
         override public string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append(Name);
+            sb.Append(": ");
             sb.Append("Replace '");
             sb.Append(From);
             sb.Append("' with '");

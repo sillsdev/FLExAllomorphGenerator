@@ -51,8 +51,12 @@ namespace SIL.AlloGenServiceTest
             Assert.NotNull(action);
             List<Replace> replaceOps = action.ReplaceOps;
             Assert.NotNull(replaceOps);
-            Assert.AreEqual(4, replaceOps.Count);
-            Replace replace = replaceOps[0];
+            Assert.AreEqual(0, replaceOps.Count);
+            List<string> replaceOpRefs = action.ReplaceOpRefs;
+            Assert.NotNull(replaceOpRefs);
+            Assert.AreEqual(4, replaceOpRefs.Count);
+            guid = replaceOpRefs[0];
+            Replace replace = allomorphGenerators.FindReplaceOp(guid);
             Assert.NotNull(replace);
             bool mode = replace.Mode;
             Assert.AreEqual(false, mode);
@@ -63,7 +67,8 @@ namespace SIL.AlloGenServiceTest
             Assert.True(replace.Akh);
             Assert.True(replace.Akl);
             Assert.True(replace.Ame);
-            replace = replaceOps[2];
+            guid = replaceOpRefs[2];
+            replace = allomorphGenerators.FindReplaceOp(guid);
             Assert.NotNull(replace);
             Assert.AreEqual(":", replace.From);
             Assert.AreEqual("", replace.To);
@@ -72,7 +77,8 @@ namespace SIL.AlloGenServiceTest
             Assert.True(replace.Akh);
             Assert.True(replace.Akl);
             Assert.False(replace.Ame);
-            replace = replaceOps[3];
+            guid = replaceOpRefs[3];
+            replace = allomorphGenerators.FindReplaceOp(guid);
             Assert.NotNull(replace);
             Assert.AreEqual(":", replace.From);
             Assert.AreEqual("a", replace.To);
@@ -94,7 +100,6 @@ namespace SIL.AlloGenServiceTest
             Assert.NotNull(sn);
             Assert.AreEqual("d2cf436-e8cf-11d3-9733-00c04f186933", sn.Guid);
             Assert.AreEqual("no lowering", sn.Name);
-
         }
 
         [Test]
@@ -107,7 +112,7 @@ namespace SIL.AlloGenServiceTest
             operation.Description = "Add allomorphs for entries which undergo foreshortening";
             Pattern pattern = MakePattern();
             operation.Pattern = pattern;
-            AlloGenModel.Action action = MakeAction();
+            AlloGenModel.Action action = MakeAction(allomorphGenerators);
             operation.Action = action;
             allomorphGenerators.Operations.Add(operation);
             string xmlFile = Path.Combine(Path.GetTempPath(), "AlloGen.agf");
@@ -124,25 +129,28 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual(AlloGenExpected, AlloGenProduced);
         }
 
-        private static AlloGenModel.Action MakeAction()
+        private static AlloGenModel.Action MakeAction(AllomorphGenerators allomorphGenerators)
         {
             AlloGenModel.Action action = new AlloGenModel.Action();
             Replace replace1 = new Replace();
             replace1.From = "*";
             replace1.To = "";
-            replace1.Guid = "9d20f7b0-4855-426b-992d-ebf2de3799c9";
-            action.ReplaceOps.Add(replace1);
+            replace1.Guid = "5e8b9b79-0269-4dee-bfb0-be8ed4f4dc5d";
+            allomorphGenerators.ReplaceOpAdd(replace1);
+            action.ReplaceOpRefs.Add(replace1.Guid);
             Replace replace2 = new Replace();
             replace2.From = "+";
             replace2.To = "";
-            replace2.Guid = "69e9da7c-2e02-4d2a-8f7c-dfdac7aac02d";
-            action.ReplaceOps.Add(replace2);
+            replace2.Guid = "34e77406-d2fe-4526-9bf9-3bc8fa653190";
+            allomorphGenerators.ReplaceOpAdd(replace2);
+            action.ReplaceOpRefs.Add(replace2.Guid);
             Replace replace3 = new Replace();
             replace3.From = ":";
             replace3.To = "";
             replace3.Ame = false;
-            replace3.Guid = "3b20ac87-9494-4b8b-8e24-e3d2df0877a4";
-            action.ReplaceOps.Add(replace3);
+            replace3.Guid = "0f853476-407d-40e9-a8f3-803792f4f83e";
+            allomorphGenerators.ReplaceOpAdd(replace3);
+            action.ReplaceOpRefs.Add(replace3.Guid);
             Replace replace4 = new Replace();
             replace4.From = ":";
             replace4.To = "a";
@@ -151,8 +159,9 @@ namespace SIL.AlloGenServiceTest
             replace4.Akh = false;
             replace4.Akl = false;
             replace4.Ame = true;
-            replace4.Guid = "e4d05bdf-ef48-4bb7-afda-05a61913ecf9";
-            action.ReplaceOps.Add(replace4);
+            replace4.Guid = "4c3f43c6-f130-4767-9a5a-f2a93b1c6222";
+            allomorphGenerators.ReplaceOpAdd(replace4);
+            action.ReplaceOpRefs.Add(replace4.Guid);
             Environment env1 = new Environment();
             env1.Guid = "d7f7123-e8cf-11d3-9733-00c04f186933";
             env1.Name = "/ _ #";
