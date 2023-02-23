@@ -570,12 +570,33 @@ namespace SIL.AllomorphGenerator
 
         private void InsertExistingAfterContextMenu_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            int selectedIndex = lBoxReplaceOps.SelectedIndex + 1;
+            InsertExistingReplaceOps(selectedIndex);
         }
 
         private void InsertExistingBeforeContextMenu_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            int selectedIndex = lBoxReplaceOps.SelectedIndex;
+            InsertExistingReplaceOps(selectedIndex);
+        }
+
+        private void InsertExistingReplaceOps(int selectedIndex)
+        {
+            ReplaceOperationsChooser chooser = new ReplaceOperationsChooser(AlloGens);
+            chooser.FillReplaceOpsListBox();
+            chooser.ShowDialog();
+            if (chooser.DialogResult == DialogResult.OK)
+            {
+                int i = selectedIndex;
+                foreach (Replace replace in chooser.SelectedReplaceOps)
+                {
+                    lBoxReplaceOps.Items.Insert(i, replace);
+                    ReplaceOpRefs.Insert(i, replace.Guid);
+                    i++;
+                }
+                RefreshReplaceListBox();
+                MarkAsChanged(true);
+            }
         }
 
         private Operation CreateNewOperation()

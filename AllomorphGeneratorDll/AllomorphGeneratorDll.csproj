@@ -165,6 +165,12 @@
     <Compile Include="EditReplaceOpForm.Designer.cs">
       <DependentUpon>EditReplaceOpForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReplaceOperationsChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReplaceOperationsChooser.Designer.cs">
+      <DependentUpon>ReplaceOperationsChooser.cs</DependentUpon>
+    </Compile>
     <Compile Include="FLExUtility.cs" />
     <Compile Include="EnvironmentsChooser.cs">
       <SubType>Form</SubType>
@@ -205,6 +211,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditReplaceOpForm.resx">
       <DependentUpon>EditReplaceOpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReplaceOperationsChooser.resx">
+      <DependentUpon>ReplaceOperationsChooser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EnvironmentsChooser.resx">
       <DependentUpon>EnvironmentsChooser.cs</DependentUpon>
