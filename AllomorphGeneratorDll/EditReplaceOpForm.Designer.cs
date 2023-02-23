@@ -212,8 +212,10 @@
             // 
             // EditReplaceOpForm
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(800, 579);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.tbDescription);
