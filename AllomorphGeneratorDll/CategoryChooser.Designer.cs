@@ -40,7 +40,7 @@
             this.btnCancel.Location = new System.Drawing.Point(702, 397);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 41);
-            this.btnCancel.TabIndex = 0;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -62,7 +62,7 @@
             this.lBoxCategories.Location = new System.Drawing.Point(13, 13);
             this.lBoxCategories.Name = "lBoxCategories";
             this.lBoxCategories.Size = new System.Drawing.Size(764, 364);
-            this.lBoxCategories.TabIndex = 2;
+            this.lBoxCategories.TabIndex = 0;
             // 
             // CategoryChooser
             // 

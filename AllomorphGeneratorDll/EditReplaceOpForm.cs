@@ -34,6 +34,7 @@ namespace SIL.AllomorphGenerator
             cbAkh.Checked = replace.Akh;
             cbAkl.Checked = replace.Akl;
             cbAme.Checked = replace.Ame;
+            tbName.Select();
         }
 
         private void btnOK_Click(object sender, EventArgs e)

@@ -43,10 +43,47 @@ namespace SIL.AlloGenModel
             }
         }
 
+        public void ReplaceOpDelete(Replace replace)
+        {
+            if (ReplaceOpExists(replace))
+            {
+                DeleteReplaceOpRefs(replace);
+                ReplaceOperations.Remove(replace);
+            }
+        }
+
+        private void DeleteReplaceOpRefs(Replace replace)
+        {
+            foreach (Operation op in Operations)
+            {
+                AlloGenModel.Action action = op.Action;
+                foreach (string replaceOpRef in action.ReplaceOpRefs.ToList())
+                {
+                    if (replaceOpRef == replace.Guid)
+                    {
+                        action.ReplaceOpRefs.Remove(replaceOpRef);
+                    }
+                }
+            }
+        }
+
         public Replace FindReplaceOp(string guid)
         {
             Replace replace = ReplaceOperations.FirstOrDefault(r => r.Guid == guid);
             return replace;
         }
+
+        public Operation CreateNewOperation()
+        {
+            Operation op = new Operation();
+            Operations.Add(op);
+            Replace newReplace = new Replace();
+            ReplaceOperations.Add(newReplace);
+            op.Action.ReplaceOpRefs.Add(newReplace.Guid);
+            op.Pattern.SetDefaultMorphTypes();
+            return op;
+        }
+
+
     }
 }

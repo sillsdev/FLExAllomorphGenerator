@@ -54,7 +54,7 @@
             this.btnCancel.Location = new System.Drawing.Point(693, 527);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(95, 35);
-            this.btnCancel.TabIndex = 0;
+            this.btnCancel.TabIndex = 16;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -65,7 +65,7 @@
             this.btnOK.Location = new System.Drawing.Point(561, 527);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(97, 34);
-            this.btnOK.TabIndex = 1;
+            this.btnOK.TabIndex = 15;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -76,7 +76,7 @@
             this.lbReplace.Location = new System.Drawing.Point(51, 160);
             this.lbReplace.Name = "lbReplace";
             this.lbReplace.Size = new System.Drawing.Size(68, 20);
-            this.lbReplace.TabIndex = 2;
+            this.lbReplace.TabIndex = 4;
             this.lbReplace.Text = "Replace";
             // 
             // tbFrom
@@ -84,7 +84,7 @@
             this.tbFrom.Location = new System.Drawing.Point(158, 160);
             this.tbFrom.Name = "tbFrom";
             this.tbFrom.Size = new System.Drawing.Size(352, 26);
-            this.tbFrom.TabIndex = 3;
+            this.tbFrom.TabIndex = 5;
             // 
             // cbRegEx
             // 
@@ -92,7 +92,7 @@
             this.cbRegEx.Location = new System.Drawing.Point(542, 162);
             this.cbRegEx.Name = "cbRegEx";
             this.cbRegEx.Size = new System.Drawing.Size(171, 24);
-            this.cbRegEx.TabIndex = 14;
+            this.cbRegEx.TabIndex = 6;
             this.cbRegEx.Text = "Regular expression";
             this.cbRegEx.UseVisualStyleBackColor = true;
             this.cbRegEx.CheckedChanged += new System.EventHandler(this.cbRegEx_CheckedChanged);
@@ -103,7 +103,7 @@
             this.lbTo.Location = new System.Drawing.Point(55, 214);
             this.lbTo.Name = "lbTo";
             this.lbTo.Size = new System.Drawing.Size(27, 20);
-            this.lbTo.TabIndex = 15;
+            this.lbTo.TabIndex = 7;
             this.lbTo.Text = "To";
             // 
             // tbTo
@@ -111,7 +111,7 @@
             this.tbTo.Location = new System.Drawing.Point(158, 207);
             this.tbTo.Name = "tbTo";
             this.tbTo.Size = new System.Drawing.Size(352, 26);
-            this.tbTo.TabIndex = 16;
+            this.tbTo.TabIndex = 8;
             // 
             // lbVarieties
             // 
@@ -119,7 +119,7 @@
             this.lbVarieties.Location = new System.Drawing.Point(55, 272);
             this.lbVarieties.Name = "lbVarieties";
             this.lbVarieties.Size = new System.Drawing.Size(75, 20);
-            this.lbVarieties.TabIndex = 17;
+            this.lbVarieties.TabIndex = 9;
             this.lbVarieties.Text = "Varieties:";
             // 
             // cbAch
@@ -128,7 +128,7 @@
             this.cbAch.Location = new System.Drawing.Point(189, 272);
             this.cbAch.Name = "cbAch";
             this.cbAch.Size = new System.Drawing.Size(61, 24);
-            this.cbAch.TabIndex = 18;
+            this.cbAch.TabIndex = 10;
             this.cbAch.Text = "ach";
             this.cbAch.UseVisualStyleBackColor = true;
             this.cbAch.CheckedChanged += new System.EventHandler(this.cbAch_CheckedChanged);
@@ -139,7 +139,7 @@
             this.cbAcl.Location = new System.Drawing.Point(189, 319);
             this.cbAcl.Name = "cbAcl";
             this.cbAcl.Size = new System.Drawing.Size(55, 24);
-            this.cbAcl.TabIndex = 19;
+            this.cbAcl.TabIndex = 11;
             this.cbAcl.Text = "acl";
             this.cbAcl.UseVisualStyleBackColor = true;
             this.cbAcl.CheckedChanged += new System.EventHandler(this.cbAcl_CheckedChanged);
@@ -150,7 +150,7 @@
             this.cbAkh.Location = new System.Drawing.Point(189, 366);
             this.cbAkh.Name = "cbAkh";
             this.cbAkh.Size = new System.Drawing.Size(61, 24);
-            this.cbAkh.TabIndex = 20;
+            this.cbAkh.TabIndex = 12;
             this.cbAkh.Text = "akh";
             this.cbAkh.UseVisualStyleBackColor = true;
             this.cbAkh.CheckedChanged += new System.EventHandler(this.cbAkh_CheckedChanged);
@@ -161,7 +161,7 @@
             this.cbAkl.Location = new System.Drawing.Point(189, 413);
             this.cbAkl.Name = "cbAkl";
             this.cbAkl.Size = new System.Drawing.Size(55, 24);
-            this.cbAkl.TabIndex = 21;
+            this.cbAkl.TabIndex = 13;
             this.cbAkl.Text = "akl";
             this.cbAkl.UseVisualStyleBackColor = true;
             this.cbAkl.CheckedChanged += new System.EventHandler(this.cbAkl_CheckedChanged);
@@ -172,7 +172,7 @@
             this.cbAme.Location = new System.Drawing.Point(189, 460);
             this.cbAme.Name = "cbAme";
             this.cbAme.Size = new System.Drawing.Size(66, 24);
-            this.cbAme.TabIndex = 22;
+            this.cbAme.TabIndex = 14;
             this.cbAme.Text = "ame";
             this.cbAme.UseVisualStyleBackColor = true;
             this.cbAme.CheckedChanged += new System.EventHandler(this.cbAme_CheckedChanged);
@@ -183,7 +183,7 @@
             this.lbName.Location = new System.Drawing.Point(55, 21);
             this.lbName.Name = "lbName";
             this.lbName.Size = new System.Drawing.Size(51, 20);
-            this.lbName.TabIndex = 23;
+            this.lbName.TabIndex = 0;
             this.lbName.Text = "Name";
             // 
             // label1
@@ -192,7 +192,7 @@
             this.label1.Location = new System.Drawing.Point(55, 72);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 20);
-            this.label1.TabIndex = 24;
+            this.label1.TabIndex = 2;
             this.label1.Text = "Description";
             // 
             // tbDescription
@@ -201,14 +201,14 @@
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.Size = new System.Drawing.Size(607, 26);
-            this.tbDescription.TabIndex = 25;
+            this.tbDescription.TabIndex = 3;
             // 
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(158, 21);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(607, 26);
-            this.tbName.TabIndex = 26;
+            this.tbName.TabIndex = 1;
             // 
             // EditReplaceOpForm
             // 

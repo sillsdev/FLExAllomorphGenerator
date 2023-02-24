@@ -46,6 +46,7 @@ namespace SIL.AllomorphGenerator
         const string m_strLastOperationsFile = "LastOperationsFile";
         const string m_strLastOperation = "Lastoperation";
         const string m_strLastApplyOperation = "LastApplyOperation";
+        const string m_strLastEditReplaceOps = "LastEditReplaceOps";
         const string m_strLastTab = "LastTab";
         const string m_strLocationX = "LocationX";
         const string m_strLocationY = "LocationY";
@@ -63,9 +64,11 @@ namespace SIL.AllomorphGenerator
         public string LastOperationsFile { get; set; }
         public int LastOperation { get; set; }
         public int LastApplyOperation { get; set; }
+        public int LastEditReplaceOps { get; set; }
         public int LastTab { get; set; }
         public int RetrievedLastOperation { get; set; }
         public int RetrievedLastApplyOperation { get; set; }
+        public int RetrievedLastEditReplaceOps { get; set; }
 
         XmlBackEndProvider Provider { get; set; }
         DatabaseMigrator Migrator { get; set; }
@@ -128,6 +131,7 @@ namespace SIL.AllomorphGenerator
         const string cmClearAll = "Clear All";
         const string cmToggle = "Toggle";
         private ListViewColumnSorter lvwColumnSorter;
+        private ListViewColumnSorter lvwEditReplaceOpsColumnSorter;
 
         public AlloGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
         {
@@ -148,7 +152,9 @@ namespace SIL.AllomorphGenerator
             // Create an instance of a ListView column sorter and assign it
             // to the ListView control.
             lvwColumnSorter = new ListViewColumnSorter();
-            this.lvPreview.ListViewItemSorter = lvwColumnSorter;
+            lvPreview.ListViewItemSorter = lvwColumnSorter;
+            lvwEditReplaceOpsColumnSorter = new ListViewColumnSorter();
+            lvEditReplaceOps.ListViewItemSorter = lvwEditReplaceOpsColumnSorter;
             try
             {
                 RememberFormState();
@@ -160,6 +166,8 @@ namespace SIL.AllomorphGenerator
                 SetUpOperationsCheckedListBox();
                 SetUpPreviewCheckedListBox();
                 FillApplyOperationsListView();
+                SetUpEditReplaceOpsListView();
+                FillReplaceOpsListView();
                 BuildReplaceContextMenu();
                 BuildHelpContextMenu();
                 BuildOperationsCheckBoxContextMenu();
@@ -194,6 +202,20 @@ namespace SIL.AllomorphGenerator
             lvPreview.Columns.Add("Akl          ", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Ach          ", -2, HorizontalAlignment.Left);
             lvPreview.Columns.Add("Ame          ", -2, HorizontalAlignment.Left);
+        }
+
+        private void SetUpEditReplaceOpsListView()
+        {
+            lvEditReplaceOps.Columns.Add("Name", -2, HorizontalAlignment.Left);
+            lvEditReplaceOps.Columns.Add("From", -2, HorizontalAlignment.Left);
+            lvEditReplaceOps.Columns.Add("To", -2, HorizontalAlignment.Left);
+            lvEditReplaceOps.Columns.Add("Mode", -2, HorizontalAlignment.Left);
+            lvEditReplaceOps.Columns.Add("Akh", -2, HorizontalAlignment.Left);
+            lvEditReplaceOps.Columns.Add("Acl", -2, HorizontalAlignment.Left);
+            lvEditReplaceOps.Columns.Add("Akl", -2, HorizontalAlignment.Left);
+            lvEditReplaceOps.Columns.Add("Ach", -2, HorizontalAlignment.Left);
+            lvEditReplaceOps.Columns.Add("Ame", -2, HorizontalAlignment.Left);
+            lvEditReplaceOps.Columns.Add("Description", -2, HorizontalAlignment.Left);
         }
 
         private ListViewItem SetFontInfoForItem(ListViewItem item)
@@ -502,11 +524,11 @@ namespace SIL.AllomorphGenerator
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmEdit)
             {
-                InvokeEditRelaceOpForm();
+                InvokeEditReplaceOpForm();
             }
         }
 
-        private void InvokeEditRelaceOpForm()
+        private void InvokeEditReplaceOpForm()
         {
             using (var dialog = new EditReplaceOpForm())
             {
@@ -526,7 +548,18 @@ namespace SIL.AllomorphGenerator
 
         void lBoxReplaceOps_DoubleClick(object sender, EventArgs e)
         {
-            InvokeEditRelaceOpForm();
+            InvokeEditReplaceOpForm();
+        }
+
+        private bool CanDoReplaceOpsMasterListOption()
+        {
+            bool doable = true;
+            if (lvEditReplaceOps.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select a replace operation first.");
+                doable = false;
+            }
+            return doable;
         }
 
         void InsertBeforeContextMenu_Click(object sender, EventArgs e)
@@ -556,11 +589,11 @@ namespace SIL.AllomorphGenerator
                 ReplaceOpRefs.Insert(index, replace.Guid);
                 currentListBox.Items.Insert(index, replace);
                 currentListBox.SelectedIndex = index;
-                InvokeEditRelaceOpForm();
+                InvokeEditReplaceOpForm();
             }
             else
             {
-                Operation op = CreateNewOperation();
+                Operation op = AlloGens.CreateNewOperation();
                 Operations.Insert(index, op);
                 currentListBox.Items.Insert(index, op);
             }
@@ -597,14 +630,6 @@ namespace SIL.AllomorphGenerator
                 RefreshReplaceListBox();
                 MarkAsChanged(true);
             }
-        }
-
-        private Operation CreateNewOperation()
-        {
-            Operation op = new Operation();
-            Pattern = op.Pattern;
-            Pattern.SetDefaultMorphTypes();
-            return op;
         }
 
         void MoveUpContextMenu_Click(object sender, EventArgs e)
@@ -723,6 +748,7 @@ namespace SIL.AllomorphGenerator
             OperationsFile = LastOperationsFile = (string)regkey.GetValue(m_strLastOperationsFile);
             RetrievedLastOperation = LastOperation = (int)regkey.GetValue(m_strLastOperation, 0);
             RetrievedLastApplyOperation = LastApplyOperation = (int)regkey.GetValue(m_strLastApplyOperation, 0);
+            RetrievedLastEditReplaceOps = LastEditReplaceOps = (int)regkey.GetValue(m_strLastEditReplaceOps, 0);
             LastTab = (int)regkey.GetValue(m_strLastTab, 0);
         }
 
@@ -740,6 +766,7 @@ namespace SIL.AllomorphGenerator
                 regkey.SetValue(m_strLastOperationsFile, LastOperationsFile);
             regkey.SetValue(m_strLastOperation, LastOperation);
             regkey.SetValue(m_strLastApplyOperation, LastApplyOperation);
+            regkey.SetValue(m_strLastEditReplaceOps, LastEditReplaceOps);
             regkey.SetValue(m_strLastTab, LastTab);
             // Window position and location
             regkey.SetValue(m_strWindowState, (int)WindowState);
@@ -769,6 +796,10 @@ namespace SIL.AllomorphGenerator
                 if (lvOperations.Visible)
                 {
                     FillApplyOperationsListView();
+                }
+                if (lvEditReplaceOps.Visible)
+                {
+                    FillReplaceOpsListView();
                 }
             }
         }
@@ -871,6 +902,52 @@ namespace SIL.AllomorphGenerator
             }
         }
 
+        public void FillReplaceOpsListView()
+        {
+            lvEditReplaceOps.Items.Clear();
+            //MessageBox.Show("ro count=" + AlloGens.ReplaceOperations.Count);
+            foreach (Replace replace in AlloGens.ReplaceOperations)
+            {
+                ListViewItem lvItem = new ListViewItem(replace.Name);
+                lvItem.UseItemStyleForSubItems = false;
+                lvItem.Tag = replace;
+                lvItem.SubItems[0].ForeColor = Color.Blue;
+                lvItem.SubItems.Add(replace.From);
+                lvItem.SubItems[1].ForeColor = Color.DarkGreen;
+                lvItem.SubItems.Add(replace.To);
+                lvItem.SubItems[2].ForeColor = Color.Navy;
+                string sMode = replace.Mode ? " RegEx " : " Normal ";
+                lvItem.SubItems.Add(sMode);
+                string sDialect = GetDialectIndicator(replace.Akh);
+                lvItem.SubItems.Add(sDialect);
+                sDialect = GetDialectIndicator(replace.Acl);
+                lvItem.SubItems.Add(sDialect);
+                sDialect = GetDialectIndicator(replace.Akl);
+                lvItem.SubItems.Add(sDialect);
+                sDialect = GetDialectIndicator(replace.Ach);
+                lvItem.SubItems.Add(sDialect);
+                sDialect = GetDialectIndicator(replace.Ame);
+                lvItem.SubItems.Add(sDialect);
+                lvItem.SubItems.Add(replace.Description);
+                lvItem.SubItems[9].ForeColor = Color.Purple;
+                lvEditReplaceOps.Items.Add(lvItem);
+            }
+            if (AlloGens.ReplaceOperations.Count > 0)
+            {
+                // select last used operation, if any
+                if (LastEditReplaceOps < 0 || LastEditReplaceOps >= AlloGens.ReplaceOperations.Count)
+                    LastEditReplaceOps = 0;
+                lvEditReplaceOps.Items[LastEditReplaceOps].Selected = true;
+                lvEditReplaceOps.Select();
+            }
+        }
+
+        private string GetDialectIndicator(bool dialect)
+        {
+            string indicator = dialect ? " X " : "";
+            return indicator;
+        }
+
         private void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
             Operation = lBoxOperations.SelectedItem as Operation;
@@ -901,6 +978,8 @@ namespace SIL.AllomorphGenerator
                 }
                 StemName = ActionOp.StemName;
                 tbStemName.Text = StemName.Name;
+                int index = lBoxOperations.SelectedIndex + 1;
+                lbCountOps.Text = index.ToString() + " / " + AlloGens.Operations.Count.ToString();
             }
         }
 
@@ -1119,6 +1198,11 @@ namespace SIL.AllomorphGenerator
             btnSaveChanges_Click(sender, e);
         }
 
+        private void btnSaveChanges3_Click(object sender, EventArgs e)
+        {
+            btnSaveChanges_Click(sender, e);
+        }
+
         private void SetOperationActiveStatus()
         {
             for (int i = 0; i < dictOperationActiveState.Count; i++)
@@ -1168,16 +1252,19 @@ namespace SIL.AllomorphGenerator
                 LastOperationsFile = OperationsFile;
                 tbFile.Text = OperationsFile;
                 AlloGens = new AllomorphGenerators();
+                Operation = AlloGens.CreateNewOperation();
+                Pattern = Operation.Pattern;
                 Operations = AlloGens.Operations;
-                Operation op = CreateNewOperation();
-                Operations.Add(op);
                 FillOperationsListBox();
                 if (lvOperations.Visible)
                 {
                     FillApplyOperationsListView();
                 }
+                if (lvEditReplaceOps.Visible)
+                {
+                    FillReplaceOpsListView();
+                }
             }
-
         }
 
         private void btnHelp_Click(object sender, EventArgs e)
@@ -1260,8 +1347,10 @@ namespace SIL.AllomorphGenerator
                 LastTab = tabControl.SelectedIndex;
                 if (LastTab == 0)
                     FillOperationsListBox();
-                else
+                else if (LastTab == 1)
                     FillApplyOperationsListView();
+                else
+                    FillReplaceOpsListView();
             }
             this.Cursor = Cursors.Arrow;
         }
@@ -1483,9 +1572,12 @@ namespace SIL.AllomorphGenerator
                 }
                 sCount = matchingEntries.Count().ToString();
                 lvPreview.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                lvPreview.Columns[0].Width = 25;
+                if (lvPreview.Columns.Count > 0)
+                {
+                    lvPreview.Columns[0].Width = 25;
+                }
             }
-            lbCount.Text = sCount;
+            lbCountRunOps.Text = sCount;
             LastOperationShown = Operation;
             this.Cursor = Cursors.Arrow;
         }
@@ -1563,5 +1655,104 @@ namespace SIL.AllomorphGenerator
             // Perform the sort with these new sort options.
             this.lvPreview.Sort();
         }
+
+        private void lvEditReplaceOps_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Following code taken from
+            // https://learn.microsoft.com/en-us/troubleshoot/developer/visualstudio/csharp/language-compilers/sort-listview-by-column
+            // on 2023.01.04
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == lvwEditReplaceOpsColumnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                if (lvwEditReplaceOpsColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwEditReplaceOpsColumnSorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    lvwEditReplaceOpsColumnSorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                lvwEditReplaceOpsColumnSorter.SortColumn = e.Column;
+                lvwEditReplaceOpsColumnSorter.Order = SortOrder.Ascending;
+            }
+
+            // Perform the sort with these new sort options.
+            lvEditReplaceOps.Sort();
+        }
+
+        private void btnEditReplaceOp_Click(object sender, EventArgs e)
+        {
+            InvokeEditReplaceOpFormMasterList();
+        }
+
+        private void btnAddNewReplaceOp_Click(object sender, EventArgs e)
+        {
+            Replace replace = new Replace();
+            AlloGens.ReplaceOpAdd(replace);
+            ListViewItem item = new ListViewItem();
+            item.Tag = replace;
+            lvEditReplaceOps.Items.Add(item);
+            int index = Math.Max(0, lvEditReplaceOps.Items.Count - 1);
+            lvEditReplaceOps.Items[index].Selected = true;
+            lvEditReplaceOps.Select();
+            InvokeEditReplaceOpFormMasterList();
+        }
+
+        private void btnDeleteReplaceOp_Click(object sender, EventArgs e)
+        {
+            if (!CanDoReplaceOpsMasterListOption())
+            {
+                return;
+            }
+            ListViewItem lvItem = lvEditReplaceOps.SelectedItems[0];
+            AlloGens.ReplaceOpDelete((Replace)lvItem.Tag);
+            MarkAsChanged(true);
+            FillReplaceOpsListView();
+        }
+
+        private void lvEditReplaceOps_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvEditReplaceOps.SelectedItems.Count > 0)
+            {
+                ListViewItem lvItem = lvEditReplaceOps.SelectedItems[0];
+                LastEditReplaceOps = lvEditReplaceOps.Items.IndexOf(lvItem);
+                lbCountReplaceOps.Text = LastEditReplaceOps.ToString() + " / " + lvEditReplaceOps.Items.Count.ToString();
+            }
+        }
+
+        private void InvokeEditReplaceOpFormMasterList()
+        {
+            if (!CanDoReplaceOpsMasterListOption())
+            {
+                return;
+            }
+            ListViewItem item = lvEditReplaceOps.SelectedItems[0]; ;
+            Replace replace = (Replace)item.Tag;
+            using (var dialog = new EditReplaceOpForm())
+            {
+                dialog.Initialize(replace);
+                dialog.ShowDialog();
+                if (dialog.DialogResult == DialogResult.OK)
+                {
+                    int index = lvEditReplaceOps.SelectedIndices[0];
+                    replace = dialog.ReplaceOp;
+                    AlloGens.ReplaceOpAdd(replace);
+                    lvEditReplaceOps.Items[index].Tag = replace;
+                    MarkAsChanged(true);
+                    FillReplaceOpsListView();
+                }
+            }
+        }
+
+        void lvEditReplaceOps_DoubleClick(object sender, EventArgs e)
+        {
+            InvokeEditReplaceOpFormMasterList();
+        }
+
     }
 }

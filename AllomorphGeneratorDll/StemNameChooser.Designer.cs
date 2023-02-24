@@ -40,7 +40,7 @@
             this.btnCancel.Location = new System.Drawing.Point(702, 397);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 41);
-            this.btnCancel.TabIndex = 0;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -62,7 +62,7 @@
             this.lBoxStemNames.Location = new System.Drawing.Point(13, 13);
             this.lBoxStemNames.Name = "lBoxStemNames";
             this.lBoxStemNames.Size = new System.Drawing.Size(764, 364);
-            this.lBoxStemNames.TabIndex = 2;
+            this.lBoxStemNames.TabIndex = 0;
             // 
             // StemNameChooser
             // 

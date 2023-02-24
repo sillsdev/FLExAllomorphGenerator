@@ -34,7 +34,7 @@ namespace AlloGenModelTests
         }
 
         [Test]
-        public void ReplaceOpsDictTest()
+        public void ReplaceOpsTests()
         {
             provider.LoadDataFromFile(AlloGenExpected);
             AllomorphGenerators allomorphGenerators = provider.AlloGens;
@@ -82,8 +82,18 @@ namespace AlloGenModelTests
             Assert.AreEqual(false, replace.Ach);
             Assert.AreEqual(false, replace.Acl);
             Assert.AreEqual(false, replace.Mode);
+            // missing replace op
             replace = allomorphGenerators.FindReplaceOp("34e7XYZ7406-d2fe-4526-9bf9-3bc8fa653190");
             Assert.Null(replace);
+            // delete a replace op
+            replace = allomorphGenerators.FindReplaceOp("4c3f43c6-f130-4767-9a5a-f2a93b1c6222");
+            Assert.NotNull(replace);
+            Operation op = allomorphGenerators.Operations[0];
+            SIL.AlloGenModel.Action action = op.Action;
+            Assert.AreEqual(true, action.ReplaceOpRefs.Contains(replace.Guid));
+            allomorphGenerators.ReplaceOpDelete(replace);
+            Assert.AreEqual(false, action.ReplaceOpRefs.Contains(replace.Guid));
+            Assert.AreEqual(false, allomorphGenerators.ReplaceOperations.Contains(replace));
         }
     }
 }
