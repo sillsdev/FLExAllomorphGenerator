@@ -619,6 +619,7 @@ namespace SIL.AllomorphGenerator
             this.lvEditReplaceOps.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvEditReplaceOps_ColumnClick);
             this.lvEditReplaceOps.SelectedIndexChanged += new System.EventHandler(this.lvEditReplaceOps_SelectedIndexChanged);
             this.lvEditReplaceOps.DoubleClick += new System.EventHandler(this.lvEditReplaceOps_DoubleClick);
+            this.lvEditReplaceOps.MouseUp += new MouseEventHandler(this.lvEditReplaceOps_MouseUp);
             // 
             // lbAlloGenFile
             // 

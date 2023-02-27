@@ -114,7 +114,9 @@ namespace SIL.AllomorphGenerator
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
+        private ContextMenuStrip editReplaceOpsContextMenu;
         const string formTitle = "Allomorph Generator";
+        const string cmAdd = "Add";
         const string cmEdit = "Edit";
         const string cmInsertBefore = "Insert new before";
         const string cmInsertExistingBefore = "Insert existing before";
@@ -169,6 +171,7 @@ namespace SIL.AllomorphGenerator
                 SetUpEditReplaceOpsListView();
                 FillReplaceOpsListView();
                 BuildReplaceContextMenu();
+                BuildEditReplaceOpContextMenu();
                 BuildHelpContextMenu();
                 BuildOperationsCheckBoxContextMenu();
                 BuildPreviewCheckBoxContextMenu();
@@ -326,7 +329,7 @@ namespace SIL.AllomorphGenerator
             insertBefore.Name = cmInsertBefore;
             ToolStripMenuItem insertExistingBefore = new ToolStripMenuItem(cmInsertExistingBefore);
             insertExistingBefore.Click += new EventHandler(InsertExistingBeforeContextMenu_Click);
-            insertBefore.Name = cmInsertBefore;
+            insertExistingBefore.Name = cmInsertExistingBefore;
             ToolStripMenuItem insertAfter = new ToolStripMenuItem(cmInsertAfter);
             insertAfter.Click += new EventHandler(InsertAfterContextMenu_Click);
             insertAfter.Name = cmInsertAfter;
@@ -483,6 +486,47 @@ namespace SIL.AllomorphGenerator
             }
         }
 
+        private void lvEditReplaceOps_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ListView lvSender = (ListView)sender;
+                ListViewItem item = lvSender.GetItemAt(e.X, e.Y);
+                if (item != null)
+                {
+                    //AdjustContextMenuContent(lBoxSender, indexAtMouse);
+                    //lBoxSender.SelectedIndex = indexAtMouse;
+                    Point ptClickedAt = e.Location;
+                    ptClickedAt = lvSender.PointToScreen(ptClickedAt);
+                    editReplaceOpsContextMenu.Show(ptClickedAt);
+                }
+            }
+        }
+
+        private void BuildEditReplaceOpContextMenu()
+        {
+            editReplaceOpsContextMenu = new ContextMenuStrip();
+            editReplaceOpsContextMenu.Name = "EditReplaceOps";
+            ToolStripMenuItem editItem = new ToolStripMenuItem(cmEdit);
+            editItem.Click += new EventHandler(EditReplaceOpsContextMenuEdit_Click);
+            editItem.Name = cmEdit;
+            ToolStripMenuItem add = new ToolStripMenuItem(cmAdd);
+            add.Click += new EventHandler(EditReplaceOpsContextMenuAdd_Click);
+            add.Name = cmAdd;
+            ToolStripMenuItem deleteItem = new ToolStripMenuItem(cmDelete);
+            deleteItem.Click += new EventHandler(EditReplaceOpsContextMenuDelete_Click);
+            deleteItem.Name = cmDelete;
+            ToolStripMenuItem duplicateItem = new ToolStripMenuItem(cmDuplicate);
+            duplicateItem.Click += new EventHandler(EditReplaceOpsContextMenuDuplicate_Click);
+            duplicateItem.Name = cmDuplicate;
+            editReplaceOpsContextMenu.Items.Add(editItem);
+            editReplaceOpsContextMenu.Items.Add("-");
+            editReplaceOpsContextMenu.Items.Add(duplicateItem);
+            editReplaceOpsContextMenu.Items.Add(add);
+            editReplaceOpsContextMenu.Items.Add("-");
+            editReplaceOpsContextMenu.Items.Add(deleteItem);
+        }
+
         private void AdjustContextMenuContent(ListBox lBoxSender, int indexAtMouse)
         {
             int indexLast = lBoxSender.Items.Count - 1;
@@ -525,6 +569,55 @@ namespace SIL.AllomorphGenerator
             if (menuItem.Name == cmEdit)
             {
                 InvokeEditReplaceOpForm();
+            }
+        }
+
+        void EditReplaceOpsContextMenuReplace_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmEdit)
+            {
+                InvokeEditReplaceOpFormMasterList();
+            }
+        }
+
+        void EditReplaceOpsContextMenuEdit_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmEdit)
+            {
+                InvokeEditReplaceOpFormMasterList();
+            }
+        }
+
+        void EditReplaceOpsContextMenuDelete_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmDelete)
+            {
+                btnDeleteReplaceOp_Click(sender, e);
+            }
+        }
+
+        void EditReplaceOpsContextMenuAdd_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmAdd)
+            {
+                btnAddNewReplaceOp_Click(sender, e);
+            }
+        }
+
+        void EditReplaceOpsContextMenuDuplicate_Click(object sender, EventArgs e)
+        {
+            ToolStripItem menuItem = (ToolStripItem)sender;
+            if (menuItem.Name == cmDuplicate)
+            {
+                ListViewItem item = lvEditReplaceOps.SelectedItems[0];
+                Replace thisReplace = (Replace)item.Tag;
+                Replace replace = thisReplace.Duplicate();
+                AddNewReplaceOpToMasterList(replace);
+                InvokeEditReplaceOpFormMasterList();
             }
         }
 
@@ -1700,17 +1793,22 @@ namespace SIL.AllomorphGenerator
                 if (dialog.DialogResult == DialogResult.OK)
                 {
                     replace = dialog.ReplaceOp;
-                    AlloGens.AddReplaceOp(replace);
-                    ListViewItem item = new ListViewItem();
-                    item.Tag = replace;
-                    lvEditReplaceOps.Items.Add(item);
-                    int index = Math.Max(0, lvEditReplaceOps.Items.Count - 1);
-                    lvEditReplaceOps.Items[index].Selected = true;
-                    lvEditReplaceOps.Select();
-                    MarkAsChanged(true);
-                    FillReplaceOpsListView();
+                    AddNewReplaceOpToMasterList(replace);
                 }
             }
+        }
+
+        private void AddNewReplaceOpToMasterList(Replace replace)
+        {
+            AlloGens.AddReplaceOp(replace);
+            ListViewItem item = new ListViewItem();
+            item.Tag = replace;
+            lvEditReplaceOps.Items.Add(item);
+            int index = Math.Max(0, lvEditReplaceOps.Items.Count - 1);
+            lvEditReplaceOps.Items[index].Selected = true;
+            lvEditReplaceOps.Select();
+            MarkAsChanged(true);
+            FillReplaceOpsListView();
         }
 
         private void btnDeleteReplaceOp_Click(object sender, EventArgs e)
@@ -1722,8 +1820,8 @@ namespace SIL.AllomorphGenerator
             ListViewItem lvItem = lvEditReplaceOps.SelectedItems[0];
             Replace replace = (Replace)lvItem.Tag;
             StringBuilder sb = BuildDeleteReplaceOpMessage(replace);
-            DialogResult result = MessageBox.Show(sb.ToString(), "Delete Replace Op", MessageBoxButtons.YesNoCancel,
-                MessageBoxIcon.Question, MessageBoxDefaultButton.Button3);
+            DialogResult result = MessageBox.Show(sb.ToString(), "Delete Replace Op", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             if (result == DialogResult.Yes)
             {
                 AlloGens.DeleteReplaceOp(replace);
