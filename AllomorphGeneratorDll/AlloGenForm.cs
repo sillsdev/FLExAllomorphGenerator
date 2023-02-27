@@ -1692,15 +1692,25 @@ namespace SIL.AllomorphGenerator
 
         private void btnAddNewReplaceOp_Click(object sender, EventArgs e)
         {
-            Replace replace = new Replace();
-            AlloGens.AddReplaceOp(replace);
-            ListViewItem item = new ListViewItem();
-            item.Tag = replace;
-            lvEditReplaceOps.Items.Add(item);
-            int index = Math.Max(0, lvEditReplaceOps.Items.Count - 1);
-            lvEditReplaceOps.Items[index].Selected = true;
-            lvEditReplaceOps.Select();
-            InvokeEditReplaceOpFormMasterList();
+            using (var dialog = new EditReplaceOpForm())
+            {
+                Replace replace = new Replace();
+                dialog.Initialize(replace);
+                dialog.ShowDialog();
+                if (dialog.DialogResult == DialogResult.OK)
+                {
+                    replace = dialog.ReplaceOp;
+                    AlloGens.AddReplaceOp(replace);
+                    ListViewItem item = new ListViewItem();
+                    item.Tag = replace;
+                    lvEditReplaceOps.Items.Add(item);
+                    int index = Math.Max(0, lvEditReplaceOps.Items.Count - 1);
+                    lvEditReplaceOps.Items[index].Selected = true;
+                    lvEditReplaceOps.Select();
+                    MarkAsChanged(true);
+                    FillReplaceOpsListView();
+                }
+            }
         }
 
         private void btnDeleteReplaceOp_Click(object sender, EventArgs e)
@@ -1753,7 +1763,7 @@ namespace SIL.AllomorphGenerator
             {
                 ListViewItem lvItem = lvEditReplaceOps.SelectedItems[0];
                 LastEditReplaceOps = lvEditReplaceOps.Items.IndexOf(lvItem);
-                lbCountReplaceOps.Text = LastEditReplaceOps.ToString() + " / " + lvEditReplaceOps.Items.Count.ToString();
+                lbCountReplaceOps.Text = (LastEditReplaceOps + 1).ToString() + " / " + lvEditReplaceOps.Items.Count.ToString();
             }
         }
 
