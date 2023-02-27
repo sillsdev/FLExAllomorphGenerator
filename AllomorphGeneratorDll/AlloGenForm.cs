@@ -1710,9 +1710,41 @@ namespace SIL.AllomorphGenerator
                 return;
             }
             ListViewItem lvItem = lvEditReplaceOps.SelectedItems[0];
-            AlloGens.DeleteReplaceOp((Replace)lvItem.Tag);
-            MarkAsChanged(true);
-            FillReplaceOpsListView();
+            Replace replace = (Replace)lvItem.Tag;
+            StringBuilder sb = BuildDeleteReplaceOpMessage(replace);
+            DialogResult result = MessageBox.Show(sb.ToString(), "Delete Replace Op", MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button3);
+            if (result == DialogResult.Yes)
+            {
+                AlloGens.DeleteReplaceOp(replace);
+                MarkAsChanged(true);
+                FillReplaceOpsListView();
+            }
+        }
+
+        private StringBuilder BuildDeleteReplaceOpMessage(Replace replace)
+        {
+            List<Operation> operationsContainingReplaceOp = AlloGens.FindOperationsUsedByReplaceOp(replace);
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Replace operation '");
+            sb.Append(replace.ToString());
+            sb.Append("' will be deleted.\n");
+            if (operationsContainingReplaceOp.Count > 0)
+            {
+                sb.Append("It is used in the following operations:\n\n");
+                foreach (Operation op in operationsContainingReplaceOp)
+                {
+                    sb.Append(op.Name);
+                    sb.Append("\n");
+                }
+                sb.Append("\n");
+            }
+            else
+            {
+                sb.Append("It is not used in any operations.\n\n");
+            }
+            sb.Append("Are you sure you want to delete it?");
+            return sb;
         }
 
         private void lvEditReplaceOps_SelectedIndexChanged(object sender, EventArgs e)
