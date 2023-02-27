@@ -539,7 +539,7 @@ namespace SIL.AllomorphGenerator
                 {
                     int index = lBoxReplaceOps.SelectedIndex;
                     replace = dialog.ReplaceOp;
-                    AlloGens.ReplaceOpAdd(replace);
+                    AlloGens.AddReplaceOp(replace);
                     lBoxReplaceOps.Items[index] = replace;
                     MarkAsChanged(true);
                 }
@@ -585,7 +585,7 @@ namespace SIL.AllomorphGenerator
             if (currentListBox.Name == "lBoxReplaceOps")
             {
                 Replace replace = new Replace();
-                AlloGens.ReplaceOpAdd(replace);
+                AlloGens.AddReplaceOp(replace);
                 ReplaceOpRefs.Insert(index, replace.Guid);
                 currentListBox.Items.Insert(index, replace);
                 currentListBox.SelectedIndex = index;
@@ -701,7 +701,7 @@ namespace SIL.AllomorphGenerator
                 {
                     Replace thisReplace = lBoxReplaceOps.SelectedItem as Replace;
                     Replace replace = thisReplace.Duplicate();
-                    AlloGens.ReplaceOpAdd(replace);
+                    AlloGens.AddReplaceOp(replace);
                     ReplaceOpRefs.Insert(index, replace.Guid);
                     currentListBox.Items.Insert(index, replace);
                 }
@@ -973,7 +973,7 @@ namespace SIL.AllomorphGenerator
                 {
                     // need at least one replace action
                     Replace replace = new Replace();
-                    AlloGens.ReplaceOpAdd(replace);
+                    AlloGens.AddReplaceOp(replace);
                     lBoxReplaceOps.Items.Add(replace);
                 }
                 StemName = ActionOp.StemName;
@@ -1693,7 +1693,7 @@ namespace SIL.AllomorphGenerator
         private void btnAddNewReplaceOp_Click(object sender, EventArgs e)
         {
             Replace replace = new Replace();
-            AlloGens.ReplaceOpAdd(replace);
+            AlloGens.AddReplaceOp(replace);
             ListViewItem item = new ListViewItem();
             item.Tag = replace;
             lvEditReplaceOps.Items.Add(item);
@@ -1710,7 +1710,7 @@ namespace SIL.AllomorphGenerator
                 return;
             }
             ListViewItem lvItem = lvEditReplaceOps.SelectedItems[0];
-            AlloGens.ReplaceOpDelete((Replace)lvItem.Tag);
+            AlloGens.DeleteReplaceOp((Replace)lvItem.Tag);
             MarkAsChanged(true);
             FillReplaceOpsListView();
         }
@@ -1741,7 +1741,7 @@ namespace SIL.AllomorphGenerator
                 {
                     int index = lvEditReplaceOps.SelectedIndices[0];
                     replace = dialog.ReplaceOp;
-                    AlloGens.ReplaceOpAdd(replace);
+                    AlloGens.AddReplaceOp(replace);
                     lvEditReplaceOps.Items[index].Tag = replace;
                     MarkAsChanged(true);
                     FillReplaceOpsListView();

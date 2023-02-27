@@ -25,17 +25,24 @@ namespace AlloGenModelTests
         [SetUp]
         public void Setup()
         {
+            // nothing to do
+        }
+
+        private void InitDataFile()
+        {
             Uri uriBase = new Uri(Assembly.GetExecutingAssembly().CodeBase);
             var rootdir = Path.GetDirectoryName(Uri.UnescapeDataString(uriBase.AbsolutePath));
             int i = rootdir.LastIndexOf("AlloGenModelTests");
             string basedir = rootdir.Substring(0, i);
             TestDataDir = Path.Combine(basedir, "AlloGenModelTests", "TestData");
-            AlloGenExpected = Path.Combine(TestDataDir, "AlloGenExpected.agf");
+            AlloGenExpected = Path.Combine(TestDataDir, AlloGenFile);
         }
 
         [Test]
-        public void ReplaceOpsTests()
+        public void FindReplaceOpsTests()
         {
+            AlloGenFile = "AlloGenExpected.agf";
+            InitDataFile();
             provider.LoadDataFromFile(AlloGenExpected);
             AllomorphGenerators allomorphGenerators = provider.AlloGens;
             Assert.NotNull(allomorphGenerators);
@@ -85,15 +92,51 @@ namespace AlloGenModelTests
             // missing replace op
             replace = allomorphGenerators.FindReplaceOp("34e7XYZ7406-d2fe-4526-9bf9-3bc8fa653190");
             Assert.Null(replace);
-            // delete a replace op
-            replace = allomorphGenerators.FindReplaceOp("4c3f43c6-f130-4767-9a5a-f2a93b1c6222");
-            Assert.NotNull(replace);
-            Operation op = allomorphGenerators.Operations[0];
-            SIL.AlloGenModel.Action action = op.Action;
-            Assert.AreEqual(true, action.ReplaceOpRefs.Contains(replace.Guid));
-            allomorphGenerators.ReplaceOpDelete(replace);
-            Assert.AreEqual(false, action.ReplaceOpRefs.Contains(replace.Guid));
-            Assert.AreEqual(false, allomorphGenerators.ReplaceOperations.Contains(replace));
         }
+
+        [Test]
+        public void DeleteReplaceOpsTests()
+        {
+            AlloGenFile = "DeleteReplaceOps.agf";
+            InitDataFile();
+            provider.LoadDataFromFile(AlloGenExpected);
+            AllomorphGenerators allomorphGenerators = provider.AlloGens;
+            Assert.NotNull(allomorphGenerators);
+            List<Replace> masterReplaceOps = allomorphGenerators.ReplaceOperations;
+            Assert.NotNull(masterReplaceOps);
+            Assert.AreEqual(12, masterReplaceOps.Count);
+
+            // delete a replace op that is not used
+            Replace replace = allomorphGenerators.FindReplaceOp("2dabfec9-2247-4aa1-876e-48614e59e339");
+            Assert.NotNull(replace);
+            List<Operation> operations = allomorphGenerators.FindOperationsUsedByReplaceOp(replace);
+            Assert.AreEqual(0, operations.Count);
+            allomorphGenerators.DeleteReplaceOp(replace);
+            Assert.AreEqual(false, allomorphGenerators.ReplaceOperations.Contains(replace));
+
+            // delete a replace op used three times
+            replace = allomorphGenerators.FindReplaceOp("331e03b6-d7b5-4761-b013-e4086a94e478");
+            Assert.NotNull(replace);
+            operations = allomorphGenerators.FindOperationsUsedByReplaceOp(replace);
+            Assert.AreEqual(3, operations.Count);
+            Operation op = allomorphGenerators.Operations.Find(o => o == operations[0]);
+            SIL.AlloGenModel.Action action1 = op.Action;
+            List<string> opRefs = action1.ReplaceOpRefs.FindAll(oRef => oRef == replace.Guid);
+            Assert.AreEqual(1, opRefs.Count);
+            op = allomorphGenerators.Operations.Find(o => o == operations[1]);
+            SIL.AlloGenModel.Action action2 = op.Action;
+            opRefs = action2.ReplaceOpRefs.FindAll(oRef => oRef == replace.Guid);
+            Assert.AreEqual(1, opRefs.Count);
+            op = allomorphGenerators.Operations.Find(o => o == operations[2]);
+            SIL.AlloGenModel.Action action3 = op.Action;
+            opRefs = action3.ReplaceOpRefs.FindAll(oRef => oRef == replace.Guid);
+            Assert.AreEqual(2, opRefs.Count);
+            allomorphGenerators.DeleteReplaceOp(replace);
+            Assert.AreEqual(false, allomorphGenerators.ReplaceOperations.Contains(replace));
+            Assert.AreEqual(false, action1.ReplaceOpRefs.Contains(replace.Guid));
+            Assert.AreEqual(false, action2.ReplaceOpRefs.Contains(replace.Guid));
+            Assert.AreEqual(false, action3.ReplaceOpRefs.Contains(replace.Guid));
+        }
+
     }
 }

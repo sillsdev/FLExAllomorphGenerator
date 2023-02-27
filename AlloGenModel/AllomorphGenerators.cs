@@ -31,7 +31,7 @@ namespace SIL.AlloGenModel
             return ReplaceOperations.Contains(replace);
         }
 
-        public void ReplaceOpAdd(Replace replace)
+        public void AddReplaceOp(Replace replace)
         {
             if (replace != null)
             {
@@ -43,7 +43,7 @@ namespace SIL.AlloGenModel
             }
         }
 
-        public void ReplaceOpDelete(Replace replace)
+        public void DeleteReplaceOp(Replace replace)
         {
             if (ReplaceOpExists(replace))
             {
@@ -71,6 +71,13 @@ namespace SIL.AlloGenModel
         {
             Replace replace = ReplaceOperations.FirstOrDefault(r => r.Guid == guid);
             return replace;
+        }
+
+        public List<Operation> FindOperationsUsedByReplaceOp(Replace replace)
+        {
+            List<Operation> operations = new List<Operation>();
+            operations = Operations.FindAll(op => op.Action.ReplaceOpRefs.Contains(replace.Guid));
+            return operations;
         }
 
         public Operation CreateNewOperation()
