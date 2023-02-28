@@ -903,9 +903,8 @@ namespace SIL.AllomorphGenerator
             AlloGens = Provider.AlloGens;
             if (AlloGens != null)
             {
-                AlloGens = Migrator.Migrate(AlloGens);
+                AlloGens = Migrator.Migrate(AlloGens, OperationsFile);
                 Operations = AlloGens.Operations;
-                //AlloGens.ReplaceOpsInit();
             }
         }
 

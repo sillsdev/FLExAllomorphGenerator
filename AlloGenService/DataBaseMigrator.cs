@@ -5,6 +5,7 @@
 using SIL.AlloGenModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace SIL.AlloGenService
     {
         const int latestVersion = 2;
 
-        public AllomorphGenerators Migrate(AllomorphGenerators oldDatabase)
+        public AllomorphGenerators Migrate(AllomorphGenerators oldDatabase, string file)
         {
             AllomorphGenerators newDatabase = new AllomorphGenerators();
             int version = oldDatabase.DbVersion;
@@ -25,6 +26,7 @@ namespace SIL.AlloGenService
             bool didMigration = false;
             while (version < latestVersion)
             {
+                MakeBackupOfFile(file);
                 switch (version)
                 {
                     case 1:
@@ -41,6 +43,33 @@ namespace SIL.AlloGenService
                 return newDatabase;
             else
                 return oldDatabase;
+        }
+
+        void MakeBackupOfFile(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                string backupName = CreateBackupFileName(fileName);
+                File.Copy(fileName, backupName, true);
+            }
+        }
+
+        public string CreateBackupFileName(string fileName)
+        {
+            string backupName = "";
+            if (fileName.Length > 4)
+            {
+                int iAgf = fileName.LastIndexOf(".agf");
+                if (iAgf > -1)
+                {
+                    backupName = fileName.Substring(0, iAgf) + ".bak";
+                }
+                else
+                {
+                    backupName = fileName + ".bak";
+                }
+            }
+            return backupName;
         }
 
         AllomorphGenerators Migrate01to02(AllomorphGenerators oldDatabase)

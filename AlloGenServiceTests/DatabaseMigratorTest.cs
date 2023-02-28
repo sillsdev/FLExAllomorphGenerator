@@ -31,7 +31,7 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual(2, oldAlloGen.DbVersion);
             Assert.AreEqual(0, oldAlloGen.ReplaceOperations.Count);
 
-            AllomorphGenerators newAlloGen = migrator.Migrate(oldAlloGen);
+            AllomorphGenerators newAlloGen = migrator.Migrate(oldAlloGen, AlloGenExpected);
             Assert.AreEqual(2, newAlloGen.DbVersion);
             Assert.AreEqual(4, newAlloGen.ReplaceOperations.Count);
             Operation operation = oldAlloGen.Operations[0];
@@ -62,7 +62,7 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual(2, oldAlloGen.DbVersion);
             Assert.AreEqual(4, oldAlloGen.ReplaceOperations.Count);
 
-            AllomorphGenerators newAlloGen = migrator.Migrate(oldAlloGen);
+            AllomorphGenerators newAlloGen = migrator.Migrate(oldAlloGen, AlloGenExpected);
             Assert.AreEqual(2, newAlloGen.DbVersion);
             Assert.AreEqual(4, newAlloGen.ReplaceOperations.Count);
             Operation operation = oldAlloGen.Operations[0];
@@ -89,6 +89,20 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual(to, replace.To);
             Assert.AreEqual(36, replace.Guid.Length);
             Assert.AreEqual(opRef, replace.Guid);
+        }
+
+        [Test]
+        public void CreateFileNameTest()
+        {
+            string fileName = Path.Combine(TestDataDir, "AlloGenVersion01.agf");
+            string backup = migrator.CreateBackupFileName(fileName);
+            Assert.AreEqual(fileName.Substring(0, fileName.Length - 3), backup.Substring(0, backup.Length - 3));
+            Assert.AreEqual("bak", backup.Substring(backup.Length - 3));
+
+            fileName = Path.Combine(TestDataDir, "AlloGenVersion01.myext");
+            backup = migrator.CreateBackupFileName(fileName);
+            Assert.AreEqual(fileName.Substring(0, fileName.Length), backup.Substring(0, backup.Length - 4));
+            Assert.AreEqual(".bak", backup.Substring(backup.Length - 4));
         }
     }
 }

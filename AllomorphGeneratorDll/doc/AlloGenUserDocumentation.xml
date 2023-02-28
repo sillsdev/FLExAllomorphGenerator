@@ -20,9 +20,17 @@ type="tAlloGen"
 ><emailAddress
 >blackhandrew@gmail.com</emailAddress
 ><date
->27 February, 2023</date
+>28 February, 2023</date
 ><version
->Version 1.2.0 Beta</version
+>Version 1.2.0 Beta<endnote
+id="nDBv01Tov2"
+><p
+>The internal structure of the operations file changed between version 1.1 and 1.2.  <object
+type="tAlloGen"
+></object
+> automatically makes the changes for you.  The older version is copied to a file with a “.bak” extension.</p
+></endnote
+></version
 ><version
 >Copyright © 2023 SIL International</version
 ><contents
@@ -368,13 +376,22 @@ width="450"
 >The replace can be a portion of the content of the <object
 type="tCitationForm"
 ></object
->. That is, you do not have to try to match the entire content. There is an option to use regular expressions for what to replace and what to change it to. Simply check the “Regular expression” check box or leave it unchecked.</p
+>. That is, you do not have to try to match the entire content. There is an option to use regular expressions for what to replace and what to change it to. Simply check the “Regular expression” check box or leave it unchecked.  When you edit any replace here, the changes made will also be made in the corresponding replace in the <object
+type="tEditReplaceTab"
+></object
+> tab.  That is, you do not need to make the same change here and in the <object
+type="tEditReplaceTab"
+></object
+> tab.  You only need to make the change once in either place.</p
 ><p
 >Each replace operation can be applied to one or more of the five writing systems we're using. Check all that apply.</p
 ><p
->When you choose either the “Insert new before” or “Insert new after” option, a new replace operation will be inserted and you will see the “Edit Replace Operation” dialog box.</p
+>When you choose either the “Insert new before” or “Insert new after” option, a new replace operation will be inserted and you will see the “Edit Replace Operation” dialog box. Any new replace operation is automatically added to the master list of replace operations shown in the <object
+type="tEditReplaceTab"
+></object
+> tab.</p
 ><p
->When you choose either the “Insert existing before” or “Insert existing after” option, you will see the “Replace Operations Chooser” dialog box.  It will look something like what is in example <exampleRef
+>When you choose either the “Insert existing before” or “Insert existing after” option, you will see the “Replace Operations Chooser” dialog box. It will look something like what is in example <exampleRef
 letter="xReplaceOpsChooser"
 num="xReplaceOpsChooser"
 ></exampleRef
@@ -389,7 +406,7 @@ width="450"
 ></chart
 ></example
 ><p
->You can choose as many replace operations as are appropriate.  They will be inserted together.</p
+>You can choose as many replace operations as are appropriate. They will be inserted together.</p
 ></section3
 ><section3
 id="sActEnvironments"
@@ -455,7 +472,12 @@ type="tEditTab"
 > tab except that each one has a check box in front of it. Whichever operation is currently selected will be applied and the resulting <object
 type="tStemAllo"
 ></object
-> forms will be shown in the “Preview of selected operation” portion of the tab.</p
+> forms will be shown in the “Preview of selected operation” portion of the tab.<endnote
+id="nPreviewDance"
+><p
+>In the preview portion, we try to set the various column widths automatically by the longest width in each column.  This can sometimes make the view appear to “dance” a bit.  Be patient and it will settle down.</p
+></endnote
+></p
 ><p
 >Note that the preview portion only shows <object
 type="tCitationForms"
