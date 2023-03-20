@@ -14,9 +14,10 @@ namespace SIL.AlloGenModel
     public class AllomorphGenerators
     {
         [XmlAttribute("dbVersion")]
-        public int DbVersion { get; set; } = 2;
+        public int DbVersion { get; set; } = 3;
         public List<Operation> Operations { get; set; } = new List<Operation>();
         public List<Replace> ReplaceOperations { get; set; } = new List<Replace>();
+        public List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();
 
         public AllomorphGenerators()
         {
@@ -90,7 +91,5 @@ namespace SIL.AlloGenModel
             op.Pattern.SetDefaultMorphTypes();
             return op;
         }
-
-
     }
 }

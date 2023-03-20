@@ -40,21 +40,66 @@
       <From>*</From>
       <To />
       <Description />
+      <WritingSystemRefs>
+	<string>qvm-ach</string>
+	<string>qvm-acl</string>
+	<string>qvm-akh</string>
+	<string>qvm-akl</string>
+	<string>qvm-ame</string>
+      </WritingSystemRefs>
     </Replace>
     <Replace active="true" guid="34e77406-d2fe-4526-9bf9-3bc8fa653190" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
       <From>+</From>
       <To />
       <Description />
+      <WritingSystemRefs>
+	<string>qvm-ach</string>
+	<string>qvm-acl</string>
+	<string>qvm-akh</string>
+	<string>qvm-akl</string>
+	<string>qvm-ame</string>
+      </WritingSystemRefs>
     </Replace>
     <Replace active="true" guid="0f853476-407d-40e9-a8f3-803792f4f83e" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="false">
       <From>:</From>
       <To />
       <Description />
+      <WritingSystemRefs>
+	<string>qvm-ach</string>
+	<string>qvm-acl</string>
+	<string>qvm-akh</string>
+	<string>qvm-akl</string>
+      </WritingSystemRefs>
     </Replace>
     <Replace active="true" guid="4c3f43c6-f130-4767-9a5a-f2a93b1c6222" name="" mode="false" ach="false" acl="false" akh="false" akl="false" ame="true">
       <From>:</From>
       <To>a</To>
       <Description />
+      <WritingSystemRefs>
+	<string>qvm-ame</string>
+      </WritingSystemRefs>
     </Replace>
   </ReplaceOperations>
+  <WritingSystems>
+    <WritingSystem>
+      <Name>qvm-akh</Name>
+      <Handle>999000005</Handle>
+    </WritingSystem>
+    <WritingSystem>
+      <Name>qvm-acl</Name>
+      <Handle>999000004</Handle>
+    </WritingSystem>
+    <WritingSystem>
+      <Name>qvm-akl</Name>
+      <Handle>999000006</Handle>
+    </WritingSystem>
+    <WritingSystem>
+      <Name>qvm-ach</Name>
+      <Handle>999000003</Handle>
+    </WritingSystem>
+    <WritingSystem>
+      <Name>qvm-ame</Name>
+      <Handle>999000007</Handle>
+    </WritingSystem>
+  </WritingSystems>
 </AllomorphGenerators>

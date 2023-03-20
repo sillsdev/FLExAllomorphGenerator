@@ -20,36 +20,7 @@ namespace SIL.AlloGenServiceTest
         override public void Setup()
         {
             base.Setup();
-            GetVernacularWritingSystemCodes();
-            ac = new AllomorphCreator(Cache, wsForAkh, wsForAcl, wsForAkl, wsForAch, wsForAme);
-        }
-
-        void GetVernacularWritingSystemCodes()
-        {
-            IList<CoreWritingSystemDefinition> vernWses = Cache.LangProject.CurrentVernacularWritingSystems;
-            foreach (CoreWritingSystemDefinition def in vernWses)
-            {
-                //This is not found for some reason; therefore we set the wses by hand above
-                // TODO: consider using a dictionary for these
-                switch (def.Abbreviation.Substring(def.Abbreviation.Length - 3))
-                {
-                    case "akh":
-                        wsForAkh = def.Handle;
-                        break;
-                    case "acl":
-                        wsForAcl = def.Handle;
-                        break;
-                    case "akl":
-                        wsForAkl = def.Handle;
-                        break;
-                    case "ach":
-                        wsForAch = def.Handle;
-                        break;
-                    case "ame":
-                        wsForAme = def.Handle;
-                        break;
-                }
-            }
+            ac = new AllomorphCreator(Cache, writingSystems);
         }
 
         [Test]

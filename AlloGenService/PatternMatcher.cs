@@ -23,15 +23,15 @@ namespace SIL.AlloGenService
         public IMoMorphType morphType { get; set; }
         public List<IMoMorphType> morphTypes { get; set; } = new List<IMoMorphType>();
         public string ErrorMessage { get; set; } = "";
-        Dictionary<Dialect, int> dictWritingSystems = new Dictionary<Dialect, int>();
+        List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();
 
-        public PatternMatcher(LcmCache cache, Dictionary<Dialect, int> dictWS)
+        public PatternMatcher(LcmCache cache, List<WritingSystem> writingSystems)
         {
             Cache = cache;
-            dictWritingSystems = dictWS;
             AllEntries = Cache.LanguageProject.LexDbOA.Entries;
             EntriesWithNoAllomorphs = AllEntries.Where(e => e.AlternateFormsOS.Count == 0);
             MultiAllomorphEntries = AllEntries.Where(e => e.AlternateFormsOS.Count > 0);
+            WritingSystems = writingSystems;
         }
 
         public IEnumerable<ILexEntry> MatchMorphTypes(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
@@ -170,38 +170,24 @@ namespace SIL.AlloGenService
                 return false;
             }
             string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
-            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Akh))
+            foreach (WritingSystem ws in WritingSystems)
             {
-                return false;
-            }
-            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Acl))
-            {
-                return false;
-            }
-            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Akl))
-            {
-                return false;
-            }
-            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Akh))
-            {
-                return false;
-            }
-            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Ame))
-            {
-                return false;
+                if (!HaveSameAllomorphForm(replacer, citationForm, allo, ws))
+                {
+                    return false;
+                }
             }
             return true;
         }
 
-        private bool HaveSameAllomorphForm(Replacer replacer, string citationForm, IMoStemAllomorph allo, Dialect dialect)
+        private bool HaveSameAllomorphForm(Replacer replacer, string citationForm, IMoStemAllomorph allo, WritingSystem ws)
         {
-            string previewForm = replacer.ApplyReplaceOpToOneDialect(citationForm, dialect);
-            int ws = -1;
-            if (!dictWritingSystems.TryGetValue(dialect, out ws))
+            string previewForm = replacer.ApplyReplaceOpToOneWS(citationForm, ws.Name);
+            if (ws.Handle == -1)
             {
                 return false;
             }
-            string alloForm = allo.Form.get_String(ws).Text;
+            string alloForm = allo.Form.get_String(ws.Handle).Text;
             if (alloForm != previewForm)
             {
                 return false;

@@ -37,15 +37,11 @@
             this.lbTo = new System.Windows.Forms.Label();
             this.tbTo = new System.Windows.Forms.TextBox();
             this.lbVarieties = new System.Windows.Forms.Label();
-            this.cbAch = new System.Windows.Forms.CheckBox();
-            this.cbAcl = new System.Windows.Forms.CheckBox();
-            this.cbAkh = new System.Windows.Forms.CheckBox();
-            this.cbAkl = new System.Windows.Forms.CheckBox();
-            this.cbAme = new System.Windows.Forms.CheckBox();
             this.lbName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.tbName = new System.Windows.Forms.TextBox();
+            this.clbWritingSystems = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -122,61 +118,6 @@
             this.lbVarieties.TabIndex = 9;
             this.lbVarieties.Text = "Varieties:";
             // 
-            // cbAch
-            // 
-            this.cbAch.AutoSize = true;
-            this.cbAch.Location = new System.Drawing.Point(189, 272);
-            this.cbAch.Name = "cbAch";
-            this.cbAch.Size = new System.Drawing.Size(61, 24);
-            this.cbAch.TabIndex = 10;
-            this.cbAch.Text = "ach";
-            this.cbAch.UseVisualStyleBackColor = true;
-            this.cbAch.CheckedChanged += new System.EventHandler(this.cbAch_CheckedChanged);
-            // 
-            // cbAcl
-            // 
-            this.cbAcl.AutoSize = true;
-            this.cbAcl.Location = new System.Drawing.Point(189, 319);
-            this.cbAcl.Name = "cbAcl";
-            this.cbAcl.Size = new System.Drawing.Size(55, 24);
-            this.cbAcl.TabIndex = 11;
-            this.cbAcl.Text = "acl";
-            this.cbAcl.UseVisualStyleBackColor = true;
-            this.cbAcl.CheckedChanged += new System.EventHandler(this.cbAcl_CheckedChanged);
-            // 
-            // cbAkh
-            // 
-            this.cbAkh.AutoSize = true;
-            this.cbAkh.Location = new System.Drawing.Point(189, 366);
-            this.cbAkh.Name = "cbAkh";
-            this.cbAkh.Size = new System.Drawing.Size(61, 24);
-            this.cbAkh.TabIndex = 12;
-            this.cbAkh.Text = "akh";
-            this.cbAkh.UseVisualStyleBackColor = true;
-            this.cbAkh.CheckedChanged += new System.EventHandler(this.cbAkh_CheckedChanged);
-            // 
-            // cbAkl
-            // 
-            this.cbAkl.AutoSize = true;
-            this.cbAkl.Location = new System.Drawing.Point(189, 413);
-            this.cbAkl.Name = "cbAkl";
-            this.cbAkl.Size = new System.Drawing.Size(55, 24);
-            this.cbAkl.TabIndex = 13;
-            this.cbAkl.Text = "akl";
-            this.cbAkl.UseVisualStyleBackColor = true;
-            this.cbAkl.CheckedChanged += new System.EventHandler(this.cbAkl_CheckedChanged);
-            // 
-            // cbAme
-            // 
-            this.cbAme.AutoSize = true;
-            this.cbAme.Location = new System.Drawing.Point(189, 460);
-            this.cbAme.Name = "cbAme";
-            this.cbAme.Size = new System.Drawing.Size(66, 24);
-            this.cbAme.TabIndex = 14;
-            this.cbAme.Text = "ame";
-            this.cbAme.UseVisualStyleBackColor = true;
-            this.cbAme.CheckedChanged += new System.EventHandler(this.cbAme_CheckedChanged);
-            // 
             // lbName
             // 
             this.lbName.AutoSize = true;
@@ -200,7 +141,7 @@
             this.tbDescription.Location = new System.Drawing.Point(158, 72);
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
-            this.tbDescription.Size = new System.Drawing.Size(607, 26);
+            this.tbDescription.Size = new System.Drawing.Size(607, 63);
             this.tbDescription.TabIndex = 3;
             // 
             // tbName
@@ -210,6 +151,14 @@
             this.tbName.Size = new System.Drawing.Size(607, 26);
             this.tbName.TabIndex = 1;
             // 
+            // clbWritingSystems
+            // 
+            this.clbWritingSystems.FormattingEnabled = true;
+            this.clbWritingSystems.Location = new System.Drawing.Point(158, 272);
+            this.clbWritingSystems.Name = "clbWritingSystems";
+            this.clbWritingSystems.Size = new System.Drawing.Size(352, 151);
+            this.clbWritingSystems.TabIndex = 17;
+            // 
             // EditReplaceOpForm
             // 
             this.AcceptButton = this.btnOK;
@@ -217,15 +166,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(800, 579);
+            this.Controls.Add(this.clbWritingSystems);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.tbDescription);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbName);
-            this.Controls.Add(this.cbAme);
-            this.Controls.Add(this.cbAkl);
-            this.Controls.Add(this.cbAkh);
-            this.Controls.Add(this.cbAcl);
-            this.Controls.Add(this.cbAch);
             this.Controls.Add(this.lbVarieties);
             this.Controls.Add(this.tbTo);
             this.Controls.Add(this.lbTo);
@@ -252,14 +197,10 @@
         private System.Windows.Forms.Label lbTo;
         private System.Windows.Forms.TextBox tbTo;
         private System.Windows.Forms.Label lbVarieties;
-        private System.Windows.Forms.CheckBox cbAch;
-        private System.Windows.Forms.CheckBox cbAcl;
-        private System.Windows.Forms.CheckBox cbAkh;
-        private System.Windows.Forms.CheckBox cbAkl;
-        private System.Windows.Forms.CheckBox cbAme;
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.TextBox tbName;
+        private System.Windows.Forms.CheckedListBox clbWritingSystems;
     }
 }
