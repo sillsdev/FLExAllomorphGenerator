@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AllomorphGenerators xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" dbVersion="2">
+<AllomorphGenerators xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" dbVersion="3">
   <Operations>
     <Operation active="true">
       <Name>foreshortening</Name>
@@ -39,45 +39,45 @@
     <Replace active="true" guid="5e8b9b79-0269-4dee-bfb0-be8ed4f4dc5d" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
       <From>*</From>
       <To />
-      <Description />
       <WritingSystemRefs>
-	<string>qvm-ach</string>
-	<string>qvm-acl</string>
-	<string>qvm-akh</string>
-	<string>qvm-akl</string>
-	<string>qvm-ame</string>
+        <string>qvm-ach</string>
+        <string>qvm-acl</string>
+        <string>qvm-akh</string>
+        <string>qvm-akl</string>
+        <string>qvm-ame</string>
       </WritingSystemRefs>
+      <Description />
     </Replace>
     <Replace active="true" guid="34e77406-d2fe-4526-9bf9-3bc8fa653190" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
       <From>+</From>
       <To />
-      <Description />
       <WritingSystemRefs>
-	<string>qvm-ach</string>
-	<string>qvm-acl</string>
-	<string>qvm-akh</string>
-	<string>qvm-akl</string>
-	<string>qvm-ame</string>
+        <string>qvm-ach</string>
+        <string>qvm-acl</string>
+        <string>qvm-akh</string>
+        <string>qvm-akl</string>
+        <string>qvm-ame</string>
       </WritingSystemRefs>
+      <Description />
     </Replace>
-    <Replace active="true" guid="0f853476-407d-40e9-a8f3-803792f4f83e" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="false">
+    <Replace active="true" guid="0f853476-407d-40e9-a8f3-803792f4f83e" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
       <From>:</From>
       <To />
-      <Description />
       <WritingSystemRefs>
-	<string>qvm-ach</string>
-	<string>qvm-acl</string>
-	<string>qvm-akh</string>
-	<string>qvm-akl</string>
+        <string>qvm-ach</string>
+        <string>qvm-acl</string>
+        <string>qvm-akh</string>
+        <string>qvm-akl</string>
       </WritingSystemRefs>
+      <Description />
     </Replace>
-    <Replace active="true" guid="4c3f43c6-f130-4767-9a5a-f2a93b1c6222" name="" mode="false" ach="false" acl="false" akh="false" akl="false" ame="true">
+    <Replace active="true" guid="4c3f43c6-f130-4767-9a5a-f2a93b1c6222" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
       <From>:</From>
       <To>a</To>
-      <Description />
       <WritingSystemRefs>
-	<string>qvm-ame</string>
+        <string>qvm-ame</string>
       </WritingSystemRefs>
+      <Description />
     </Replace>
   </ReplaceOperations>
   <WritingSystems>

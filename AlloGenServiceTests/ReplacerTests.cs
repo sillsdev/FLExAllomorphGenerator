@@ -44,7 +44,7 @@ namespace SIL.AlloGenServiceTest
             AllomorphGenerators allomorphGenerators = provider.AlloGens;
             Assert.NotNull(allomorphGenerators);
             Operation operation = allomorphGenerators.Operations[0];
-            replacer = new Replacer(operation.Action.ReplaceOps);
+            replacer = new Replacer(allomorphGenerators.ReplaceOperations);
             writingSystems = allomorphGenerators.WritingSystems;
             string input = "";
             compareResult(input, "\u00A0", writingSystems[0]);
@@ -89,7 +89,6 @@ namespace SIL.AlloGenServiceTest
         {
             string result = replacer.ApplyReplaceOpToOneWS(input, ws.Name);
             Assert.AreEqual(expected, result);
-
         }
     }
 }

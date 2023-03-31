@@ -14,7 +14,8 @@ namespace SIL.AlloGenService
 {
     public class DatabaseMigrator
     {
-        const int latestVersion = 3;
+        // is public and can be changed for testing purposes
+        public int LatestVersion { get; set; } = 3;
 
         public AllomorphGenerators Migrate(AllomorphGenerators oldDatabase, string file)
         {
@@ -24,7 +25,7 @@ namespace SIL.AlloGenService
             if (oldDatabase.ReplaceOperations.Count == 0)
                 version = 1;
             bool didMigration = false;
-            while (version < latestVersion)
+            while (version < LatestVersion)
             {
                 MakeBackupOfFile(file);
                 switch (version)
@@ -98,12 +99,13 @@ namespace SIL.AlloGenService
             }
             return newDatabase;
         }
+
         AllomorphGenerators Migrate02to03(AllomorphGenerators oldDatabase)
         {
             AllomorphGenerators newDatabase = new AllomorphGenerators();
             newDatabase.DbVersion = 3;
             newDatabase.Operations = oldDatabase.Operations;
-            foreach (Replace replace in newDatabase.ReplaceOperations)
+            foreach (Replace replace in oldDatabase.ReplaceOperations)
             {
                 int index = newDatabase.ReplaceOperations.IndexOf(replace);
                 if (replace.Ach)
@@ -126,7 +128,6 @@ namespace SIL.AlloGenService
                 {
                     replace.WritingSystemRefs.Add("qvm-ame");
                 }
-                newDatabase.ReplaceOperations.RemoveAt(index);
                 newDatabase.ReplaceOperations.Add(replace);
             }
             return newDatabase;
