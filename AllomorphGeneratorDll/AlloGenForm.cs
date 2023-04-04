@@ -643,8 +643,16 @@ namespace SIL.AllomorphGenerator
                 int i = selectedIndex;
                 foreach (Replace replace in chooser.SelectedReplaceOps)
                 {
-                    lBoxReplaceOps.Items.Insert(i, replace);
-                    ReplaceOpRefs.Insert(i, replace.Guid);
+                    if (i < lBoxReplaceOps.Items.Count)
+                    {
+                        lBoxReplaceOps.Items.Insert(i, replace);
+                        ReplaceOpRefs.Insert(i, replace.Guid);
+                    }
+                    else
+                    {
+                        lBoxReplaceOps.Items.Add(replace);
+                        ReplaceOpRefs.Add(replace.Guid);
+                    }
                     i++;
                 }
                 RefreshReplaceListBox();
@@ -701,6 +709,9 @@ namespace SIL.AllomorphGenerator
                 if (currentListBox.Name == "lBoxReplaceOps")
                 {
                     ReplaceOpRefs.RemoveAt(index);
+                    Replace replace = (Replace)currentListBox.Items[index];
+                    StringBuilder sb = BuildDeleteReplaceOpRefMessage(replace);
+                    CheckOnRemovingSelectedReplaceOpFromMasterList(sb.ToString(), replace);
                 }
                 else
                 {
@@ -709,6 +720,18 @@ namespace SIL.AllomorphGenerator
                 currentListBox.Items.RemoveAt(index);
             }
             MarkAsChanged(true);
+        }
+
+        private void CheckOnRemovingSelectedReplaceOpFromMasterList(string prompt, Replace replace)
+        {
+            DialogResult result = MessageBox.Show(prompt, "Delete Replace Op", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (result == DialogResult.Yes)
+            {
+                AlloGens.DeleteReplaceOp(replace);
+                MarkAsChanged(true);
+                FillReplaceOpsListView();
+            }
         }
 
         void DuplicateContextMenu_Click(object sender, EventArgs e)
@@ -1749,14 +1772,7 @@ namespace SIL.AllomorphGenerator
             ListViewItem lvItem = lvEditReplaceOps.SelectedItems[0];
             Replace replace = (Replace)lvItem.Tag;
             StringBuilder sb = BuildDeleteReplaceOpMessage(replace);
-            DialogResult result = MessageBox.Show(sb.ToString(), "Delete Replace Op", MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-            if (result == DialogResult.Yes)
-            {
-                AlloGens.DeleteReplaceOp(replace);
-                MarkAsChanged(true);
-                FillReplaceOpsListView();
-            }
+            CheckOnRemovingSelectedReplaceOpFromMasterList(sb.ToString(), replace);
         }
 
         private StringBuilder BuildDeleteReplaceOpMessage(Replace replace)
@@ -1781,6 +1797,32 @@ namespace SIL.AllomorphGenerator
                 sb.Append("It is not used in any operations.\n\n");
             }
             sb.Append("Are you sure you want to delete it?");
+            return sb;
+        }
+
+        private StringBuilder BuildDeleteReplaceOpRefMessage(Replace replace)
+        {
+            List<Operation> operationsContainingReplaceOp = AlloGens.FindOperationsUsedByReplaceOp(replace);
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Replace operation '");
+            sb.Append(replace.ToString());
+            sb.Append("' will be removed from this operation.\n");
+            sb.Append("You can also delete it from the master list.\n");
+            if (operationsContainingReplaceOp.Count > 0)
+            {
+                sb.Append("It is used in the following operations:\n\n");
+                foreach (Operation op in operationsContainingReplaceOp)
+                {
+                    sb.Append(op.Name);
+                    sb.Append("\n");
+                }
+                sb.Append("\n");
+            }
+            else
+            {
+                sb.Append("It is not used in any operations.\n\n");
+            }
+            sb.Append("Do you want to delete it from the master list?");
             return sb;
         }
 
