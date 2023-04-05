@@ -179,11 +179,10 @@ namespace SIL.AllomorphGenerator
             lvPreview.SmallImageList = ilPreview;
             lvPreview.Columns.Add("", "", 25, HorizontalAlignment.Left, 0);
             lvPreview.Columns.Add("Citation Form", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Akh          ", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Acl          ", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Akl          ", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Ach          ", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Ame          ", -2, HorizontalAlignment.Left);
+            foreach (WritingSystem ws in WritingSystems)
+            {
+                lvPreview.Columns.Add(ws.Name + "      ", -2, HorizontalAlignment.Left);
+            }
         }
 
         private void SetUpEditReplaceOpsListView()
@@ -192,11 +191,10 @@ namespace SIL.AllomorphGenerator
             lvEditReplaceOps.Columns.Add("From", -2, HorizontalAlignment.Left);
             lvEditReplaceOps.Columns.Add("To", -2, HorizontalAlignment.Left);
             lvEditReplaceOps.Columns.Add("Mode", -2, HorizontalAlignment.Left);
-            lvEditReplaceOps.Columns.Add("Akh", -2, HorizontalAlignment.Left);
-            lvEditReplaceOps.Columns.Add("Acl", -2, HorizontalAlignment.Left);
-            lvEditReplaceOps.Columns.Add("Akl", -2, HorizontalAlignment.Left);
-            lvEditReplaceOps.Columns.Add("Ach", -2, HorizontalAlignment.Left);
-            lvEditReplaceOps.Columns.Add("Ame", -2, HorizontalAlignment.Left);
+            foreach (WritingSystem ws in WritingSystems)
+            {
+                lvEditReplaceOps.Columns.Add(ws.Name, -2, HorizontalAlignment.Left);
+            }
             lvEditReplaceOps.Columns.Add("Description", -2, HorizontalAlignment.Left);
         }
 

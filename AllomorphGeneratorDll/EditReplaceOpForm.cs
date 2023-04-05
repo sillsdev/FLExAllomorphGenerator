@@ -53,10 +53,10 @@ namespace SIL.AllomorphGenerator
             {
                 if (clbWritingSystems.GetItemChecked(i))
                 {
-                    string ws = clbWritingSystems.Items[i] as string;
+                    var ws = clbWritingSystems.Items[i] as WritingSystem;
                     if (ws != null)
                     {
-                        ReplaceOp.WritingSystemRefs.Add(ws);
+                        ReplaceOp.WritingSystemRefs.Add(ws.Name);
                     }
                 }
             }
