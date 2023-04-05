@@ -20,9 +20,10 @@ type="tAlloGen"
 ><emailAddress
 >blackhandrew@gmail.com</emailAddress
 ><date
->4  April, 2023</date
+>5 April, 2023</date
 ><version
->Version 2.0.0 Beta<endnote
+>Version 2.0.0 Beta<comment
+><endnote
 id="nDBv01Tov2"
 ><p
 >The internal structure of the operations file changed between version 1.1 and 1.2. <object
@@ -30,6 +31,7 @@ type="tAlloGen"
 ></object
 > automatically makes the changes for you. The older version is copied to a file with a “.bak” extension.</p
 ></endnote
+></comment
 ></version
 ><version
 >Copyright © 2023 SIL International</version
@@ -372,6 +374,8 @@ width="450"
 ><li
 >what to change what matches ("To”).</li
 ></ol
+><p
+>There is also a set of vernacular writing systems names, each with a check box before it.  Be sure to check each vernacular writing system that this replace operation should apply to.</p
 ><p
 >The replace can be a portion of the content of the <object
 type="tCitationForm"
