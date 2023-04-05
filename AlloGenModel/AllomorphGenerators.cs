@@ -86,6 +86,13 @@ namespace SIL.AlloGenModel
             Operation op = new Operation();
             Operations.Add(op);
             Replace newReplace = new Replace();
+            if (WritingSystems != null)
+            {
+                foreach (WritingSystem ws in WritingSystems)
+                {
+                    newReplace.WritingSystemRefs.Add(ws.Name);
+                }
+            }
             ReplaceOperations.Add(newReplace);
             op.Action.ReplaceOpRefs.Add(newReplace.Guid);
             op.Pattern.SetDefaultMorphTypes();

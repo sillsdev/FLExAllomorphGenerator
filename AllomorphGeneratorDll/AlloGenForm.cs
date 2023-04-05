@@ -602,7 +602,7 @@ namespace SIL.AllomorphGenerator
         {
             if (currentListBox.Name == "lBoxReplaceOps")
             {
-                Replace replace = new Replace();
+                Replace replace = CreateNewReplace();
                 AlloGens.AddReplaceOp(replace);
                 ReplaceOpRefs.Insert(index, replace.Guid);
                 currentListBox.Items.Insert(index, replace);
@@ -1013,7 +1013,7 @@ namespace SIL.AllomorphGenerator
                 if (ActionOp.ReplaceOpRefs.Count == 0)
                 {
                     // need at least one replace action
-                    Replace replace = new Replace();
+                    Replace replace = CreateNewReplace();
                     AlloGens.AddReplaceOp(replace);
                     lBoxReplaceOps.Items.Add(replace);
                 }
@@ -1296,10 +1296,10 @@ namespace SIL.AllomorphGenerator
                 LastOperationsFile = OperationsFile;
                 tbFile.Text = OperationsFile;
                 AlloGens = new AllomorphGenerators();
+                AlloGens.WritingSystems = WritingSystems;
                 Operation = AlloGens.CreateNewOperation();
                 Pattern = Operation.Pattern;
                 Operations = AlloGens.Operations;
-                AlloGens.WritingSystems = WritingSystems;
                 FillOperationsListBox();
                 if (lvOperations.Visible)
                 {
@@ -1737,7 +1737,7 @@ namespace SIL.AllomorphGenerator
         {
             using (var dialog = new EditReplaceOpForm())
             {
-                Replace replace = new Replace();
+                Replace replace = CreateNewReplace();
                 dialog.Initialize(replace, WritingSystems);
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
@@ -1746,6 +1746,16 @@ namespace SIL.AllomorphGenerator
                     AddNewReplaceOpToMasterList(replace);
                 }
             }
+        }
+
+        private Replace CreateNewReplace()
+        {
+            Replace replace = new Replace();
+            foreach (WritingSystem ws in WritingSystems)
+            {
+                replace.WritingSystemRefs.Add(ws.Name);
+            }
+            return replace;
         }
 
         private void AddNewReplaceOpToMasterList(Replace replace)
