@@ -104,6 +104,7 @@
     <Compile Include="AlloGenTestBase.cs" />
     <Compile Include="AllomorphCreatorTests.cs" />
     <Compile Include="DatabaseMigratorTest.cs" />
+    <Compile Include="FLExCustomFieldsObtainerTest.cs" />
     <Compile Include="FwTestBase.cs" />
     <Compile Include="PatternMatcherTest.cs" />
     <Compile Include="ReplacerTests.cs" />

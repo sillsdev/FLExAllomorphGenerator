@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) 2022-2023 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
+
+using NUnit.Framework;
 using SIL.AlloGenService;
 using SIL.LCModel;
 using SIL.LCModel.Core.WritingSystems;

@@ -31,6 +31,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XCore;
+using static SIL.AlloGenService.FLExCustomFieldsObtainer;
 
 namespace SIL.AllomorphGenerator
 {
@@ -113,6 +114,7 @@ namespace SIL.AllomorphGenerator
         const string cmToggle = "Toggle";
         private ListViewColumnSorter lvwColumnSorter;
         private ListViewColumnSorter lvwEditReplaceOpsColumnSorter;
+        FLExCustomFieldsObtainer customFields;
 
         public AlloGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
         {
@@ -120,6 +122,7 @@ namespace SIL.AllomorphGenerator
             PropTable = propTable;
             Mediator = mediator;
             InitForm();
+            customFields = new FLExCustomFieldsObtainer(cache);
         }
 
         public AlloGenForm()
