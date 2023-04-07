@@ -645,6 +645,8 @@ namespace SIL.AllomorphGenerator
             else
             {
                 Operation op = AlloGens.CreateNewOperation();
+                // remove the new op added by CreateNewOperation() and insert it at the right place
+                Operations.Remove(op);
                 Operations.Insert(index, op);
                 currentListBox.Items.Insert(index, op);
             }
