@@ -107,6 +107,7 @@
     <Compile Include="AlloGenBase.cs" />
     <Compile Include="AlloGenGuid.cs" />
     <Compile Include="AllomorphGenerators.cs" />
+    <Compile Include="ApplyTo.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="Matcher.cs" />

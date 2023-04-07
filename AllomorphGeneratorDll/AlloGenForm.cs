@@ -114,15 +114,17 @@ namespace SIL.AllomorphGenerator
         const string cmToggle = "Toggle";
         private ListViewColumnSorter lvwColumnSorter;
         private ListViewColumnSorter lvwEditReplaceOpsColumnSorter;
-        FLExCustomFieldsObtainer customFields;
+        private List<FDWrapper> customFields = new List<FDWrapper>();
+        private string applyToField = "";
 
         public AlloGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
         {
             Cache = cache;
             PropTable = propTable;
             Mediator = mediator;
+            FLExCustomFieldsObtainer obtainer = new FLExCustomFieldsObtainer(cache);
+            customFields = obtainer.CustomFields;
             InitForm();
-            customFields = new FLExCustomFieldsObtainer(cache);
         }
 
         public AlloGenForm()
@@ -146,6 +148,7 @@ namespace SIL.AllomorphGenerator
                 Migrator = new DatabaseMigrator();
                 LoadMigrateGetOperations();
                 FillOperationsListBox();
+                FillApplyToComboBox();
                 SetupFontAndStyleInfo();
                 SetUpOperationsCheckedListBox();
                 SetUpPreviewCheckedListBox();
@@ -170,6 +173,32 @@ namespace SIL.AllomorphGenerator
             }
         }
 
+        private void FillApplyToComboBox()
+        {
+            ApplyTo cit = new ApplyTo("Citation Form", LexEntryTags.kflidCitationForm);
+            ApplyTo lex = new ApplyTo("Lexeme Form", LexEntryTags.kflidLexemeForm);
+            ApplyTo ety = new ApplyTo("Etymology Form", LexEntryTags.kflidEtymology);
+            cbApplyTo.Items.Add(cit);
+            cbApplyTo.Items.Add(lex);
+            cbApplyTo.Items.Add(ety);
+            foreach (FDWrapper fdw in customFields)
+            {
+                ApplyTo cf = new ApplyTo(fdw.Fd.Name, fdw.Fd.Id);
+                cbApplyTo.Items.Add(cf);
+            }
+            if (AlloGens.ApplyTo > -1)
+            {
+                int index = AlloGens.ApplyTo;
+                if (index >= cbApplyTo.Items.Count)
+                    index = 0;
+                cbApplyTo.SelectedIndex = index;
+            }
+            else
+            {
+                cbApplyTo.SelectedIndex = 0;
+            }
+        }
+
         private void SetUpOperationsCheckedListBox()
         {
             lvOperations.SmallImageList = ilPreview;
@@ -180,8 +209,9 @@ namespace SIL.AllomorphGenerator
         private void SetUpPreviewCheckedListBox()
         {
             lvPreview.SmallImageList = ilPreview;
+            lvPreview.Columns.Clear();
             lvPreview.Columns.Add("", "", 25, HorizontalAlignment.Left, 0);
-            lvPreview.Columns.Add("Citation Form", -2, HorizontalAlignment.Left);
+            lvPreview.Columns.Add(applyToField, -2, HorizontalAlignment.Left);
             foreach (WritingSystem ws in WritingSystems)
             {
                 lvPreview.Columns.Add(ws.Name + "      ", -2, HorizontalAlignment.Left);
@@ -1427,6 +1457,7 @@ namespace SIL.AllomorphGenerator
                     nonChosenEntries = dictNonChosen[op];
                 }
                 PatternMatcher patMatcher = new PatternMatcher(Cache, WritingSystems);
+                patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
                 IList<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern).ToList();
                 IList<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(Operation, Pattern).ToList();
                 foreach (ILexEntry entry in matchingEntriesWithAllos)
@@ -1572,6 +1603,7 @@ namespace SIL.AllomorphGenerator
             if (Operation != null)
             {
                 PatternMatcher patMatcher = new PatternMatcher(Cache, WritingSystems);
+                patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
                 IList<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, Operation.Pattern).ToList();
                 IList<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(Operation, Pattern).ToList();
                 foreach (ILexEntry entry in matchingEntriesWithAllos)
@@ -1876,5 +1908,11 @@ namespace SIL.AllomorphGenerator
             InvokeEditReplaceOpFormMasterList();
         }
 
+        private void cbApplyTo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            AlloGens.ApplyTo = cb.SelectedIndex;
+            applyToField = ((ApplyTo)cb.SelectedItem).Name;
+            SetUpPreviewCheckedListBox();        }
     }
 }

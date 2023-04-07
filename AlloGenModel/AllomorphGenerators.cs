@@ -15,6 +15,8 @@ namespace SIL.AlloGenModel
     {
         [XmlAttribute("dbVersion")]
         public int DbVersion { get; set; } = 3;
+        [XmlAttribute("applyTo")]
+        public int ApplyTo { get; set; } = -1;
         public List<Operation> Operations { get; set; } = new List<Operation>();
         public List<Replace> ReplaceOperations { get; set; } = new List<Replace>();
         public List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();

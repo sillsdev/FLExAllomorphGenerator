@@ -5,6 +5,9 @@
 using SIL.AlloGenModel;
 using SIL.FieldWorks.Filters;
 using SIL.LCModel;
+using SIL.LCModel.Core.Cellar;
+using SIL.LCModel.Core.KernelInterfaces;
+using SIL.LCModel.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +27,8 @@ namespace SIL.AlloGenService
         public List<IMoMorphType> morphTypes { get; set; } = new List<IMoMorphType>();
         public string ErrorMessage { get; set; } = "";
         List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();
+        public ApplyTo ApplyTo { get; set; }
+        private readonly IFwMetaDataCacheManaged m_mdc;
 
         public PatternMatcher(LcmCache cache, List<WritingSystem> writingSystems)
         {
@@ -32,6 +37,7 @@ namespace SIL.AlloGenService
             EntriesWithNoAllomorphs = AllEntries.Where(e => e.AlternateFormsOS.Count == 0);
             MultiAllomorphEntries = AllEntries.Where(e => e.AlternateFormsOS.Count > 0);
             WritingSystems = writingSystems;
+            m_mdc = cache.MetaDataCacheAccessor as IFwMetaDataCacheManaged;
         }
 
         public IEnumerable<ILexEntry> MatchMorphTypes(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
@@ -118,7 +124,34 @@ namespace SIL.AlloGenService
             var lexEntriesPerMatchString = new List<ILexEntry>();
             foreach (ILexEntry e in lexEntries)
             {
-                if (fwMatcher.Matches(e.CitationForm.VernacularDefaultWritingSystem))
+                ITsString useToMatch = null;
+                if (ApplyTo == null || ApplyTo.Id == LexEntryTags.kflidCitationForm)
+                    useToMatch = e.CitationForm.VernacularDefaultWritingSystem;
+                else if (ApplyTo.Id == LexEntryTags.kflidLexemeForm)
+                    useToMatch = e.LexemeFormOA.Form.VernacularDefaultWritingSystem;
+                else if (ApplyTo.Id == LexEntryTags.kflidEtymology)
+                {
+                    if (e.EtymologyOS.Count == 0)
+                        continue;
+                    useToMatch = e.EtymologyOS.ElementAt(0).Form.VernacularDefaultWritingSystem;
+                }
+                else
+                {
+                    foreach (var flid in m_mdc.GetFields(e.ClassID, true, (int)CellarPropertyTypeFilter.All))
+                    {
+                        if (!m_mdc.IsCustom(flid))
+                            continue;
+                        if (flid != ApplyTo.Id)
+                            continue;
+                        ITsString tssString = Cache.DomainDataByFlid.get_StringProp(e.Hvo, flid);
+                        if (!String.IsNullOrEmpty(tssString.Text))
+                        {
+                            useToMatch = tssString;
+                        }
+                    }
+                }
+
+                if (useToMatch != null && fwMatcher.Matches(useToMatch))
                 {
                     lexEntriesPerMatchString.Add(e);
                 }

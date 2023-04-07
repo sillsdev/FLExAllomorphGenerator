@@ -106,6 +106,7 @@ namespace SIL.AlloGenServiceTest
         public void SaveTest()
         {
             AllomorphGenerators allomorphGenerators = new AllomorphGenerators();
+            allomorphGenerators.ApplyTo = 0;
             Operation operation = new Operation();
             operation.Active = true;
             operation.Name = "foreshortening";
