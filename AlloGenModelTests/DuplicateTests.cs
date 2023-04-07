@@ -63,11 +63,11 @@ namespace AlloGenModelTests
             Assert.AreEqual(replace.From, replaceCopy.From);
             Assert.AreEqual(replace.To, replaceCopy.To);
             Assert.AreEqual(replace.Mode, replaceCopy.Mode);
-            Assert.AreEqual(replace.Ach, replaceCopy.Ach);
-            Assert.AreEqual(replace.Acl, replaceCopy.Acl);
-            Assert.AreEqual(replace.Akh, replaceCopy.Akh);
-            Assert.AreEqual(replace.Akl, replaceCopy.Akl);
-            Assert.AreEqual(replace.Ame, replaceCopy.Ame);
+            Assert.AreEqual(replace.WritingSystemRefs.Count, replaceCopy.WritingSystemRefs.Count);
+            for (int i = 0; i < replace.WritingSystemRefs.Count; i++)
+            {
+                Assert.AreEqual(replace.WritingSystemRefs[i], replaceCopy.WritingSystemRefs[i]);
+            }
             Assert.AreEqual(replace.Active, replaceCopy.Active);
         }
     }

@@ -1,4 +1,8 @@
-﻿using SIL.AlloGenModel;
+﻿// Copyright (c) 2023 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
+
+using SIL.AlloGenModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +25,7 @@ namespace SIL.AllomorphGenerator
             InitializeComponent();
         }
 
-        public void Initialize(Replace replace)
+        public void Initialize(Replace replace, List<WritingSystem> writingSystems)
         {
             ReplaceOp = replace;
             tbName.Text = replace.Name;
@@ -29,11 +33,15 @@ namespace SIL.AllomorphGenerator
             tbFrom.Text = replace.From;
             tbTo.Text = replace.To;
             cbRegEx.Checked = replace.Mode;
-            cbAch.Checked = replace.Ach;
-            cbAcl.Checked = replace.Acl;
-            cbAkh.Checked = replace.Akh;
-            cbAkl.Checked = replace.Akl;
-            cbAme.Checked = replace.Ame;
+            foreach (WritingSystem ws in writingSystems)
+            {
+                clbWritingSystems.Items.Add(ws);
+                int index = clbWritingSystems.Items.Count - 1;
+                if (replace.WritingSystemRefs.Contains(ws.Name))
+                {
+                    clbWritingSystems.SetItemChecked(index, true);
+                }
+            }
             tbName.Select();
         }
 
@@ -44,11 +52,18 @@ namespace SIL.AllomorphGenerator
             ReplaceOp.From = tbFrom.Text;
             ReplaceOp.To = tbTo.Text;
             ReplaceOp.Mode = cbRegEx.Checked;
-            ReplaceOp.Ach = cbAch.Checked;
-            ReplaceOp.Acl = cbAcl.Checked;
-            ReplaceOp.Akh = cbAkh.Checked;
-            ReplaceOp.Akl = cbAkl.Checked;
-            ReplaceOp.Ame = cbAme.Checked;
+            ReplaceOp.WritingSystemRefs.Clear();
+            for (int i = 0; i < clbWritingSystems.Items.Count; i++)
+            {
+                if (clbWritingSystems.GetItemChecked(i))
+                {
+                    var ws = clbWritingSystems.Items[i] as WritingSystem;
+                    if (ws != null)
+                    {
+                        ReplaceOp.WritingSystemRefs.Add(ws.Name);
+                    }
+                }
+            }
             OkPressed = true;
             this.Close();
         }
@@ -64,29 +79,5 @@ namespace SIL.AllomorphGenerator
             ReplaceOp.Mode = cbRegEx.Checked;
         }
 
-        private void cbAch_CheckedChanged(object sender, EventArgs e)
-        {
-            ReplaceOp.Ach = cbAch.Checked;
-        }
-
-        private void cbAcl_CheckedChanged(object sender, EventArgs e)
-        {
-            ReplaceOp.Acl = cbAcl.Checked;
-        }
-
-        private void cbAkh_CheckedChanged(object sender, EventArgs e)
-        {
-            ReplaceOp.Akh = cbAkh.Checked;
-        }
-
-        private void cbAkl_CheckedChanged(object sender, EventArgs e)
-        {
-            ReplaceOp.Akl = cbAkl.Checked;
-        }
-
-        private void cbAme_CheckedChanged(object sender, EventArgs e)
-        {
-            ReplaceOp.Ame = cbAme.Checked;
-        }
     }
 }

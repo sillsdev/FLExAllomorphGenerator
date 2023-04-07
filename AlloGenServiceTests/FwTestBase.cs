@@ -6,9 +6,11 @@ using NUnit.Framework;
 using SIL.AlloGenModel;
 using SIL.AlloGenService;
 using SIL.LCModel;
+using SIL.LCModel.Core.WritingSystems;
 using SIL.WritingSystems;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -33,13 +35,7 @@ namespace SIL.AlloGenServiceTest
         protected Operation operation;
         protected Pattern pattern { get; set; }
         protected PatternMatcher patternMatcher { get; set; }
-
-        protected int wsForAkh = 999000005;
-        protected int wsForAcl = 999000004;
-        protected int wsForAkl = 999000006;
-        protected int wsForAch = 999000003;
-        protected int wsForAme = 999000007;
-        Dictionary<Dialect, int> dictWritingSystems = new Dictionary<Dialect, int>();
+        protected List<WritingSystem> writingSystems = new List<WritingSystem>();
 
         public override void FixtureSetup()
         {
@@ -50,16 +46,28 @@ namespace SIL.AlloGenServiceTest
             Directory.CreateDirectory(m_projectsDirectory);
             m_ui = new DummyLcmUI();
             m_lcmDirectories = new TestLcmDirectories(m_projectsDirectory);
-            CreateWritingSystemDictionary();
+            CreateWritingSystemList();
         }
 
-        private void CreateWritingSystemDictionary()
+        protected void CreateWritingSystemList()
         {
-            dictWritingSystems.Add(Dialect.Akh, wsForAkh);
-            dictWritingSystems.Add(Dialect.Acl, wsForAcl);
-            dictWritingSystems.Add(Dialect.Akl, wsForAkl);
-            dictWritingSystems.Add(Dialect.Ach, wsForAch);
-            dictWritingSystems.Add(Dialect.Ame, wsForAme);
+            var styles = Cache.LangProject.StylesOC.ToDictionary(style => style.Name);
+            IStStyle normal = Cache.LangProject.StylesOC.FirstOrDefault(style => style.Name == "Normal");
+            if (normal != null)
+            {
+                SIL.FieldWorks.FwCoreDlgControls.StyleInfo styleInfo = new SIL.FieldWorks.FwCoreDlgControls.StyleInfo(normal);
+                IList<CoreWritingSystemDefinition> vernWses = Cache.LangProject.CurrentVernacularWritingSystems;
+                foreach (CoreWritingSystemDefinition def in vernWses)
+                {
+                    float fontSize = Math.Max(def.DefaultFontSize, 10);
+                    WritingSystem ws = new WritingSystem();
+                    ws.Handle = def.Handle;
+                    ws.Font = new Font(def.DefaultFontName, fontSize);
+                    ws.FontInfo = styleInfo.FontInfoForWs(def.Handle);
+                    ws.Color = ws.FontInfo.FontColor.Value;
+                    writingSystems.Add(ws);
+                }
+            }
         }
 
         [SetUp]
@@ -82,7 +90,7 @@ namespace SIL.AlloGenServiceTest
             allomorphGenerators = provider.AlloGens;
             operation = allomorphGenerators.Operations[0];
             pattern = operation.Pattern;
-            patternMatcher = new PatternMatcher(myCache, dictWritingSystems);
+            patternMatcher = new PatternMatcher(myCache, allomorphGenerators);
         }
     }
 }

@@ -31,6 +31,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XCore;
+using static SIL.AlloGenService.FLExCustomFieldsObtainer;
 
 namespace SIL.AllomorphGenerator
 {
@@ -79,6 +80,7 @@ namespace SIL.AllomorphGenerator
         Operation LastOperationShown { get; set; } = null;
         List<Replace> ReplaceOps { get; set; }
         List<string> ReplaceOpRefs { get; set; }
+        List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();
         AlloGenModel.Action ActionOp { get; set; }
         StemName StemName { get; set; }
         Pattern Pattern { get; set; }
@@ -87,30 +89,8 @@ namespace SIL.AllomorphGenerator
         Font fontForDefaultCitationForm;
         FontInfo fontInfoForDefaultCitationForm;
         Color colorForDefaultCitationForm;
-        Font fontForAkh;
-        FontInfo fontInfoForAkh;
-        Color colorForAkh;
-        int wsForAkh = -1;
-        Font fontForAcl;
-        FontInfo fontInfoForAcl;
-        Color colorForAcl;
-        int wsForAcl = -1;
-        Font fontForAkl;
-        FontInfo fontInfoForAkl;
-        Color colorForAkl;
-        int wsForAkl = -1;
-        Font fontForAch;
-        FontInfo fontInfoForAch;
-        Color colorForAch;
-        int wsForAch = -1;
-        Font fontForAme;
-        FontInfo fontInfoForAme;
-        Color colorForAme;
-        int wsForAme = -1;
         Dictionary<Operation, List<ILexEntry>> dictNonChosen = new Dictionary<Operation, List<ILexEntry>>();
-        Dictionary<Dialect, int> dictWritingSystems = new Dictionary<Dialect, int>();
         Dictionary<Operation, bool> dictOperationActiveState = new Dictionary<Operation, bool>();
-
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
@@ -134,12 +114,16 @@ namespace SIL.AllomorphGenerator
         const string cmToggle = "Toggle";
         private ListViewColumnSorter lvwColumnSorter;
         private ListViewColumnSorter lvwEditReplaceOpsColumnSorter;
+        private List<FDWrapper> customFields = new List<FDWrapper>();
+        private string applyToField = "";
 
         public AlloGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
         {
             Cache = cache;
             PropTable = propTable;
             Mediator = mediator;
+            FLExCustomFieldsObtainer obtainer = new FLExCustomFieldsObtainer(cache);
+            customFields = obtainer.CustomFields;
             InitForm();
         }
 
@@ -164,6 +148,7 @@ namespace SIL.AllomorphGenerator
                 Migrator = new DatabaseMigrator();
                 LoadMigrateGetOperations();
                 FillOperationsListBox();
+                FillApplyToComboBox();
                 SetupFontAndStyleInfo();
                 SetUpOperationsCheckedListBox();
                 SetUpPreviewCheckedListBox();
@@ -188,6 +173,32 @@ namespace SIL.AllomorphGenerator
             }
         }
 
+        private void FillApplyToComboBox()
+        {
+            ApplyTo cit = new ApplyTo("Citation Form", LexEntryTags.kflidCitationForm);
+            ApplyTo lex = new ApplyTo("Lexeme Form", LexEntryTags.kflidLexemeForm);
+            ApplyTo ety = new ApplyTo("Etymology Form", LexEntryTags.kflidEtymology);
+            cbApplyTo.Items.Add(cit);
+            cbApplyTo.Items.Add(lex);
+            cbApplyTo.Items.Add(ety);
+            foreach (FDWrapper fdw in customFields)
+            {
+                ApplyTo cf = new ApplyTo(fdw.Fd.Name, fdw.Fd.Id);
+                cbApplyTo.Items.Add(cf);
+            }
+            if (AlloGens.ApplyTo > -1)
+            {
+                int index = AlloGens.ApplyTo;
+                if (index >= cbApplyTo.Items.Count)
+                    index = 0;
+                cbApplyTo.SelectedIndex = index;
+            }
+            else
+            {
+                cbApplyTo.SelectedIndex = 0;
+            }
+        }
+
         private void SetUpOperationsCheckedListBox()
         {
             lvOperations.SmallImageList = ilPreview;
@@ -198,13 +209,13 @@ namespace SIL.AllomorphGenerator
         private void SetUpPreviewCheckedListBox()
         {
             lvPreview.SmallImageList = ilPreview;
+            lvPreview.Columns.Clear();
             lvPreview.Columns.Add("", "", 25, HorizontalAlignment.Left, 0);
-            lvPreview.Columns.Add("Citation Form", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Akh          ", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Acl          ", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Akl          ", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Ach          ", -2, HorizontalAlignment.Left);
-            lvPreview.Columns.Add("Ame          ", -2, HorizontalAlignment.Left);
+            lvPreview.Columns.Add(applyToField, -2, HorizontalAlignment.Left);
+            foreach (WritingSystem ws in WritingSystems)
+            {
+                lvPreview.Columns.Add(ws.Name + "      ", -2, HorizontalAlignment.Left);
+            }
         }
 
         private void SetUpEditReplaceOpsListView()
@@ -213,29 +224,11 @@ namespace SIL.AllomorphGenerator
             lvEditReplaceOps.Columns.Add("From", -2, HorizontalAlignment.Left);
             lvEditReplaceOps.Columns.Add("To", -2, HorizontalAlignment.Left);
             lvEditReplaceOps.Columns.Add("Mode", -2, HorizontalAlignment.Left);
-            lvEditReplaceOps.Columns.Add("Akh", -2, HorizontalAlignment.Left);
-            lvEditReplaceOps.Columns.Add("Acl", -2, HorizontalAlignment.Left);
-            lvEditReplaceOps.Columns.Add("Akl", -2, HorizontalAlignment.Left);
-            lvEditReplaceOps.Columns.Add("Ach", -2, HorizontalAlignment.Left);
-            lvEditReplaceOps.Columns.Add("Ame", -2, HorizontalAlignment.Left);
+            foreach (WritingSystem ws in WritingSystems)
+            {
+                lvEditReplaceOps.Columns.Add(ws.Name, -2, HorizontalAlignment.Left);
+            }
             lvEditReplaceOps.Columns.Add("Description", -2, HorizontalAlignment.Left);
-        }
-
-        private ListViewItem SetFontInfoForItem(ListViewItem item)
-        {
-            item.SubItems[1].Font = fontForDefaultCitationForm;
-            item.SubItems[1].ForeColor = colorForDefaultCitationForm;
-            item.SubItems[2].Font = fontForAkh;
-            item.SubItems[2].ForeColor = colorForAkh;
-            item.SubItems[3].Font = fontForAcl;
-            item.SubItems[3].ForeColor = colorForAcl;
-            item.SubItems[4].Font = fontForAkl;
-            item.SubItems[4].ForeColor = colorForAkl;
-            item.SubItems[5].Font = fontForAch;
-            item.SubItems[5].ForeColor = colorForAch;
-            item.SubItems[6].Font = fontForAme;
-            item.SubItems[6].ForeColor = colorForAme;
-            return item;
         }
 
         private void SetupFontAndStyleInfo()
@@ -248,65 +241,30 @@ namespace SIL.AllomorphGenerator
                 {
                     SIL.FieldWorks.FwCoreDlgControls.StyleInfo styleInfo = new SIL.FieldWorks.FwCoreDlgControls.StyleInfo(normal);
                     IList<CoreWritingSystemDefinition> vernWses = Cache.LangProject.CurrentVernacularWritingSystems;
+                    WritingSystems.Clear();
                     foreach (CoreWritingSystemDefinition def in vernWses)
                     {
                         float fontSize = Math.Max(def.DefaultFontSize, 10);
-                        // TODO: consider using a dictionary for these
-                        switch (def.Abbreviation.Substring(def.Abbreviation.Length - 3))
-                        {
-                            case "akh":
-                                wsForAkh = def.Handle;
-                                dictWritingSystems.Add(Dialect.Akh, wsForAkh);
-                                fontForAkh = new Font(def.DefaultFontName, fontSize);
-                                fontInfoForAkh = styleInfo.FontInfoForWs(def.Handle);
-                                colorForAkh = fontInfoForAkh.FontColor.Value;
-                                SetFontAndStyleInfoForDefaultCitationForm(wsForAkh, fontForAkh, fontInfoForAkh, colorForAkh);
-                                break;
-                            case "acl":
-                                wsForAcl = def.Handle;
-                                dictWritingSystems.Add(Dialect.Acl, wsForAcl);
-                                fontForAcl = new Font(def.DefaultFontName, fontSize);
-                                fontInfoForAcl = styleInfo.FontInfoForWs(def.Handle);
-                                colorForAcl = fontInfoForAcl.FontColor.Value;
-                                SetFontAndStyleInfoForDefaultCitationForm(wsForAcl, fontForAcl, fontInfoForAcl, colorForAcl);
-                                break;
-                            case "akl":
-                                wsForAkl = def.Handle;
-                                dictWritingSystems.Add(Dialect.Akl, wsForAkl);
-                                fontForAkl = new Font(def.DefaultFontName, fontSize);
-                                fontInfoForAkl = styleInfo.FontInfoForWs(def.Handle);
-                                colorForAkl = fontInfoForAkl.FontColor.Value;
-                                SetFontAndStyleInfoForDefaultCitationForm(wsForAkl, fontForAkl, fontInfoForAkl, colorForAkl);
-                                break;
-                            case "ach":
-                                wsForAch = def.Handle;
-                                dictWritingSystems.Add(Dialect.Ach, wsForAch);
-                                fontForAch = new Font(def.DefaultFontName, fontSize);
-                                fontInfoForAch = styleInfo.FontInfoForWs(def.Handle);
-                                colorForAch = fontInfoForAch.FontColor.Value;
-                                SetFontAndStyleInfoForDefaultCitationForm(wsForAch, fontForAch, fontInfoForAch, colorForAch);
-                                break;
-                            case "ame":
-                                wsForAme = def.Handle;
-                                dictWritingSystems.Add(Dialect.Ame, wsForAme);
-                                fontForAme = new Font(def.DefaultFontName, fontSize);
-                                fontInfoForAme = styleInfo.FontInfoForWs(def.Handle);
-                                colorForAme = fontInfoForAme.FontColor.Value;
-                                SetFontAndStyleInfoForDefaultCitationForm(wsForAme, fontForAme, fontInfoForAme, colorForAme);
-                                break;
-                        }
+                        WritingSystem ws = new WritingSystem();
+                        ws.Name = def.Abbreviation;
+                        ws.Handle = def.Handle;
+                        ws.Font = new Font(def.DefaultFontName, fontSize);
+                        ws.FontInfo = styleInfo.FontInfoForWs(def.Handle);
+                        ws.Color = ws.FontInfo.FontColor.Value;
+                        SetFontAndStyleInfoForDefaultCitationForm(ws);
+                        WritingSystems.Add(ws);
                     }
                 }
             }
         }
 
-        private void SetFontAndStyleInfoForDefaultCitationForm(int ws, Font font, FontInfo fontInfo, Color color)
+        private void SetFontAndStyleInfoForDefaultCitationForm(WritingSystem ws)
         {
-            if (ws == Cache.DefaultVernWs)
+            if (ws.Handle == Cache.DefaultVernWs)
             {
-                fontForDefaultCitationForm = font;
-                fontInfoForDefaultCitationForm = fontInfo;
-                colorForDefaultCitationForm = color;
+                fontForDefaultCitationForm = ws.Font;
+                fontInfoForDefaultCitationForm = ws.FontInfo;
+                colorForDefaultCitationForm = ws.Color;
             }
         }
 
@@ -626,7 +584,7 @@ namespace SIL.AllomorphGenerator
             using (var dialog = new EditReplaceOpForm())
             {
                 Replace replace = (Replace)lBoxReplaceOps.SelectedItem;
-                dialog.Initialize(replace);
+                dialog.Initialize(replace, WritingSystems);
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {
@@ -677,7 +635,7 @@ namespace SIL.AllomorphGenerator
         {
             if (currentListBox.Name == "lBoxReplaceOps")
             {
-                Replace replace = new Replace();
+                Replace replace = CreateNewReplace();
                 AlloGens.AddReplaceOp(replace);
                 ReplaceOpRefs.Insert(index, replace.Guid);
                 currentListBox.Items.Insert(index, replace);
@@ -687,6 +645,8 @@ namespace SIL.AllomorphGenerator
             else
             {
                 Operation op = AlloGens.CreateNewOperation();
+                // remove the new op added by CreateNewOperation() and insert it at the right place
+                Operations.Remove(op);
                 Operations.Insert(index, op);
                 currentListBox.Items.Insert(index, op);
             }
@@ -922,12 +882,15 @@ namespace SIL.AllomorphGenerator
 
         private void LoadMigrateGetOperations()
         {
+            if (!File.Exists(OperationsFile))
+                return;
             Provider.LoadDataFromFile(OperationsFile);
             AlloGens = Provider.AlloGens;
             if (AlloGens != null)
             {
                 AlloGens = Migrator.Migrate(AlloGens, OperationsFile);
                 Operations = AlloGens.Operations;
+                WritingSystems = AlloGens.WritingSystems;
             }
         }
 
@@ -1020,7 +983,6 @@ namespace SIL.AllomorphGenerator
         public void FillReplaceOpsListView()
         {
             lvEditReplaceOps.Items.Clear();
-            //MessageBox.Show("ro count=" + AlloGens.ReplaceOperations.Count);
             foreach (Replace replace in AlloGens.ReplaceOperations)
             {
                 ListViewItem lvItem = new ListViewItem(replace.Name);
@@ -1033,16 +995,15 @@ namespace SIL.AllomorphGenerator
                 lvItem.SubItems[2].ForeColor = Color.Navy;
                 string sMode = replace.Mode ? " RegEx " : " Normal ";
                 lvItem.SubItems.Add(sMode);
-                string sDialect = GetDialectIndicator(replace.Akh);
-                lvItem.SubItems.Add(sDialect);
-                sDialect = GetDialectIndicator(replace.Acl);
-                lvItem.SubItems.Add(sDialect);
-                sDialect = GetDialectIndicator(replace.Akl);
-                lvItem.SubItems.Add(sDialect);
-                sDialect = GetDialectIndicator(replace.Ach);
-                lvItem.SubItems.Add(sDialect);
-                sDialect = GetDialectIndicator(replace.Ame);
-                lvItem.SubItems.Add(sDialect);
+                foreach (WritingSystem ws in WritingSystems)
+                {
+                    string sDialect = "";
+                    if (replace.WritingSystemRefs.Contains(ws.Name))
+                    {
+                        sDialect = " X ";
+                    }
+                    lvItem.SubItems.Add(sDialect);
+                }
                 lvItem.SubItems.Add(replace.Description);
                 lvItem.SubItems[9].ForeColor = Color.Purple;
                 lvEditReplaceOps.Items.Add(lvItem);
@@ -1087,7 +1048,7 @@ namespace SIL.AllomorphGenerator
                 if (ActionOp.ReplaceOpRefs.Count == 0)
                 {
                     // need at least one replace action
-                    Replace replace = new Replace();
+                    Replace replace = CreateNewReplace();
                     AlloGens.AddReplaceOp(replace);
                     lBoxReplaceOps.Items.Add(replace);
                 }
@@ -1370,6 +1331,7 @@ namespace SIL.AllomorphGenerator
                 LastOperationsFile = OperationsFile;
                 tbFile.Text = OperationsFile;
                 AlloGens = new AllomorphGenerators();
+                AlloGens.WritingSystems = WritingSystems;
                 Operation = AlloGens.CreateNewOperation();
                 Pattern = Operation.Pattern;
                 Operations = AlloGens.Operations;
@@ -1487,7 +1449,7 @@ namespace SIL.AllomorphGenerator
             }
             this.Cursor = Cursors.WaitCursor;
             List<Replace> replaceOpsToUse = new List<Replace>();
-            AllomorphCreator alloCreator = new AllomorphCreator(Cache, wsForAkh, wsForAcl, wsForAkl, wsForAch, wsForAme);
+            AllomorphCreator alloCreator = new AllomorphCreator(Cache, WritingSystems);
             foreach (ListViewItem lvItem in lvOperations.CheckedItems)
             {
                 Operation op = (Operation)lvItem.Tag;
@@ -1496,7 +1458,8 @@ namespace SIL.AllomorphGenerator
                 {
                     nonChosenEntries = dictNonChosen[op];
                 }
-                PatternMatcher patMatcher = new PatternMatcher(Cache, dictWritingSystems);
+                PatternMatcher patMatcher = new PatternMatcher(Cache, AlloGens);
+                patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
                 IList<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern).ToList();
                 IList<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(Operation, Pattern).ToList();
                 foreach (ILexEntry entry in matchingEntriesWithAllos)
@@ -1519,12 +1482,12 @@ namespace SIL.AllomorphGenerator
                             continue;
                         }
                         string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
-                        IMoStemAllomorph form = alloCreator.CreateAllomorph(entry,
-                                GetPreviewForm(replacer, citationForm, Dialect.Akh),
-                                GetPreviewForm(replacer, citationForm, Dialect.Acl),
-                                GetPreviewForm(replacer, citationForm, Dialect.Akl),
-                                GetPreviewForm(replacer, citationForm, Dialect.Ach),
-                                GetPreviewForm(replacer, citationForm, Dialect.Ame));
+                        List<string> forms = new List<string>();
+                        foreach (WritingSystem ws in WritingSystems)
+                        {
+                            forms.Add(GetPreviewForm(replacer, citationForm, ws));
+                        }
+                        IMoStemAllomorph form = alloCreator.CreateAllomorph(entry, forms);
                         if (op.Action.StemName.Guid.Length > 0)
                         {
                             alloCreator.AddStemName(form, op.Action.StemName.Guid);
@@ -1641,7 +1604,8 @@ namespace SIL.AllomorphGenerator
             Pattern = Operation.Pattern;
             if (Operation != null)
             {
-                PatternMatcher patMatcher = new PatternMatcher(Cache, dictWritingSystems);
+                PatternMatcher patMatcher = new PatternMatcher(Cache, AlloGens);
+                patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
                 IList<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, Operation.Pattern).ToList();
                 IList<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(Operation, Pattern).ToList();
                 foreach (ILexEntry entry in matchingEntriesWithAllos)
@@ -1674,17 +1638,15 @@ namespace SIL.AllomorphGenerator
                     {
                         lvItem.SubItems[1].BackColor = Color.Yellow;
                     }
-                    string previewForm = GetPreviewForm(replacer, citationForm, Dialect.Akh);
-                    lvItem.SubItems.Add(previewForm);
-                    previewForm = GetPreviewForm(replacer, citationForm, Dialect.Acl);
-                    lvItem.SubItems.Add(previewForm);
-                    previewForm = GetPreviewForm(replacer, citationForm, Dialect.Akl);
-                    lvItem.SubItems.Add(previewForm);
-                    previewForm = GetPreviewForm(replacer, citationForm, Dialect.Ach);
-                    lvItem.SubItems.Add(previewForm);
-                    previewForm = GetPreviewForm(replacer, citationForm, Dialect.Ame);
-                    lvItem.SubItems.Add(previewForm);
-                    lvItem = SetFontInfoForItem(lvItem);
+                    int i = 2;
+                    foreach (WritingSystem ws in WritingSystems)
+                    {
+                        string previewForm = GetPreviewForm(replacer, citationForm, ws);
+                        lvItem.SubItems.Add(previewForm);
+                        lvItem.SubItems[i].Font = ws.Font;
+                        lvItem.SubItems[i].ForeColor = ws.Color;
+                        i++;
+                    }
                     lvPreview.Items.Add(lvItem);
                     lvItem.Checked = !nonChosenEntries.Contains(entry);
                 }
@@ -1717,9 +1679,9 @@ namespace SIL.AllomorphGenerator
             dictNonChosen.Add(op, uncheckedEntries);
         }
 
-        private string GetPreviewForm(Replacer replacer, string citationForm, Dialect dialect)
+        private string GetPreviewForm(Replacer replacer, string citationForm, WritingSystem ws)
         {
-            string previewForm = replacer.ApplyReplaceOpToOneDialect(citationForm, dialect);
+            string previewForm = replacer.ApplyReplaceOpToOneWS(citationForm, ws.Name);
             return previewForm;
         }
 
@@ -1812,8 +1774,8 @@ namespace SIL.AllomorphGenerator
         {
             using (var dialog = new EditReplaceOpForm())
             {
-                Replace replace = new Replace();
-                dialog.Initialize(replace);
+                Replace replace = CreateNewReplace();
+                dialog.Initialize(replace, WritingSystems);
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {
@@ -1821,6 +1783,16 @@ namespace SIL.AllomorphGenerator
                     AddNewReplaceOpToMasterList(replace);
                 }
             }
+        }
+
+        private Replace CreateNewReplace()
+        {
+            Replace replace = new Replace();
+            foreach (WritingSystem ws in WritingSystems)
+            {
+                replace.WritingSystemRefs.Add(ws.Name);
+            }
+            return replace;
         }
 
         private void AddNewReplaceOpToMasterList(Replace replace)
@@ -1919,7 +1891,7 @@ namespace SIL.AllomorphGenerator
             Replace replace = (Replace)item.Tag;
             using (var dialog = new EditReplaceOpForm())
             {
-                dialog.Initialize(replace);
+                dialog.Initialize(replace, WritingSystems);
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {
@@ -1938,5 +1910,11 @@ namespace SIL.AllomorphGenerator
             InvokeEditReplaceOpFormMasterList();
         }
 
+        private void cbApplyTo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            AlloGens.ApplyTo = cb.SelectedIndex;
+            applyToField = ((ApplyTo)cb.SelectedItem).Name;
+            SetUpPreviewCheckedListBox();        }
     }
 }

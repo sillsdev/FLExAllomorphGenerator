@@ -2,6 +2,7 @@
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
+using SIL.AlloGenModel;
 using SIL.LCModel;
 using SIL.LCModel.Core.KernelInterfaces;
 using SIL.LCModel.Core.Text;
@@ -16,31 +17,22 @@ namespace SIL.AlloGenService
     public class AllomorphCreator
     {
         LcmCache Cache { get; set; }
-        int wsForAkh = -1;
-        int wsForAcl = -1;
-        int wsForAkl = -1;
-        int wsForAch = -1;
-        int wsForAme = -1;
+        List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();
 
-        public AllomorphCreator(LcmCache cache, int wsAkh, int wsAcl, int wsAkl, int wsAch, int wsAme)
+        public AllomorphCreator(LcmCache cache, List<WritingSystem> writingSystems)
         {
             Cache = cache;
-            wsForAch = wsAch;
-            wsForAcl = wsAcl;
-            wsForAkh = wsAkh;
-            wsForAkl = wsAkl;
-            wsForAme = wsAme;
+            WritingSystems = writingSystems;
         }
 
-        public IMoStemAllomorph CreateAllomorph(ILexEntry entry, string sAkh, string sAcl, string sAkl, string sAch, string sAme)
+        public IMoStemAllomorph CreateAllomorph(ILexEntry entry, List<string> forms)
         {
             IMoStemAllomorph form = entry.Services.GetInstance<IMoStemAllomorphFactory>().Create();
             entry.AlternateFormsOS.Add(form);
-            form.Form.set_String(wsForAkh, sAkh);
-            form.Form.set_String(wsForAcl, sAcl);
-            form.Form.set_String(wsForAkl, sAkl);
-            form.Form.set_String(wsForAch, sAch);
-            form.Form.set_String(wsForAme, sAme);
+            for (int i = 0; i < WritingSystems.Count && i < forms.Count; i++)
+            {
+                form.Form.set_String(WritingSystems[i].Handle, forms[i]);
+            }
             return form;
         }
 

@@ -18,6 +18,7 @@ namespace SIL.AlloGenModel
         public bool Mode { get; set; } = false;
         public string From { get; set; } = "";
         public string To { get; set; } = "";
+        // following attributes are for data migration purposes
         [XmlAttribute("ach")]
         public bool Ach { get; set; } = true;
         [XmlAttribute("acl")]
@@ -28,7 +29,7 @@ namespace SIL.AlloGenModel
         public bool Akl { get; set; } = true;
         [XmlAttribute("ame")]
         public bool Ame { get; set; } = true;
-
+        public List<string> WritingSystemRefs { get; set; } = new List<string>();
         public string Description { get; set; } = "";
 
         public Replace()
@@ -42,18 +43,19 @@ namespace SIL.AlloGenModel
         public Replace Duplicate()
         {
             Replace newReplace = new Replace();
-            newReplace.Ach = Ach;
-            newReplace.Ach = Ach;
-            newReplace.Acl = Acl;
-            newReplace.Akh = Akh;
-            newReplace.Akl = Akl;
-            newReplace.Ame = Ame;
             newReplace.From = From;
             newReplace.Mode = Mode;
             newReplace.To = To;
             newReplace.Active = Active;
             newReplace.Description = Description;
             newReplace.Name = Name;
+            List<string> newWritingSystems = new List<string>();
+            foreach (string ws in WritingSystemRefs)
+            {
+                newWritingSystems.Add(ws);
+                Console.WriteLine("name='" + ws + "'");
+            }
+            newReplace.WritingSystemRefs = newWritingSystems;
             return newReplace;
         }
 
@@ -67,16 +69,11 @@ namespace SIL.AlloGenModel
             sb.Append("' with '");
             sb.Append(To);
             sb.Append("' for");
-            if (Ach)
-                sb.Append(" ach");
-            if (Acl)
-                sb.Append(" acl");
-            if (Akh)
-                sb.Append(" akh");
-            if (Akl)
-                sb.Append(" akl");
-            if (Ame)
-                sb.Append(" ame");
+            foreach (string ws in WritingSystemRefs)
+            {
+                sb.Append(" ");
+                sb.Append(ws);
+            }
             sb.Append(".");
             return sb.ToString();
         }
@@ -96,19 +93,15 @@ namespace SIL.AlloGenModel
                     && (Mode == replace.Mode)
                     && (From == replace.From)
                     && (To == replace.To)
-                    && (Ach == replace.Ach)
-                    && (Acl == replace.Acl)
-                    && (Akh == replace.Akh)
-                    && (Akl == replace.Akl)
-                    && (Ame == replace.Ame)
+                    && (WritingSystemRefs.SequenceEqual(replace.WritingSystemRefs))
                     ;
             }
         }
 
         public override int GetHashCode()
         {
-            int result = base.GetHashCode() + Tuple.Create(Description, Mode).GetHashCode();
-            return result + Tuple.Create(From, To, Ach, Acl, Akh, Akl, Ame).GetHashCode();
+            int result = base.GetHashCode() + Tuple.Create(Description, Mode, WritingSystemRefs).GetHashCode();
+            return result + Tuple.Create(From, To).GetHashCode();
         }
 
     }

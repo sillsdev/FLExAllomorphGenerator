@@ -28,9 +28,11 @@ namespace SIL.AlloGenServiceTest
             provider.LoadDataFromFile(AlloGenExpected);
             AllomorphGenerators oldAlloGen = provider.AlloGens;
             Assert.NotNull(oldAlloGen);
-            Assert.AreEqual(2, oldAlloGen.DbVersion);
+            Assert.AreEqual(3, oldAlloGen.DbVersion);
             Assert.AreEqual(0, oldAlloGen.ReplaceOperations.Count);
 
+            migrator.LatestVersion = 2;
+            Assert.AreEqual(2, migrator.LatestVersion);
             AllomorphGenerators newAlloGen = migrator.Migrate(oldAlloGen, AlloGenExpected);
             Assert.AreEqual(2, newAlloGen.DbVersion);
             Assert.AreEqual(4, newAlloGen.ReplaceOperations.Count);
@@ -53,7 +55,7 @@ namespace SIL.AlloGenServiceTest
         }
 
         [Test]
-        public void Migrate02to02Test()
+        public void Migrate02to03Test()
         {
             AlloGenExpected = Path.Combine(TestDataDir, "AlloGenVersion02.agf");
             provider.LoadDataFromFile(AlloGenExpected);
@@ -62,8 +64,10 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual(2, oldAlloGen.DbVersion);
             Assert.AreEqual(4, oldAlloGen.ReplaceOperations.Count);
 
+            migrator.LatestVersion = 3;
+            Assert.AreEqual(3, migrator.LatestVersion);
             AllomorphGenerators newAlloGen = migrator.Migrate(oldAlloGen, AlloGenExpected);
-            Assert.AreEqual(2, newAlloGen.DbVersion);
+            Assert.AreEqual(3, newAlloGen.DbVersion);
             Assert.AreEqual(4, newAlloGen.ReplaceOperations.Count);
             Operation operation = oldAlloGen.Operations[0];
             AlloGenModel.Action action = operation.Action;

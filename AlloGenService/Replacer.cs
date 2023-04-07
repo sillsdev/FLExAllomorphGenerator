@@ -21,36 +21,16 @@ namespace SIL.AlloGenService
             ReplaceOps = replaceOps;
         }
 
-        public string ApplyReplaceOpToOneDialect(string input, Dialect dialect)
+        public string ApplyReplaceOpToOneWS(string input, string ws)
         {
             string result = input;
             foreach (Replace replace in ReplaceOps)
             {
                 if (!replace.Active || replace.From.Length == 0)
                     continue;
-                switch (dialect)
-                {
-                    case Dialect.Ach:
-                        if (!replace.Ach)
-                            continue;
-                        break;
-                    case Dialect.Acl:
-                        if (!replace.Acl)
-                            continue;
-                        break;
-                    case Dialect.Akh:
-                        if (!replace.Akh)
-                            continue;
-                        break;
-                    case Dialect.Akl:
-                        if (!replace.Akl)
-                            continue;
-                        break;
-                    case Dialect.Ame:
-                        if (!replace.Ame)
-                            continue;
-                        break;
-                }
+                var wsName = replace.WritingSystemRefs.Find(wsn => wsn == ws);
+                if (wsName == null)
+                    continue;
                 if (replace.Mode)
                 {
                     // regular expression
@@ -71,12 +51,4 @@ namespace SIL.AlloGenService
         }
     }
 
-    public enum Dialect
-    {
-        Ach,
-        Acl,
-        Akh,
-        Akl,
-        Ame,
-    }
 }

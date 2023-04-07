@@ -5,6 +5,9 @@
 using SIL.AlloGenModel;
 using SIL.FieldWorks.Filters;
 using SIL.LCModel;
+using SIL.LCModel.Core.Cellar;
+using SIL.LCModel.Core.KernelInterfaces;
+using SIL.LCModel.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,21 +20,26 @@ namespace SIL.AlloGenService
     {
         //public Pattern Pattern { get; set; }
         LcmCache Cache { get; set; }
+        public AllomorphGenerators AlloGens { get; set; }
         public IEnumerable<ILexEntry> AllEntries { get; set; }
         public IEnumerable<ILexEntry> EntriesWithNoAllomorphs { get; set; }
         public IEnumerable<ILexEntry> MultiAllomorphEntries { get; set; }
         public IMoMorphType morphType { get; set; }
         public List<IMoMorphType> morphTypes { get; set; } = new List<IMoMorphType>();
         public string ErrorMessage { get; set; } = "";
-        Dictionary<Dialect, int> dictWritingSystems = new Dictionary<Dialect, int>();
+        List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();
+        public ApplyTo ApplyTo { get; set; }
+        private readonly IFwMetaDataCacheManaged m_mdc;
 
-        public PatternMatcher(LcmCache cache, Dictionary<Dialect, int> dictWS)
+        public PatternMatcher(LcmCache cache, AllomorphGenerators alloGens)
         {
             Cache = cache;
-            dictWritingSystems = dictWS;
             AllEntries = Cache.LanguageProject.LexDbOA.Entries;
             EntriesWithNoAllomorphs = AllEntries.Where(e => e.AlternateFormsOS.Count == 0);
             MultiAllomorphEntries = AllEntries.Where(e => e.AlternateFormsOS.Count > 0);
+            AlloGens = alloGens;
+            WritingSystems = alloGens.WritingSystems;
+            m_mdc = cache.MetaDataCacheAccessor as IFwMetaDataCacheManaged;
         }
 
         public IEnumerable<ILexEntry> MatchMorphTypes(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
@@ -118,12 +126,44 @@ namespace SIL.AlloGenService
             var lexEntriesPerMatchString = new List<ILexEntry>();
             foreach (ILexEntry e in lexEntries)
             {
-                if (fwMatcher.Matches(e.CitationForm.VernacularDefaultWritingSystem))
+                ITsString useToMatch = GetToMatch(e);
+                if (useToMatch != null && fwMatcher.Matches(useToMatch))
                 {
                     lexEntriesPerMatchString.Add(e);
                 }
             }
             return lexEntriesPerMatchString;
+        }
+
+        private ITsString GetToMatch(ILexEntry e)
+        {
+            ITsString useToMatch = null;
+            if (ApplyTo == null || ApplyTo.Id == LexEntryTags.kflidCitationForm)
+                useToMatch = e.CitationForm.VernacularDefaultWritingSystem;
+            else if (ApplyTo.Id == LexEntryTags.kflidLexemeForm)
+                useToMatch = e.LexemeFormOA.Form.VernacularDefaultWritingSystem;
+            else if (ApplyTo.Id == LexEntryTags.kflidEtymology)
+            {
+                if (e.EtymologyOS.Count == 0)
+                    return null;
+                useToMatch = e.EtymologyOS.ElementAt(0).Form.VernacularDefaultWritingSystem;
+            }
+            else
+            {
+                foreach (var flid in m_mdc.GetFields(e.ClassID, true, (int)CellarPropertyTypeFilter.All))
+                {
+                    if (!m_mdc.IsCustom(flid))
+                        continue;
+                    if (flid != ApplyTo.Id)
+                        continue;
+                    ITsString tssString = Cache.DomainDataByFlid.get_StringProp(e.Hvo, flid);
+                    if (!String.IsNullOrEmpty(tssString.Text))
+                    {
+                        useToMatch = tssString;
+                    }
+                }
+            }
+            return useToMatch;
         }
 
         public IEnumerable<ILexEntry> MatchEntriesWithAllosPerPattern(Operation operation, Pattern pattern)
@@ -135,7 +175,14 @@ namespace SIL.AlloGenService
             lexEntriesThatMatch = MatchMorphTypes(lexEntriesThatMatch, pattern);
 
             AlloGenModel.Action action = operation.Action;
-            Replacer replacer = new Replacer(action.ReplaceOps);
+            List<Replace> replaceOps = new List<Replace>();
+            foreach (string opRef in action.ReplaceOpRefs)
+            {
+                Replace replace = AlloGens.ReplaceOperations.FirstOrDefault(ro => ro.Guid == opRef);
+                if (replace != null)
+                    replaceOps.Add(replace);
+            }
+            Replacer replacer = new Replacer(replaceOps);
             IList<ILexEntry> lexEntriesWithAllosThatDoNotMatch = new List<ILexEntry>();
             foreach (ILexEntry entry in lexEntriesThatMatch)
             {
@@ -169,39 +216,29 @@ namespace SIL.AlloGenService
             {
                 return false;
             }
-            string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
-            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Akh))
+            ITsString useToMatch = GetToMatch(entry);
+            if (useToMatch != null)
             {
-                return false;
-            }
-            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Acl))
-            {
-                return false;
-            }
-            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Akl))
-            {
-                return false;
-            }
-            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Akh))
-            {
-                return false;
-            }
-            if (!HaveSameAllomorphForm(replacer, citationForm, allo, Dialect.Ame))
-            {
-                return false;
+                string form = useToMatch.Text;
+                foreach (WritingSystem ws in WritingSystems)
+                {
+                    if (!HaveSameAllomorphForm(replacer, form, allo, ws))
+                    {
+                        return false;
+                    }
+                }
             }
             return true;
         }
 
-        private bool HaveSameAllomorphForm(Replacer replacer, string citationForm, IMoStemAllomorph allo, Dialect dialect)
+        private bool HaveSameAllomorphForm(Replacer replacer, string citationForm, IMoStemAllomorph allo, WritingSystem ws)
         {
-            string previewForm = replacer.ApplyReplaceOpToOneDialect(citationForm, dialect);
-            int ws = -1;
-            if (!dictWritingSystems.TryGetValue(dialect, out ws))
+            string previewForm = replacer.ApplyReplaceOpToOneWS(citationForm, ws.Name);
+            if (ws.Handle == -1)
             {
                 return false;
             }
-            string alloForm = allo.Form.get_String(ws).Text;
+            string alloForm = allo.Form.get_String(ws.Handle).Text;
             if (alloForm != previewForm)
             {
                 return false;

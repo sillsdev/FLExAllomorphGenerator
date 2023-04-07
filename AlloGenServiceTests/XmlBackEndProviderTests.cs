@@ -62,31 +62,31 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual(false, mode);
             Assert.AreEqual("*", replace.From);
             Assert.AreEqual("", replace.To);
-            Assert.True(replace.Ach);
-            Assert.True(replace.Acl);
-            Assert.True(replace.Akh);
-            Assert.True(replace.Akl);
-            Assert.True(replace.Ame);
+            Assert.True(replace.WritingSystemRefs.Contains("qvm-ach"));
+            Assert.True(replace.WritingSystemRefs.Contains("qvm-acl"));
+            Assert.True(replace.WritingSystemRefs.Contains("qvm-akh"));
+            Assert.True(replace.WritingSystemRefs.Contains("qvm-akh"));
+            Assert.True(replace.WritingSystemRefs.Contains("qvm-ame"));
             guid = replaceOpRefs[2];
             replace = allomorphGenerators.FindReplaceOp(guid);
             Assert.NotNull(replace);
             Assert.AreEqual(":", replace.From);
             Assert.AreEqual("", replace.To);
-            Assert.True(replace.Ach);
-            Assert.True(replace.Acl);
-            Assert.True(replace.Akh);
-            Assert.True(replace.Akl);
-            Assert.False(replace.Ame);
+            Assert.True(replace.WritingSystemRefs.Contains("qvm-ach"));
+            Assert.True(replace.WritingSystemRefs.Contains("qvm-acl"));
+            Assert.True(replace.WritingSystemRefs.Contains("qvm-akh"));
+            Assert.True(replace.WritingSystemRefs.Contains("qvm-akh"));
+            Assert.False(replace.WritingSystemRefs.Contains("qvm-ame"));
             guid = replaceOpRefs[3];
             replace = allomorphGenerators.FindReplaceOp(guid);
             Assert.NotNull(replace);
             Assert.AreEqual(":", replace.From);
             Assert.AreEqual("a", replace.To);
-            Assert.False(replace.Ach);
-            Assert.False(replace.Acl);
-            Assert.False(replace.Akh);
-            Assert.False(replace.Akl);
-            Assert.True(replace.Ame);
+            Assert.False(replace.WritingSystemRefs.Contains("qvm-ach"));
+            Assert.False(replace.WritingSystemRefs.Contains("qvm-acl"));
+            Assert.False(replace.WritingSystemRefs.Contains("qvm-akh"));
+            Assert.False(replace.WritingSystemRefs.Contains("qvm-akh"));
+            Assert.True(replace.WritingSystemRefs.Contains("qvm-ame"));
             List<Environment> envs = action.Environments;
             Assert.NotNull(envs);
             Assert.AreEqual(2, envs.Count);
@@ -106,6 +106,7 @@ namespace SIL.AlloGenServiceTest
         public void SaveTest()
         {
             AllomorphGenerators allomorphGenerators = new AllomorphGenerators();
+            allomorphGenerators.ApplyTo = 0;
             Operation operation = new Operation();
             operation.Active = true;
             operation.Name = "foreshortening";
@@ -115,6 +116,7 @@ namespace SIL.AlloGenServiceTest
             AlloGenModel.Action action = MakeAction(allomorphGenerators);
             operation.Action = action;
             allomorphGenerators.Operations.Add(operation);
+            MakeWritingSystems(allomorphGenerators);
             string xmlFile = Path.Combine(Path.GetTempPath(), "AlloGen.agf");
             provider.AlloGens = allomorphGenerators;
             provider.SaveDataToFile(xmlFile);
@@ -136,30 +138,39 @@ namespace SIL.AlloGenServiceTest
             replace1.From = "*";
             replace1.To = "";
             replace1.Guid = "5e8b9b79-0269-4dee-bfb0-be8ed4f4dc5d";
+            replace1.WritingSystemRefs.Add("qvm-ach");
+            replace1.WritingSystemRefs.Add("qvm-acl");
+            replace1.WritingSystemRefs.Add("qvm-akh");
+            replace1.WritingSystemRefs.Add("qvm-akl");
+            replace1.WritingSystemRefs.Add("qvm-ame");
             allomorphGenerators.AddReplaceOp(replace1);
             action.ReplaceOpRefs.Add(replace1.Guid);
             Replace replace2 = new Replace();
             replace2.From = "+";
             replace2.To = "";
             replace2.Guid = "34e77406-d2fe-4526-9bf9-3bc8fa653190";
+            replace2.WritingSystemRefs.Add("qvm-ach");
+            replace2.WritingSystemRefs.Add("qvm-acl");
+            replace2.WritingSystemRefs.Add("qvm-akh");
+            replace2.WritingSystemRefs.Add("qvm-akl");
+            replace2.WritingSystemRefs.Add("qvm-ame");
             allomorphGenerators.AddReplaceOp(replace2);
             action.ReplaceOpRefs.Add(replace2.Guid);
             Replace replace3 = new Replace();
             replace3.From = ":";
             replace3.To = "";
-            replace3.Ame = false;
             replace3.Guid = "0f853476-407d-40e9-a8f3-803792f4f83e";
+            replace3.WritingSystemRefs.Add("qvm-ach");
+            replace3.WritingSystemRefs.Add("qvm-acl");
+            replace3.WritingSystemRefs.Add("qvm-akh");
+            replace3.WritingSystemRefs.Add("qvm-akl");
             allomorphGenerators.AddReplaceOp(replace3);
             action.ReplaceOpRefs.Add(replace3.Guid);
             Replace replace4 = new Replace();
             replace4.From = ":";
             replace4.To = "a";
-            replace4.Ach = false;
-            replace4.Acl = false;
-            replace4.Akh = false;
-            replace4.Akl = false;
-            replace4.Ame = true;
             replace4.Guid = "4c3f43c6-f130-4767-9a5a-f2a93b1c6222";
+            replace4.WritingSystemRefs.Add("qvm-ame");
             allomorphGenerators.AddReplaceOp(replace4);
             action.ReplaceOpRefs.Add(replace4.Guid);
             Environment env1 = new Environment();
@@ -206,6 +217,23 @@ namespace SIL.AlloGenServiceTest
             cat.Name = "Transitive verb";
             pattern.Category = cat;
             return pattern;
+        }
+
+        private void MakeWritingSystems(AllomorphGenerators allomorphGenerators)
+        {
+            allomorphGenerators.WritingSystems.Add(MakeWritingSystem("qvm-akh", 999000005));
+            allomorphGenerators.WritingSystems.Add(MakeWritingSystem("qvm-acl", 999000004));
+            allomorphGenerators.WritingSystems.Add(MakeWritingSystem("qvm-akl", 999000006));
+            allomorphGenerators.WritingSystems.Add(MakeWritingSystem("qvm-ach", 999000003));
+            allomorphGenerators.WritingSystems.Add(MakeWritingSystem("qvm-ame", 999000007));
+        }
+
+        private WritingSystem MakeWritingSystem(string name, int handle)
+        {
+            WritingSystem ws = new WritingSystem();
+            ws.Name = name;
+            ws.Handle = handle;
+            return ws;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace SIL.AlloGenServiceTest
         string AlloGenFile { get; set; }
         string AlloGenExpected { get; set; }
         Replacer replacer { get; set; }
+        List<WritingSystem> writingSystems = new List<WritingSystem>();
 
         [SetUp]
         public void Setup()
@@ -32,6 +33,8 @@ namespace SIL.AlloGenServiceTest
             string basedir = rootdir.Substring(0, i);
             TestDataDir = Path.Combine(basedir, "AlloGenServiceTests", "TestData");
             AlloGenExpected = Path.Combine(TestDataDir, "AlloGenReplace.agf");
+            WritingSystem ws = new WritingSystem();
+
         }
 
         [Test]
@@ -41,50 +44,51 @@ namespace SIL.AlloGenServiceTest
             AllomorphGenerators allomorphGenerators = provider.AlloGens;
             Assert.NotNull(allomorphGenerators);
             Operation operation = allomorphGenerators.Operations[0];
-            replacer = new Replacer(operation.Action.ReplaceOps);
+            replacer = new Replacer(allomorphGenerators.ReplaceOperations);
+            writingSystems = allomorphGenerators.WritingSystems;
             string input = "";
-            compareResult(input, "\u00A0", Dialect.Ach);
-            compareResult(input, "\u00A0", Dialect.Acl);
-            compareResult(input, "\u00A0", Dialect.Akh);
-            compareResult(input, "\u00A0", Dialect.Akl);
-            compareResult(input, "\u00A0", Dialect.Ame);
+            compareResult(input, "\u00A0", writingSystems[0]);
+            compareResult(input, "\u00A0", writingSystems[1]);
+            compareResult(input, "\u00A0", writingSystems[2]);
+            compareResult(input, "\u00A0", writingSystems[3]);
+            compareResult(input, "\u00A0", writingSystems[4]);
             input = "*a:";
-            compareResult(input, "a", Dialect.Ach);
-            compareResult(input, "a", Dialect.Acl);
-            compareResult(input, "a", Dialect.Akh);
-            compareResult(input, "a", Dialect.Akl);
-            compareResult(input, "aa", Dialect.Ame);
+            compareResult(input, "a", writingSystems[0]);
+            compareResult(input, "a", writingSystems[1]);
+            compareResult(input, "a", writingSystems[2]);
+            compareResult(input, "a", writingSystems[3]);
+            //{ 74D68073 - 0CA7 - 4EBE - B3EC - 9D4BFB4D8FFF}
+            compareResult(input, "aa", writingSystems[4]);
             input = "*arka:";
-            compareResult(input, "arka", Dialect.Ach);
-            compareResult(input, "arka", Dialect.Acl);
-            compareResult(input, "arka", Dialect.Akh);
-            compareResult(input, "arka", Dialect.Akl);
-            compareResult(input, "arkaa", Dialect.Ame);
+            compareResult(input, "arka", writingSystems[0]);
+            compareResult(input, "arka", writingSystems[1]);
+            compareResult(input, "arka", writingSystems[2]);
+            compareResult(input, "arka", writingSystems[3]);
+            compareResult(input, "arkaa", writingSystems[4]);
             input = "*chillinya:";
-            compareResult(input, "chillinya", Dialect.Ach);
-            compareResult(input, "chillinya", Dialect.Acl);
-            compareResult(input, "chillinya", Dialect.Akh);
-            compareResult(input, "chillinya", Dialect.Akl);
-            compareResult(input, "chillinyaa", Dialect.Ame);
+            compareResult(input, "chillinya", writingSystems[0]);
+            compareResult(input, "chillinya", writingSystems[1]);
+            compareResult(input, "chillinya", writingSystems[2]);
+            compareResult(input, "chillinya", writingSystems[3]);
+            compareResult(input, "chillinyaa", writingSystems[4]);
             input = "*yarqa:.v2";
-            compareResult(input, "yarqa", Dialect.Ach);
-            compareResult(input, "yarqa", Dialect.Acl);
-            compareResult(input, "yarqa", Dialect.Akh);
-            compareResult(input, "yarqa", Dialect.Akl);
-            compareResult(input, "yarqaa", Dialect.Ame);
+            compareResult(input, "yarqa", writingSystems[0]);
+            compareResult(input, "yarqa", writingSystems[1]);
+            compareResult(input, "yarqa", writingSystems[2]);
+            compareResult(input, "yarqa", writingSystems[3]);
+            compareResult(input, "yarqaa", writingSystems[4]);
             input = "+yusulpa:";
-            compareResult(input, "yusulpa", Dialect.Ach);
-            compareResult(input, "yusulpa", Dialect.Acl);
-            compareResult(input, "yusulpa", Dialect.Akh);
-            compareResult(input, "yusulpa", Dialect.Akl);
-            compareResult(input, "yusulpaa", Dialect.Ame);
+            compareResult(input, "yusulpa", writingSystems[0]);
+            compareResult(input, "yusulpa", writingSystems[1]);
+            compareResult(input, "yusulpa", writingSystems[2]);
+            compareResult(input, "yusulpa", writingSystems[3]);
+            compareResult(input, "yusulpaa", writingSystems[4]);
         }
 
-        private void compareResult(string input, string expected, Dialect dialect)
+        private void compareResult(string input, string expected, WritingSystem ws)
         {
-            string result = replacer.ApplyReplaceOpToOneDialect(input, dialect);
+            string result = replacer.ApplyReplaceOpToOneWS(input, ws.Name);
             Assert.AreEqual(expected, result);
-
         }
     }
 }

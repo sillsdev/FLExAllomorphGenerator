@@ -20,9 +20,10 @@ type="tAlloGen"
 ><emailAddress
 >blackhandrew@gmail.com</emailAddress
 ><date
->20 March, 2023</date
+>7 April, 2023</date
 ><version
->Version 1.3.0 Beta<endnote
+>Version 2.0.0 Beta<comment
+><endnote
 id="nDBv01Tov2"
 ><p
 >The internal structure of the operations file changed between version 1.1 and 1.2. <object
@@ -30,6 +31,7 @@ type="tAlloGen"
 ></object
 > automatically makes the changes for you. The older version is copied to a file with a “.bak” extension.</p
 ></endnote
+></comment
 ></version
 ><version
 >Copyright © 2023 SIL International</version
@@ -53,13 +55,16 @@ type="tFLEx"
 >). <object
 type="tAlloGen"
 ></object
-> allows you to define operations on <object
-type="tCitationForms"
-></object
-> to produce new <object
+> allows you to define operations on a form in an entry to produce new <object
 type="tStemAllos"
 ></object
-> in the entry of the matching <object
+> in the entry of the matching form.  You can use what is in the <object
+type="tCitationForm"
+></object
+>, Lexeme Form, or in the first Etymology Source form for what to match on.  It is possible to use a custom field, too.  <object
+type="tAlloGen"
+></object
+> defaults to using the <object
 type="tCitationForm"
 ></object
 >.</p
@@ -78,16 +83,10 @@ type="tFLEx"
 >Each operation defined in <object
 type="tAlloGen"
 ></object
-> describes a pattern that is used to match <object
-type="tCitationForms"
-></object
-> in the <object
+> describes a pattern that is used to match the indicated kind of form in the <object
 type="tFLEx"
 ></object
-> database. There also is a set of actions that are to be applied to each such <object
-type="tCitationForm"
-></object
->. The result of the action will produce a new <object
+> database. There also is a set of actions that are to be applied to each such form. The result of the action will produce a new <object
 type="tStemAllo"
 ></object
 > in that entry.</p
@@ -271,10 +270,7 @@ id="sPattern"
 ><secTitle
 >Pattern section</secTitle
 ><p
->The pattern section contains three parts which define which <object
-type="tCitationForms"
-></object
-> will be used: the Match pattern, the morpheme types to use, and an optional category.</p
+>The pattern section contains three parts which define which forms will be used: the Match pattern, the morpheme types to use, and an optional category.</p
 ><section3
 id="sPatMatch"
 ><secTitle
@@ -317,10 +313,7 @@ id="sActions"
 ><secTitle
 >Actions section</secTitle
 ><p
->The Actions section allows you to define a set of ordered replace operations to be applied to the <object
-type="tCitationForm"
-></object
-> to create the form of the new allomorph. You can also optionally select a set of environments and/or a <object
+>The Actions section allows you to define a set of ordered replace operations to be applied to the indicated form to create the shape of the new allomorph. You can also optionally select a set of environments and/or a <object
 type="tStemName"
 ></object
 > to be included with the new <object
@@ -373,10 +366,9 @@ width="450"
 >what to change what matches ("To”).</li
 ></ol
 ><p
->The replace can be a portion of the content of the <object
-type="tCitationForm"
-></object
->. That is, you do not have to try to match the entire content. There is an option to use regular expressions for what to replace and what to change it to. Simply check the “Regular expression” check box or leave it unchecked. When you edit any replace here, the changes made will also be made in the corresponding replace in the <object
+>There is also a set of vernacular writing systems names, each with a check box before it. Be sure to check each vernacular writing system that this replace operation should apply to.</p
+><p
+>The replace can be a portion of the content of the indicated form. That is, you do not have to try to match the entire content. There is an option to use regular expressions for what to replace and what to change it to. Simply check the “Regular expression” check box or leave it unchecked. When you edit any replace here, the changes made will also be made in the corresponding replace in the <object
 type="tEditReplaceTab"
 ></object
 > tab. That is, you do not need to make the same change here and in the <object
@@ -384,7 +376,7 @@ type="tEditReplaceTab"
 ></object
 > tab. You only need to make the change once in either place.</p
 ><p
->Each replace operation can be applied to one or more of the five writing systems we're using. Check all that apply.</p
+>Each replace operation can be applied to one or more of the currently defined vernacular writing systems. Check all that apply.</p
 ><p
 >When you choose either the “Insert new before” or “Insert new after” option, a new replace operation will be inserted and you will see the “Edit Replace Operation” dialog box. Any new replace operation is automatically added to the master list of replace operations shown in the <object
 type="tEditReplaceTab"
@@ -410,7 +402,7 @@ width="450"
 ><p
 >When you choose either the “Move up” or “Move down” option, the currently selected replace operation will be moved up or down in the list of replace operations.</p
 ><p
->When you choose the “Delete” option, the currently selected replace operation will be removed from the list of replace operations for the current operation.  <object
+>When you choose the “Delete” option, the currently selected replace operation will be removed from the list of replace operations for the current operation. <object
 type="tAlloGen"
 ></object
 > will also show you a list of which other operations, if any, are using the currently selected replace operation and ask if you want to delete the currently selected replace operation from the master list of all replace operations.</p
@@ -455,6 +447,50 @@ type="tStemName"
 ></section3
 ></section2
 ><section2
+id="sApplyOperationsTo"
+><secTitle
+>Apply operations to drop-down box</secTitle
+><p
+>In the bottom left hand corner, there is a drop-down box.  You can click on the button and choose which field in an entry to use for matching and applying replace operations.  There are at least three options available:</p
+><ol
+><li
+>Citation Form</li
+><li
+>Lexeme Form</li
+><li
+>Etymology Form</li
+></ol
+><pc
+><object
+type="tAlloGen"
+></object
+> will use the default vernacular writing system in each case.  If there is more than one etymology field, it will use the first one.</pc
+><p
+>It will also show any custom fields you have at the entry level which were created with the pattern illustrated by what is in example <exampleRef
+letter="xCustomFieldSettings"
+num="xCustomFieldSettings"
+></exampleRef
+>.</p
+><example
+num="xCustomFieldSettings"
+><chart
+><img
+src="resources/CustomFieldSettings.png"
+></img
+></chart
+></example
+><p
+>In particular, the custom field must have:</p
+><ul
+><li
+>A Location of “Entry”</li
+><li
+>A Type of “Single-line Text” and</li
+><li
+>A Writing Systems(s) of “First Vernacular Writing System.”</li
+></ul
+></section2
+><section2
 id="sSaveButton"
 ><secTitle
 >Save changes button</secTitle
@@ -486,20 +522,14 @@ id="nPreviewDance"
 ></endnote
 ></p
 ><p
->Note that the preview portion only shows <object
-type="tCitationForms"
-></object
-> which currently have no allomorphs or those which have some allomorphs but the allomorph that will be generated is not already there. In the latter case, the citation form has a yellow background.<comment
+>Note that the preview portion only shows entries having the indicated form which currently have no allomorphs or those which have some allomorphs but the allomorph that will be generated is not already there. In the latter case, the indicated form has a yellow background.<comment
 ><endnote
 id="nMissingReplaceOp"
 ><p
 >For those which already have some allomorphs, you may want to check them to see if maybe there is a missing replace operation.</p
 ></endnote
 ></comment
-> In addition, the <object
-type="tCitationForms"
-></object
-> shown are for the default vernacular writing system. You can click on a column header to sort the rows by the content of that column. Note that it sorts by code points, not the way it might in <object
+> In addition, the indicated forms shown are for the default vernacular writing system. You can click on a column header to sort the rows by the content of that column. Note that it sorts by Unicode code points, not the way it might in <object
 type="tFLEx"
 ></object
 >.</p
@@ -533,10 +563,7 @@ type="tFLEx"
 >: if an item is checked, a new <object
 type="tStemAllo"
 ></object
-> will be produced for the entry containing that <object
-type="tCitationForm"
-></object
->. If an item is not checked, it will be ignored (i.e., it will remain as it currently is).</p
+> will be produced for the entry containing that indicated form. If an item is not checked, it will be ignored (i.e., it will remain as it currently is).</p
 ><p
 >See section <sectionRef
 sec="sApplyOps"
@@ -629,10 +656,7 @@ type="tAlloGen"
 > will insert a new <object
 type="tStemAllo"
 ></object
-> for each checked operation. When it is done, the preview portion will no longer show those <object
-type="tCitationForms"
-></object
-> which have had a <object
+> for each checked operation. When it is done, the preview portion will no longer show those indicated forms which have had a <object
 type="tStemAllo"
 ></object
 > added. In addition, in <object
@@ -685,7 +709,7 @@ id="sErrorMessage"
 ><secTitle
 >Error messages</secTitle
 ><p
->In certain situations,<object
+>In certain situations, <object
 type="tAlloGen"
 ></object
 > will issue an error message.</p
@@ -830,14 +854,6 @@ type="tFLExVersion"
 type="tFLEx"
 ></object
 >.</li
-><li
-><object
-type="tAlloGen"
-></object
-> currently has its five writing systems “hard-coded.” A future version may list out the possible vernacular writing systems based on what is in the <object
-type="tFLEx"
-></object
-> project.</li
 ><li
 >The user interface is in English only.</li
 ><li

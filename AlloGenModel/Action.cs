@@ -27,12 +27,12 @@ namespace SIL.AlloGenModel
         public Action Duplicate()
         {
             Action newAction = new Action();
-            List<Replace> newReplaceOps = new List<Replace>();
-            foreach (Replace rep in ReplaceOps)
+            List<string> newReplaceOpRefs = new List<string>();
+            foreach (string repRef in ReplaceOpRefs)
             {
-                newReplaceOps.Add(rep.Duplicate());
+                newReplaceOpRefs.Add(repRef);
             }
-            newAction.ReplaceOps = newReplaceOps;
+            newAction.ReplaceOpRefs = newReplaceOpRefs;
             List<Environment> newEnvironments = new List<Environment>();
             foreach (Environment env in Environments)
             {

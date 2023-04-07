@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AllomorphGenerators xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" dbVersion="2">
+<AllomorphGenerators xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" dbVersion="3">
   <Operations>
     <Operation active="true">
       <Name>foreshortening</Name>
@@ -43,7 +43,7 @@
       <WritingSystemRefs>
 	<string>qvm-ach</string>
 	<string>qvm-acl</string>
-	<string>qvm-akh</string>
+	<string>qvm-aka</string>
 	<string>qvm-akl</string>
 	<string>qvm-ame</string>
       </WritingSystemRefs>
@@ -55,7 +55,7 @@
       <WritingSystemRefs>
 	<string>qvm-ach</string>
 	<string>qvm-acl</string>
-	<string>qvm-akh</string>
+	<string>qvm-aka</string>
 	<string>qvm-akl</string>
 	<string>qvm-ame</string>
       </WritingSystemRefs>
@@ -67,7 +67,7 @@
       <WritingSystemRefs>
 	<string>qvm-ach</string>
 	<string>qvm-acl</string>
-	<string>qvm-akh</string>
+	<string>qvm-aka</string>
 	<string>qvm-akl</string>
       </WritingSystemRefs>
     </Replace>
@@ -82,20 +82,20 @@
   </ReplaceOperations>
   <WritingSystems>
     <WritingSystem>
-      <Name>qvm-akh</Name>
-      <Handle>999000005</Handle>
+      <Name>qvm-ach</Name>
+      <Handle>999000003</Handle>
     </WritingSystem>
     <WritingSystem>
       <Name>qvm-acl</Name>
       <Handle>999000004</Handle>
     </WritingSystem>
     <WritingSystem>
-      <Name>qvm-akl</Name>
-      <Handle>999000006</Handle>
+      <Name>qvm-akh</Name>
+      <Handle>999000005</Handle>
     </WritingSystem>
     <WritingSystem>
-      <Name>qvm-ach</Name>
-      <Handle>999000003</Handle>
+      <Name>qvm-akl</Name>
+      <Handle>999000006</Handle>
     </WritingSystem>
     <WritingSystem>
       <Name>qvm-ame</Name>

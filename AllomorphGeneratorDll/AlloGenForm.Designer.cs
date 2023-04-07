@@ -35,6 +35,9 @@ namespace SIL.AllomorphGenerator
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlloGenForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabEditOps = new System.Windows.Forms.TabPage();
+            this.lbApplyTo = new System.Windows.Forms.Label();
+            this.cbApplyTo = new System.Windows.Forms.ComboBox();
+            this.lbCountOps = new System.Windows.Forms.Label();
             this.btnSaveChanges = new System.Windows.Forms.Button();
             this.lbOpRightClickToEdit = new System.Windows.Forms.Label();
             this.lbOperations = new System.Windows.Forms.Label();
@@ -74,6 +77,7 @@ namespace SIL.AllomorphGenerator
             this.btnApplyOperations = new System.Windows.Forms.Button();
             this.lbOperationsToApply = new System.Windows.Forms.Label();
             this.tabEditReplaceOps = new System.Windows.Forms.TabPage();
+            this.lbCountReplaceOps = new System.Windows.Forms.Label();
             this.btnSaveChanges3 = new System.Windows.Forms.Button();
             this.btnDeleteReplaceOp = new System.Windows.Forms.Button();
             this.btnEditReplaceOp = new System.Windows.Forms.Button();
@@ -85,8 +89,6 @@ namespace SIL.AllomorphGenerator
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnNewFile = new System.Windows.Forms.Button();
             this.ilPreview = new System.Windows.Forms.ImageList(this.components);
-            this.lbCountReplaceOps = new System.Windows.Forms.Label();
-            this.lbCountOps = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabEditOps.SuspendLayout();
             this.plPattern.SuspendLayout();
@@ -112,6 +114,8 @@ namespace SIL.AllomorphGenerator
             // 
             // tabEditOps
             // 
+            this.tabEditOps.Controls.Add(this.lbApplyTo);
+            this.tabEditOps.Controls.Add(this.cbApplyTo);
             this.tabEditOps.Controls.Add(this.lbCountOps);
             this.tabEditOps.Controls.Add(this.btnSaveChanges);
             this.tabEditOps.Controls.Add(this.lbOpRightClickToEdit);
@@ -132,6 +136,34 @@ namespace SIL.AllomorphGenerator
             this.tabEditOps.TabIndex = 0;
             this.tabEditOps.Text = "Edit Operations";
             this.tabEditOps.UseVisualStyleBackColor = true;
+            // 
+            // lbApplyTo
+            // 
+            this.lbApplyTo.AutoSize = true;
+            this.lbApplyTo.Location = new System.Drawing.Point(7, 899);
+            this.lbApplyTo.Name = "lbApplyTo";
+            this.lbApplyTo.Size = new System.Drawing.Size(149, 20);
+            this.lbApplyTo.TabIndex = 31;
+            this.lbApplyTo.Text = "Apply operations to:";
+            // 
+            // cbApplyTo
+            // 
+            this.cbApplyTo.FormattingEnabled = true;
+            this.cbApplyTo.Location = new System.Drawing.Point(201, 896);
+            this.cbApplyTo.Name = "cbApplyTo";
+            this.cbApplyTo.Size = new System.Drawing.Size(157, 28);
+            this.cbApplyTo.TabIndex = 6;
+            this.cbApplyTo.SelectedIndexChanged += new System.EventHandler(this.cbApplyTo_SelectedIndexChanged);
+            // 
+            // lbCountOps
+            // 
+            this.lbCountOps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbCountOps.AutoSize = true;
+            this.lbCountOps.Location = new System.Drawing.Point(1159, 899);
+            this.lbCountOps.Name = "lbCountOps";
+            this.lbCountOps.Size = new System.Drawing.Size(57, 20);
+            this.lbCountOps.TabIndex = 30;
+            this.lbCountOps.Text = "1 / 160";
             // 
             // btnSaveChanges
             // 
@@ -181,7 +213,7 @@ namespace SIL.AllomorphGenerator
             this.lBoxOperations.ItemHeight = 20;
             this.lBoxOperations.Location = new System.Drawing.Point(3, 43);
             this.lBoxOperations.Name = "lBoxOperations";
-            this.lBoxOperations.Size = new System.Drawing.Size(355, 884);
+            this.lBoxOperations.Size = new System.Drawing.Size(355, 824);
             this.lBoxOperations.TabIndex = 0;
             this.lBoxOperations.SelectedIndexChanged += new System.EventHandler(this.lBoxOperations_SelectedIndexChanged);
             this.lBoxOperations.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lBoxOperations_MouseUp);
@@ -557,6 +589,16 @@ namespace SIL.AllomorphGenerator
             this.tabEditReplaceOps.Text = "Edit Replace Operations";
             this.tabEditReplaceOps.UseVisualStyleBackColor = true;
             // 
+            // lbCountReplaceOps
+            // 
+            this.lbCountReplaceOps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbCountReplaceOps.AutoSize = true;
+            this.lbCountReplaceOps.Location = new System.Drawing.Point(1216, 905);
+            this.lbCountReplaceOps.Name = "lbCountReplaceOps";
+            this.lbCountReplaceOps.Size = new System.Drawing.Size(57, 20);
+            this.lbCountReplaceOps.TabIndex = 7;
+            this.lbCountReplaceOps.Text = "1 / 160";
+            // 
             // btnSaveChanges3
             // 
             this.btnSaveChanges3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -619,7 +661,7 @@ namespace SIL.AllomorphGenerator
             this.lvEditReplaceOps.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvEditReplaceOps_ColumnClick);
             this.lvEditReplaceOps.SelectedIndexChanged += new System.EventHandler(this.lvEditReplaceOps_SelectedIndexChanged);
             this.lvEditReplaceOps.DoubleClick += new System.EventHandler(this.lvEditReplaceOps_DoubleClick);
-            this.lvEditReplaceOps.MouseUp += new MouseEventHandler(this.lvEditReplaceOps_MouseUp);
+            this.lvEditReplaceOps.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lvEditReplaceOps_MouseUp);
             // 
             // lbAlloGenFile
             // 
@@ -673,26 +715,6 @@ namespace SIL.AllomorphGenerator
             this.ilPreview.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilPreview.ImageStream")));
             this.ilPreview.TransparentColor = System.Drawing.Color.Transparent;
             this.ilPreview.Images.SetKeyName(0, "CheckedCheckbox.bmp");
-            // 
-            // lbCountReplaceOps
-            // 
-            this.lbCountReplaceOps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbCountReplaceOps.AutoSize = true;
-            this.lbCountReplaceOps.Location = new System.Drawing.Point(1216, 905);
-            this.lbCountReplaceOps.Name = "lbCountReplaceOps";
-            this.lbCountReplaceOps.Size = new System.Drawing.Size(57, 20);
-            this.lbCountReplaceOps.TabIndex = 7;
-            this.lbCountReplaceOps.Text = "1 / 160";
-            // 
-            // lbCountOps
-            // 
-            this.lbCountOps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbCountOps.AutoSize = true;
-            this.lbCountOps.Location = new System.Drawing.Point(1159, 899);
-            this.lbCountOps.Name = "lbCountOps";
-            this.lbCountOps.Size = new System.Drawing.Size(57, 20);
-            this.lbCountOps.TabIndex = 30;
-            this.lbCountOps.Text = "1 / 160";
             // 
             // AlloGenForm
             // 
@@ -781,6 +803,8 @@ namespace SIL.AllomorphGenerator
         private Button btnSaveChanges3;
         private Label lbCountReplaceOps;
         private Label lbCountOps;
+        private Label lbApplyTo;
+        private ComboBox cbApplyTo;
     }
 }
 
