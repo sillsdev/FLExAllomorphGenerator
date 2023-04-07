@@ -20,6 +20,7 @@ namespace SIL.AlloGenService
     {
         //public Pattern Pattern { get; set; }
         LcmCache Cache { get; set; }
+        public AllomorphGenerators AlloGens { get; set; }
         public IEnumerable<ILexEntry> AllEntries { get; set; }
         public IEnumerable<ILexEntry> EntriesWithNoAllomorphs { get; set; }
         public IEnumerable<ILexEntry> MultiAllomorphEntries { get; set; }
@@ -30,13 +31,14 @@ namespace SIL.AlloGenService
         public ApplyTo ApplyTo { get; set; }
         private readonly IFwMetaDataCacheManaged m_mdc;
 
-        public PatternMatcher(LcmCache cache, List<WritingSystem> writingSystems)
+        public PatternMatcher(LcmCache cache, AllomorphGenerators alloGens)
         {
             Cache = cache;
             AllEntries = Cache.LanguageProject.LexDbOA.Entries;
             EntriesWithNoAllomorphs = AllEntries.Where(e => e.AlternateFormsOS.Count == 0);
             MultiAllomorphEntries = AllEntries.Where(e => e.AlternateFormsOS.Count > 0);
-            WritingSystems = writingSystems;
+            AlloGens = alloGens;
+            WritingSystems = alloGens.WritingSystems;
             m_mdc = cache.MetaDataCacheAccessor as IFwMetaDataCacheManaged;
         }
 
@@ -124,39 +126,44 @@ namespace SIL.AlloGenService
             var lexEntriesPerMatchString = new List<ILexEntry>();
             foreach (ILexEntry e in lexEntries)
             {
-                ITsString useToMatch = null;
-                if (ApplyTo == null || ApplyTo.Id == LexEntryTags.kflidCitationForm)
-                    useToMatch = e.CitationForm.VernacularDefaultWritingSystem;
-                else if (ApplyTo.Id == LexEntryTags.kflidLexemeForm)
-                    useToMatch = e.LexemeFormOA.Form.VernacularDefaultWritingSystem;
-                else if (ApplyTo.Id == LexEntryTags.kflidEtymology)
-                {
-                    if (e.EtymologyOS.Count == 0)
-                        continue;
-                    useToMatch = e.EtymologyOS.ElementAt(0).Form.VernacularDefaultWritingSystem;
-                }
-                else
-                {
-                    foreach (var flid in m_mdc.GetFields(e.ClassID, true, (int)CellarPropertyTypeFilter.All))
-                    {
-                        if (!m_mdc.IsCustom(flid))
-                            continue;
-                        if (flid != ApplyTo.Id)
-                            continue;
-                        ITsString tssString = Cache.DomainDataByFlid.get_StringProp(e.Hvo, flid);
-                        if (!String.IsNullOrEmpty(tssString.Text))
-                        {
-                            useToMatch = tssString;
-                        }
-                    }
-                }
-
+                ITsString useToMatch = GetToMatch(e);
                 if (useToMatch != null && fwMatcher.Matches(useToMatch))
                 {
                     lexEntriesPerMatchString.Add(e);
                 }
             }
             return lexEntriesPerMatchString;
+        }
+
+        private ITsString GetToMatch(ILexEntry e)
+        {
+            ITsString useToMatch = null;
+            if (ApplyTo == null || ApplyTo.Id == LexEntryTags.kflidCitationForm)
+                useToMatch = e.CitationForm.VernacularDefaultWritingSystem;
+            else if (ApplyTo.Id == LexEntryTags.kflidLexemeForm)
+                useToMatch = e.LexemeFormOA.Form.VernacularDefaultWritingSystem;
+            else if (ApplyTo.Id == LexEntryTags.kflidEtymology)
+            {
+                if (e.EtymologyOS.Count == 0)
+                    return null;
+                useToMatch = e.EtymologyOS.ElementAt(0).Form.VernacularDefaultWritingSystem;
+            }
+            else
+            {
+                foreach (var flid in m_mdc.GetFields(e.ClassID, true, (int)CellarPropertyTypeFilter.All))
+                {
+                    if (!m_mdc.IsCustom(flid))
+                        continue;
+                    if (flid != ApplyTo.Id)
+                        continue;
+                    ITsString tssString = Cache.DomainDataByFlid.get_StringProp(e.Hvo, flid);
+                    if (!String.IsNullOrEmpty(tssString.Text))
+                    {
+                        useToMatch = tssString;
+                    }
+                }
+            }
+            return useToMatch;
         }
 
         public IEnumerable<ILexEntry> MatchEntriesWithAllosPerPattern(Operation operation, Pattern pattern)
@@ -168,7 +175,14 @@ namespace SIL.AlloGenService
             lexEntriesThatMatch = MatchMorphTypes(lexEntriesThatMatch, pattern);
 
             AlloGenModel.Action action = operation.Action;
-            Replacer replacer = new Replacer(action.ReplaceOps);
+            List<Replace> replaceOps = new List<Replace>();
+            foreach (string opRef in action.ReplaceOpRefs)
+            {
+                Replace replace = AlloGens.ReplaceOperations.FirstOrDefault(ro => ro.Guid == opRef);
+                if (replace != null)
+                    replaceOps.Add(replace);
+            }
+            Replacer replacer = new Replacer(replaceOps);
             IList<ILexEntry> lexEntriesWithAllosThatDoNotMatch = new List<ILexEntry>();
             foreach (ILexEntry entry in lexEntriesThatMatch)
             {
@@ -202,12 +216,16 @@ namespace SIL.AlloGenService
             {
                 return false;
             }
-            string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
-            foreach (WritingSystem ws in WritingSystems)
+            ITsString useToMatch = GetToMatch(entry);
+            if (useToMatch != null)
             {
-                if (!HaveSameAllomorphForm(replacer, citationForm, allo, ws))
+                string form = useToMatch.Text;
+                foreach (WritingSystem ws in WritingSystems)
                 {
-                    return false;
+                    if (!HaveSameAllomorphForm(replacer, form, allo, ws))
+                    {
+                        return false;
+                    }
                 }
             }
             return true;

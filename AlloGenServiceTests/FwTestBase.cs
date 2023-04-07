@@ -90,7 +90,7 @@ namespace SIL.AlloGenServiceTest
             allomorphGenerators = provider.AlloGens;
             operation = allomorphGenerators.Operations[0];
             pattern = operation.Pattern;
-            patternMatcher = new PatternMatcher(myCache, writingSystems);
+            patternMatcher = new PatternMatcher(myCache, allomorphGenerators);
         }
     }
 }

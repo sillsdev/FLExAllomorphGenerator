@@ -1456,7 +1456,7 @@ namespace SIL.AllomorphGenerator
                 {
                     nonChosenEntries = dictNonChosen[op];
                 }
-                PatternMatcher patMatcher = new PatternMatcher(Cache, WritingSystems);
+                PatternMatcher patMatcher = new PatternMatcher(Cache, AlloGens);
                 patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
                 IList<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern).ToList();
                 IList<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(Operation, Pattern).ToList();
@@ -1602,7 +1602,7 @@ namespace SIL.AllomorphGenerator
             Pattern = Operation.Pattern;
             if (Operation != null)
             {
-                PatternMatcher patMatcher = new PatternMatcher(Cache, WritingSystems);
+                PatternMatcher patMatcher = new PatternMatcher(Cache, AlloGens);
                 patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
                 IList<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, Operation.Pattern).ToList();
                 IList<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(Operation, Pattern).ToList();
