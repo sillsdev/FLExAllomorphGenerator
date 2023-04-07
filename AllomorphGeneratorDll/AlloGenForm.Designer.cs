@@ -142,9 +142,9 @@ namespace SIL.AllomorphGenerator
             this.lbApplyTo.AutoSize = true;
             this.lbApplyTo.Location = new System.Drawing.Point(7, 899);
             this.lbApplyTo.Name = "lbApplyTo";
-            this.lbApplyTo.Size = new System.Drawing.Size(153, 20);
+            this.lbApplyTo.Size = new System.Drawing.Size(149, 20);
             this.lbApplyTo.TabIndex = 31;
-            this.lbApplyTo.Text = "Apply  operations to:";
+            this.lbApplyTo.Text = "Apply operations to:";
             // 
             // cbApplyTo
             // 
