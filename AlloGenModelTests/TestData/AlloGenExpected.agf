@@ -20,7 +20,6 @@
         <Category active="true" guid="54712931-442f-42d5-8634-f12bd2e310ce" name="Transitive verb" />
       </Pattern>
       <Action>
-        <ReplaceOps />
         <ReplaceOpRefs>
           <string>5e8b9b79-0269-4dee-bfb0-be8ed4f4dc5d</string>
           <string>34e77406-d2fe-4526-9bf9-3bc8fa653190</string>
@@ -36,7 +35,7 @@
     </Operation>
   </Operations>
   <ReplaceOperations>
-    <Replace active="true" guid="5e8b9b79-0269-4dee-bfb0-be8ed4f4dc5d" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
+    <Replace active="true" guid="5e8b9b79-0269-4dee-bfb0-be8ed4f4dc5d" name="" mode="false" >
       <From>*</From>
       <To />
       <Description />
@@ -48,7 +47,7 @@
 	<string>qvm-ame</string>
       </WritingSystemRefs>
     </Replace>
-    <Replace active="true" guid="34e77406-d2fe-4526-9bf9-3bc8fa653190" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="true">
+    <Replace active="true" guid="34e77406-d2fe-4526-9bf9-3bc8fa653190" name="" mode="false" >
       <From>+</From>
       <To />
       <Description />
@@ -60,7 +59,7 @@
 	<string>qvm-ame</string>
       </WritingSystemRefs>
     </Replace>
-    <Replace active="true" guid="0f853476-407d-40e9-a8f3-803792f4f83e" name="" mode="false" ach="true" acl="true" akh="true" akl="true" ame="false">
+    <Replace active="true" guid="0f853476-407d-40e9-a8f3-803792f4f83e" name="" mode="false" >
       <From>:</From>
       <To />
       <Description />
@@ -71,7 +70,7 @@
 	<string>qvm-akl</string>
       </WritingSystemRefs>
     </Replace>
-    <Replace active="true" guid="4c3f43c6-f130-4767-9a5a-f2a93b1c6222" name="" mode="false" ach="false" acl="false" akh="false" akl="false" ame="true">
+    <Replace active="true" guid="4c3f43c6-f130-4767-9a5a-f2a93b1c6222" name="" mode="false" >
       <From>:</From>
       <To>a</To>
       <Description />

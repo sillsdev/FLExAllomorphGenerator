@@ -18,17 +18,6 @@ namespace SIL.AlloGenModel
         public bool Mode { get; set; } = false;
         public string From { get; set; } = "";
         public string To { get; set; } = "";
-        // following attributes are for data migration purposes
-        [XmlAttribute("ach")]
-        public bool Ach { get; set; } = true;
-        [XmlAttribute("acl")]
-        public bool Acl { get; set; } = true;
-        [XmlAttribute("akh")]
-        public bool Akh { get; set; } = true;
-        [XmlAttribute("akl")]
-        public bool Akl { get; set; } = true;
-        [XmlAttribute("ame")]
-        public bool Ame { get; set; } = true;
         public List<string> WritingSystemRefs { get; set; } = new List<string>();
         public string Description { get; set; } = "";
 

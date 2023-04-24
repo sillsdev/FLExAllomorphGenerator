@@ -123,4 +123,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.3\build\NUnit.props'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(TargetDir)\icudt68.dll" copy C:\fwrepo\fw\Output\Debug\icudt68.dll "$(TargetDir)\icudt68.dll"
+if not exist "$(TargetDir)\icuuc68.dll" copy C:\fwrepo\fw\Output\Debug\icuuc68.dll "$(TargetDir)\icuuc68.dll"
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

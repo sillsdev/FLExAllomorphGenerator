@@ -21,6 +21,7 @@ namespace SIL.AlloGenServiceTest
         string AlloGenProduced { get; set; }
         DatabaseMigrator migrator = new DatabaseMigrator();
 
+#if Marks
         [Test]
         public void Migrate01to02Test()
         {
@@ -94,7 +95,7 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual(36, replace.Guid.Length);
             Assert.AreEqual(opRef, replace.Guid);
         }
-
+#endif
         [Test]
         public void CreateFileNameTest()
         {

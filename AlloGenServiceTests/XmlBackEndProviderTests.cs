@@ -49,9 +49,6 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual("Transitive verb", name);
             Action action = operation.Action;
             Assert.NotNull(action);
-            List<Replace> replaceOps = action.ReplaceOps;
-            Assert.NotNull(replaceOps);
-            Assert.AreEqual(0, replaceOps.Count);
             List<string> replaceOpRefs = action.ReplaceOpRefs;
             Assert.NotNull(replaceOpRefs);
             Assert.AreEqual(4, replaceOpRefs.Count);

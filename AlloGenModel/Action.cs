@@ -12,14 +12,12 @@ namespace SIL.AlloGenModel
 {
     public class Action
     {
-        public List<Replace> ReplaceOps { get; set; }
         public List<string> ReplaceOpRefs { get; set; }
         public List<Environment> Environments { get; set; }
         public StemName StemName { get; set; } = new StemName();
 
         public Action()
         {
-            ReplaceOps = new List<Replace>();
             ReplaceOpRefs = new List<string>();
             Environments = new List<Environment>();
         }
@@ -61,7 +59,7 @@ namespace SIL.AlloGenModel
             else
             {
                 Action act = (Action)obj;
-                return (ReplaceOps.SequenceEqual(act.ReplaceOps))
+                return (ReplaceOpRefs.SequenceEqual(act.ReplaceOpRefs))
                     && (Environments.SequenceEqual(act.Environments))
                     && (StemName.Equals(act.StemName))
                     ;
@@ -70,7 +68,7 @@ namespace SIL.AlloGenModel
 
         public override int GetHashCode()
         {
-            return Tuple.Create(ReplaceOps, Environments, StemName).GetHashCode();
+            return Tuple.Create(ReplaceOpRefs, Environments, StemName).GetHashCode();
         }
     }
 }

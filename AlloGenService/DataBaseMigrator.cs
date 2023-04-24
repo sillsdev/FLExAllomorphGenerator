@@ -19,7 +19,8 @@ namespace SIL.AlloGenService
 
         public AllomorphGenerators Migrate(AllomorphGenerators oldDatabase, string file)
         {
-            AllomorphGenerators newDatabase = new AllomorphGenerators();
+#if Marks
+			AllomorphGenerators newDatabase = new AllomorphGenerators();
             int version = oldDatabase.DbVersion;
             // special case since we did not add a db version until version 2
             if (oldDatabase.ReplaceOperations.Count == 0)
@@ -51,8 +52,12 @@ namespace SIL.AlloGenService
                 return newDatabase;
             else
                 return oldDatabase;
-        }
+#else
+			return oldDatabase;
+#endif
+		}
 
+#if Marks
         void MakeBackupOfFile(string fileName)
         {
             if (File.Exists(fileName))
@@ -61,7 +66,7 @@ namespace SIL.AlloGenService
                 File.Copy(fileName, backupName, true);
             }
         }
-
+#endif
         public string CreateBackupFileName(string fileName)
         {
             string backupName = "";
@@ -79,8 +84,8 @@ namespace SIL.AlloGenService
             }
             return backupName;
         }
-
-        AllomorphGenerators Migrate01to02(AllomorphGenerators oldDatabase)
+#if Marks
+		AllomorphGenerators Migrate01to02(AllomorphGenerators oldDatabase)
         {
             AllomorphGenerators newDatabase = new AllomorphGenerators();
             newDatabase.DbVersion = 2;
@@ -132,6 +137,6 @@ namespace SIL.AlloGenService
             }
             return newDatabase;
         }
-
-    }
+#endif
+	}
 }
