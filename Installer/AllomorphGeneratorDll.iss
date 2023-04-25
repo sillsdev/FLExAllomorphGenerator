@@ -40,6 +40,7 @@ Source: "..\AlloGenService\bin\x64\Release\AlloGenService.dll"; DestDir: "{app}"
 Source: "..\AlloGenService\bin\x64\Release\AlloGenService.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\AllomorphGeneratorDll\bin\x64\Release\AllomorphGenerator.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\AllomorphGeneratorDll\bin\x64\Release\AllomorphGenerator.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AlloGenService\AlloGenDataMigrations\PcPatrToLingTree.xsl"; DestDir: "{app}\AlloGenDataMigrations\DBVersion3To4.xslt"; Flags: ignoreversion
 Source: "..\AllomorphGeneratorDll\doc\AlloGenUserDocumentation.pdf"; DestDir: "{app}\doc"; Flags: ignoreversion; AfterInstall: SetLineInFile('C:\Program Files\SIL\FieldWorks 9\Language Explorer\Configuration\UtilityCatalogInclude.xml', '<utility assemblyPath=''C:\Program Files\SIL\AllomorphGenerator\AllomorphGenerator.dll'' class=''SIL.AllomorphGenerator.FLExUtility''/>');
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files

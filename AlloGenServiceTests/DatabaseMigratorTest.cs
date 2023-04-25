@@ -21,6 +21,24 @@ namespace SIL.AlloGenServiceTest
         string AlloGenProduced { get; set; }
         DatabaseMigrator migrator = new DatabaseMigrator();
 
+		[Test]
+		public void Migrate03to04Test()
+		{
+			AlloGenFile = Path.Combine(TestDataDir, "AlloGenVersion03.agf");
+			AlloGenExpected = Path.Combine(TestDataDir, "AlloGenVersion04.agf");
+			migrator.LatestVersion = 4;
+			Assert.AreEqual(4, migrator.LatestVersion);
+			string newAlloGen = migrator.Migrate(AlloGenFile);
+			using (var streamReader = new StreamReader(AlloGenExpected, Encoding.UTF8))
+			{
+				AlloGenExpected = streamReader.ReadToEnd().Replace("\r", "");
+			}
+			using (var streamReader = new StreamReader(newAlloGen, Encoding.UTF8))
+			{
+				AlloGenProduced = streamReader.ReadToEnd().Replace("\r", "");
+			}
+			Assert.AreEqual(AlloGenExpected, AlloGenProduced);
+		}
 #if Marks
         [Test]
         public void Migrate01to02Test()
@@ -96,7 +114,7 @@ namespace SIL.AlloGenServiceTest
             Assert.AreEqual(opRef, replace.Guid);
         }
 #endif
-        [Test]
+		[Test]
         public void CreateFileNameTest()
         {
             string fileName = Path.Combine(TestDataDir, "AlloGenVersion01.agf");

@@ -9,4 +9,4 @@ copy "..\AlloGenService\bin\x64\Debug\AlloGenService.pdb" "c:\fwrepo\fw\Output\D
 echo Copying done
 REM copy "C:\fwrepo\fw\DistFiles\Language Explorer\Configuration\UtilityCatalogInclude.xml" "C:\fwrepo\fw\DistFiles\Language Explorer\Configuration\UtilityCatalogIncludeOrig.xml"
 REM copy UtilityCatalogLine.txt >> "C:\fwrepo\fw\DistFiles\Language Explorer\Configuration\UtilityCatalogInclude.xml"
-
+xcopy /i /y "..\AlloGenService\AlloGenDataMigrations" "c:\fwrepo\fw\Output\Debug\AlloGenDataMigrations"

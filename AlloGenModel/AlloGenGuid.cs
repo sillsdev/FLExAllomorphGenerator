@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 SIL International
+﻿// Copyright (c) 2022-2023 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
@@ -15,7 +15,6 @@ namespace SIL.AlloGenModel
     {
         [XmlAttribute("guid")]
         public string Guid { get; set; } = "";
-        [XmlAttribute("name")]
         public string Name { get; set; } = "";
 
         override public string ToString()

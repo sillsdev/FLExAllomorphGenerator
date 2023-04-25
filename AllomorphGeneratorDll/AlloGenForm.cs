@@ -883,8 +883,13 @@ namespace SIL.AllomorphGenerator
         private void LoadMigrateGetOperations()
         {
             if (!File.Exists(OperationsFile))
-                return;
-            Provider.LoadDataFromFile(OperationsFile);
+			{
+				MessageBox.Show("Operations file not found!", "Load error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+#if Marks
+			Provider.LoadDataFromFile(OperationsFile);
             AlloGens = Provider.AlloGens;
             if (AlloGens != null)
             {
@@ -892,9 +897,19 @@ namespace SIL.AllomorphGenerator
                 Operations = AlloGens.Operations;
                 WritingSystems = AlloGens.WritingSystems;
             }
-        }
+#else
+			string newFile = Migrator.Migrate(OperationsFile);
+			Provider.LoadDataFromFile(newFile);
+			AlloGens = Provider.AlloGens;
+			if (AlloGens != null)
+			{
+				Operations = AlloGens.Operations;
+				WritingSystems = AlloGens.WritingSystems;
+			}
+#endif
+		}
 
-        private void OnFormClosing(object sender, EventArgs e)
+		private void OnFormClosing(object sender, EventArgs e)
         {
             SaveAnyChanges();
             SaveRegistryInfo();
