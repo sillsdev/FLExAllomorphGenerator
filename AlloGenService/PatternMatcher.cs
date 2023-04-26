@@ -127,7 +127,7 @@ namespace SIL.AlloGenService
             foreach (ILexEntry e in lexEntries)
             {
                 ITsString useToMatch = GetToMatch(e);
-                if (useToMatch != null && fwMatcher.Matches(useToMatch))
+                if (useToMatch != null && useToMatch.Length > 0 && fwMatcher.Matches(useToMatch))
                 {
                     lexEntriesPerMatchString.Add(e);
                 }
@@ -135,7 +135,7 @@ namespace SIL.AlloGenService
             return lexEntriesPerMatchString;
         }
 
-        private ITsString GetToMatch(ILexEntry e)
+        public ITsString GetToMatch(ILexEntry e)
         {
             ITsString useToMatch = null;
             if (ApplyTo == null || ApplyTo.Id == LexEntryTags.kflidCitationForm)

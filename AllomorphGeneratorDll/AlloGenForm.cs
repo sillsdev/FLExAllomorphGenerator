@@ -250,7 +250,8 @@ namespace SIL.AllomorphGenerator
                         ws.Handle = def.Handle;
                         ws.Font = new Font(def.DefaultFontName, fontSize);
                         ws.FontInfo = styleInfo.FontInfoForWs(def.Handle);
-                        ws.Color = ws.FontInfo.FontColor.Value;
+						if (ws.FontInfo.FontColor.ValueIsSet)
+							ws.Color = ws.FontInfo.FontColor.Value;
                         SetFontAndStyleInfoForDefaultCitationForm(ws);
                         WritingSystems.Add(ws);
                     }
@@ -1020,8 +1021,9 @@ namespace SIL.AllomorphGenerator
                     lvItem.SubItems.Add(sDialect);
                 }
                 lvItem.SubItems.Add(replace.Description);
-                lvItem.SubItems[9].ForeColor = Color.Purple;
-                lvEditReplaceOps.Items.Add(lvItem);
+				int descriptionIndex = lvItem.SubItems.Count - 1;
+				lvItem.SubItems[descriptionIndex].ForeColor = Color.Purple;
+				lvEditReplaceOps.Items.Add(lvItem);
             }
             if (AlloGens.ReplaceOperations.Count > 0)
             {
@@ -1496,11 +1498,11 @@ namespace SIL.AllomorphGenerator
                         {
                             continue;
                         }
-                        string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
-                        List<string> forms = new List<string>();
+						string formToUse = patMatcher.GetToMatch(entry).Text;
+						List<string> forms = new List<string>();
                         foreach (WritingSystem ws in WritingSystems)
                         {
-                            forms.Add(GetPreviewForm(replacer, citationForm, ws));
+                            forms.Add(GetPreviewForm(replacer, formToUse, ws));
                         }
                         IMoStemAllomorph form = alloCreator.CreateAllomorph(entry, forms);
                         if (op.Action.StemName.Guid.Length > 0)
@@ -1647,8 +1649,8 @@ namespace SIL.AllomorphGenerator
                     lvItem = new ListViewItem("");
                     lvItem.Tag = entry;
                     lvItem.UseItemStyleForSubItems = false;
-                    string citationForm = entry.CitationForm.VernacularDefaultWritingSystem.Text;
-                    lvItem.SubItems.Add(citationForm);
+					string formToUse = patMatcher.GetToMatch(entry).Text;
+                    lvItem.SubItems.Add(formToUse);
                     if (matchingEntriesWithAllos.Contains(entry))
                     {
                         lvItem.SubItems[1].BackColor = Color.Yellow;
@@ -1656,7 +1658,7 @@ namespace SIL.AllomorphGenerator
                     int i = 2;
                     foreach (WritingSystem ws in WritingSystems)
                     {
-                        string previewForm = GetPreviewForm(replacer, citationForm, ws);
+                        string previewForm = GetPreviewForm(replacer, formToUse, ws);
                         lvItem.SubItems.Add(previewForm);
                         lvItem.SubItems[i].Font = ws.Font;
                         lvItem.SubItems[i].ForeColor = ws.Color;
@@ -1694,9 +1696,9 @@ namespace SIL.AllomorphGenerator
             dictNonChosen.Add(op, uncheckedEntries);
         }
 
-        private string GetPreviewForm(Replacer replacer, string citationForm, WritingSystem ws)
+        private string GetPreviewForm(Replacer replacer, string formToUse, WritingSystem ws)
         {
-            string previewForm = replacer.ApplyReplaceOpToOneWS(citationForm, ws.Name);
+            string previewForm = replacer.ApplyReplaceOpToOneWS(formToUse, ws.Name);
             return previewForm;
         }
 
@@ -1930,6 +1932,7 @@ namespace SIL.AllomorphGenerator
             ComboBox cb = (ComboBox)sender;
             AlloGens.ApplyTo = cb.SelectedIndex;
             applyToField = ((ApplyTo)cb.SelectedItem).Name;
-            SetUpPreviewCheckedListBox();        }
+            SetUpPreviewCheckedListBox();
+		}
     }
 }
