@@ -24,8 +24,7 @@ namespace SIL.AlloGenModel
             else
             {
                 AlloGenBase agb = (AlloGenBase)obj;
-                return (Active == agb.Active)
-                    ;
+                return (Active == agb.Active);
             }
         }
 

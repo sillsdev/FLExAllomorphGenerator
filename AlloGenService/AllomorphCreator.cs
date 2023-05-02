@@ -40,7 +40,9 @@ namespace SIL.AlloGenService
         {
             foreach (AlloGenModel.Environment env in envs)
             {
-                 var phEnv = Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(new Guid(env.Guid));
+                var phEnv = Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(
+                    new Guid(env.Guid)
+                );
                 if (phEnv != null)
                 {
                     form.AllomorphEnvironments.Add((IPhEnvironment)phEnv);
@@ -50,7 +52,9 @@ namespace SIL.AlloGenService
 
         public void AddStemName(IMoStemAllomorph form, string stemNameGuid)
         {
-            var stemName = Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(new Guid(stemNameGuid));
+            var stemName = Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(
+                new Guid(stemNameGuid)
+            );
             if (stemName != null)
             {
                 form.StemNameRA = (IMoStemName)stemName;

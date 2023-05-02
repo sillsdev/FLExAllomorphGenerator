@@ -17,10 +17,13 @@ namespace SIL.AlloGenModel
     {
         public string Name { get; set; } = "";
         public int Handle { get; set; } = -1;
+
         [XmlIgnore]
         public Font Font { get; set; }
+
         [XmlIgnore]
         public FontInfo FontInfo { get; set; }
+
         [XmlIgnore]
         public Color Color { get; set; }
 
@@ -50,8 +53,7 @@ namespace SIL.AlloGenModel
                     && (Handle == ws.Handle)
                     && (Font == ws.Font)
                     && (FontInfo == ws.FontInfo)
-                    && (Color == ws.Color)
-                    ;
+                    && (Color == ws.Color);
             }
         }
 

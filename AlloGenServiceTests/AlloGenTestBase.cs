@@ -33,6 +33,5 @@ namespace SIL.AlloGenServiceTest
             TestDataDir = Path.Combine(basedir, "AlloGenServiceTests", "TestData");
             AlloGenExpected = Path.Combine(TestDataDir, ExpectedFileName);
         }
-
     }
 }

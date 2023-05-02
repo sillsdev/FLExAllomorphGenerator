@@ -34,13 +34,12 @@ namespace SIL.AlloGenServiceTest
             TestDataDir = Path.Combine(basedir, "AlloGenServiceTests", "TestData");
             AlloGenExpected = Path.Combine(TestDataDir, "AlloGenReplace.agf");
             WritingSystem ws = new WritingSystem();
-
         }
 
         [Test]
         public void ReplaceTest()
         {
-            provider.LoadDataFromFile(AlloGenExpected); 
+            provider.LoadDataFromFile(AlloGenExpected);
             AllomorphGenerators allomorphGenerators = provider.AlloGens;
             Assert.NotNull(allomorphGenerators);
             Operation operation = allomorphGenerators.Operations[0];

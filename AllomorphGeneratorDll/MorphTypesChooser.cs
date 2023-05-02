@@ -22,15 +22,15 @@ namespace SIL.AllomorphGenerator
         public List<MorphType> MorphTypes { get; set; }
         public List<MorphType> SelectedMorphTypes { get; set; }
         List<string> morphTypesToUseGuids = new List<string>()
-                {
-                    "d7f713e4-e8cf-11d3-9764-00c04f186933",
-                    "d7f713e7-e8cf-11d3-9764-00c04f186933",
-                    "0cc8c35a-cee9-434d-be58-5d29130fba5b",
-                    "56db04bf-3d58-44cc-b292-4c8aa68538f4",
-                    "a23b6faa-1052-4f4d-984b-4b338bdaf95f",
-                    "d7f713e5-e8cf-11d3-9764-00c04f186933",
-                    "d7f713e8-e8cf-11d3-9764-00c04f186933",
-                };
+        {
+            "d7f713e4-e8cf-11d3-9764-00c04f186933",
+            "d7f713e7-e8cf-11d3-9764-00c04f186933",
+            "0cc8c35a-cee9-434d-be58-5d29130fba5b",
+            "56db04bf-3d58-44cc-b292-4c8aa68538f4",
+            "a23b6faa-1052-4f4d-984b-4b338bdaf95f",
+            "d7f713e5-e8cf-11d3-9764-00c04f186933",
+            "d7f713e8-e8cf-11d3-9764-00c04f186933",
+        };
 
         public MorphTypesChooser(LcmCache cache)
         {
@@ -45,7 +45,11 @@ namespace SIL.AllomorphGenerator
 
         void CreateMorphTypes()
         {
-            ILcmOwningSequence<ICmPossibility> allTypes = Cache.LangProject.LexDbOA.MorphTypesOA.PossibilitiesOS;
+            ILcmOwningSequence<ICmPossibility> allTypes = Cache
+                .LangProject
+                .LexDbOA
+                .MorphTypesOA
+                .PossibilitiesOS;
             foreach (ICmPossibility mt in allTypes)
             {
                 if (morphTypesToUseGuids.Contains(mt.Guid.ToString()))
@@ -88,7 +92,7 @@ namespace SIL.AllomorphGenerator
         private void btnOK_Click(object sender, EventArgs e)
         {
             SelectedMorphTypes.Clear();
-            for (int i =0; i < clbMorphTypes.Items.Count; i++)
+            for (int i = 0; i < clbMorphTypes.Items.Count; i++)
             {
                 if (clbMorphTypes.GetItemChecked(i))
                 {

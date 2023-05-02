@@ -89,7 +89,8 @@ namespace SIL.AllomorphGenerator
         Font fontForDefaultCitationForm;
         FontInfo fontInfoForDefaultCitationForm;
         Color colorForDefaultCitationForm;
-        Dictionary<Operation, List<ILexEntry>> dictNonChosen = new Dictionary<Operation, List<ILexEntry>>();
+        Dictionary<Operation, List<ILexEntry>> dictNonChosen =
+            new Dictionary<Operation, List<ILexEntry>>();
         Dictionary<Operation, bool> dictOperationActiveState = new Dictionary<Operation, bool>();
 
         private ListBox currentListBox;
@@ -236,11 +237,16 @@ namespace SIL.AllomorphGenerator
             if (Cache != null)
             {
                 var styles = Cache.LangProject.StylesOC.ToDictionary(style => style.Name);
-                IStStyle normal = Cache.LangProject.StylesOC.FirstOrDefault(style => style.Name == "Normal");
+                IStStyle normal = Cache.LangProject.StylesOC.FirstOrDefault(
+                    style => style.Name == "Normal"
+                );
                 if (normal != null)
                 {
-                    SIL.FieldWorks.FwCoreDlgControls.StyleInfo styleInfo = new SIL.FieldWorks.FwCoreDlgControls.StyleInfo(normal);
-                    IList<CoreWritingSystemDefinition> vernWses = Cache.LangProject.CurrentVernacularWritingSystems;
+                    SIL.FieldWorks.FwCoreDlgControls.StyleInfo styleInfo =
+                        new SIL.FieldWorks.FwCoreDlgControls.StyleInfo(normal);
+                    IList<CoreWritingSystemDefinition> vernWses = Cache
+                        .LangProject
+                        .CurrentVernacularWritingSystems;
                     WritingSystems.Clear();
                     foreach (CoreWritingSystemDefinition def in vernWses)
                     {
@@ -250,8 +256,8 @@ namespace SIL.AllomorphGenerator
                         ws.Handle = def.Handle;
                         ws.Font = new Font(def.DefaultFontName, fontSize);
                         ws.FontInfo = styleInfo.FontInfoForWs(def.Handle);
-						if (ws.FontInfo.FontColor.ValueIsSet)
-							ws.Color = ws.FontInfo.FontColor.Value;
+                        if (ws.FontInfo.FontColor.ValueIsSet)
+                            ws.Color = ws.FontInfo.FontColor.Value;
                         SetFontAndStyleInfoForDefaultCitationForm(ws);
                         WritingSystems.Add(ws);
                     }
@@ -758,8 +764,13 @@ namespace SIL.AllomorphGenerator
 
         private void CheckOnRemovingSelectedReplaceOpFromMasterList(string prompt, Replace replace)
         {
-            DialogResult result = MessageBox.Show(prompt, "Delete Replace Op", MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            DialogResult result = MessageBox.Show(
+                prompt,
+                "Delete Replace Op",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2
+            );
             if (result == DialogResult.Yes)
             {
                 AlloGens.DeleteReplaceOp(replace);
@@ -824,8 +835,10 @@ namespace SIL.AllomorphGenerator
             LastDatabase = (string)regkey.GetValue(m_strLastDatabase);
             OperationsFile = LastOperationsFile = (string)regkey.GetValue(m_strLastOperationsFile);
             RetrievedLastOperation = LastOperation = (int)regkey.GetValue(m_strLastOperation, 0);
-            RetrievedLastApplyOperation = LastApplyOperation = (int)regkey.GetValue(m_strLastApplyOperation, 0);
-            RetrievedLastEditReplaceOps = LastEditReplaceOps = (int)regkey.GetValue(m_strLastEditReplaceOps, 0);
+            RetrievedLastApplyOperation = LastApplyOperation = (int)
+                regkey.GetValue(m_strLastApplyOperation, 0);
+            RetrievedLastEditReplaceOps = LastEditReplaceOps = (int)
+                regkey.GetValue(m_strLastEditReplaceOps, 0);
             LastTab = (int)regkey.GetValue(m_strLastTab, 0);
         }
 
@@ -857,8 +870,8 @@ namespace SIL.AllomorphGenerator
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Allomorph Generator Operations File (*.agf)|*.agf|" +
-            "All Files (*.*)|*.*";
+            dlg.Filter =
+                "Allomorph Generator Operations File (*.agf)|*.agf|" + "All Files (*.*)|*.*";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 OperationsFile = dlg.FileName;
@@ -884,13 +897,18 @@ namespace SIL.AllomorphGenerator
         private void LoadMigrateGetOperations()
         {
             if (!File.Exists(OperationsFile))
-			{
-				MessageBox.Show("Operations file not found!", "Load error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
+            {
+                MessageBox.Show(
+                    "Operations file not found!",
+                    "Load error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
 
 #if Marks
-			Provider.LoadDataFromFile(OperationsFile);
+            Provider.LoadDataFromFile(OperationsFile);
             AlloGens = Provider.AlloGens;
             if (AlloGens != null)
             {
@@ -899,18 +917,18 @@ namespace SIL.AllomorphGenerator
                 WritingSystems = AlloGens.WritingSystems;
             }
 #else
-			string newFile = Migrator.Migrate(OperationsFile);
-			Provider.LoadDataFromFile(newFile);
-			AlloGens = Provider.AlloGens;
-			if (AlloGens != null)
-			{
-				Operations = AlloGens.Operations;
-				WritingSystems = AlloGens.WritingSystems;
-			}
+            string newFile = Migrator.Migrate(OperationsFile);
+            Provider.LoadDataFromFile(newFile);
+            AlloGens = Provider.AlloGens;
+            if (AlloGens != null)
+            {
+                Operations = AlloGens.Operations;
+                WritingSystems = AlloGens.WritingSystems;
+            }
 #endif
-		}
+        }
 
-		private void OnFormClosing(object sender, EventArgs e)
+        private void OnFormClosing(object sender, EventArgs e)
         {
             SaveAnyChanges();
             SaveRegistryInfo();
@@ -920,8 +938,12 @@ namespace SIL.AllomorphGenerator
         {
             if (ChangesMade)
             {
-                DialogResult res = MessageBox.Show("Changes have been made.  Do you want to save them?", "Changes made", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+                DialogResult res = MessageBox.Show(
+                    "Changes have been made.  Do you want to save them?",
+                    "Changes made",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
                 if (res == DialogResult.Yes)
                 {
                     Provider.AlloGens = AlloGens;
@@ -937,6 +959,7 @@ namespace SIL.AllomorphGenerator
             if (WindowState == FormWindowState.Normal)
                 RectNormal = DesktopBounds;
         }
+
         protected override void OnResize(EventArgs ea)
         {
             base.OnResize(ea);
@@ -984,7 +1007,7 @@ namespace SIL.AllomorphGenerator
                 }
                 lvOperations.Items.Add(lvItem);
             }
-            if(Operations.Count > 0)
+            if (Operations.Count > 0)
             {
                 // select last used operation, if any
                 if (LastApplyOperation < 0 || LastApplyOperation >= Operations.Count)
@@ -1021,14 +1044,16 @@ namespace SIL.AllomorphGenerator
                     lvItem.SubItems.Add(sDialect);
                 }
                 lvItem.SubItems.Add(replace.Description);
-				int descriptionIndex = lvItem.SubItems.Count - 1;
-				lvItem.SubItems[descriptionIndex].ForeColor = Color.Purple;
-				lvEditReplaceOps.Items.Add(lvItem);
+                int descriptionIndex = lvItem.SubItems.Count - 1;
+                lvItem.SubItems[descriptionIndex].ForeColor = Color.Purple;
+                lvEditReplaceOps.Items.Add(lvItem);
             }
             if (AlloGens.ReplaceOperations.Count > 0)
             {
                 // select last used operation, if any
-                if (LastEditReplaceOps < 0 || LastEditReplaceOps >= AlloGens.ReplaceOperations.Count)
+                if (
+                    LastEditReplaceOps < 0 || LastEditReplaceOps >= AlloGens.ReplaceOperations.Count
+                )
                     LastEditReplaceOps = 0;
                 lvEditReplaceOps.Items[LastEditReplaceOps].Selected = true;
                 lvEditReplaceOps.Select();
@@ -1113,8 +1138,10 @@ namespace SIL.AllomorphGenerator
         {
             if (Cache != null)
             {
-                var allPoses = Cache.LanguageProject.PartsOfSpeechOA.ReallyReallyAllPossibilities
-                    .OrderBy(pos => pos.Name.BestAnalysisAlternative.Text);
+                var allPoses =
+                    Cache.LanguageProject.PartsOfSpeechOA.ReallyReallyAllPossibilities.OrderBy(
+                        pos => pos.Name.BestAnalysisAlternative.Text
+                    );
 
                 CategoryChooser chooser = new CategoryChooser();
                 foreach (ICmPossibility pos in allPoses)
@@ -1128,7 +1155,9 @@ namespace SIL.AllomorphGenerator
                 Category = Pattern.Category;
                 if (Category.Name != null)
                 {
-                    var catFound = chooser.Categories.FirstOrDefault(cat => cat.Name == Category.Name);
+                    var catFound = chooser.Categories.FirstOrDefault(
+                        cat => cat.Name == Category.Name
+                    );
                     int index = chooser.Categories.IndexOf(catFound);
                     if (index > -1)
                         chooser.SelectCategory(index);
@@ -1161,7 +1190,6 @@ namespace SIL.AllomorphGenerator
                     tbCategory.Text = Category.Name;
                     MarkAsChanged(true);
                 }
-
             }
         }
 
@@ -1176,11 +1204,19 @@ namespace SIL.AllomorphGenerator
             IPartOfSpeech pos = GetPartOfSpeechToUse(Pattern.Category.Guid);
             if (pos == null)
             {
-                MessageBox.Show("The category '" + Pattern.Category.Name + "' was not found in the FLEx database");
+                MessageBox.Show(
+                    "The category '"
+                        + Pattern.Category.Name
+                        + "' was not found in the FLEx database"
+                );
                 return;
             }
             StemNameChooser chooser = new StemNameChooser();
-            foreach (IMoStemName msn in pos.AllStemNames.OrderBy(sn => sn.Name.BestAnalysisAlternative.Text))
+            foreach (
+                IMoStemName msn in pos.AllStemNames.OrderBy(
+                    sn => sn.Name.BestAnalysisAlternative.Text
+                )
+            )
             {
                 StemName stemName = new StemName();
                 stemName.Name = msn.Name.BestAnalysisAlternative.Text;
@@ -1218,9 +1254,11 @@ namespace SIL.AllomorphGenerator
 
         private IPartOfSpeech GetPartOfSpeechToUse(string poaGuid)
         {
-            IPartOfSpeech pos = (IPartOfSpeech)Cache.LangProject.PartsOfSpeechOA.ReallyReallyAllPossibilities.FirstOrDefault(p => p.Guid.ToString() == poaGuid);
+            IPartOfSpeech pos = (IPartOfSpeech)
+                Cache.LangProject.PartsOfSpeechOA.ReallyReallyAllPossibilities.FirstOrDefault(
+                    p => p.Guid.ToString() == poaGuid
+                );
             return pos;
-
         }
 
         private void btnEnvironments_Click(object sender, EventArgs e)
@@ -1340,8 +1378,8 @@ namespace SIL.AllomorphGenerator
         {
             SaveAnyChanges();
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter = "Allomorph Generator Operations File (*.agf)|*.agf|" +
-            "All Files (*.*)|*.*";
+            dlg.Filter =
+                "Allomorph Generator Operations File (*.agf)|*.agf|" + "All Files (*.*)|*.*";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 OperationsFile = dlg.FileName;
@@ -1409,20 +1447,29 @@ namespace SIL.AllomorphGenerator
             return basedir;
         }
 
-        private static void DetermineIndexOfBinInExecutablesPath(out string rootdir, out int indexOfBinInPath)
+        private static void DetermineIndexOfBinInExecutablesPath(
+            out string rootdir,
+            out int indexOfBinInPath
+        )
         {
             Uri uriBase = new Uri(Assembly.GetExecutingAssembly().CodeBase);
             rootdir = Path.GetDirectoryName(Uri.UnescapeDataString(uriBase.AbsolutePath));
             indexOfBinInPath = rootdir.LastIndexOf("bin");
         }
 
-
         private void btnMatch_Click(object sender, EventArgs e)
         {
             IVwStylesheet stylesheet = FontHeightAdjuster.StyleSheetFromPropertyTable(PropTable);
 
-            using (SimpleMatchDlgAlloGen dlg = new SimpleMatchDlgAlloGen(Cache.WritingSystemFactory,
-                PropTable.GetValue<IHelpTopicProvider>("HelpTopicProvider"), Cache.DefaultVernWs, stylesheet, Cache))
+            using (
+                SimpleMatchDlgAlloGen dlg = new SimpleMatchDlgAlloGen(
+                    Cache.WritingSystemFactory,
+                    PropTable.GetValue<IHelpTopicProvider>("HelpTopicProvider"),
+                    Cache.DefaultVernWs,
+                    stylesheet,
+                    Cache
+                )
+            )
             {
                 Matcher agMatcher = Pattern.Matcher;
                 dlg.SetDlgValues(agMatcher, stylesheet);
@@ -1477,8 +1524,12 @@ namespace SIL.AllomorphGenerator
                 }
                 PatternMatcher patMatcher = new PatternMatcher(Cache, AlloGens);
                 patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
-                IList<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern).ToList();
-                IList<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(Operation, Pattern).ToList();
+                IList<ILexEntry> matchingEntries = patMatcher
+                    .MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern)
+                    .ToList();
+                IList<ILexEntry> matchingEntriesWithAllos = patMatcher
+                    .MatchEntriesWithAllosPerPattern(Operation, Pattern)
+                    .ToList();
                 foreach (ILexEntry entry in matchingEntriesWithAllos)
                 {
                     matchingEntries.Add(entry);
@@ -1490,31 +1541,36 @@ namespace SIL.AllomorphGenerator
                 GetRepaceOpsToUse(replaceOpsToUse, op);
                 Replacer replacer = new Replacer(replaceOpsToUse);
                 string undoRedoPrompt = " Allomorph Generation for '" + op.Name;
-                UndoableUnitOfWorkHelper.Do("Undo" + undoRedoPrompt, "Redo" + undoRedoPrompt, Cache.ActionHandlerAccessor, () =>
-                {
-                    foreach (ILexEntry entry in matchingEntries)
+                UndoableUnitOfWorkHelper.Do(
+                    "Undo" + undoRedoPrompt,
+                    "Redo" + undoRedoPrompt,
+                    Cache.ActionHandlerAccessor,
+                    () =>
                     {
-                        if (nonChosenEntries.Contains(entry))
+                        foreach (ILexEntry entry in matchingEntries)
                         {
-                            continue;
-                        }
-						string formToUse = patMatcher.GetToMatch(entry).Text;
-						List<string> forms = new List<string>();
-                        foreach (WritingSystem ws in WritingSystems)
-                        {
-                            forms.Add(GetPreviewForm(replacer, formToUse, ws));
-                        }
-                        IMoStemAllomorph form = alloCreator.CreateAllomorph(entry, forms);
-                        if (op.Action.StemName.Guid.Length > 0)
-                        {
-                            alloCreator.AddStemName(form, op.Action.StemName.Guid);
-                        }
-                        if (op.Action.Environments.Count > 0)
-                        {
-                            alloCreator.AddEnvironments(form, op.Action.Environments);
+                            if (nonChosenEntries.Contains(entry))
+                            {
+                                continue;
+                            }
+                            string formToUse = patMatcher.GetToMatch(entry).Text;
+                            List<string> forms = new List<string>();
+                            foreach (WritingSystem ws in WritingSystems)
+                            {
+                                forms.Add(GetPreviewForm(replacer, formToUse, ws));
+                            }
+                            IMoStemAllomorph form = alloCreator.CreateAllomorph(entry, forms);
+                            if (op.Action.StemName.Guid.Length > 0)
+                            {
+                                alloCreator.AddStemName(form, op.Action.StemName.Guid);
+                            }
+                            if (op.Action.Environments.Count > 0)
+                            {
+                                alloCreator.AddEnvironments(form, op.Action.Environments);
+                            }
                         }
                     }
-                });
+                );
             }
             ShowPreview();
             this.Cursor = Cursors.Arrow;
@@ -1542,19 +1598,24 @@ namespace SIL.AllomorphGenerator
                 string stemNameGuid = op.Action.StemName.Guid;
                 if (stemNameGuid.Length > 0)
                 {
-                    var stemName = Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(new Guid(stemNameGuid));
+                    var stemName =
+                        Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(
+                            new Guid(stemNameGuid)
+                        );
                     if (stemName == null)
                     {
                         ReportMissingFLExItem("The stem name '", op.Action.StemName.Name, op.Name);
                         allIsGood = false;
                     }
-
                 }
                 if (op.Action.Environments.Count > 0)
                 {
                     foreach (AlloGenModel.Environment env in op.Action.Environments)
                     {
-                        var phEnv = Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(new Guid(env.Guid));
+                        var phEnv =
+                            Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(
+                                new Guid(env.Guid)
+                            );
                         if (phEnv == null)
                         {
                             ReportMissingFLExItem("The environment '", env.Name, op.Name);
@@ -1562,12 +1623,15 @@ namespace SIL.AllomorphGenerator
                         }
                     }
                 }
-
             }
             return allIsGood;
         }
 
-        private void ReportMissingFLExItem(string missingItem, string itemName, string operationName)
+        private void ReportMissingFLExItem(
+            string missingItem,
+            string itemName,
+            string operationName
+        )
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(missingItem);
@@ -1610,7 +1674,6 @@ namespace SIL.AllomorphGenerator
             string sCount = "0";
             if (lvOperations.SelectedItems.Count == 0)
             {
-
                 return;
             }
             this.Cursor = Cursors.WaitCursor;
@@ -1623,17 +1686,29 @@ namespace SIL.AllomorphGenerator
             {
                 PatternMatcher patMatcher = new PatternMatcher(Cache, AlloGens);
                 patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
-                IList<ILexEntry> matchingEntries = patMatcher.MatchPattern(patMatcher.EntriesWithNoAllomorphs, Operation.Pattern).ToList();
-                IList<ILexEntry> matchingEntriesWithAllos = patMatcher.MatchEntriesWithAllosPerPattern(Operation, Pattern).ToList();
+                IList<ILexEntry> matchingEntries = patMatcher
+                    .MatchPattern(patMatcher.EntriesWithNoAllomorphs, Operation.Pattern)
+                    .ToList();
+                IList<ILexEntry> matchingEntriesWithAllos = patMatcher
+                    .MatchEntriesWithAllosPerPattern(Operation, Pattern)
+                    .ToList();
                 foreach (ILexEntry entry in matchingEntriesWithAllos)
                 {
                     matchingEntries.Add(entry);
                 }
                 if (matchingEntries == null)
                 {
-                    string errMsg = string.Format(FwCoreDlgs.kstidErrorInRegEx, patMatcher.ErrorMessage);
-                    MessageBox.Show(this, errMsg, FwCoreDlgs.kstidErrorInRegExHeader,
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string errMsg = string.Format(
+                        FwCoreDlgs.kstidErrorInRegEx,
+                        patMatcher.ErrorMessage
+                    );
+                    MessageBox.Show(
+                        this,
+                        errMsg,
+                        FwCoreDlgs.kstidErrorInRegExHeader,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
                     return;
                 }
                 List<ILexEntry> nonChosenEntries = new List<ILexEntry>();
@@ -1649,7 +1724,7 @@ namespace SIL.AllomorphGenerator
                     lvItem = new ListViewItem("");
                     lvItem.Tag = entry;
                     lvItem.UseItemStyleForSubItems = false;
-					string formToUse = patMatcher.GetToMatch(entry).Text;
+                    string formToUse = patMatcher.GetToMatch(entry).Text;
                     lvItem.SubItems.Add(formToUse);
                     if (matchingEntriesWithAllos.Contains(entry))
                     {
@@ -1722,7 +1797,7 @@ namespace SIL.AllomorphGenerator
             {
                 ListView lvSender = (ListView)sender;
                 Point ptLowerLeft = new Point(0, 10);
-                ptLowerLeft =lvSender.PointToScreen(ptLowerLeft);
+                ptLowerLeft = lvSender.PointToScreen(ptLowerLeft);
                 previewCheckBoxContextMenu.Show(ptLowerLeft);
                 return;
             }
@@ -1839,7 +1914,9 @@ namespace SIL.AllomorphGenerator
 
         private StringBuilder BuildDeleteReplaceOpMessage(Replace replace)
         {
-            List<Operation> operationsContainingReplaceOp = AlloGens.FindOperationsUsedByReplaceOp(replace);
+            List<Operation> operationsContainingReplaceOp = AlloGens.FindOperationsUsedByReplaceOp(
+                replace
+            );
             StringBuilder sb = new StringBuilder();
             sb.Append("Replace operation '");
             sb.Append(replace.ToString());
@@ -1864,7 +1941,9 @@ namespace SIL.AllomorphGenerator
 
         private StringBuilder BuildDeleteReplaceOpRefMessage(Replace replace)
         {
-            List<Operation> operationsContainingReplaceOp = AlloGens.FindOperationsUsedByReplaceOp(replace);
+            List<Operation> operationsContainingReplaceOp = AlloGens.FindOperationsUsedByReplaceOp(
+                replace
+            );
             StringBuilder sb = new StringBuilder();
             sb.Append("Replace operation '");
             sb.Append(replace.ToString());
@@ -1894,7 +1973,10 @@ namespace SIL.AllomorphGenerator
             {
                 ListViewItem lvItem = lvEditReplaceOps.SelectedItems[0];
                 LastEditReplaceOps = lvEditReplaceOps.Items.IndexOf(lvItem);
-                lbCountReplaceOps.Text = (LastEditReplaceOps + 1).ToString() + " / " + lvEditReplaceOps.Items.Count.ToString();
+                lbCountReplaceOps.Text =
+                    (LastEditReplaceOps + 1).ToString()
+                    + " / "
+                    + lvEditReplaceOps.Items.Count.ToString();
             }
         }
 
@@ -1904,7 +1986,8 @@ namespace SIL.AllomorphGenerator
             {
                 return;
             }
-            ListViewItem item = lvEditReplaceOps.SelectedItems[0]; ;
+            ListViewItem item = lvEditReplaceOps.SelectedItems[0];
+            ;
             Replace replace = (Replace)item.Tag;
             using (var dialog = new EditReplaceOpForm())
             {
@@ -1933,6 +2016,6 @@ namespace SIL.AllomorphGenerator
             AlloGens.ApplyTo = cb.SelectedIndex;
             applyToField = ((ApplyTo)cb.SelectedItem).Name;
             SetUpPreviewCheckedListBox();
-		}
+        }
     }
 }

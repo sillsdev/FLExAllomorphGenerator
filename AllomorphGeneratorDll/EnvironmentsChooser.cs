@@ -35,11 +35,20 @@ namespace SIL.AllomorphGenerator
 
         void CreateEnvironments()
         {
-            ILcmOwningSequence<IPhEnvironment> allEnvs = Cache.LangProject.PhonologicalDataOA.EnvironmentsOS;
+            ILcmOwningSequence<IPhEnvironment> allEnvs = Cache
+                .LangProject
+                .PhonologicalDataOA
+                .EnvironmentsOS;
             foreach (IPhEnvironment env in allEnvs)
             {
                 LCModel.DomainServices.ConstraintFailure failure;
-                if (env.CheckConstraints(PhEnvironmentTags.kflidStringRepresentation, false, out failure))
+                if (
+                    env.CheckConstraints(
+                        PhEnvironmentTags.kflidStringRepresentation,
+                        false,
+                        out failure
+                    )
+                )
                 {
                     AlloGenModel.Environment environ = new AlloGenModel.Environment();
                     environ.Guid = env.Guid.ToString();
@@ -80,11 +89,12 @@ namespace SIL.AllomorphGenerator
         private void btnOK_Click(object sender, EventArgs e)
         {
             SelectedEnvironments.Clear();
-            for (int i =0; i < clbEnvironments.Items.Count; i++)
+            for (int i = 0; i < clbEnvironments.Items.Count; i++)
             {
                 if (clbEnvironments.GetItemChecked(i))
                 {
-                    AlloGenModel.Environment mt = clbEnvironments.Items[i] as AlloGenModel.Environment;
+                    AlloGenModel.Environment mt =
+                        clbEnvironments.Items[i] as AlloGenModel.Environment;
                     SelectedEnvironments.Add(mt);
                 }
             }

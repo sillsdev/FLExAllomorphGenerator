@@ -48,14 +48,18 @@ public class ListViewColumnSorter : IComparer
     public int Compare(object x, object y)
     {
         int compareResult;
-        ListViewItem listviewX, listviewY;
+        ListViewItem listviewX,
+            listviewY;
 
         // Cast the objects to be compared to ListViewItem objects
         listviewX = (ListViewItem)x;
         listviewY = (ListViewItem)y;
 
         // Compare the two items
-        compareResult = ObjectCompare.Compare(listviewX.SubItems[ColumnToSort].Text, listviewY.SubItems[ColumnToSort].Text);
+        compareResult = ObjectCompare.Compare(
+            listviewX.SubItems[ColumnToSort].Text,
+            listviewY.SubItems[ColumnToSort].Text
+        );
 
         // Calculate correct return value based on object comparison
         if (OrderOfSort == SortOrder.Ascending)
@@ -80,14 +84,8 @@ public class ListViewColumnSorter : IComparer
     /// </summary>
     public int SortColumn
     {
-        set
-        {
-            ColumnToSort = value;
-        }
-        get
-        {
-            return ColumnToSort;
-        }
+        set { ColumnToSort = value; }
+        get { return ColumnToSort; }
     }
 
     /// <summary>
@@ -95,14 +93,7 @@ public class ListViewColumnSorter : IComparer
     /// </summary>
     public SortOrder Order
     {
-        set
-        {
-            OrderOfSort = value;
-        }
-        get
-        {
-            return OrderOfSort;
-        }
+        set { OrderOfSort = value; }
+        get { return OrderOfSort; }
     }
-
 }

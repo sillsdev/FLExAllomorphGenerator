@@ -71,7 +71,7 @@ namespace SIL.AllomorphGenerator
         private void btnOK_Click(object sender, EventArgs e)
         {
             SelectedReplaceOps.Clear();
-            for (int i =0; i < clbReplaceOps.Items.Count; i++)
+            for (int i = 0; i < clbReplaceOps.Items.Count; i++)
             {
                 if (clbReplaceOps.GetItemChecked(i))
                 {

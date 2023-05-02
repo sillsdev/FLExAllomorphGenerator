@@ -24,6 +24,7 @@ namespace SIL.AlloGenServiceTest
         protected string TestDataDir { get; set; }
         protected string FieldWorksTestFile { get; set; }
         protected LcmCache myCache { get; set; }
+
         // Following three needed to get cache
         protected ILcmUI m_ui;
         protected string m_projectsDirectory;
@@ -52,11 +53,16 @@ namespace SIL.AlloGenServiceTest
         protected void CreateWritingSystemList()
         {
             var styles = Cache.LangProject.StylesOC.ToDictionary(style => style.Name);
-            IStStyle normal = Cache.LangProject.StylesOC.FirstOrDefault(style => style.Name == "Normal");
+            IStStyle normal = Cache.LangProject.StylesOC.FirstOrDefault(
+                style => style.Name == "Normal"
+            );
             if (normal != null)
             {
-                SIL.FieldWorks.FwCoreDlgControls.StyleInfo styleInfo = new SIL.FieldWorks.FwCoreDlgControls.StyleInfo(normal);
-                IList<CoreWritingSystemDefinition> vernWses = Cache.LangProject.CurrentVernacularWritingSystems;
+                SIL.FieldWorks.FwCoreDlgControls.StyleInfo styleInfo =
+                    new SIL.FieldWorks.FwCoreDlgControls.StyleInfo(normal);
+                IList<CoreWritingSystemDefinition> vernWses = Cache
+                    .LangProject
+                    .CurrentVernacularWritingSystems;
                 foreach (CoreWritingSystemDefinition def in vernWses)
                 {
                     float fontSize = Math.Max(def.DefaultFontSize, 10);
@@ -83,8 +89,14 @@ namespace SIL.AlloGenServiceTest
 
             var projectId = new TestProjectId(BackendProviderType.kXML, FieldWorksTestFile);
             // following came from LcmCacheTests.cs
-            myCache = LcmCache.CreateCacheFromExistingData(projectId, "en", m_ui, m_lcmDirectories, new LcmSettings(),
-                new DummyProgressDlg());
+            myCache = LcmCache.CreateCacheFromExistingData(
+                projectId,
+                "en",
+                m_ui,
+                m_lcmDirectories,
+                new LcmSettings(),
+                new DummyProgressDlg()
+            );
 
             provider.LoadDataFromFile(AlloGenExpected);
             allomorphGenerators = provider.AlloGens;

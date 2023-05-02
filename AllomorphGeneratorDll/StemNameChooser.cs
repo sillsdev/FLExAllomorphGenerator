@@ -54,6 +54,5 @@ namespace SIL.AllomorphGenerator
         {
             SelectedStemName = (StemName)lBoxStemNames.SelectedItem;
         }
-
     }
 }

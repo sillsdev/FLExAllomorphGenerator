@@ -33,6 +33,5 @@ namespace SIL.AlloGenServiceTest
             fd = customFields.FirstOrDefault(fdw => fdw.Fd.Name == "SFMs");
             Assert.NotNull(fd);
         }
-
     }
 }

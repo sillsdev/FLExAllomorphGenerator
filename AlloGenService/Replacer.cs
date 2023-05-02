@@ -50,5 +50,4 @@ namespace SIL.AlloGenService
             return result;
         }
     }
-
 }

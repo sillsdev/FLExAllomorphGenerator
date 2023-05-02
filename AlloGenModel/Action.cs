@@ -61,8 +61,7 @@ namespace SIL.AlloGenModel
                 Action act = (Action)obj;
                 return (ReplaceOpRefs.SequenceEqual(act.ReplaceOpRefs))
                     && (Environments.SequenceEqual(act.Environments))
-                    && (StemName.Equals(act.StemName))
-                    ;
+                    && (StemName.Equals(act.StemName));
             }
         }
 

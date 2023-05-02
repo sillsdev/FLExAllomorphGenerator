@@ -24,7 +24,7 @@ namespace SIL.AlloGenService
 #if Marks
         public AllomorphGenerators Migrate(AllomorphGenerators oldDatabase, string file)
         {
-			AllomorphGenerators newDatabase = new AllomorphGenerators();
+            AllomorphGenerators newDatabase = new AllomorphGenerators();
             int version = oldDatabase.DbVersion;
             // special case since we did not add a db version until version 2
             if (oldDatabase.ReplaceOperations.Count == 0)
@@ -56,10 +56,10 @@ namespace SIL.AlloGenService
                 return newDatabase;
             else
                 return oldDatabase;
-		}
+        }
 #endif
 
-		void MakeBackupOfFile(string fileName)
+        void MakeBackupOfFile(string fileName)
         {
             if (File.Exists(fileName))
             {
@@ -86,82 +86,84 @@ namespace SIL.AlloGenService
             return backupName;
         }
 
-		public string Migrate(string fileName)
-		{
-			if (!File.Exists(fileName))
-			{
-				// effectively do nothing
-				return fileName;
-			}
-			int version = GetFileVersionNumber(fileName);
-			if (version < 0)
-				return fileName;
-			string newFileName = "";
-			bool didMigration = false;
-			while (version < LatestVersion)
-			{
-				MakeBackupOfFile(fileName);
-				switch (version)
-				{
-					case 3:
-						newFileName = ApplyTransform(fileName, "DBVersion3To4.xslt", "04");
-						didMigration = true;
-						break;
-					default:
-						Console.WriteLine("Migrator: version=" + version);
-						break;
-				}
-				version++;
-			}
-			if (didMigration)
-				return newFileName;
-			else
-				return fileName;
+        public string Migrate(string fileName)
+        {
+            if (!File.Exists(fileName))
+            {
+                // effectively do nothing
+                return fileName;
+            }
+            int version = GetFileVersionNumber(fileName);
+            if (version < 0)
+                return fileName;
+            string newFileName = "";
+            bool didMigration = false;
+            while (version < LatestVersion)
+            {
+                MakeBackupOfFile(fileName);
+                switch (version)
+                {
+                    case 3:
+                        newFileName = ApplyTransform(fileName, "DBVersion3To4.xslt", "04");
+                        didMigration = true;
+                        break;
+                    default:
+                        Console.WriteLine("Migrator: version=" + version);
+                        break;
+                }
+                version++;
+            }
+            if (didMigration)
+                return newFileName;
+            else
+                return fileName;
+        }
 
-		}
+        private string ApplyTransform(string fileName, string transform, string newVersion)
+        {
+            XPathDocument myXPathDoc = new XPathDocument(fileName);
+            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            String basedir = GetAppBaseDir();
+            string migrationStyleSheet = Path.Combine(basedir, "AlloGenDataMigrations", transform);
+            Console.WriteLine("migrationStyleSheet='" + migrationStyleSheet + "'");
 
-		private string ApplyTransform(string fileName, string transform, string newVersion)
-		{
-			XPathDocument myXPathDoc = new XPathDocument(fileName);
-			XslCompiledTransform myXslTrans = new XslCompiledTransform();
-			String basedir = GetAppBaseDir();
-			string migrationStyleSheet = Path.Combine(basedir, "AlloGenDataMigrations", transform);
-			Console.WriteLine("migrationStyleSheet='" + migrationStyleSheet + "'");
+            myXslTrans.Load(migrationStyleSheet);
+            string resultFile = Path.Combine(
+                Path.GetTempPath(),
+                String.Concat("AlloGenMigrationTo", newVersion, ".agf")
+            );
 
-			myXslTrans.Load(migrationStyleSheet);
-			string resultFile = Path.Combine(Path.GetTempPath(), String.Concat("AlloGenMigrationTo", newVersion, ".agf"));
+            XmlTextWriter myWriter = new XmlTextWriter(resultFile, null);
+            myXslTrans.Transform(myXPathDoc, null, myWriter);
+            myWriter.Close();
+            return resultFile;
+        }
 
-			XmlTextWriter myWriter = new XmlTextWriter(resultFile, null);
-			myXslTrans.Transform(myXPathDoc, null, myWriter);
-			myWriter.Close();
-			return resultFile;
-		}
+        private static string GetAppBaseDir()
+        {
+            Uri uriBase = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+            string rootdir = Path.GetDirectoryName(Uri.UnescapeDataString(uriBase.AbsolutePath));
+            return rootdir;
+        }
 
-		private static string GetAppBaseDir()
-		{
-			Uri uriBase = new Uri(Assembly.GetExecutingAssembly().CodeBase);
-			string rootdir = Path.GetDirectoryName(Uri.UnescapeDataString(uriBase.AbsolutePath));
-			return rootdir;
-		}
-
-		private int GetFileVersionNumber(string fileName)
-		{
-			if (!File.Exists(fileName))
-				return -1;
-			string contents = File.ReadAllText(fileName);
-			int index = contents.IndexOf("dbVersion=\"");
-			if (index < 0)
-				return -1;
-			index += 11;
-			int indexEnd = contents.Substring(index).IndexOf("\"");
-			string value = contents.Substring(index, indexEnd);
-			Console.WriteLine("index=" + index + "; indexEnd=" + indexEnd);
-			Console.WriteLine("value='" + value + "'");
-			return Int32.Parse(value);
-		}
+        private int GetFileVersionNumber(string fileName)
+        {
+            if (!File.Exists(fileName))
+                return -1;
+            string contents = File.ReadAllText(fileName);
+            int index = contents.IndexOf("dbVersion=\"");
+            if (index < 0)
+                return -1;
+            index += 11;
+            int indexEnd = contents.Substring(index).IndexOf("\"");
+            string value = contents.Substring(index, indexEnd);
+            Console.WriteLine("index=" + index + "; indexEnd=" + indexEnd);
+            Console.WriteLine("value='" + value + "'");
+            return Int32.Parse(value);
+        }
 
 #if Marks
-		AllomorphGenerators Migrate01to02(AllomorphGenerators oldDatabase)
+        AllomorphGenerators Migrate01to02(AllomorphGenerators oldDatabase)
         {
             AllomorphGenerators newDatabase = new AllomorphGenerators();
             newDatabase.DbVersion = 2;
@@ -214,5 +216,5 @@ namespace SIL.AlloGenService
             return newDatabase;
         }
 #endif
-	}
+    }
 }

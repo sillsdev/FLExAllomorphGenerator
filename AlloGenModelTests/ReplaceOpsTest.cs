@@ -49,7 +49,9 @@ namespace AlloGenModelTests
             List<Replace> masterReplaceOps = allomorphGenerators.ReplaceOperations;
             Assert.NotNull(masterReplaceOps);
             Assert.AreEqual(4, masterReplaceOps.Count);
-            Replace replace = allomorphGenerators.FindReplaceOp("5e8b9b79-0269-4dee-bfb0-be8ed4f4dc5d");
+            Replace replace = allomorphGenerators.FindReplaceOp(
+                "5e8b9b79-0269-4dee-bfb0-be8ed4f4dc5d"
+            );
             Assert.NotNull(replace);
             Assert.AreEqual("*", replace.From);
             Assert.AreEqual("", replace.To);
@@ -110,7 +112,9 @@ namespace AlloGenModelTests
             Assert.AreEqual(12, masterReplaceOps.Count);
 
             // delete a replace op that is not used
-            Replace replace = allomorphGenerators.FindReplaceOp("2dabfec9-2247-4aa1-876e-48614e59e339");
+            Replace replace = allomorphGenerators.FindReplaceOp(
+                "2dabfec9-2247-4aa1-876e-48614e59e339"
+            );
             Assert.NotNull(replace);
             List<Operation> operations = allomorphGenerators.FindOperationsUsedByReplaceOp(replace);
             Assert.AreEqual(0, operations.Count);
@@ -140,6 +144,5 @@ namespace AlloGenModelTests
             Assert.AreEqual(false, action2.ReplaceOpRefs.Contains(replace.Guid));
             Assert.AreEqual(false, action3.ReplaceOpRefs.Contains(replace.Guid));
         }
-
     }
 }

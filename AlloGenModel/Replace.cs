@@ -24,9 +24,10 @@ namespace SIL.AlloGenModel
         public Replace()
         {
             if (Guid == "")
-            {  // make sure it has a value
+            { // make sure it has a value
                 Guid = System.Guid.NewGuid().ToString();
-            };
+            }
+            ;
         }
 
         public Replace Duplicate()
@@ -82,16 +83,16 @@ namespace SIL.AlloGenModel
                     && (Mode == replace.Mode)
                     && (From == replace.From)
                     && (To == replace.To)
-                    && (WritingSystemRefs.SequenceEqual(replace.WritingSystemRefs))
-                    ;
+                    && (WritingSystemRefs.SequenceEqual(replace.WritingSystemRefs));
             }
         }
 
         public override int GetHashCode()
         {
-            int result = base.GetHashCode() + Tuple.Create(Description, Mode, WritingSystemRefs).GetHashCode();
+            int result =
+                base.GetHashCode()
+                + Tuple.Create(Description, Mode, WritingSystemRefs).GetHashCode();
             return result + Tuple.Create(From, To).GetHashCode();
         }
-
     }
 }

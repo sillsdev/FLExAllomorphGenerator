@@ -14,9 +14,7 @@ namespace SIL.AlloGenModel
     {
         public string Name { get; set; } = "";
 
-        public WritingSystemName()
-        {
-        }
+        public WritingSystemName() { }
 
         public WritingSystemName(string name)
         {
@@ -30,6 +28,5 @@ namespace SIL.AlloGenModel
             newWS.Name = Name;
             return newWS;
         }
-
     }
 }

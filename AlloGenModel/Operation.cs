@@ -47,8 +47,7 @@ namespace SIL.AlloGenModel
                 return (Name == op.Name)
                     && (Description == op.Description)
                     && (Pattern.Equals(op.Pattern))
-                    && (Action.Equals(op.Action))
-                    ;
+                    && (Action.Equals(op.Action));
             }
         }
 

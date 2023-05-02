@@ -24,9 +24,15 @@ namespace SIL.AlloGenModel
 
         public void SetDefaultMorphTypes()
         {
-            MorphType mtBoundRoot = CreateMorphType("bound root", "d7f713e4-e8cf-11d3-9764-00c04f186933");
+            MorphType mtBoundRoot = CreateMorphType(
+                "bound root",
+                "d7f713e4-e8cf-11d3-9764-00c04f186933"
+            );
             MorphTypes.Add(mtBoundRoot);
-            MorphType mtBoundStem = CreateMorphType("bound stem", "d7f713e7-e8cf-11d3-9764-00c04f186933");
+            MorphType mtBoundStem = CreateMorphType(
+                "bound stem",
+                "d7f713e7-e8cf-11d3-9764-00c04f186933"
+            );
             MorphTypes.Add(mtBoundStem);
             MorphType mtRoot = CreateMorphType("root", "d7f713e5-e8cf-11d3-9764-00c04f186933");
             MorphTypes.Add(mtRoot);
@@ -77,8 +83,7 @@ namespace SIL.AlloGenModel
                 Pattern pat = (Pattern)obj;
                 return (Matcher.Equals(pat.Matcher))
                     && (MorphTypes.SequenceEqual(pat.MorphTypes))
-                    && (Category.Equals(pat.Category))
-                    ;
+                    && (Category.Equals(pat.Category));
             }
         }
 

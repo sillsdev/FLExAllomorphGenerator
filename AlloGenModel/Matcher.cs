@@ -22,10 +22,7 @@ namespace SIL.AlloGenModel
         public bool MatchCase { get; set; } = false;
         public bool MatchDiacritics { get; set; } = false;
 
-        public Matcher()
-        {
-
-        }
+        public Matcher() { }
 
         public Matcher(MatcherType type)
         {
@@ -55,8 +52,7 @@ namespace SIL.AlloGenModel
                 return (Type == matcher.Type)
                     && (Pattern == matcher.Pattern)
                     && (MatchCase == matcher.MatchCase)
-                    && (MatchDiacritics == matcher.MatchDiacritics)
-                    ;
+                    && (MatchDiacritics == matcher.MatchDiacritics);
             }
         }
 

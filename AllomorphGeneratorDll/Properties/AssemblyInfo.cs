@@ -10,7 +10,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AllomorphGenerator")]
-[assembly: AssemblyDescription("This program enables one to create allomorphs in lexical entries based on the shape of the ciation form.\r\nIt is compatible with FLEx database version 7000072 such as in version 9.1.12 Beta of FLEx.\r\n\r\nThis software is licensed under the LGPL, version 2.1 or later\r\n(http://www.gnu.org/licenses/lgpl-2.1.html)")]
+[assembly: AssemblyDescription(
+    "This program enables one to create allomorphs in lexical entries based on the shape of the ciation form.\r\nIt is compatible with FLEx database version 7000072 such as in version 9.1.12 Beta of FLEx.\r\n\r\nThis software is licensed under the LGPL, version 2.1 or later\r\n(http://www.gnu.org/licenses/lgpl-2.1.html)"
+)]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SIL International")]
 [assembly: AssemblyProduct("AllomorphGenerator")]

@@ -16,7 +16,6 @@ namespace SIL.AlloGenServiceTest
     [TestFixture]
     class PatternMatcherTest : FwTestBase
     {
-
         [Test]
         public void LoadFWDatabaseTest()
         {
@@ -30,7 +29,10 @@ namespace SIL.AlloGenServiceTest
         [Test]
         public void LexEntriesPerMorphTypesTest()
         {
-            var lexEntriesPerMorphTypes = patternMatcher.MatchMorphTypes(patternMatcher.EntriesWithNoAllomorphs, pattern);
+            var lexEntriesPerMorphTypes = patternMatcher.MatchMorphTypes(
+                patternMatcher.EntriesWithNoAllomorphs,
+                pattern
+            );
             Assert.AreEqual(4360, lexEntriesPerMorphTypes.Count());
         }
 
@@ -39,15 +41,24 @@ namespace SIL.AlloGenServiceTest
         {
             // Verb
             pattern.Category.Guid = "86ff66f6-0774-407a-a0dc-3eeaf873daf7";
-            var lexEntriesPerCategory = patternMatcher.MatchCategory(patternMatcher.EntriesWithNoAllomorphs, pattern);
+            var lexEntriesPerCategory = patternMatcher.MatchCategory(
+                patternMatcher.EntriesWithNoAllomorphs,
+                pattern
+            );
             Assert.AreEqual(1491, lexEntriesPerCategory.Count());
             // transitive verb
             pattern.Category.Guid = "54712931-442f-42d5-8634-f12bd2e310ce";
-            lexEntriesPerCategory = patternMatcher.MatchCategory(patternMatcher.EntriesWithNoAllomorphs, pattern);
+            lexEntriesPerCategory = patternMatcher.MatchCategory(
+                patternMatcher.EntriesWithNoAllomorphs,
+                pattern
+            );
             Assert.AreEqual(664, lexEntriesPerCategory.Count());
             // Intranitive verb
             pattern.Category.Guid = "4459ff09-9ee0-4b50-8787-ae40fd76d3b7";
-            lexEntriesPerCategory = patternMatcher.MatchCategory(patternMatcher.EntriesWithNoAllomorphs, pattern);
+            lexEntriesPerCategory = patternMatcher.MatchCategory(
+                patternMatcher.EntriesWithNoAllomorphs,
+                pattern
+            );
             Assert.AreEqual(827, lexEntriesPerCategory.Count());
         }
 

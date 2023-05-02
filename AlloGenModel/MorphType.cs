@@ -10,7 +10,5 @@ using System.Threading.Tasks;
 
 namespace SIL.AlloGenModel
 {
-    public class MorphType : AlloGenGuid
-    {
-    }
+    public class MorphType : AlloGenGuid { }
 }

@@ -42,7 +42,10 @@ namespace SIL.AlloGenService
             m_mdc = cache.MetaDataCacheAccessor as IFwMetaDataCacheManaged;
         }
 
-        public IEnumerable<ILexEntry> MatchMorphTypes(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
+        public IEnumerable<ILexEntry> MatchMorphTypes(
+            IEnumerable<ILexEntry> lexEntries,
+            Pattern pattern
+        )
         {
             if (pattern.MorphTypes.Count > 0)
             {
@@ -71,10 +74,17 @@ namespace SIL.AlloGenService
             return lexEntries;
         }
 
-        public IEnumerable<ILexEntry> MatchCategory(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
+        public IEnumerable<ILexEntry> MatchCategory(
+            IEnumerable<ILexEntry> lexEntries,
+            Pattern pattern
+        )
         {
             var lexEntriesForCategory = new List<ILexEntry>();
-            if (pattern.Category != null && pattern.Category.Active && pattern.Category.Guid.Length > 0)
+            if (
+                pattern.Category != null
+                && pattern.Category.Active
+                && pattern.Category.Guid.Length > 0
+            )
             {
                 IPartOfSpeech patternPos = GetPatternsPartOfSpeech(pattern);
                 if (patternPos != null)
@@ -86,7 +96,12 @@ namespace SIL.AlloGenService
                             IMoStemMsa stemMsa = msa as IMoStemMsa;
                             if (stemMsa != null && stemMsa.PartOfSpeechRA != null)
                             {
-                                if (stemMsa.PartOfSpeechRA == patternPos || patternPos.ReallyReallyAllPossibilities.Contains(stemMsa.PartOfSpeechRA))
+                                if (
+                                    stemMsa.PartOfSpeechRA == patternPos
+                                    || patternPos.ReallyReallyAllPossibilities.Contains(
+                                        stemMsa.PartOfSpeechRA
+                                    )
+                                )
                                 {
                                     {
                                         lexEntriesForCategory.Add(entry);
@@ -114,7 +129,10 @@ namespace SIL.AlloGenService
             return null;
         }
 
-        public IEnumerable<ILexEntry> MatchMatchString(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
+        public IEnumerable<ILexEntry> MatchMatchString(
+            IEnumerable<ILexEntry> lexEntries,
+            Pattern pattern
+        )
         {
             int ws = Cache.DefaultVernWs;
             Matcher agMatcher = pattern.Matcher;
@@ -150,7 +168,9 @@ namespace SIL.AlloGenService
             }
             else
             {
-                foreach (var flid in m_mdc.GetFields(e.ClassID, true, (int)CellarPropertyTypeFilter.All))
+                foreach (
+                    var flid in m_mdc.GetFields(e.ClassID, true, (int)CellarPropertyTypeFilter.All)
+                )
                 {
                     if (!m_mdc.IsCustom(flid))
                         continue;
@@ -166,7 +186,10 @@ namespace SIL.AlloGenService
             return useToMatch;
         }
 
-        public IEnumerable<ILexEntry> MatchEntriesWithAllosPerPattern(Operation operation, Pattern pattern)
+        public IEnumerable<ILexEntry> MatchEntriesWithAllosPerPattern(
+            Operation operation,
+            Pattern pattern
+        )
         {
             var lexEntriesThatMatch = MatchMatchString(MultiAllomorphEntries, pattern);
             if (lexEntriesThatMatch == null)
@@ -194,7 +217,11 @@ namespace SIL.AlloGenService
             return lexEntriesWithAllosThatDoNotMatch;
         }
 
-        private bool HaveSameAllomorphs(Replacer replacer, ILexEntry entry, AlloGenModel.Action action)
+        private bool HaveSameAllomorphs(
+            Replacer replacer,
+            ILexEntry entry,
+            AlloGenModel.Action action
+        )
         {
             foreach (IMoStemAllomorph allo in entry.AlternateFormsOS)
             {
@@ -206,9 +233,14 @@ namespace SIL.AlloGenService
             return false;
         }
 
-        private bool HasSameAllomorph(Replacer replacer, ILexEntry entry, AlloGenModel.Action action, IMoStemAllomorph allo)
+        private bool HasSameAllomorph(
+            Replacer replacer,
+            ILexEntry entry,
+            AlloGenModel.Action action,
+            IMoStemAllomorph allo
+        )
         {
-            if (allo.StemNameRA!= null &&  allo.StemNameRA.Guid.ToString() != action.StemName.Guid)
+            if (allo.StemNameRA != null && allo.StemNameRA.Guid.ToString() != action.StemName.Guid)
             {
                 return false;
             }
@@ -231,7 +263,12 @@ namespace SIL.AlloGenService
             return true;
         }
 
-        private bool HaveSameAllomorphForm(Replacer replacer, string citationForm, IMoStemAllomorph allo, WritingSystem ws)
+        private bool HaveSameAllomorphForm(
+            Replacer replacer,
+            string citationForm,
+            IMoStemAllomorph allo,
+            WritingSystem ws
+        )
         {
             string previewForm = replacer.ApplyReplaceOpToOneWS(citationForm, ws.Name);
             if (ws.Handle == -1)
@@ -246,7 +283,10 @@ namespace SIL.AlloGenService
             return true;
         }
 
-        private bool HaveSameEnvironments(ILcmReferenceCollection<IPhEnvironment> allosEnvs, List<AlloGenModel.Environment> actionsEnvs)
+        private bool HaveSameEnvironments(
+            ILcmReferenceCollection<IPhEnvironment> allosEnvs,
+            List<AlloGenModel.Environment> actionsEnvs
+        )
         {
             if (allosEnvs.Count != actionsEnvs.Count)
                 return false;
@@ -260,7 +300,10 @@ namespace SIL.AlloGenService
             return true;
         }
 
-        public IEnumerable<ILexEntry> MatchPattern(IEnumerable<ILexEntry> lexEntries, Pattern pattern)
+        public IEnumerable<ILexEntry> MatchPattern(
+            IEnumerable<ILexEntry> lexEntries,
+            Pattern pattern
+        )
         {
             var lexEntriesThatMatch = MatchMatchString(lexEntries, pattern);
             if (lexEntriesThatMatch == null)

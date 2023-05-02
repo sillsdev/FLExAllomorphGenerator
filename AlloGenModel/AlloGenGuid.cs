@@ -33,9 +33,7 @@ namespace SIL.AlloGenModel
             else
             {
                 AlloGenGuid agg = (AlloGenGuid)obj;
-                return (Guid == agg.Guid)
-                    && (Name == agg.Name)
-                    ;
+                return (Guid == agg.Guid) && (Name == agg.Name);
             }
         }
 
@@ -44,6 +42,5 @@ namespace SIL.AlloGenModel
             int result = base.GetHashCode();
             return result + Tuple.Create(Guid, Name).GetHashCode();
         }
-
     }
 }

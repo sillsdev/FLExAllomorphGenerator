@@ -24,6 +24,5 @@ namespace SIL.AlloGenModel
         {
             return Name;
         }
-
     }
 }

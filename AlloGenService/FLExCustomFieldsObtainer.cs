@@ -22,11 +22,15 @@ namespace SIL.AlloGenService
             Cache = cache;
             // get the custom fields
             FieldDescription.ClearDataAbout();
-            CustomFields = (from fd in FieldDescription.FieldDescriptors(Cache)
-                              where fd.IsCustomField && fd.IsInstalled
-                              && fd.Class == LexEntryTags.kClassId
-                              && fd.Type == LCModel.Core.Cellar.CellarPropertyType.String
-                              select new FDWrapper(fd, false)).ToList();
+            CustomFields = (
+                from fd in FieldDescription.FieldDescriptors(Cache)
+                where
+                    fd.IsCustomField
+                    && fd.IsInstalled
+                    && fd.Class == LexEntryTags.kClassId
+                    && fd.Type == LCModel.Core.Cellar.CellarPropertyType.String
+                select new FDWrapper(fd, false)
+            ).ToList();
         }
 
         /// <summary>
@@ -41,10 +45,12 @@ namespace SIL.AlloGenService
                 Fd = fd;
                 IsNew = isNew;
             }
+
             public override string ToString()
             {
                 return Fd.Userlabel ?? "";
             }
+
             // read only properties
             public FieldDescription Fd { get; private set; }
             public bool IsNew { get; private set; }

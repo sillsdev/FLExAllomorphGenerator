@@ -78,6 +78,5 @@ namespace SIL.AllomorphGenerator
         {
             ReplaceOp.Mode = cbRegEx.Checked;
         }
-
     }
 }

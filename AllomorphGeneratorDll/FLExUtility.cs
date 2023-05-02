@@ -14,51 +14,54 @@ using XCore;
 
 namespace SIL.AllomorphGenerator
 {
-	class FLExUtility : IUtility
+    class FLExUtility : IUtility
+    {
+        protected UtilityDlg m_dlg;
 
-	{
-		protected UtilityDlg m_dlg;
+        #region IUtility implementation
 
-		#region IUtility implementation
+        /// <summary>
+        /// Override method to return the Label property.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return Label;
+        }
 
-		/// <summary>
-		/// Override method to return the Label property.
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return Label;
-		}
+        /// <summary>
+        /// Get the main label describing the utility.
+        /// </summary>
+        public string Label => "Allomorph Generator";
 
-		/// <summary>
-		/// Get the main label describing the utility.
-		/// </summary>
-		public string Label => "Allomorph Generator";
+        UtilityDlg IUtility.Dialog
+        {
+            set => m_dlg = value;
+        }
 
-		UtilityDlg IUtility.Dialog { set => m_dlg = value; }
+        void IUtility.LoadUtilities()
+        {
+            m_dlg.Utilities.Items.Add(this);
+        }
 
-		void IUtility.LoadUtilities()
-		{		
-			m_dlg.Utilities.Items.Add(this);
-		}
+        void IUtility.OnSelection()
+        {
+            m_dlg.WhenDescription = "Run this when you need to generate allomorphs.";
+            m_dlg.WhatDescription = "Run this to generate allomorphs based on the citation form.";
+            m_dlg.RedoDescription =
+                "You cannot use 'Undo' to cancel the effect of this utility. You would need to go back to a previously saved version of the database(i.e., make a backup of your database before running this utility so you can restore to it if the results are not what you want).";
+            ;
+        }
 
-		void IUtility.OnSelection()
-		{
-			m_dlg.WhenDescription = "Run this when you need to generate allomorphs.";
-			m_dlg.WhatDescription = "Run this to generate allomorphs based on the citation form.";
-			m_dlg.RedoDescription = "You cannot use 'Undo' to cancel the effect of this utility. You would need to go back to a previously saved version of the database(i.e., make a backup of your database before running this utility so you can restore to it if the results are not what you want).";
-			;
-		}
-
-		void IUtility.Process()
-		{
+        void IUtility.Process()
+        {
             LcmCache cache = m_dlg.PropTable.GetValue<LcmCache>("cache");
             PropertyTable propTable = m_dlg.PropTable;
             Mediator mediator = m_dlg.Mediator;
             var alloGenForm = new AlloGenForm(cache, propTable, mediator);
             alloGenForm.Show();
-			m_dlg.Close();
-		}
-		#endregion IUtility implementation
-	}
+            m_dlg.Close();
+        }
+        #endregion IUtility implementation
+    }
 }

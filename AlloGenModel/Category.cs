@@ -10,7 +10,5 @@ using System.Threading.Tasks;
 
 namespace SIL.AlloGenModel
 {
-    public class Category : AlloGenGuid
-    {
-    }
+    public class Category : AlloGenGuid { }
 }
