@@ -20,7 +20,7 @@ type="tAlloGen"
 ><emailAddress
 >blackhandrew@gmail.com</emailAddress
 ><date
->7 April, 2023</date
+>2 May, 2023</date
 ><version
 >Version 2.0.0 Beta<comment
 ><endnote
@@ -58,10 +58,10 @@ type="tAlloGen"
 > allows you to define operations on a form in an entry to produce new <object
 type="tStemAllos"
 ></object
-> in the entry of the matching form.  You can use what is in the <object
+> in the entry of the matching form. You can use what is in the <object
 type="tCitationForm"
 ></object
->, Lexeme Form, or in the first Etymology Source form for what to match on.  It is possible to use a custom field, too.  <object
+>, Lexeme Form, or in the first Etymology Source form for what to match on. It is possible to use a custom field, too. <object
 type="tAlloGen"
 ></object
 > defaults to using the <object
@@ -451,7 +451,7 @@ id="sApplyOperationsTo"
 ><secTitle
 >Apply operations to drop-down box</secTitle
 ><p
->In the bottom left hand corner, there is a drop-down box.  You can click on the button and choose which field in an entry to use for matching and applying replace operations.  There are at least three options available:</p
+>In the bottom left hand corner, there is a drop-down box. You can click on the button and choose which field in an entry to use for matching and applying replace operations. There are at least three options available:</p
 ><ol
 ><li
 >Citation Form</li
@@ -464,7 +464,7 @@ id="sApplyOperationsTo"
 ><object
 type="tAlloGen"
 ></object
-> will use the default vernacular writing system in each case.  If there is more than one etymology field, it will use the first one.</pc
+> will use the default vernacular writing system in each case. If there is more than one etymology field, it will use the first one.</pc
 ><p
 >It will also show any custom fields you have at the entry level which were created with the pattern illustrated by what is in example <exampleRef
 letter="xCustomFieldSettings"
