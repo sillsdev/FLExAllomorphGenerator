@@ -58,9 +58,21 @@ namespace SIL.AllomorphGenerator
             LcmCache cache = m_dlg.PropTable.GetValue<LcmCache>("cache");
             PropertyTable propTable = m_dlg.PropTable;
             Mediator mediator = m_dlg.Mediator;
-            var alloGenForm = new AlloGenForm(cache, propTable, mediator);
-            alloGenForm.Show();
-            m_dlg.Close();
+            try
+            {
+                var alloGenForm = new AlloGenForm(cache, propTable, mediator);
+                alloGenForm.Show();
+                //m_dlg.Close();
+            }
+            catch (Exception e)
+            {
+                // probably first time and user canceled file creation
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                m_dlg.Close();
+            }
         }
         #endregion IUtility implementation
     }

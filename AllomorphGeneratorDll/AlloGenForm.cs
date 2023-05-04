@@ -59,6 +59,9 @@ namespace SIL.AllomorphGenerator
         const string UserDocumentation = "User Documentation";
         const string About = "About";
 
+        const string OperationsFilePrompt =
+            "Allomorph Generator Operations File (*.agf)|*.agf|" + "All Files (*.*)|*.*";
+
         public Rectangle RectNormal { get; set; }
 
         public string LastDatabase { get; set; }
@@ -870,8 +873,7 @@ namespace SIL.AllomorphGenerator
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter =
-                "Allomorph Generator Operations File (*.agf)|*.agf|" + "All Files (*.*)|*.*";
+            dlg.Filter = OperationsFilePrompt;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 OperationsFile = dlg.FileName;
@@ -892,21 +894,56 @@ namespace SIL.AllomorphGenerator
                     FillReplaceOpsListView();
                 }
             }
+            else if (String.IsNullOrEmpty(OperationsFile))
+            {
+                // probably first time run and user chose to cancel opening a file; quit
+                this.Dispose();
+            }
         }
 
         private void LoadMigrateGetOperations()
         {
             if (!File.Exists(OperationsFile))
             {
-                MessageBox.Show(
-                    "Operations file not found!",
-                    "Load error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                if (String.IsNullOrEmpty(OperationsFile))
+                {
+                    // probably first time it is run
+                    var dlg = new CreateNewOpenCancelDialog();
+                    var result = dlg.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        // create new operations file
+                        ChangesMade = false;
+                        SetupFontAndStyleInfo();
+                        btnNewFile_Click(this, new EventArgs());
+                        if (!String.IsNullOrEmpty(OperationsFile))
+                        {
+                            // Need to save it since it exists
+                            DoSave();
+                        }
+                    }
+                    else if (result == DialogResult.Yes)
+                    {
+                        // Open existing operations file
+                        btnBrowse_Click(this, new EventArgs());
+                    }
+                    else
+                    {
+                        // Assume it was canceled, so quit
+                        this.Dispose();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Operations file not found!",
+                        "Load error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
                 return;
             }
-
 #if Marks
             Provider.LoadDataFromFile(OperationsFile);
             AlloGens = Provider.AlloGens;
@@ -946,10 +983,15 @@ namespace SIL.AllomorphGenerator
                 );
                 if (res == DialogResult.Yes)
                 {
-                    Provider.AlloGens = AlloGens;
-                    Provider.SaveDataToFile(OperationsFile);
+                    DoSave();
                 }
             }
+        }
+
+        private void DoSave()
+        {
+            Provider.AlloGens = AlloGens;
+            Provider.SaveDataToFile(OperationsFile);
         }
 
         protected override void OnMove(EventArgs ea)
@@ -1378,8 +1420,7 @@ namespace SIL.AllomorphGenerator
         {
             SaveAnyChanges();
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter =
-                "Allomorph Generator Operations File (*.agf)|*.agf|" + "All Files (*.*)|*.*";
+            dlg.Filter = OperationsFilePrompt;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 OperationsFile = dlg.FileName;
@@ -1399,6 +1440,13 @@ namespace SIL.AllomorphGenerator
                 {
                     FillReplaceOpsListView();
                 }
+                // Need to save it since it exists
+                DoSave();
+            }
+            else if (String.IsNullOrEmpty(OperationsFile))
+            {
+                // probably first time run and user chose to cancel creating the needed file; quit
+                this.Dispose();
             }
         }
 
