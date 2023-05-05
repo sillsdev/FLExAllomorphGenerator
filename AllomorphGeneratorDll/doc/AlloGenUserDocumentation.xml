@@ -20,7 +20,7 @@ type="tAlloGen"
 ><emailAddress
 >blackhandrew@gmail.com</emailAddress
 ><date
->4 May, 2023</date
+>5 May, 2023</date
 ><version
 >Version 2.0.0 Beta<comment
 ><endnote
@@ -873,6 +873,20 @@ type="tFLEx"
 type="tAlloGen"
 ></object
 > dialog and move it to another screen.</li
+><li
+>Whenever you upgrade your version of <object
+type="tFLEx"
+></object
+>, you may have to re-install <object
+type="tAlloGen"
+></object
+>.  In particular, the “Allomorph Generator” item under <object
+type="tMenuItem"
+>Tools</object
+> menu item / <object
+type="tMenuItem"
+>Utilities...</object
+> may not show.</li
 ></ol
 ></section1
 ><section1
