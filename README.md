@@ -5,10 +5,6 @@ A tool to generate allomorphs for a FLEx project based on the citation form of a
 
 *Allomorph Generator for FLEx* is compatible with version 9.1.18 or higher of FLEx.
 
-<!---
-See https://github.com/sillsdev/pcpatrflex/tree/master/PcPatrFLExDll/doc/UserDocumentation.pdf for more.
--->
+See https://github.com/sillsdev/FLExAllomorphGenerator/blob/master/AllomorphGeneratorDll/doc/AlloGenUserDocumentation.pdf for more.
 
-<!---
-The installer can be downloaded at https://github.com/sillsdev/pcpatrflex/tree/master/Installer/Output/UsePcPatrWithFLExDllSetup.exe.
--->
+The installer can be downloaded at https://github.com/sillsdev/FLExAllomorphGenerator/blob/master/Installer/Output/AllomorphGeneratorDllSetup.exe.
