@@ -594,7 +594,7 @@ namespace SIL.AllomorphGenerator
             using (var dialog = new EditReplaceOpForm())
             {
                 Replace replace = (Replace)lBoxReplaceOps.SelectedItem;
-                dialog.Initialize(replace, WritingSystems);
+                dialog.Initialize(replace, WritingSystems, Cache);
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {
@@ -1915,7 +1915,7 @@ namespace SIL.AllomorphGenerator
             using (var dialog = new EditReplaceOpForm())
             {
                 Replace replace = CreateNewReplace();
-                dialog.Initialize(replace, WritingSystems);
+                dialog.Initialize(replace, WritingSystems, Cache);
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {
@@ -2039,7 +2039,7 @@ namespace SIL.AllomorphGenerator
             Replace replace = (Replace)item.Tag;
             using (var dialog = new EditReplaceOpForm())
             {
-                dialog.Initialize(replace, WritingSystems);
+                dialog.Initialize(replace, WritingSystems, Cache);
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {

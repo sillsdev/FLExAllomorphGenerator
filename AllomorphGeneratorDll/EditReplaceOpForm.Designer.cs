@@ -32,10 +32,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.lbReplace = new System.Windows.Forms.Label();
-            this.tbFrom = new System.Windows.Forms.TextBox();
             this.cbRegEx = new System.Windows.Forms.CheckBox();
             this.lbTo = new System.Windows.Forms.Label();
-            this.tbTo = new System.Windows.Forms.TextBox();
             this.lbVarieties = new System.Windows.Forms.Label();
             this.lbName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -75,13 +73,6 @@
             this.lbReplace.TabIndex = 4;
             this.lbReplace.Text = "Replace";
             // 
-            // tbFrom
-            // 
-            this.tbFrom.Location = new System.Drawing.Point(158, 160);
-            this.tbFrom.Name = "tbFrom";
-            this.tbFrom.Size = new System.Drawing.Size(352, 26);
-            this.tbFrom.TabIndex = 5;
-            // 
             // cbRegEx
             // 
             this.cbRegEx.AutoSize = true;
@@ -101,13 +92,6 @@
             this.lbTo.Size = new System.Drawing.Size(27, 20);
             this.lbTo.TabIndex = 7;
             this.lbTo.Text = "To";
-            // 
-            // tbTo
-            // 
-            this.tbTo.Location = new System.Drawing.Point(158, 207);
-            this.tbTo.Name = "tbTo";
-            this.tbTo.Size = new System.Drawing.Size(352, 26);
-            this.tbTo.TabIndex = 8;
             // 
             // lbVarieties
             // 
@@ -172,10 +156,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbName);
             this.Controls.Add(this.lbVarieties);
-            this.Controls.Add(this.tbTo);
             this.Controls.Add(this.lbTo);
             this.Controls.Add(this.cbRegEx);
-            this.Controls.Add(this.tbFrom);
             this.Controls.Add(this.lbReplace);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
@@ -192,10 +174,8 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lbReplace;
-        private System.Windows.Forms.TextBox tbFrom;
         private System.Windows.Forms.CheckBox cbRegEx;
         private System.Windows.Forms.Label lbTo;
-        private System.Windows.Forms.TextBox tbTo;
         private System.Windows.Forms.Label lbVarieties;
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.Label label1;
