@@ -17,77 +17,85 @@ using System.Windows.Forms;
 
 namespace SIL.AllomorphGenerator
 {
-	public partial class EditReplaceOpForm : Form
+    public partial class EditReplaceOpForm : Form
     {
-		private FwTextBox fwtbFrom;
-		private FwTextBox fwtbTo;
+        private FwTextBox fwtbFrom;
+        private FwTextBox fwtbTo;
 
-		public Replace ReplaceOp { get; set; }
+        public Replace ReplaceOp { get; set; }
         public bool OkPressed { get; set; }
 
         public EditReplaceOpForm()
         {
             InitializeComponent();
-			InitializeFWComponents();
-		}
+            InitializeFWComponents();
+        }
 
-		private void InitializeFWComponents()
-		{
-			fwtbFrom = new FwTextBox();
-			((System.ComponentModel.ISupportInitialize)(this.fwtbFrom)).BeginInit();
-			//
-			// fwtbFrom
-			//
-			this.fwtbFrom.Location = new System.Drawing.Point(105, 97);
-			this.fwtbFrom.Name = "fwtbFrom";
-			this.fwtbFrom.Size = new System.Drawing.Size(235, 26);
-			this.fwtbFrom.TabIndex = 5;
-
-			this.fwtbFrom.AcceptsReturn = false;
-			this.fwtbFrom.AdjustStringHeight = true;
-			this.fwtbFrom.BackColor = System.Drawing.SystemColors.Window;
-			this.fwtbFrom.controlID = null;
-			//resources.ApplyResources(this.fwtbFrom, "fwtbFrom");
-			this.fwtbFrom.HasBorder = true;
-			this.fwtbFrom.Name = "fwtbFrom";
-			this.fwtbFrom.SuppressEnter = true;
-			this.fwtbFrom.WordWrap = false;
-			((System.ComponentModel.ISupportInitialize)(this.fwtbFrom)).EndInit();
-			this.Controls.Add(this.fwtbFrom);
-
-			fwtbTo = new FwTextBox();
-			((System.ComponentModel.ISupportInitialize)(this.fwtbTo)).BeginInit();
-			//
-			// fwtbTo
-			//
-			this.fwtbTo.Location = new System.Drawing.Point(105, 127);
-			this.fwtbTo.Name = "fwtbTo";
-			this.fwtbTo.Size = new System.Drawing.Size(235, 26);
-			this.fwtbTo.TabIndex = 8;
-
-			this.fwtbTo.AcceptsReturn = false;
-			this.fwtbTo.AdjustStringHeight = true;
-			this.fwtbTo.BackColor = System.Drawing.SystemColors.Window;
-			this.fwtbTo.controlID = null;
-			//resources.ApplyResources(this.fwtbTo, "fwtbTo");
-			this.fwtbTo.HasBorder = true;
-			this.fwtbTo.Name = "fwtbTo";
-			this.fwtbTo.SuppressEnter = true;
-			this.fwtbTo.WordWrap = false;
-			((System.ComponentModel.ISupportInitialize)(this.fwtbTo)).EndInit();
-			this.Controls.Add(this.fwtbTo);
-		}
-
-		public void Initialize(Replace replace, List<WritingSystem> writingSystems, LcmCache cache)
+        private void InitializeFWComponents()
         {
-			fwtbFrom.WritingSystemFactory = cache.LanguageWritingSystemFactoryAccessor;
-			fwtbFrom.WritingSystemCode = cache.ServiceLocator.WritingSystems.DefaultVernacularWritingSystem.Handle;
-			fwtbTo.WritingSystemFactory = cache.LanguageWritingSystemFactoryAccessor;
-			fwtbTo.WritingSystemCode = cache.ServiceLocator.WritingSystems.DefaultVernacularWritingSystem.Handle;
-			ReplaceOp = replace;
+            fwtbFrom = new FwTextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.fwtbFrom)).BeginInit();
+            //
+            // fwtbFrom
+            //
+            this.fwtbFrom.Location = new System.Drawing.Point(105, 97);
+            this.fwtbFrom.Name = "fwtbFrom";
+            this.fwtbFrom.Size = new System.Drawing.Size(235, 26);
+            this.fwtbFrom.TabIndex = 5;
+
+            this.fwtbFrom.AcceptsReturn = false;
+            this.fwtbFrom.AdjustStringHeight = true;
+            this.fwtbFrom.BackColor = System.Drawing.SystemColors.Window;
+            this.fwtbFrom.controlID = null;
+            //resources.ApplyResources(this.fwtbFrom, "fwtbFrom");
+            this.fwtbFrom.HasBorder = true;
+            this.fwtbFrom.Name = "fwtbFrom";
+            this.fwtbFrom.SuppressEnter = true;
+            this.fwtbFrom.WordWrap = false;
+            ((System.ComponentModel.ISupportInitialize)(this.fwtbFrom)).EndInit();
+            this.Controls.Add(this.fwtbFrom);
+
+            fwtbTo = new FwTextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.fwtbTo)).BeginInit();
+            //
+            // fwtbTo
+            //
+            this.fwtbTo.Location = new System.Drawing.Point(105, 127);
+            this.fwtbTo.Name = "fwtbTo";
+            this.fwtbTo.Size = new System.Drawing.Size(235, 26);
+            this.fwtbTo.TabIndex = 8;
+
+            this.fwtbTo.AcceptsReturn = false;
+            this.fwtbTo.AdjustStringHeight = true;
+            this.fwtbTo.BackColor = System.Drawing.SystemColors.Window;
+            this.fwtbTo.controlID = null;
+            //resources.ApplyResources(this.fwtbTo, "fwtbTo");
+            this.fwtbTo.HasBorder = true;
+            this.fwtbTo.Name = "fwtbTo";
+            this.fwtbTo.SuppressEnter = true;
+            this.fwtbTo.WordWrap = false;
+            ((System.ComponentModel.ISupportInitialize)(this.fwtbTo)).EndInit();
+            this.Controls.Add(this.fwtbTo);
+        }
+
+        public void Initialize(Replace replace, List<WritingSystem> writingSystems, LcmCache cache)
+        {
+            fwtbFrom.WritingSystemFactory = cache.LanguageWritingSystemFactoryAccessor;
+            fwtbFrom.WritingSystemCode = cache
+                .ServiceLocator
+                .WritingSystems
+                .DefaultVernacularWritingSystem
+                .Handle;
+            fwtbTo.WritingSystemFactory = cache.LanguageWritingSystemFactoryAccessor;
+            fwtbTo.WritingSystemCode = cache
+                .ServiceLocator
+                .WritingSystems
+                .DefaultVernacularWritingSystem
+                .Handle;
+            ReplaceOp = replace;
             tbName.Text = replace.Name;
             tbDescription.Text = replace.Description;
-			fwtbFrom.Text = replace.From;
+            fwtbFrom.Text = replace.From;
             fwtbTo.Text = replace.To;
             cbRegEx.Checked = replace.Mode;
             foreach (WritingSystem ws in writingSystems)
@@ -106,8 +114,8 @@ namespace SIL.AllomorphGenerator
         {
             ReplaceOp.Name = tbName.Text;
             ReplaceOp.Description = tbDescription.Text;
-			ReplaceOp.From = fwtbFrom.Text;
-			ReplaceOp.To = fwtbTo.Text;
+            ReplaceOp.From = fwtbFrom.Text;
+            ReplaceOp.To = fwtbTo.Text;
             ReplaceOp.Mode = cbRegEx.Checked;
             ReplaceOp.WritingSystemRefs.Clear();
             for (int i = 0; i < clbWritingSystems.Items.Count; i++)

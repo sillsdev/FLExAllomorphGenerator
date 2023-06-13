@@ -100,18 +100,18 @@ namespace SIL.AlloGenModel
             return op;
         }
 
-		public void DeleteEmptyReplaceOperationsFromAnOperation(Operation op)
-		{
-			if (op == null)
-				return;
-			foreach (string repOpRef in op.Action.ReplaceOpRefs)
-			{
-				Replace rep = ReplaceOperations.FirstOrDefault(r => r.Guid == repOpRef);
-				if (rep != null && rep.IsEmpty())
-				{
-					ReplaceOperations.Remove(rep);
-				}
-			}
-		}
-	}
+        public void DeleteEmptyReplaceOperationsFromAnOperation(Operation op)
+        {
+            if (op == null)
+                return;
+            foreach (string repOpRef in op.Action.ReplaceOpRefs)
+            {
+                Replace rep = ReplaceOperations.FirstOrDefault(r => r.Guid == repOpRef);
+                if (rep != null && rep.IsEmpty())
+                {
+                    ReplaceOperations.Remove(rep);
+                }
+            }
+        }
+    }
 }
