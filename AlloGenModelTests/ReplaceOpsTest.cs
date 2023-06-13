@@ -144,5 +144,22 @@ namespace AlloGenModelTests
             Assert.AreEqual(false, action2.ReplaceOpRefs.Contains(replace.Guid));
             Assert.AreEqual(false, action3.ReplaceOpRefs.Contains(replace.Guid));
         }
-    }
+
+		[Test]
+		public void ReplaceOpIsEmptyTests()
+		{
+			Replace rep = new Replace();
+			Assert.AreEqual(true, rep.IsEmpty());
+			rep.From = "something";
+			Assert.AreEqual(false, rep.IsEmpty());
+			rep.From = "";
+			rep.Name = "something";
+			Assert.AreEqual(false, rep.IsEmpty());
+			rep.Name = "";
+			rep.Description = "something";
+			Assert.AreEqual(false, rep.IsEmpty());
+		}
+
+
+	}
 }

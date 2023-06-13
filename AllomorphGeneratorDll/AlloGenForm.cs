@@ -758,9 +758,14 @@ namespace SIL.AllomorphGenerator
                 }
                 else
                 {
+					Operation op = Operations.ElementAt(index);
+					AlloGens.DeleteEmptyReplaceOperationsFromAnOperation(op);
                     Operations.RemoveAt(index);
                 }
                 currentListBox.Items.RemoveAt(index);
+				int newIndex = index < currentListBox.Items.Count ? index : currentListBox.Items.Count - 1;
+				if (newIndex > -1 )
+					currentListBox.SelectedIndex = newIndex;
             }
             MarkAsChanged(true);
         }

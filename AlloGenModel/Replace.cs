@@ -49,7 +49,18 @@ namespace SIL.AlloGenModel
             return newReplace;
         }
 
-        override public string ToString()
+		public bool IsEmpty()
+		{
+			if (!String.IsNullOrEmpty(From))
+				return false;
+			if (!String.IsNullOrEmpty(Name))
+				return false;
+			if (!String.IsNullOrEmpty(Description))
+				return false;
+			return true;
+		}
+
+		override public string ToString()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(Name);
