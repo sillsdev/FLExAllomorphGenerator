@@ -107,7 +107,7 @@ namespace SIL.AlloGenServiceTest
         {
             AllomorphGenerators allomorphGenerators = new AllomorphGenerators();
             allomorphGenerators.ApplyTo = 0;
-            Operation operation = new Operation();
+            Operation operation = new Operation(0);
             operation.Active = true;
             operation.Name = "foreshortening";
             operation.Description = "Add allomorphs for entries which undergo foreshortening";

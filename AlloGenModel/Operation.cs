@@ -7,19 +7,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SIL.AlloGenModel
 {
     public class Operation : AlloGenBase
     {
+        // generation type:
+        // 0 = allomorph
+        // 1 = variant
+        [XmlAttribute("generationType")]
+        public int GenerationType { get; set; } = 0;
+
         public string Name { get; set; } = "new operation";
         public string Description { get; set; } = "";
         public Pattern Pattern { get; set; } = new Pattern();
         public Action Action { get; set; } = new Action();
 
+        public Operation()
+        {
+            GenerationType = 0;
+        }
+
+        public Operation(int genType)
+        {
+            if (genType < 0 || genType > 1)
+            { // default is 0 (allomorph)
+                genType = 0;
+            }
+            GenerationType = genType;
+        }
+
         public Operation Duplicate()
         {
-            Operation newOp = new Operation();
+            Operation newOp = new Operation(0);
             newOp.Action = Action.Duplicate();
             newOp.Active = Active;
             newOp.Description = Description;

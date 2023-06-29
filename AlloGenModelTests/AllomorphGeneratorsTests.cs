@@ -26,12 +26,21 @@ namespace AlloGenModelTests
         public void NewOperationTest()
         {
             Assert.AreEqual(0, alloGens.Operations.Count);
-            Operation op = alloGens.CreateNewOperation();
+            Operation op = alloGens.CreateNewOperation(0);
             Assert.AreEqual(1, alloGens.Operations.Count);
             Assert.AreEqual(1, alloGens.ReplaceOperations.Count);
             Assert.AreEqual(1, op.Action.ReplaceOpRefs.Count);
             Replace replace = alloGens.ReplaceOperations[0];
             Assert.AreEqual(replace.Guid, op.Action.ReplaceOpRefs[0]);
+            Assert.AreEqual(0, op.GenerationType);
+
+            Operation op1 = alloGens.CreateNewOperation(1);
+            Assert.AreEqual(2, alloGens.Operations.Count);
+            Assert.AreEqual(2, alloGens.ReplaceOperations.Count);
+            Assert.AreEqual(1, op1.Action.ReplaceOpRefs.Count);
+            Replace replace2 = alloGens.ReplaceOperations[1];
+            Assert.AreEqual(replace2.Guid, op1.Action.ReplaceOpRefs[0]);
+            Assert.AreEqual(1, op1.GenerationType);
         }
 
         [Test]
@@ -47,7 +56,7 @@ namespace AlloGenModelTests
             rep3.Name = "my name";
             alloGens.ReplaceOperations.Add(rep3);
             Assert.AreEqual(3, alloGens.ReplaceOperations.Count);
-            Operation op = new Operation();
+            Operation op = new Operation(0);
             op.Action.ReplaceOpRefs.Add(rep1.Guid);
             op.Action.ReplaceOpRefs.Add(rep2.Guid);
             op.Action.ReplaceOpRefs.Add(rep3.Guid);

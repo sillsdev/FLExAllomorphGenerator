@@ -14,7 +14,7 @@ namespace SIL.AlloGenModel
     public class AllomorphGenerators
     {
         [XmlAttribute("dbVersion")]
-        public int DbVersion { get; set; } = 4;
+        public int DbVersion { get; set; } = 5;
 
         [XmlAttribute("applyTo")]
         public int ApplyTo { get; set; } = -1;
@@ -82,9 +82,9 @@ namespace SIL.AlloGenModel
             return operations;
         }
 
-        public Operation CreateNewOperation()
+        public Operation CreateNewOperation(int genType)
         {
-            Operation op = new Operation();
+            Operation op = new Operation(genType);
             Operations.Add(op);
             Replace newReplace = new Replace();
             if (WritingSystems != null)

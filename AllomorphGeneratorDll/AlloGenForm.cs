@@ -95,6 +95,7 @@ namespace SIL.AllomorphGenerator
         Dictionary<Operation, List<ILexEntry>> dictNonChosen =
             new Dictionary<Operation, List<ILexEntry>>();
         Dictionary<Operation, bool> dictOperationActiveState = new Dictionary<Operation, bool>();
+        int generationType = 0;
 
         private ListBox currentListBox;
         private ContextMenuStrip editContextMenu;
@@ -654,7 +655,7 @@ namespace SIL.AllomorphGenerator
             }
             else
             {
-                Operation op = AlloGens.CreateNewOperation();
+                Operation op = AlloGens.CreateNewOperation(generationType);
                 // remove the new op added by CreateNewOperation() and insert it at the right place
                 Operations.Remove(op);
                 Operations.Insert(index, op);
@@ -1434,7 +1435,7 @@ namespace SIL.AllomorphGenerator
                 tbFile.Text = OperationsFile;
                 AlloGens = new AllomorphGenerators();
                 AlloGens.WritingSystems = WritingSystems;
-                Operation = AlloGens.CreateNewOperation();
+                Operation = AlloGens.CreateNewOperation(generationType);
                 Pattern = Operation.Pattern;
                 Operations = AlloGens.Operations;
                 FillOperationsListBox();

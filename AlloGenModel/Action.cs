@@ -15,11 +15,13 @@ namespace SIL.AlloGenModel
         public List<string> ReplaceOpRefs { get; set; }
         public List<Environment> Environments { get; set; }
         public StemName StemName { get; set; } = new StemName();
+        public List<VariantType> VariantTypes { get; set; }
 
         public Action()
         {
             ReplaceOpRefs = new List<string>();
             Environments = new List<Environment>();
+            VariantTypes = new List<VariantType>();
         }
 
         public Action Duplicate()
@@ -46,6 +48,16 @@ namespace SIL.AlloGenModel
             newSN.Guid = StemName.Guid;
             newSN.Name = StemName.Name;
             newAction.StemName = newSN;
+            List<VariantType> newVariantTypes = new List<VariantType>();
+            foreach (VariantType vt in VariantTypes)
+            {
+                var newVT = new VariantType();
+                newVT.Active = vt.Active;
+                newVT.Guid = vt.Guid;
+                newVT.Name = vt.Name;
+                newVariantTypes.Add(newVT);
+            }
+            newAction.VariantTypes = newVariantTypes;
             return newAction;
         }
 
@@ -61,13 +73,14 @@ namespace SIL.AlloGenModel
                 Action act = (Action)obj;
                 return (ReplaceOpRefs.SequenceEqual(act.ReplaceOpRefs))
                     && (Environments.SequenceEqual(act.Environments))
+                    && (VariantTypes.SequenceEqual(act.VariantTypes))
                     && (StemName.Equals(act.StemName));
             }
         }
 
         public override int GetHashCode()
         {
-            return Tuple.Create(ReplaceOpRefs, Environments, StemName).GetHashCode();
+            return Tuple.Create(ReplaceOpRefs, Environments, StemName, VariantTypes).GetHashCode();
         }
     }
 }
