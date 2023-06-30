@@ -3,11 +3,6 @@
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SIL.AllomorphGenerator;
 using SIL.FieldWorks.FwCoreDlgs;
 using SIL.LCModel;
 using XCore;
@@ -47,7 +42,7 @@ namespace SIL.AllomorphGenerator
         void IUtility.OnSelection()
         {
             m_dlg.WhenDescription = "Run this when you need to generate allomorphs.";
-            m_dlg.WhatDescription = "Run this to generate allomorphs based on the citation form.";
+            m_dlg.WhatDescription = "Run this to generate allomorphs based on the citation form, lexeme form, eytmology form, or an entry-level custom field.";
             m_dlg.RedoDescription =
                 "You cannot use 'Undo' to cancel the effect of this utility. You would need to go back to a previously saved version of the database(i.e., make a backup of your database before running this utility so you can restore to it if the results are not what you want).";
             ;

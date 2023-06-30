@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlloGenModelTests", "AlloGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FwCoreDlgs", "..\..\..\..\..\fwrepo\fw\Src\FwCoreDlgs\FwCoreDlgs.csproj", "{17090FC0-6BDA-409A-A99A-5AE7F35647ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VariantGeneratorDll", "VariantGeneratorDll\VariantGeneratorDll.csproj", "{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,18 @@ Global
 		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Release|x64.Build.0 = Release|x64
 		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Release|x86.ActiveCfg = Release|x86
 		{17090FC0-6BDA-409A-A99A-5AE7F35647ED}.Release|x86.Build.0 = Release|x86
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Debug|x64.Build.0 = Debug|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Debug|x86.Build.0 = Debug|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Release|x64.ActiveCfg = Release|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Release|x64.Build.0 = Release|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Release|x86.ActiveCfg = Release|Any CPU
+		{57E15C5D-4F7D-4B8E-B8D1-706F06BCF1E8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

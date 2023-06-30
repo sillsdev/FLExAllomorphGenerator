@@ -41,25 +41,25 @@ namespace SIL.AllomorphGenerator
         public Mediator Mediator { get; set; }
         public PropertyTable PropTable { get; set; }
 
-        private RegistryKey regkey;
+        protected RegistryKey regkey;
         public static string m_strRegKey = "Software\\SIL\\AllomorphGenerator";
-        const string m_strLastDatabase = "LastDatabase";
-        const string m_strLastOperationsFile = "LastOperationsFile";
-        const string m_strLastOperation = "Lastoperation";
-        const string m_strLastApplyOperation = "LastApplyOperation";
-        const string m_strLastEditReplaceOps = "LastEditReplaceOps";
-        const string m_strLastTab = "LastTab";
-        const string m_strLocationX = "LocationX";
-        const string m_strLocationY = "LocationY";
-        const string m_strSizeHeight = "SizeHeight";
-        const string m_strSizeWidth = "SizeWidth";
-        const string m_strWindowState = "WindowState";
+		protected const string m_strLastDatabase = "LastDatabase";
+		protected const string m_strLastOperationsFile = "LastOperationsFile";
+		protected const string m_strLastOperation = "Lastoperation";
+		protected const string m_strLastApplyOperation = "LastApplyOperation";
+		protected const string m_strLastEditReplaceOps = "LastEditReplaceOps";
+		protected const string m_strLastTab = "LastTab";
+		protected const string m_strLocationX = "LocationX";
+		protected const string m_strLocationY = "LocationY";
+		protected const string m_strSizeHeight = "SizeHeight";
+		protected const string m_strSizeWidth = "SizeWidth";
+		protected const string m_strWindowState = "WindowState";
 
-        private ContextMenuStrip helpContextMenu;
-        const string UserDocumentation = "User Documentation";
-        const string About = "About";
+        protected ContextMenuStrip helpContextMenu;
+		protected const string UserDocumentation = "User Documentation";
+		protected const string About = "About";
 
-        const string OperationsFilePrompt =
+		protected const string OperationsFilePrompt =
             "Allomorph Generator Operations File (*.agf)|*.agf|" + "All Files (*.*)|*.*";
 
         public Rectangle RectNormal { get; set; }
@@ -74,53 +74,53 @@ namespace SIL.AllomorphGenerator
         public int RetrievedLastApplyOperation { get; set; }
         public int RetrievedLastEditReplaceOps { get; set; }
 
-        XmlBackEndProvider Provider { get; set; }
-        DatabaseMigrator Migrator { get; set; }
-        String OperationsFile { get; set; }
-        AllomorphGenerators AlloGens { get; set; }
-        List<Operation> Operations { get; set; }
-        Operation Operation { get; set; }
-        Operation LastOperationShown { get; set; } = null;
-        List<Replace> ReplaceOps { get; set; }
-        List<string> ReplaceOpRefs { get; set; }
-        List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();
-        AlloGenModel.Action ActionOp { get; set; }
-        StemName StemName { get; set; }
-        Pattern Pattern { get; set; }
-        Category Category { get; set; }
-        bool ChangesMade { get; set; } = false;
-        Font fontForDefaultCitationForm;
-        FontInfo fontInfoForDefaultCitationForm;
-        Color colorForDefaultCitationForm;
-        Dictionary<Operation, List<ILexEntry>> dictNonChosen =
+		protected XmlBackEndProvider Provider { get; set; }
+		protected DatabaseMigrator Migrator { get; set; }
+		protected String OperationsFile { get; set; }
+		protected AllomorphGenerators AlloGens { get; set; }
+		protected List<Operation> Operations { get; set; }
+		protected Operation Operation { get; set; }
+		protected Operation LastOperationShown { get; set; } = null;
+		protected List<Replace> ReplaceOps { get; set; }
+		protected List<string> ReplaceOpRefs { get; set; }
+		protected List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();
+		protected AlloGenModel.Action ActionOp { get; set; }
+		protected StemName StemName { get; set; }
+		protected Pattern Pattern { get; set; }
+		protected Category Category { get; set; }
+		protected bool ChangesMade { get; set; } = false;
+		protected Font fontForDefaultCitationForm;
+		protected FontInfo fontInfoForDefaultCitationForm;
+		protected Color colorForDefaultCitationForm;
+		protected Dictionary<Operation, List<ILexEntry>> dictNonChosen =
             new Dictionary<Operation, List<ILexEntry>>();
-        Dictionary<Operation, bool> dictOperationActiveState = new Dictionary<Operation, bool>();
-        int generationType = 0;
+		protected Dictionary<Operation, bool> dictOperationActiveState = new Dictionary<Operation, bool>();
+		protected int generationType = 0;
 
-        private ListBox currentListBox;
-        private ContextMenuStrip editContextMenu;
-        private ContextMenuStrip editReplaceOpsContextMenu;
-        const string formTitle = "Allomorph Generator";
-        const string cmAdd = "Add";
-        const string cmEdit = "Edit";
-        const string cmInsertBefore = "Insert new before";
-        const string cmInsertExistingBefore = "Insert existing before";
-        const string cmInsertAfter = "Insert new after";
-        const string cmInsertExistingAfter = "Insert existing after";
-        const string cmMoveUp = "Move up";
-        const string cmMoveDown = "Move down";
-        const string cmDelete = "Delete";
-        const string cmDuplicate = "Duplicate";
+        protected ListBox currentListBox;
+        protected ContextMenuStrip editContextMenu;
+        protected ContextMenuStrip editReplaceOpsContextMenu;
+		protected const string formTitle = "Allomorph Generator";
+		protected const string cmAdd = "Add";
+		protected const string cmEdit = "Edit";
+		protected const string cmInsertBefore = "Insert new before";
+		protected const string cmInsertExistingBefore = "Insert existing before";
+		protected const string cmInsertAfter = "Insert new after";
+		protected const string cmInsertExistingAfter = "Insert existing after";
+		protected const string cmMoveUp = "Move up";
+		protected const string cmMoveDown = "Move down";
+		protected const string cmDelete = "Delete";
+		protected const string cmDuplicate = "Duplicate";
 
-        private ContextMenuStrip operationsCheckBoxContextMenu;
-        private ContextMenuStrip previewCheckBoxContextMenu;
-        const string cmSelectAll = "Select All";
-        const string cmClearAll = "Clear All";
-        const string cmToggle = "Toggle";
-        private ListViewColumnSorter lvwColumnSorter;
-        private ListViewColumnSorter lvwEditReplaceOpsColumnSorter;
-        private List<FDWrapper> customFields = new List<FDWrapper>();
-        private string applyToField = "";
+        protected ContextMenuStrip operationsCheckBoxContextMenu;
+        protected ContextMenuStrip previewCheckBoxContextMenu;
+		protected const string cmSelectAll = "Select All";
+		protected const string cmClearAll = "Clear All";
+		protected const string cmToggle = "Toggle";
+        protected ListViewColumnSorter lvwColumnSorter;
+        protected ListViewColumnSorter lvwEditReplaceOpsColumnSorter;
+        protected List<FDWrapper> customFields = new List<FDWrapper>();
+        protected string applyToField = "";
 
         public AlloGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
         {
@@ -137,7 +137,7 @@ namespace SIL.AllomorphGenerator
             InitForm();
         }
 
-        private void InitForm()
+        protected void InitForm()
         {
             InitializeComponent();
             // Create an instance of a ListView column sorter and assign it
@@ -178,7 +178,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void FillApplyToComboBox()
+        protected void FillApplyToComboBox()
         {
             ApplyTo cit = new ApplyTo("Citation Form", LexEntryTags.kflidCitationForm);
             ApplyTo lex = new ApplyTo("Lexeme Form", LexEntryTags.kflidLexemeForm);
@@ -204,14 +204,14 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void SetUpOperationsCheckedListBox()
+        protected void SetUpOperationsCheckedListBox()
         {
             lvOperations.SmallImageList = ilPreview;
             lvOperations.Columns.Add("", "", 25, HorizontalAlignment.Left, 0);
             lvOperations.Columns.Add("Operations", -2, HorizontalAlignment.Left);
         }
 
-        private void SetUpPreviewCheckedListBox()
+        protected void SetUpPreviewCheckedListBox()
         {
             lvPreview.SmallImageList = ilPreview;
             lvPreview.Columns.Clear();
@@ -223,7 +223,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void SetUpEditReplaceOpsListView()
+        protected void SetUpEditReplaceOpsListView()
         {
             lvEditReplaceOps.Columns.Add("Name", -2, HorizontalAlignment.Left);
             lvEditReplaceOps.Columns.Add("From", -2, HorizontalAlignment.Left);
@@ -236,7 +236,7 @@ namespace SIL.AllomorphGenerator
             lvEditReplaceOps.Columns.Add("Description", -2, HorizontalAlignment.Left);
         }
 
-        private void SetupFontAndStyleInfo()
+        protected void SetupFontAndStyleInfo()
         {
             if (Cache != null)
             {
@@ -269,7 +269,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void SetFontAndStyleInfoForDefaultCitationForm(WritingSystem ws)
+        protected void SetFontAndStyleInfoForDefaultCitationForm(WritingSystem ws)
         {
             if (ws.Handle == Cache.DefaultVernWs)
             {
@@ -279,14 +279,14 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void RememberTabSelection()
+        protected void RememberTabSelection()
         {
             if (LastTab < 0 || LastTab > tabControl.TabCount)
                 LastTab = 0;
             tabControl.SelectedIndex = LastTab;
         }
 
-        private void BuildReplaceContextMenu()
+        protected void BuildReplaceContextMenu()
         {
             editContextMenu = new ContextMenuStrip();
             editContextMenu.Name = "ReplaceOps";
@@ -331,7 +331,7 @@ namespace SIL.AllomorphGenerator
             editContextMenu.Items.Add(deleteItem);
         }
 
-        private void BuildHelpContextMenu()
+        protected void BuildHelpContextMenu()
         {
             helpContextMenu = new ContextMenuStrip();
             ToolStripMenuItem userDoc = new ToolStripMenuItem(UserDocumentation);
@@ -345,7 +345,7 @@ namespace SIL.AllomorphGenerator
             helpContextMenu.Items.Add(about);
         }
 
-        private void BuildOperationsCheckBoxContextMenu()
+        protected void BuildOperationsCheckBoxContextMenu()
         {
             operationsCheckBoxContextMenu = new ContextMenuStrip();
             ToolStripMenuItem selectAll = new ToolStripMenuItem(cmSelectAll);
@@ -362,7 +362,7 @@ namespace SIL.AllomorphGenerator
             operationsCheckBoxContextMenu.Items.Add(toggle);
         }
 
-        private void OperationsClearAll_Click(object sender, EventArgs e)
+        protected void OperationsClearAll_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem lvItem in lvOperations.Items)
             {
@@ -370,7 +370,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void OperationsSelectAll_Click(object sender, EventArgs e)
+        protected void OperationsSelectAll_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem lvItem in lvOperations.Items)
             {
@@ -378,7 +378,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void OperationsToggle_Click(object sender, EventArgs e)
+        protected void OperationsToggle_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem lvItem in lvOperations.Items)
             {
@@ -386,7 +386,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void BuildPreviewCheckBoxContextMenu()
+        protected void BuildPreviewCheckBoxContextMenu()
         {
             previewCheckBoxContextMenu = new ContextMenuStrip();
             ToolStripMenuItem selectAll = new ToolStripMenuItem(cmSelectAll);
@@ -403,7 +403,7 @@ namespace SIL.AllomorphGenerator
             previewCheckBoxContextMenu.Items.Add(toggle);
         }
 
-        private void PreviewClearAll_Click(object sender, EventArgs e)
+        protected void PreviewClearAll_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem lvItem in lvPreview.Items)
             {
@@ -411,7 +411,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void PreviewSelectAll_Click(object sender, EventArgs e)
+        protected void PreviewSelectAll_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem lvItem in lvPreview.Items)
             {
@@ -419,7 +419,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void PreviewToggle_Click(object sender, EventArgs e)
+        protected void PreviewToggle_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem lvItem in lvPreview.Items)
             {
@@ -427,17 +427,17 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void lBoxReplaceOps_MouseUp(object sender, MouseEventArgs e)
+        protected void lBoxReplaceOps_MouseUp(object sender, MouseEventArgs e)
         {
             HandleContextMenu(sender, e);
         }
 
-        private void lBoxOperations_MouseUp(object sender, MouseEventArgs e)
+        protected void lBoxOperations_MouseUp(object sender, MouseEventArgs e)
         {
             HandleContextMenu(sender, e);
         }
 
-        private void HandleContextMenu(object sender, MouseEventArgs e)
+        protected void HandleContextMenu(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -455,7 +455,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void lvEditReplaceOps_MouseUp(object sender, MouseEventArgs e)
+        protected void lvEditReplaceOps_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -472,7 +472,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void BuildEditReplaceOpContextMenu()
+        protected void BuildEditReplaceOpContextMenu()
         {
             editReplaceOpsContextMenu = new ContextMenuStrip();
             editReplaceOpsContextMenu.Name = "EditReplaceOps";
@@ -496,7 +496,7 @@ namespace SIL.AllomorphGenerator
             editReplaceOpsContextMenu.Items.Add(deleteItem);
         }
 
-        private void AdjustContextMenuContent(ListBox lBoxSender, int indexAtMouse)
+        protected void AdjustContextMenuContent(ListBox lBoxSender, int indexAtMouse)
         {
             int indexLast = lBoxSender.Items.Count - 1;
             if (lBoxSender.Name == "lBoxOperations")
@@ -532,7 +532,7 @@ namespace SIL.AllomorphGenerator
                 editContextMenu.Items[9].Enabled = true;
         }
 
-        void EditContextMenuReplace_Click(object sender, EventArgs e)
+        protected void EditContextMenuReplace_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmEdit)
@@ -590,7 +590,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void InvokeEditReplaceOpForm()
+        protected void InvokeEditReplaceOpForm()
         {
             using (var dialog = new EditReplaceOpForm())
             {
@@ -613,7 +613,7 @@ namespace SIL.AllomorphGenerator
             InvokeEditReplaceOpForm();
         }
 
-        private bool CanDoReplaceOpsMasterListOption()
+        protected bool CanDoReplaceOpsMasterListOption()
         {
             bool doable = true;
             if (lvEditReplaceOps.SelectedItems.Count == 0)
@@ -642,7 +642,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void DoContextMenuInsert(int index)
+        protected void DoContextMenuInsert(int index)
         {
             if (currentListBox.Name == "lBoxReplaceOps")
             {
@@ -665,19 +665,19 @@ namespace SIL.AllomorphGenerator
             MarkAsChanged(true);
         }
 
-        private void InsertExistingAfterContextMenu_Click(object sender, EventArgs e)
+        protected void InsertExistingAfterContextMenu_Click(object sender, EventArgs e)
         {
             int selectedIndex = lBoxReplaceOps.SelectedIndex + 1;
             InsertExistingReplaceOps(selectedIndex);
         }
 
-        private void InsertExistingBeforeContextMenu_Click(object sender, EventArgs e)
+        protected void InsertExistingBeforeContextMenu_Click(object sender, EventArgs e)
         {
             int selectedIndex = lBoxReplaceOps.SelectedIndex;
             InsertExistingReplaceOps(selectedIndex);
         }
 
-        private void InsertExistingReplaceOps(int selectedIndex)
+        protected void InsertExistingReplaceOps(int selectedIndex)
         {
             ReplaceOperationsChooser chooser = new ReplaceOperationsChooser(AlloGens);
             chooser.FillReplaceOpsListBox();
@@ -724,7 +724,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void DoContextMenuMove(int index, int otherIndex)
+        protected void DoContextMenuMove(int index, int otherIndex)
         {
             Object selectedItem = currentListBox.SelectedItem;
             Object otherItem = currentListBox.Items[otherIndex];
@@ -772,7 +772,7 @@ namespace SIL.AllomorphGenerator
             MarkAsChanged(true);
         }
 
-        private void CheckOnRemovingSelectedReplaceOpFromMasterList(string prompt, Replace replace)
+        protected void CheckOnRemovingSelectedReplaceOpFromMasterList(string prompt, Replace replace)
         {
             DialogResult result = MessageBox.Show(
                 prompt,
@@ -813,7 +813,7 @@ namespace SIL.AllomorphGenerator
             MarkAsChanged(true);
         }
 
-        private void RememberFormState()
+        protected void RememberFormState()
         {
             regkey = Registry.CurrentUser.OpenSubKey(m_strRegKey);
             if (regkey != null)
@@ -877,7 +877,7 @@ namespace SIL.AllomorphGenerator
             regkey.Close();
         }
 
-        private void btnBrowse_Click(object sender, EventArgs e)
+        protected void btnBrowse_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = OperationsFilePrompt;
@@ -908,7 +908,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void LoadMigrateGetOperations()
+        protected void LoadMigrateGetOperations()
         {
             if (!File.Exists(OperationsFile))
             {
@@ -972,13 +972,13 @@ namespace SIL.AllomorphGenerator
 #endif
         }
 
-        private void OnFormClosing(object sender, EventArgs e)
+        protected void OnFormClosing(object sender, EventArgs e)
         {
             SaveAnyChanges();
             SaveRegistryInfo();
         }
 
-        private void SaveAnyChanges()
+        protected void SaveAnyChanges()
         {
             if (ChangesMade)
             {
@@ -995,7 +995,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void DoSave()
+        protected void DoSave()
         {
             Provider.AlloGens = AlloGens;
             Provider.SaveDataToFile(OperationsFile);
@@ -1109,13 +1109,13 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private string GetDialectIndicator(bool dialect)
+        protected string GetDialectIndicator(bool dialect)
         {
             string indicator = dialect ? " X " : "";
             return indicator;
         }
 
-        private void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
+        protected void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
             Operation = lBoxOperations.SelectedItem as Operation;
             if (Operation != null)
@@ -1150,7 +1150,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void RefreshReplaceListBox()
+        protected void RefreshReplaceListBox()
         {
             lBoxReplaceOps.Items.Clear();
             foreach (string guid in ReplaceOpRefs)
@@ -1165,7 +1165,7 @@ namespace SIL.AllomorphGenerator
                 lBoxReplaceOps.SetSelected(0, true);
         }
 
-        private void RefreshMorphTypesListBox()
+        protected void RefreshMorphTypesListBox()
         {
             lBoxMorphTypes.Items.Clear();
             foreach (MorphType item in Pattern.MorphTypes)
@@ -1174,7 +1174,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void RefreshEnvironmentsListBox()
+        protected void RefreshEnvironmentsListBox()
         {
             lBoxEnvironments.Items.Clear();
             foreach (AlloGenModel.Environment item in ActionOp.Environments)
@@ -1183,7 +1183,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void btnCategory_Click(object sender, EventArgs e)
+        protected void btnCategory_Click(object sender, EventArgs e)
         {
             if (Cache != null)
             {
@@ -1242,13 +1242,13 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void ClearStemNameValues()
+        protected void ClearStemNameValues()
         {
             StemName.Name = "";
             StemName.Guid = "";
         }
 
-        private void btnStemName_Click(object sender, EventArgs e)
+        protected void btnStemName_Click(object sender, EventArgs e)
         {
             IPartOfSpeech pos = GetPartOfSpeechToUse(Pattern.Category.Guid);
             if (pos == null)
@@ -1301,7 +1301,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private IPartOfSpeech GetPartOfSpeechToUse(string poaGuid)
+        protected IPartOfSpeech GetPartOfSpeechToUse(string poaGuid)
         {
             IPartOfSpeech pos = (IPartOfSpeech)
                 Cache.LangProject.PartsOfSpeechOA.ReallyReallyAllPossibilities.FirstOrDefault(
@@ -1310,7 +1310,7 @@ namespace SIL.AllomorphGenerator
             return pos;
         }
 
-        private void btnEnvironments_Click(object sender, EventArgs e)
+        virtual protected void btnEnvironments_Click(object sender, EventArgs e)
         {
             if (Cache != null)
             {
@@ -1328,7 +1328,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void btnMorphTypes_Click(object sender, EventArgs e)
+        protected void btnMorphTypes_Click(object sender, EventArgs e)
         {
             if (Cache != null)
             {
@@ -1346,7 +1346,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void tbName_TextChanged(object sender, EventArgs e)
+        protected void tbName_TextChanged(object sender, EventArgs e)
         {
             TextBox tb = sender as TextBox;
             if (tb != null)
@@ -1363,7 +1363,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void btnSaveChanges_Click(object sender, EventArgs e)
+        protected void btnSaveChanges_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
             SetOperationActiveStatus();
@@ -1373,17 +1373,17 @@ namespace SIL.AllomorphGenerator
             this.Cursor = Cursors.Arrow;
         }
 
-        private void btnSaveChanges2_Click(object sender, EventArgs e)
+        protected void btnSaveChanges2_Click(object sender, EventArgs e)
         {
             btnSaveChanges_Click(sender, e);
         }
 
-        private void btnSaveChanges3_Click(object sender, EventArgs e)
+        protected void btnSaveChanges3_Click(object sender, EventArgs e)
         {
             btnSaveChanges_Click(sender, e);
         }
 
-        private void SetOperationActiveStatus()
+        protected void SetOperationActiveStatus()
         {
             for (int i = 0; i < dictOperationActiveState.Count; i++)
             {
@@ -1397,7 +1397,7 @@ namespace SIL.AllomorphGenerator
             AlloGens.Operations = Operations;
         }
 
-        private void tbDescription_TextChanged(object sender, EventArgs e)
+        protected void tbDescription_TextChanged(object sender, EventArgs e)
         {
             TextBox tb = sender as TextBox;
             if (tb != null)
@@ -1407,13 +1407,13 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void MarkAsChanged(bool value)
+        protected void MarkAsChanged(bool value)
         {
             ChangesMade = value;
             ShowChangeStatusOnForm();
         }
 
-        private void ShowChangeStatusOnForm()
+        protected void ShowChangeStatusOnForm()
         {
             if (AlloGenForm.ActiveForm != null)
             {
@@ -1423,7 +1423,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void btnNewFile_Click(object sender, EventArgs e)
+        protected void btnNewFile_Click(object sender, EventArgs e)
         {
             SaveAnyChanges();
             SaveFileDialog dlg = new SaveFileDialog();
@@ -1457,7 +1457,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void btnHelp_Click(object sender, EventArgs e)
+        protected void btnHelp_Click(object sender, EventArgs e)
         {
             Button btnSender = (Button)sender;
             Point ptLowerLeft = new Point(0, btnSender.Height);
@@ -1465,7 +1465,7 @@ namespace SIL.AllomorphGenerator
             helpContextMenu.Show(ptLowerLeft);
         }
 
-        void About_Click(object sender, EventArgs e)
+        protected void About_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == About)
@@ -1479,7 +1479,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void UserDoc_Click(object sender, EventArgs e)
+		protected void UserDoc_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == UserDocumentation)
@@ -1489,7 +1489,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private static string GetAppBaseDir()
+        protected static string GetAppBaseDir()
         {
             string basedir;
             string rootdir;
@@ -1502,7 +1502,7 @@ namespace SIL.AllomorphGenerator
             return basedir;
         }
 
-        private static void DetermineIndexOfBinInExecutablesPath(
+        protected static void DetermineIndexOfBinInExecutablesPath(
             out string rootdir,
             out int indexOfBinInPath
         )
@@ -1512,7 +1512,7 @@ namespace SIL.AllomorphGenerator
             indexOfBinInPath = rootdir.LastIndexOf("bin");
         }
 
-        private void btnMatch_Click(object sender, EventArgs e)
+        protected void btnMatch_Click(object sender, EventArgs e)
         {
             IVwStylesheet stylesheet = FontHeightAdjuster.StyleSheetFromPropertyTable(PropTable);
 
@@ -1537,7 +1537,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        protected void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
             TabPage page = (sender as TabControl).SelectedTab;
@@ -1554,7 +1554,7 @@ namespace SIL.AllomorphGenerator
             this.Cursor = Cursors.Arrow;
         }
 
-        private void btnApplyOperations_Click(object sender, EventArgs e)
+        protected void btnApplyOperations_Click(object sender, EventArgs e)
         {
             RememberNonChosenEntries(Operation);
             if (lvOperations.CheckedItems.Count == 0)
@@ -1631,7 +1631,7 @@ namespace SIL.AllomorphGenerator
             this.Cursor = Cursors.Arrow;
         }
 
-        private void GetRepaceOpsToUse(List<Replace> replaceOpsToUse, Operation op)
+        protected void GetRepaceOpsToUse(List<Replace> replaceOpsToUse, Operation op)
         {
             replaceOpsToUse.Clear();
             foreach (string guid in op.Action.ReplaceOpRefs)
@@ -1644,7 +1644,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private bool CheckForInvalidEnvironmentsAndStemNames()
+        protected bool CheckForInvalidEnvironmentsAndStemNames()
         {
             bool allIsGood = true;
             foreach (ListViewItem lvItem in lvOperations.CheckedItems)
@@ -1682,7 +1682,7 @@ namespace SIL.AllomorphGenerator
             return allIsGood;
         }
 
-        private void ReportMissingFLExItem(
+        protected void ReportMissingFLExItem(
             string missingItem,
             string itemName,
             string operationName
@@ -1697,7 +1697,7 @@ namespace SIL.AllomorphGenerator
             MessageBox.Show(sb.ToString());
         }
 
-        private void lvOperations_ItemChecked(object sender, ItemCheckedEventArgs e)
+        protected void lvOperations_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             ListViewItem itemChecked = e.Item;
             if (itemChecked == null)
@@ -1715,12 +1715,12 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void lvOperations_SelectedIndexChanged(object sender, EventArgs e)
+        protected void lvOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowPreview();
         }
 
-        private void ShowPreview()
+        protected void ShowPreview()
         {
             if (LastOperationShown != null)
             {
@@ -1809,7 +1809,7 @@ namespace SIL.AllomorphGenerator
             this.Cursor = Cursors.Arrow;
         }
 
-        private void RememberNonChosenEntries(Operation op)
+        protected void RememberNonChosenEntries(Operation op)
         {
             List<ILexEntry> uncheckedEntries = new List<ILexEntry>();
             foreach (ListViewItem item in lvPreview.Items)
@@ -1826,13 +1826,13 @@ namespace SIL.AllomorphGenerator
             dictNonChosen.Add(op, uncheckedEntries);
         }
 
-        private string GetPreviewForm(Replacer replacer, string formToUse, WritingSystem ws)
+        protected string GetPreviewForm(Replacer replacer, string formToUse, WritingSystem ws)
         {
             string previewForm = replacer.ApplyReplaceOpToOneWS(formToUse, ws.Name);
             return previewForm;
         }
 
-        private void lvOperations_ColumnClick(object sender, ColumnClickEventArgs e)
+        protected void lvOperations_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Only show the context menu
             if (e.Column == 0)
@@ -1845,7 +1845,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void lvPreview_ColumnClick(object sender, ColumnClickEventArgs e)
+        protected void lvPreview_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Do not sort the checkboxes column; instead show context menu
             if (e.Column == 0)
@@ -1883,7 +1883,7 @@ namespace SIL.AllomorphGenerator
             this.lvPreview.Sort();
         }
 
-        private void lvEditReplaceOps_ColumnClick(object sender, ColumnClickEventArgs e)
+        protected void lvEditReplaceOps_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Following code taken from
             // https://learn.microsoft.com/en-us/troubleshoot/developer/visualstudio/csharp/language-compilers/sort-listview-by-column
@@ -1912,12 +1912,12 @@ namespace SIL.AllomorphGenerator
             lvEditReplaceOps.Sort();
         }
 
-        private void btnEditReplaceOp_Click(object sender, EventArgs e)
+        protected void btnEditReplaceOp_Click(object sender, EventArgs e)
         {
             InvokeEditReplaceOpFormMasterList();
         }
 
-        private void btnAddNewReplaceOp_Click(object sender, EventArgs e)
+        protected void btnAddNewReplaceOp_Click(object sender, EventArgs e)
         {
             using (var dialog = new EditReplaceOpForm())
             {
@@ -1932,7 +1932,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private Replace CreateNewReplace()
+        protected Replace CreateNewReplace()
         {
             Replace replace = new Replace();
             foreach (WritingSystem ws in WritingSystems)
@@ -1942,7 +1942,7 @@ namespace SIL.AllomorphGenerator
             return replace;
         }
 
-        private void AddNewReplaceOpToMasterList(Replace replace)
+        protected void AddNewReplaceOpToMasterList(Replace replace)
         {
             AlloGens.AddReplaceOp(replace);
             ListViewItem item = new ListViewItem();
@@ -1955,7 +1955,7 @@ namespace SIL.AllomorphGenerator
             FillReplaceOpsListView();
         }
 
-        private void btnDeleteReplaceOp_Click(object sender, EventArgs e)
+        protected void btnDeleteReplaceOp_Click(object sender, EventArgs e)
         {
             if (!CanDoReplaceOpsMasterListOption())
             {
@@ -1967,7 +1967,7 @@ namespace SIL.AllomorphGenerator
             CheckOnRemovingSelectedReplaceOpFromMasterList(sb.ToString(), replace);
         }
 
-        private StringBuilder BuildDeleteReplaceOpMessage(Replace replace)
+        protected StringBuilder BuildDeleteReplaceOpMessage(Replace replace)
         {
             List<Operation> operationsContainingReplaceOp = AlloGens.FindOperationsUsedByReplaceOp(
                 replace
@@ -1994,7 +1994,7 @@ namespace SIL.AllomorphGenerator
             return sb;
         }
 
-        private StringBuilder BuildDeleteReplaceOpRefMessage(Replace replace)
+        protected StringBuilder BuildDeleteReplaceOpRefMessage(Replace replace)
         {
             List<Operation> operationsContainingReplaceOp = AlloGens.FindOperationsUsedByReplaceOp(
                 replace
@@ -2022,7 +2022,7 @@ namespace SIL.AllomorphGenerator
             return sb;
         }
 
-        private void lvEditReplaceOps_SelectedIndexChanged(object sender, EventArgs e)
+        protected void lvEditReplaceOps_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lvEditReplaceOps.SelectedItems.Count > 0)
             {
@@ -2035,7 +2035,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        private void InvokeEditReplaceOpFormMasterList()
+        protected void InvokeEditReplaceOpFormMasterList()
         {
             if (!CanDoReplaceOpsMasterListOption())
             {
@@ -2060,12 +2060,12 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void lvEditReplaceOps_DoubleClick(object sender, EventArgs e)
+		protected void lvEditReplaceOps_DoubleClick(object sender, EventArgs e)
         {
             InvokeEditReplaceOpFormMasterList();
         }
 
-        private void cbApplyTo_SelectedIndexChanged(object sender, EventArgs e)
+        protected void cbApplyTo_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
             AlloGens.ApplyTo = cb.SelectedIndex;

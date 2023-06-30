@@ -8,7 +8,7 @@ namespace SIL.AllomorphGenerator
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        protected System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -29,7 +29,7 @@ namespace SIL.AllomorphGenerator
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        protected void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlloGenForm));
@@ -797,62 +797,62 @@ namespace SIL.AllomorphGenerator
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabEditOps;
-        private System.Windows.Forms.TabPage tabRunOps;
-        private System.Windows.Forms.ListBox lBoxOperations;
-        private System.Windows.Forms.Label lbAlloGenFile;
-        private System.Windows.Forms.TextBox tbFile;
-        private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.Button btnHelp;
-        private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.TextBox tbDescription;
-        private System.Windows.Forms.Label lbPattern;
-        private System.Windows.Forms.Label lbAction;
-        private System.Windows.Forms.Label lbName;
-        private System.Windows.Forms.Label lbDescription;
-        private System.Windows.Forms.ListBox lBoxEnvironments;
-        private System.Windows.Forms.ListBox lBoxMorphTypes;
-        private System.Windows.Forms.Label lbCategoryddd;
-        private System.Windows.Forms.Label lbMorphTypes;
-        private System.Windows.Forms.TextBox tbMatch;
-        private System.Windows.Forms.Label lbMatch;
-        private System.Windows.Forms.ListBox lBoxReplaceOps;
-        private System.Windows.Forms.Button btnCategory;
-        private System.Windows.Forms.TextBox tbCategory;
-        private System.Windows.Forms.Label lbCategory;
-        private System.Windows.Forms.Button btnStemName;
-        private System.Windows.Forms.TextBox tbStemName;
-        private System.Windows.Forms.Label lbStemName;
-        private System.Windows.Forms.Label lbReplaceOps;
-        private System.Windows.Forms.Button btnEnvironments;
-        private System.Windows.Forms.Button btnMorphTypes;
-        private System.Windows.Forms.Label lbReplaceRightClickToEdit;
-        private System.Windows.Forms.Label lbOpRightClickToEdit;
-        private System.Windows.Forms.Label lbOperations;
-        private System.Windows.Forms.Button btnSaveChanges;
-        private System.Windows.Forms.Panel plPattern;
-        private System.Windows.Forms.Panel plActions;
-        private System.Windows.Forms.Button btnNewFile;
-        private System.Windows.Forms.Button btnMatch;
-        private System.Windows.Forms.Label lbOperationsToApply;
-        private System.Windows.Forms.Button btnApplyOperations;
-        private System.Windows.Forms.Label lbPreview;
-        private System.Windows.Forms.ListView lvPreview;
-        private System.Windows.Forms.Label lbCountRunOps;
-        private ImageList ilPreview;
-        private ListView lvOperations;
-        private Button btnSaveChanges2;
-        private TabPage tabEditReplaceOps;
-        private Button btnEditReplaceOp;
-        private Button btnAddNewReplaceOp;
-        private ListView lvEditReplaceOps;
-        private Button btnDeleteReplaceOp;
-        private Button btnSaveChanges3;
-        private Label lbCountReplaceOps;
-        private Label lbCountOps;
-        private Label lbApplyTo;
-        private ComboBox cbApplyTo;
+        protected System.Windows.Forms.TabControl tabControl;
+        protected System.Windows.Forms.TabPage tabEditOps;
+        protected System.Windows.Forms.TabPage tabRunOps;
+        protected System.Windows.Forms.ListBox lBoxOperations;
+        protected System.Windows.Forms.Label lbAlloGenFile;
+        protected System.Windows.Forms.TextBox tbFile;
+        protected System.Windows.Forms.Button btnBrowse;
+        protected System.Windows.Forms.Button btnHelp;
+        protected System.Windows.Forms.TextBox tbName;
+        protected System.Windows.Forms.TextBox tbDescription;
+        protected System.Windows.Forms.Label lbPattern;
+        protected System.Windows.Forms.Label lbAction;
+        protected System.Windows.Forms.Label lbName;
+        protected System.Windows.Forms.Label lbDescription;
+        protected System.Windows.Forms.ListBox lBoxEnvironments;
+        protected System.Windows.Forms.ListBox lBoxMorphTypes;
+        protected System.Windows.Forms.Label lbCategoryddd;
+        protected System.Windows.Forms.Label lbMorphTypes;
+        protected System.Windows.Forms.TextBox tbMatch;
+        protected System.Windows.Forms.Label lbMatch;
+        protected System.Windows.Forms.ListBox lBoxReplaceOps;
+        protected System.Windows.Forms.Button btnCategory;
+        protected System.Windows.Forms.TextBox tbCategory;
+        protected System.Windows.Forms.Label lbCategory;
+        protected System.Windows.Forms.Button btnStemName;
+        protected System.Windows.Forms.TextBox tbStemName;
+        protected System.Windows.Forms.Label lbStemName;
+        protected System.Windows.Forms.Label lbReplaceOps;
+        protected System.Windows.Forms.Button btnEnvironments;
+        protected System.Windows.Forms.Button btnMorphTypes;
+        protected System.Windows.Forms.Label lbReplaceRightClickToEdit;
+        protected System.Windows.Forms.Label lbOpRightClickToEdit;
+        protected System.Windows.Forms.Label lbOperations;
+        protected System.Windows.Forms.Button btnSaveChanges;
+        protected System.Windows.Forms.Panel plPattern;
+        protected System.Windows.Forms.Panel plActions;
+        protected System.Windows.Forms.Button btnNewFile;
+        protected System.Windows.Forms.Button btnMatch;
+        protected System.Windows.Forms.Label lbOperationsToApply;
+        protected System.Windows.Forms.Button btnApplyOperations;
+        protected System.Windows.Forms.Label lbPreview;
+        protected System.Windows.Forms.ListView lvPreview;
+        protected System.Windows.Forms.Label lbCountRunOps;
+        protected ImageList ilPreview;
+        protected ListView lvOperations;
+        protected Button btnSaveChanges2;
+        protected TabPage tabEditReplaceOps;
+        protected Button btnEditReplaceOp;
+        protected Button btnAddNewReplaceOp;
+        protected ListView lvEditReplaceOps;
+        protected Button btnDeleteReplaceOp;
+        protected Button btnSaveChanges3;
+        protected Label lbCountReplaceOps;
+        protected Label lbCountOps;
+        protected Label lbApplyTo;
+        protected ComboBox cbApplyTo;
     }
 }
 

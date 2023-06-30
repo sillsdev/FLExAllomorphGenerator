@@ -1,0 +1,2 @@
+
+<utility assemblyPath="c:\fwrepo\fw\Output\Release\AllomorphGenerator.dll" class="SIL.AllomorphGenerator.FLExUtility"/>
