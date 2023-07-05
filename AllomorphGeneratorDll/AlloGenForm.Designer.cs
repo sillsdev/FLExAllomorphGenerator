@@ -67,7 +67,7 @@ namespace SIL.AllomorphGenerator
 			this.lbStemName = new System.Windows.Forms.Label();
 			this.lBoxReplaceOps = new System.Windows.Forms.ListBox();
 			this.lBoxEnvironments = new System.Windows.Forms.ListBox();
-			this.lbCategoryddd = new System.Windows.Forms.Label();
+			this.lbEnvironments = new System.Windows.Forms.Label();
 			this.tabRunOps = new System.Windows.Forms.TabPage();
 			this.btnSaveChanges2 = new System.Windows.Forms.Button();
 			this.lvOperations = new System.Windows.Forms.ListView();
@@ -398,7 +398,7 @@ namespace SIL.AllomorphGenerator
 			this.plActions.Controls.Add(this.lbStemName);
 			this.plActions.Controls.Add(this.lBoxReplaceOps);
 			this.plActions.Controls.Add(this.lBoxEnvironments);
-			this.plActions.Controls.Add(this.lbCategoryddd);
+			this.plActions.Controls.Add(this.lbEnvironments);
 			this.plActions.Location = new System.Drawing.Point(248, 240);
 			this.plActions.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.plActions.Name = "plActions";
@@ -488,15 +488,15 @@ namespace SIL.AllomorphGenerator
 			this.lBoxEnvironments.Size = new System.Drawing.Size(207, 82);
 			this.lBoxEnvironments.TabIndex = 4;
 			// 
-			// lbCategoryddd
+			// lbEnvironments
 			// 
-			this.lbCategoryddd.AutoSize = true;
-			this.lbCategoryddd.Location = new System.Drawing.Point(83, 119);
-			this.lbCategoryddd.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.lbCategoryddd.Name = "lbCategoryddd";
-			this.lbCategoryddd.Size = new System.Drawing.Size(71, 13);
-			this.lbCategoryddd.TabIndex = 3;
-			this.lbCategoryddd.Text = "Environments";
+			this.lbEnvironments.AutoSize = true;
+			this.lbEnvironments.Location = new System.Drawing.Point(83, 119);
+			this.lbEnvironments.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.lbEnvironments.Name = "lbEnvironments";
+			this.lbEnvironments.Size = new System.Drawing.Size(71, 13);
+			this.lbEnvironments.TabIndex = 3;
+			this.lbEnvironments.Text = "Environments";
 			// 
 			// tabRunOps
 			// 
@@ -813,7 +813,7 @@ namespace SIL.AllomorphGenerator
         protected System.Windows.Forms.Label lbDescription;
         protected System.Windows.Forms.ListBox lBoxEnvironments;
         protected System.Windows.Forms.ListBox lBoxMorphTypes;
-        protected System.Windows.Forms.Label lbCategoryddd;
+        protected System.Windows.Forms.Label lbEnvironments;
         protected System.Windows.Forms.Label lbMorphTypes;
         protected System.Windows.Forms.TextBox tbMatch;
         protected System.Windows.Forms.Label lbMatch;

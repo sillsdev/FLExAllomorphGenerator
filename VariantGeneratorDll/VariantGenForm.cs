@@ -2,6 +2,7 @@
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
+using Microsoft.Win32;
 using SIL.AlloGenService;
 using SIL.AllomorphGenerator;
 using SIL.LCModel;
@@ -38,8 +39,15 @@ namespace SIL.VariantGenerator
 		protected void VarGenInitForm()
 		{
 			InitForm();
+			VarGenInitializeComponent();
 			// TODO: add var gen items and hide the allo gen ones not needed
 			this.Text = "Variant Generator";
+			SetBackColor();
+			//HideEnvironmentsAndStemName();
+		}
+
+		private void SetBackColor()
+		{
 			Color tabBackColor = Color.Linen;
 			tabEditOps.BackColor = tabBackColor;
 			tabRunOps.BackColor = tabBackColor;
@@ -48,7 +56,24 @@ namespace SIL.VariantGenerator
 			plActions.BackColor = tabBackColor;
 		}
 
-		override protected void btnEnvironments_Click(object sender, EventArgs e)
+		protected void HideEnvironmentsAndStemName()
+		{
+			//lbEnvironments.Visible = false;
+			lBoxEnvironments.Visible = false;
+			btnEnvironments.Visible = false;
+			lbStemName.Visible = false;
+			tbStemName.Visible = false;
+			btnStemName.Visible = false;
+		}
+
+		override protected void RememberFormState()
+		{
+			RegKey = "Software\\SIL\\VariantGenerator";
+			base.RememberFormState();
+		}
+
+
+		protected void btnVariantTypes_Click(object sender, EventArgs e)
 		{
 			if (Cache != null)
 			{
@@ -63,6 +88,18 @@ namespace SIL.VariantGenerator
 					RefreshEnvironmentsListBox();
 					MarkAsChanged(true);
 				}
+			}
+		}
+
+		protected override void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			base.tabControl_SelectedIndexChanged(sender, e);
+			TabPage page = (sender as TabControl).SelectedTab;
+			if (page != null)
+			{
+				LastTab = (sender as TabControl).SelectedIndex;
+				page.BackColor = Color.Linen;
+				//HideEnvironmentsAndStemName();
 			}
 		}
 

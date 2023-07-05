@@ -42,24 +42,24 @@ namespace SIL.AllomorphGenerator
         public PropertyTable PropTable { get; set; }
 
         protected RegistryKey regkey;
-        public static string m_strRegKey = "Software\\SIL\\AllomorphGenerator";
-		protected const string m_strLastDatabase = "LastDatabase";
-		protected const string m_strLastOperationsFile = "LastOperationsFile";
-		protected const string m_strLastOperation = "Lastoperation";
-		protected const string m_strLastApplyOperation = "LastApplyOperation";
-		protected const string m_strLastEditReplaceOps = "LastEditReplaceOps";
-		protected const string m_strLastTab = "LastTab";
-		protected const string m_strLocationX = "LocationX";
-		protected const string m_strLocationY = "LocationY";
-		protected const string m_strSizeHeight = "SizeHeight";
-		protected const string m_strSizeWidth = "SizeWidth";
-		protected const string m_strWindowState = "WindowState";
+        public static string RegKey { get; set; } = "Software\\SIL\\AllomorphGenerator";
+        protected const string m_strLastDatabase = "LastDatabase";
+        protected const string m_strLastOperationsFile = "LastOperationsFile";
+        protected const string m_strLastOperation = "Lastoperation";
+        protected const string m_strLastApplyOperation = "LastApplyOperation";
+        protected const string m_strLastEditReplaceOps = "LastEditReplaceOps";
+        protected const string m_strLastTab = "LastTab";
+        protected const string m_strLocationX = "LocationX";
+        protected const string m_strLocationY = "LocationY";
+        protected const string m_strSizeHeight = "SizeHeight";
+        protected const string m_strSizeWidth = "SizeWidth";
+        protected const string m_strWindowState = "WindowState";
 
         protected ContextMenuStrip helpContextMenu;
-		protected const string UserDocumentation = "User Documentation";
-		protected const string About = "About";
+        protected const string UserDocumentation = "User Documentation";
+        protected const string About = "About";
 
-		protected const string OperationsFilePrompt =
+        protected const string OperationsFilePrompt =
             "Allomorph Generator Operations File (*.agf)|*.agf|" + "All Files (*.*)|*.*";
 
         public Rectangle RectNormal { get; set; }
@@ -74,49 +74,50 @@ namespace SIL.AllomorphGenerator
         public int RetrievedLastApplyOperation { get; set; }
         public int RetrievedLastEditReplaceOps { get; set; }
 
-		protected XmlBackEndProvider Provider { get; set; }
-		protected DatabaseMigrator Migrator { get; set; }
-		protected String OperationsFile { get; set; }
-		protected AllomorphGenerators AlloGens { get; set; }
-		protected List<Operation> Operations { get; set; }
-		protected Operation Operation { get; set; }
-		protected Operation LastOperationShown { get; set; } = null;
-		protected List<Replace> ReplaceOps { get; set; }
-		protected List<string> ReplaceOpRefs { get; set; }
-		protected List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();
-		protected AlloGenModel.Action ActionOp { get; set; }
-		protected StemName StemName { get; set; }
-		protected Pattern Pattern { get; set; }
-		protected Category Category { get; set; }
-		protected bool ChangesMade { get; set; } = false;
-		protected Font fontForDefaultCitationForm;
-		protected FontInfo fontInfoForDefaultCitationForm;
-		protected Color colorForDefaultCitationForm;
-		protected Dictionary<Operation, List<ILexEntry>> dictNonChosen =
+        protected XmlBackEndProvider Provider { get; set; }
+        protected DatabaseMigrator Migrator { get; set; }
+        protected String OperationsFile { get; set; }
+        protected AllomorphGenerators AlloGens { get; set; }
+        protected List<Operation> Operations { get; set; }
+        protected Operation Operation { get; set; }
+        protected Operation LastOperationShown { get; set; } = null;
+        protected List<Replace> ReplaceOps { get; set; }
+        protected List<string> ReplaceOpRefs { get; set; }
+        protected List<WritingSystem> WritingSystems { get; set; } = new List<WritingSystem>();
+        protected AlloGenModel.Action ActionOp { get; set; }
+        protected StemName StemName { get; set; }
+        protected Pattern Pattern { get; set; }
+        protected Category Category { get; set; }
+        protected bool ChangesMade { get; set; } = false;
+        protected Font fontForDefaultCitationForm;
+        protected FontInfo fontInfoForDefaultCitationForm;
+        protected Color colorForDefaultCitationForm;
+        protected Dictionary<Operation, List<ILexEntry>> dictNonChosen =
             new Dictionary<Operation, List<ILexEntry>>();
-		protected Dictionary<Operation, bool> dictOperationActiveState = new Dictionary<Operation, bool>();
-		protected int generationType = 0;
+        protected Dictionary<Operation, bool> dictOperationActiveState =
+            new Dictionary<Operation, bool>();
+        protected int generationType = 0;
 
         protected ListBox currentListBox;
         protected ContextMenuStrip editContextMenu;
         protected ContextMenuStrip editReplaceOpsContextMenu;
-		protected const string formTitle = "Allomorph Generator";
-		protected const string cmAdd = "Add";
-		protected const string cmEdit = "Edit";
-		protected const string cmInsertBefore = "Insert new before";
-		protected const string cmInsertExistingBefore = "Insert existing before";
-		protected const string cmInsertAfter = "Insert new after";
-		protected const string cmInsertExistingAfter = "Insert existing after";
-		protected const string cmMoveUp = "Move up";
-		protected const string cmMoveDown = "Move down";
-		protected const string cmDelete = "Delete";
-		protected const string cmDuplicate = "Duplicate";
+        protected const string formTitle = "Allomorph Generator";
+        protected const string cmAdd = "Add";
+        protected const string cmEdit = "Edit";
+        protected const string cmInsertBefore = "Insert new before";
+        protected const string cmInsertExistingBefore = "Insert existing before";
+        protected const string cmInsertAfter = "Insert new after";
+        protected const string cmInsertExistingAfter = "Insert existing after";
+        protected const string cmMoveUp = "Move up";
+        protected const string cmMoveDown = "Move down";
+        protected const string cmDelete = "Delete";
+        protected const string cmDuplicate = "Duplicate";
 
         protected ContextMenuStrip operationsCheckBoxContextMenu;
         protected ContextMenuStrip previewCheckBoxContextMenu;
-		protected const string cmSelectAll = "Select All";
-		protected const string cmClearAll = "Clear All";
-		protected const string cmToggle = "Toggle";
+        protected const string cmSelectAll = "Select All";
+        protected const string cmClearAll = "Clear All";
+        protected const string cmToggle = "Toggle";
         protected ListViewColumnSorter lvwColumnSorter;
         protected ListViewColumnSorter lvwEditReplaceOpsColumnSorter;
         protected List<FDWrapper> customFields = new List<FDWrapper>();
@@ -541,7 +542,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void EditReplaceOpsContextMenuReplace_Click(object sender, EventArgs e)
+        protected void EditReplaceOpsContextMenuReplace_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmEdit)
@@ -550,7 +551,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void EditReplaceOpsContextMenuEdit_Click(object sender, EventArgs e)
+        protected void EditReplaceOpsContextMenuEdit_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmEdit)
@@ -559,7 +560,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void EditReplaceOpsContextMenuDelete_Click(object sender, EventArgs e)
+        protected void EditReplaceOpsContextMenuDelete_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmDelete)
@@ -568,7 +569,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void EditReplaceOpsContextMenuAdd_Click(object sender, EventArgs e)
+        protected void EditReplaceOpsContextMenuAdd_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmAdd)
@@ -577,7 +578,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void EditReplaceOpsContextMenuDuplicate_Click(object sender, EventArgs e)
+        protected void EditReplaceOpsContextMenuDuplicate_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmDuplicate)
@@ -608,7 +609,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void lBoxReplaceOps_DoubleClick(object sender, EventArgs e)
+        protected void lBoxReplaceOps_DoubleClick(object sender, EventArgs e)
         {
             InvokeEditReplaceOpForm();
         }
@@ -624,7 +625,7 @@ namespace SIL.AllomorphGenerator
             return doable;
         }
 
-        void InsertBeforeContextMenu_Click(object sender, EventArgs e)
+        protected void InsertBeforeContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmInsertBefore)
@@ -633,7 +634,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void InsertAfterContextMenu_Click(object sender, EventArgs e)
+        protected void InsertAfterContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmInsertAfter)
@@ -704,7 +705,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void MoveUpContextMenu_Click(object sender, EventArgs e)
+        protected void MoveUpContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmMoveUp)
@@ -714,7 +715,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void MoveDownContextMenu_Click(object sender, EventArgs e)
+        protected void MoveDownContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmMoveDown)
@@ -744,7 +745,7 @@ namespace SIL.AllomorphGenerator
             MarkAsChanged(true);
         }
 
-        void DeleteContextMenu_Click(object sender, EventArgs e)
+        protected void DeleteContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmDelete)
@@ -772,7 +773,10 @@ namespace SIL.AllomorphGenerator
             MarkAsChanged(true);
         }
 
-        protected void CheckOnRemovingSelectedReplaceOpFromMasterList(string prompt, Replace replace)
+        protected void CheckOnRemovingSelectedReplaceOpFromMasterList(
+            string prompt,
+            Replace replace
+        )
         {
             DialogResult result = MessageBox.Show(
                 prompt,
@@ -789,7 +793,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void DuplicateContextMenu_Click(object sender, EventArgs e)
+        protected void DuplicateContextMenu_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == cmDuplicate)
@@ -813,9 +817,9 @@ namespace SIL.AllomorphGenerator
             MarkAsChanged(true);
         }
 
-        protected void RememberFormState()
+        virtual protected void RememberFormState()
         {
-            regkey = Registry.CurrentUser.OpenSubKey(m_strRegKey);
+            regkey = Registry.CurrentUser.OpenSubKey(RegKey);
             if (regkey != null)
             {
                 Cursor.Current = Cursors.WaitCursor;
@@ -831,12 +835,12 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        void RetrieveRegistryInfo()
+        protected void RetrieveRegistryInfo()
         {
             // Window location
             int iX = (int)regkey.GetValue(m_strLocationX, 100);
             int iY = (int)regkey.GetValue(m_strLocationY, 100);
-            int iWidth = (int)regkey.GetValue(m_strSizeWidth, 809); // 1228);
+            int iWidth = (int)regkey.GetValue(m_strSizeWidth, 863); // 1228);
             int iHeight = (int)regkey.GetValue(m_strSizeHeight, 670); // 947);
             RectNormal = new Rectangle(iX, iY, iWidth, iHeight);
             // Set form properties
@@ -854,10 +858,10 @@ namespace SIL.AllomorphGenerator
 
         public void SaveRegistryInfo()
         {
-            regkey = Registry.CurrentUser.OpenSubKey(m_strRegKey, true);
+            regkey = Registry.CurrentUser.OpenSubKey(RegKey, true);
             if (regkey == null)
             {
-                regkey = Registry.CurrentUser.CreateSubKey(m_strRegKey);
+                regkey = Registry.CurrentUser.CreateSubKey(RegKey);
             }
 
             if (LastDatabase != null)
@@ -1310,7 +1314,7 @@ namespace SIL.AllomorphGenerator
             return pos;
         }
 
-        virtual protected void btnEnvironments_Click(object sender, EventArgs e)
+        protected void btnEnvironments_Click(object sender, EventArgs e)
         {
             if (Cache != null)
             {
@@ -1479,7 +1483,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-		protected void UserDoc_Click(object sender, EventArgs e)
+        protected void UserDoc_Click(object sender, EventArgs e)
         {
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == UserDocumentation)
@@ -1537,7 +1541,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-        protected void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        protected virtual void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
             TabPage page = (sender as TabControl).SelectedTab;
@@ -2060,7 +2064,7 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-		protected void lvEditReplaceOps_DoubleClick(object sender, EventArgs e)
+        protected void lvEditReplaceOps_DoubleClick(object sender, EventArgs e)
         {
             InvokeEditReplaceOpFormMasterList();
         }
