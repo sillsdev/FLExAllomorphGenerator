@@ -21,6 +21,11 @@ namespace SIL.VariantGenerator
 {
 	public partial class VariantGenForm : AlloGenForm
 	{
+		Button btnVariantTypes;
+		ListBox lBoxVariantTypes;
+		Label lbVariantTypes;
+		CheckBox cbShowInMinorEntry;
+
 		public VariantGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
 		{
 			Cache = cache;
@@ -38,12 +43,119 @@ namespace SIL.VariantGenerator
 
 		protected void VarGenInitForm()
 		{
-			InitForm();
-			VarGenInitializeComponent();
-			// TODO: add var gen items and hide the allo gen ones not needed
-			this.Text = "Variant Generator";
-			SetBackColor();
-			//HideEnvironmentsAndStemName();
+			if (plActions != null)
+			{
+				RemoveEnvironmentsAndStemName();
+				InitializeVariantTypesControls();
+				InitializeShowInMinorEntryControls();
+				SetBackColor();
+			}
+			// Create an instance of a ListView column sorter and assign it
+			// to the ListView control.
+			lvwColumnSorter = new ListViewColumnSorter();
+			lvPreview.ListViewItemSorter = lvwColumnSorter;
+			lvwEditReplaceOpsColumnSorter = new ListViewColumnSorter();
+			lvEditReplaceOps.ListViewItemSorter = lvwEditReplaceOpsColumnSorter;
+			try
+			{
+				RememberFormState();
+				Provider = new XmlBackEndProvider();
+				Migrator = new DatabaseMigrator();
+				LoadMigrateGetOperations();
+				FillOperationsListBox();
+				FillApplyToComboBox();
+				SetupFontAndStyleInfo();
+				SetUpOperationsCheckedListBox();
+				SetUpPreviewCheckedListBox();
+				FillApplyOperationsListView();
+				SetUpEditReplaceOpsListView();
+				FillReplaceOpsListView();
+				BuildReplaceContextMenu();
+				BuildEditReplaceOpContextMenu();
+				BuildHelpContextMenu();
+				BuildOperationsCheckBoxContextMenu();
+				BuildPreviewCheckBoxContextMenu();
+				lBoxMorphTypes.ClearSelected();
+				lBoxEnvironments.ClearSelected();
+				RememberTabSelection();
+				MarkAsChanged(false);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+				Console.WriteLine(e.InnerException);
+				Console.WriteLine(e.StackTrace);
+			}
+		}
+
+		private void InitializeVariantTypesControls()
+		{
+			btnVariantTypes = new Button();
+			lBoxVariantTypes = new ListBox();
+			lbVariantTypes = new Label();
+			plActions.Controls.Add(btnVariantTypes);
+			plActions.Controls.Add(lBoxVariantTypes);
+			plActions.Controls.Add(lbVariantTypes);
+			// 
+			// lbVariantTypes
+			// 
+			lbVariantTypes.AutoSize = true;
+			lbVariantTypes.Location = new Point(83, 119);
+			lbVariantTypes.Margin = new Padding(2, 0, 2, 0);
+			lbVariantTypes.Name = "lblbVariantTypes";
+			lbVariantTypes.Size = new Size(71, 13);
+			lbVariantTypes.TabIndex = 3;
+			lbVariantTypes.Text = "Variant Types";
+			// 
+			// lBoxVariantTypes
+			// 
+			lBoxVariantTypes.Enabled = false;
+			lBoxVariantTypes.FormattingEnabled = true;
+			lBoxVariantTypes.Location = new Point(177, 119);
+			lBoxVariantTypes.Margin = new Padding(2, 2, 2, 2);
+			lBoxVariantTypes.Name = "lBoxVariantTypes";
+			lBoxVariantTypes.Size = new Size(207, 82);
+			lBoxVariantTypes.TabIndex = 4;
+			lBoxVariantTypes.BringToFront();
+			// 
+			// btnVariantTypes
+			// 
+			btnVariantTypes.Location = new Point(399, 119);
+			btnVariantTypes.Margin = new Padding(2, 2, 2, 2);
+			btnVariantTypes.Name = "btnVariantTypes";
+			btnVariantTypes.Size = new Size(33, 20);
+			btnVariantTypes.TabIndex = 5;
+			btnVariantTypes.Text = "Ed&it";
+			btnVariantTypes.UseVisualStyleBackColor = true;
+			btnVariantTypes.BringToFront();
+			btnVariantTypes.Click += new System.EventHandler(this.btnVariantTypes_Click);
+		}
+
+		private void InitializeShowInMinorEntryControls()
+		{
+			cbShowInMinorEntry = new CheckBox();
+			plActions.Controls.Add(cbShowInMinorEntry);
+			// 
+			// cbShowInMinorEntry
+			// 
+			cbShowInMinorEntry.AutoSize = true;
+			cbShowInMinorEntry.Location = new Point(81, 214);
+			cbShowInMinorEntry.Name = "cbShowInMinorEntry";
+			cbShowInMinorEntry.Margin = new Padding(2, 0, 2, 0);
+			cbShowInMinorEntry.Size = new System.Drawing.Size(60, 13);
+			cbShowInMinorEntry.TabIndex = 6;
+			cbShowInMinorEntry.Text = "Show in minor entry";
+			cbShowInMinorEntry.Checked = true;
+		}
+
+		private void RemoveEnvironmentsAndStemName()
+		{
+			plActions.Controls.Remove(lbEnvironments);
+			plActions.Controls.Remove(lBoxEnvironments);
+			plActions.Controls.Remove(btnEnvironments);
+			plActions.Controls.Remove(lbStemName);
+			plActions.Controls.Remove(tbStemName);
+			plActions.Controls.Remove(btnStemName);
 		}
 
 		private void SetBackColor()
@@ -54,16 +166,6 @@ namespace SIL.VariantGenerator
 			tabEditReplaceOps.BackColor = tabBackColor;
 			plPattern.BackColor = tabBackColor;
 			plActions.BackColor = tabBackColor;
-		}
-
-		protected void HideEnvironmentsAndStemName()
-		{
-			//lbEnvironments.Visible = false;
-			lBoxEnvironments.Visible = false;
-			btnEnvironments.Visible = false;
-			lbStemName.Visible = false;
-			tbStemName.Visible = false;
-			btnStemName.Visible = false;
 		}
 
 		override protected void RememberFormState()
@@ -77,31 +179,27 @@ namespace SIL.VariantGenerator
 		{
 			if (Cache != null)
 			{
-				EnvironmentsChooser chooser = new EnvironmentsChooser(Cache);
-				chooser.setSelected(ActionOp.Environments);
-				chooser.FillEnvironmentsListBox();
+				VariantTypesChooser chooser = new VariantTypesChooser(Cache);
+				chooser.setSelected(ActionOp.VariantTypes);
+				chooser.FillVarianTypesListBox();
 				chooser.ShowDialog();
 				if (chooser.DialogResult == DialogResult.OK)
 				{
-					ActionOp.Environments.Clear();
-					ActionOp.Environments.AddRange(chooser.SelectedEnvironments);
-					RefreshEnvironmentsListBox();
+					ActionOp.VariantTypes.Clear();
+					ActionOp.VariantTypes.AddRange(chooser.SelectedVariantTypes);
+					RefreshVariantTypesListBox();
 					MarkAsChanged(true);
 				}
 			}
 		}
 
-		protected override void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+		protected void RefreshVariantTypesListBox()
 		{
-			base.tabControl_SelectedIndexChanged(sender, e);
-			TabPage page = (sender as TabControl).SelectedTab;
-			if (page != null)
+			lBoxVariantTypes.Items.Clear();
+			foreach (AlloGenModel.VariantType item in ActionOp.VariantTypes)
 			{
-				LastTab = (sender as TabControl).SelectedIndex;
-				page.BackColor = Color.Linen;
-				//HideEnvironmentsAndStemName();
+				lBoxVariantTypes.Items.Add(item);
 			}
 		}
-
 	}
 }

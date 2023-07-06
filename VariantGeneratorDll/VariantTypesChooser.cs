@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 SIL International
+﻿// Copyright (c) 2023 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
@@ -16,70 +16,60 @@ using System.Windows.Forms;
 
 namespace SIL.VariantGenerator
 {
-    public partial class EnvironmentsChooser : Form
+    public partial class VariantTypesChooser : Form
     {
         LcmCache Cache { get; set; }
-        public List<AlloGenModel.Environment> Environments { get; set; }
-        public List<AlloGenModel.Environment> SelectedEnvironments { get; set; }
+        public List<AlloGenModel.VariantType> VariantTypes { get; set; }
+        public List<AlloGenModel.VariantType> SelectedVariantTypes { get; set; }
 
-        public EnvironmentsChooser(LcmCache cache)
+        public VariantTypesChooser(LcmCache cache)
         {
             Cache = cache;
-            Environments = new List<AlloGenModel.Environment>();
-            SelectedEnvironments = new List<AlloGenModel.Environment>();
+			VariantTypes = new List<AlloGenModel.VariantType>();
+            SelectedVariantTypes = new List<AlloGenModel.VariantType>();
             InitializeComponent();
-            clbEnvironments.CheckOnClick = true;
-            clbEnvironments.Sorted = true;
-            CreateEnvironments();
+            clbVariantTypes.CheckOnClick = true;
+            clbVariantTypes.Sorted = true;
+            CreateVariantTypes();
         }
 
-        void CreateEnvironments()
+        void CreateVariantTypes()
         {
-            ILcmOwningSequence<IPhEnvironment> allEnvs = Cache
-                .LangProject
-                .PhonologicalDataOA
-                .EnvironmentsOS;
-            foreach (IPhEnvironment env in allEnvs)
+            ICmPossibilityList allVariants = Cache
+                .LangProject.LexDbOA.VariantEntryTypesOA;
+            foreach (ILexEntryType variant in allVariants.PossibilitiesOS)
             {
-                LCModel.DomainServices.ConstraintFailure failure;
-                if (
-                    env.CheckConstraints(
-                        PhEnvironmentTags.kflidStringRepresentation,
-                        false,
-                        out failure
-                    )
-                )
                 {
-                    AlloGenModel.Environment environ = new AlloGenModel.Environment();
-                    environ.Guid = env.Guid.ToString();
-                    environ.Name = env.StringRepresentation.Text;
-                    Environments.Add(environ);
+                    AlloGenModel.VariantType varType = new AlloGenModel.VariantType();
+                    varType.Guid = variant.Guid.ToString();
+                    varType.Name = variant.ChooserNameTS.Text;
+                    VariantTypes.Add(varType);
                 }
             }
         }
 
-        public void setSelected(List<AlloGenModel.Environment> selectedOnes)
+        public void setSelected(List<AlloGenModel.VariantType> selectedOnes)
         {
-            SelectedEnvironments.Clear();
-            SelectedEnvironments.AddRange(selectedOnes);
+            SelectedVariantTypes.Clear();
+            SelectedVariantTypes.AddRange(selectedOnes);
         }
 
-        public void FillEnvironmentsListBox()
+        public void FillVarianTypesListBox()
         {
-            clbEnvironments.Items.Clear();
-            foreach (AlloGenModel.Environment env in Environments)
+            clbVariantTypes.Items.Clear();
+            foreach (AlloGenModel.VariantType varType in VariantTypes)
             {
-                if (!string.IsNullOrEmpty(env.Name))
-                    clbEnvironments.Items.Add(env);
+                if (!string.IsNullOrEmpty(varType.Name))
+                    clbVariantTypes.Items.Add(varType);
             }
-            for (int i = 0; i < clbEnvironments.Items.Count; i++)
+            for (int i = 0; i < clbVariantTypes.Items.Count; i++)
             {
-                AlloGenModel.Environment env = clbEnvironments.Items[i] as AlloGenModel.Environment;
-                for (int j = 0; j < SelectedEnvironments.Count; j++)
+                AlloGenModel.VariantType varType = clbVariantTypes.Items[i] as AlloGenModel.VariantType;
+                for (int j = 0; j < SelectedVariantTypes.Count; j++)
                 {
-                    if (SelectedEnvironments[j].Guid == env.Guid)
+                    if (SelectedVariantTypes[j].Guid == varType.Guid)
                     {
-                        clbEnvironments.SetItemChecked(i, true);
+                        clbVariantTypes.SetItemChecked(i, true);
                         break;
                     }
                 }
@@ -88,14 +78,14 @@ namespace SIL.VariantGenerator
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            SelectedEnvironments.Clear();
-            for (int i = 0; i < clbEnvironments.Items.Count; i++)
+            SelectedVariantTypes.Clear();
+            for (int i = 0; i < clbVariantTypes.Items.Count; i++)
             {
-                if (clbEnvironments.GetItemChecked(i))
+                if (clbVariantTypes.GetItemChecked(i))
                 {
-                    AlloGenModel.Environment mt =
-                        clbEnvironments.Items[i] as AlloGenModel.Environment;
-                    SelectedEnvironments.Add(mt);
+                    AlloGenModel.VariantType varType =
+                        clbVariantTypes.Items[i] as AlloGenModel.VariantType;
+                    SelectedVariantTypes.Add(varType);
                 }
             }
         }

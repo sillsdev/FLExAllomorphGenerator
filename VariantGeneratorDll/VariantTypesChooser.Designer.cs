@@ -1,50 +1,50 @@
-﻿namespace SIL.AllomorphGenerator
+﻿namespace SIL.VariantGenerator
 {
-    partial class EnvironmentsChooser
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class VariantTypesChooser
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnvironmentsChooser));
-			this.clbEnvironments = new System.Windows.Forms.CheckedListBox();
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VariantTypesChooser));
+			this.clbVariantTypes = new System.Windows.Forms.CheckedListBox();
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.btnOK = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// clbEnvironments
 			// 
-			this.clbEnvironments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.clbEnvironments.FormattingEnabled = true;
-			this.clbEnvironments.Location = new System.Drawing.Point(13, 13);
-			this.clbEnvironments.Name = "clbEnvironments";
-			this.clbEnvironments.Size = new System.Drawing.Size(760, 361);
-			this.clbEnvironments.Sorted = true;
-			this.clbEnvironments.TabIndex = 0;
+			this.clbVariantTypes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.clbVariantTypes.FormattingEnabled = true;
+			this.clbVariantTypes.Location = new System.Drawing.Point(13, 13);
+			this.clbVariantTypes.Name = "clbEnvironments";
+			this.clbVariantTypes.Size = new System.Drawing.Size(760, 361);
+			this.clbVariantTypes.Sorted = true;
+			this.clbVariantTypes.TabIndex = 0;
 			// 
 			// btnCancel
 			// 
@@ -78,18 +78,18 @@
 			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.btnCancel);
-			this.Controls.Add(this.clbEnvironments);
+			this.Controls.Add(this.clbVariantTypes);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "EnvironmentsChooser";
 			this.Text = "Variant Types Chooser";
 			this.ResumeLayout(false);
 
-        }
+		}
 
-        #endregion
+		#endregion
 
-        private System.Windows.Forms.CheckedListBox clbEnvironments;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnOK;
-    }
+		private System.Windows.Forms.CheckedListBox clbVariantTypes;
+		private System.Windows.Forms.Button btnCancel;
+		private System.Windows.Forms.Button btnOK;
+	}
 }
