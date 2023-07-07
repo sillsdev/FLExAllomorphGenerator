@@ -26,24 +26,19 @@ namespace AlloGenModelTests
         public void NewOperationTest()
         {
             Assert.AreEqual(0, alloGens.Operations.Count);
-            Operation op = alloGens.CreateNewOperation(0);
+            Operation op = alloGens.CreateNewOperation();
             Assert.AreEqual(1, alloGens.Operations.Count);
             Assert.AreEqual(1, alloGens.ReplaceOperations.Count);
             Assert.AreEqual(1, op.Action.ReplaceOpRefs.Count);
             Replace replace = alloGens.ReplaceOperations[0];
             Assert.AreEqual(replace.Guid, op.Action.ReplaceOpRefs[0]);
-            Assert.AreEqual(0, op.GenerationType);
+			Assert.AreEqual(0, op.Action.Environments.Count);
+			Assert.AreEqual("", op.Action.StemName.Name);
+			Assert.AreEqual(0, op.Action.VariantTypes.Count);
+			Assert.AreEqual(true, op.Action.ShowMinorEntry);
+		}
 
-            Operation op1 = alloGens.CreateNewOperation(1);
-            Assert.AreEqual(2, alloGens.Operations.Count);
-            Assert.AreEqual(2, alloGens.ReplaceOperations.Count);
-            Assert.AreEqual(1, op1.Action.ReplaceOpRefs.Count);
-            Replace replace2 = alloGens.ReplaceOperations[1];
-            Assert.AreEqual(replace2.Guid, op1.Action.ReplaceOpRefs[0]);
-            Assert.AreEqual(1, op1.GenerationType);
-        }
-
-        [Test]
+		[Test]
         public void RemoveEmptyReplaceOperationsTest()
         {
             Replace rep1 = new Replace();
@@ -56,7 +51,7 @@ namespace AlloGenModelTests
             rep3.Name = "my name";
             alloGens.ReplaceOperations.Add(rep3);
             Assert.AreEqual(3, alloGens.ReplaceOperations.Count);
-            Operation op = new Operation(0);
+            Operation op = new Operation();
             op.Action.ReplaceOpRefs.Add(rep1.Guid);
             op.Action.ReplaceOpRefs.Add(rep2.Guid);
             op.Action.ReplaceOpRefs.Add(rep3.Guid);

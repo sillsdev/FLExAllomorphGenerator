@@ -82,9 +82,9 @@ namespace SIL.AlloGenModel
             return operations;
         }
 
-        public Operation CreateNewOperation(int genType)
+        public Operation CreateNewOperation()
         {
-            Operation op = new Operation(genType);
+            Operation op = new Operation();
             Operations.Add(op);
             Replace newReplace = new Replace();
             if (WritingSystems != null)

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022 SIL International
+﻿// Copyright (c) 2022-2023 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
@@ -13,12 +13,6 @@ namespace SIL.AlloGenModel
 {
     public class Operation : AlloGenBase
     {
-        // generation type:
-        // 0 = allomorph
-        // 1 = variant
-        [XmlAttribute("generationType")]
-        public int GenerationType { get; set; } = 0;
-
         public string Name { get; set; } = "new operation";
         public string Description { get; set; } = "";
         public Pattern Pattern { get; set; } = new Pattern();
@@ -26,21 +20,11 @@ namespace SIL.AlloGenModel
 
         public Operation()
         {
-            GenerationType = 0;
-        }
-
-        public Operation(int genType)
-        {
-            if (genType < 0 || genType > 1)
-            { // default is 0 (allomorph)
-                genType = 0;
-            }
-            GenerationType = genType;
         }
 
         public Operation Duplicate()
         {
-            Operation newOp = new Operation(0);
+            Operation newOp = new Operation();
             newOp.Action = Action.Duplicate();
             newOp.Active = Active;
             newOp.Description = Description;
