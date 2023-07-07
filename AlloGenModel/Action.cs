@@ -13,14 +13,16 @@ namespace SIL.AlloGenModel
     public class Action
     {
         public List<string> ReplaceOpRefs { get; set; }
-		// Environments and StemName used in Allomorph Generator
+
+        // Environments and StemName used in Allomorph Generator
         public List<Environment> Environments { get; set; }
         public StemName StemName { get; set; } = new StemName();
-		// Variant Types and ShowInMinorEntry used in Variant Generator
-        public List<VariantType> VariantTypes { get; set; }
-		public bool ShowMinorEntry { get; set; } = true;
 
-		public Action()
+        // Variant Types and ShowInMinorEntry used in Variant Generator
+        public List<VariantType> VariantTypes { get; set; }
+        public bool ShowMinorEntry { get; set; } = true;
+
+        public Action()
         {
             ReplaceOpRefs = new List<string>();
             Environments = new List<Environment>();
@@ -61,7 +63,7 @@ namespace SIL.AlloGenModel
                 newVariantTypes.Add(newVT);
             }
             newAction.VariantTypes = newVariantTypes;
-			newAction.ShowMinorEntry = ShowMinorEntry;
+            newAction.ShowMinorEntry = ShowMinorEntry;
             return newAction;
         }
 
@@ -78,14 +80,16 @@ namespace SIL.AlloGenModel
                 return (ReplaceOpRefs.SequenceEqual(act.ReplaceOpRefs))
                     && (Environments.SequenceEqual(act.Environments))
                     && (VariantTypes.SequenceEqual(act.VariantTypes))
-					&& (StemName.Equals(act.StemName))
-					&& (ShowMinorEntry == act.ShowMinorEntry);
-			}
-		}
+                    && (StemName.Equals(act.StemName))
+                    && (ShowMinorEntry == act.ShowMinorEntry);
+            }
+        }
 
         public override int GetHashCode()
         {
-            return Tuple.Create(ReplaceOpRefs, Environments, StemName, VariantTypes, ShowMinorEntry).GetHashCode();
+            return Tuple
+                .Create(ReplaceOpRefs, Environments, StemName, VariantTypes, ShowMinorEntry)
+                .GetHashCode();
         }
     }
 }

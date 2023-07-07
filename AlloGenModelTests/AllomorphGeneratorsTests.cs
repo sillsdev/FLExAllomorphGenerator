@@ -32,13 +32,13 @@ namespace AlloGenModelTests
             Assert.AreEqual(1, op.Action.ReplaceOpRefs.Count);
             Replace replace = alloGens.ReplaceOperations[0];
             Assert.AreEqual(replace.Guid, op.Action.ReplaceOpRefs[0]);
-			Assert.AreEqual(0, op.Action.Environments.Count);
-			Assert.AreEqual("", op.Action.StemName.Name);
-			Assert.AreEqual(0, op.Action.VariantTypes.Count);
-			Assert.AreEqual(true, op.Action.ShowMinorEntry);
-		}
+            Assert.AreEqual(0, op.Action.Environments.Count);
+            Assert.AreEqual("", op.Action.StemName.Name);
+            Assert.AreEqual(0, op.Action.VariantTypes.Count);
+            Assert.AreEqual(true, op.Action.ShowMinorEntry);
+        }
 
-		[Test]
+        [Test]
         public void RemoveEmptyReplaceOperationsTest()
         {
             Replace rep1 = new Replace();

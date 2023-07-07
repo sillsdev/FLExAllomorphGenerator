@@ -25,7 +25,7 @@ namespace SIL.VariantGenerator
         public VariantTypesChooser(LcmCache cache)
         {
             Cache = cache;
-			VariantTypes = new List<AlloGenModel.VariantType>();
+            VariantTypes = new List<AlloGenModel.VariantType>();
             SelectedVariantTypes = new List<AlloGenModel.VariantType>();
             InitializeComponent();
             clbVariantTypes.CheckOnClick = true;
@@ -35,8 +35,7 @@ namespace SIL.VariantGenerator
 
         void CreateVariantTypes()
         {
-            ICmPossibilityList allVariants = Cache
-                .LangProject.LexDbOA.VariantEntryTypesOA;
+            ICmPossibilityList allVariants = Cache.LangProject.LexDbOA.VariantEntryTypesOA;
             foreach (ILexEntryType variant in allVariants.PossibilitiesOS)
             {
                 {
@@ -64,7 +63,8 @@ namespace SIL.VariantGenerator
             }
             for (int i = 0; i < clbVariantTypes.Items.Count; i++)
             {
-                AlloGenModel.VariantType varType = clbVariantTypes.Items[i] as AlloGenModel.VariantType;
+                AlloGenModel.VariantType varType =
+                    clbVariantTypes.Items[i] as AlloGenModel.VariantType;
                 for (int j = 0; j < SelectedVariantTypes.Count; j++)
                 {
                     if (SelectedVariantTypes[j].Guid == varType.Guid)

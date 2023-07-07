@@ -18,9 +18,7 @@ namespace SIL.AlloGenModel
         public Pattern Pattern { get; set; } = new Pattern();
         public Action Action { get; set; } = new Action();
 
-        public Operation()
-        {
-        }
+        public Operation() { }
 
         public Operation Duplicate()
         {
