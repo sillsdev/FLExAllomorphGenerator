@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AllomorphGenerators xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" dbVersion="4" applyTo="0">
+<AllomorphGenerators xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" dbVersion="5" applyTo="0">
   <Operations>
     <Operation active="true">
       <Name>foreshortening</Name>
@@ -47,6 +47,8 @@
         <StemName active="true" guid="d2cf436-e8cf-11d3-9733-00c04f186933">
           <Name>no lowering</Name>
         </StemName>
+        <VariantTypes />
+        <ShowMinorEntry>true</ShowMinorEntry>
       </Action>
     </Operation>
   </Operations>
