@@ -24,7 +24,7 @@ namespace SIL.VariantGenerator
 		Button btnVariantTypes;
 		ListBox lBoxVariantTypes;
 		Label lbVariantTypes;
-		CheckBox cbShowInMinorEntry;
+		CheckBox cbShowMinorEntry;
 
 		public VariantGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
 		{
@@ -133,19 +133,19 @@ namespace SIL.VariantGenerator
 
 		private void InitializeShowInMinorEntryControls()
 		{
-			cbShowInMinorEntry = new CheckBox();
-			plActions.Controls.Add(cbShowInMinorEntry);
+			cbShowMinorEntry = new CheckBox();
+			plActions.Controls.Add(cbShowMinorEntry);
 			// 
 			// cbShowInMinorEntry
 			// 
-			cbShowInMinorEntry.AutoSize = true;
-			cbShowInMinorEntry.Location = new Point(81, 214);
-			cbShowInMinorEntry.Name = "cbShowInMinorEntry";
-			cbShowInMinorEntry.Margin = new Padding(2, 0, 2, 0);
-			cbShowInMinorEntry.Size = new System.Drawing.Size(60, 13);
-			cbShowInMinorEntry.TabIndex = 6;
-			cbShowInMinorEntry.Text = "Show in minor entry";
-			cbShowInMinorEntry.Checked = true;
+			cbShowMinorEntry.AutoSize = true;
+			cbShowMinorEntry.Location = new Point(81, 214);
+			cbShowMinorEntry.Name = "cbShowInMinorEntry";
+			cbShowMinorEntry.Margin = new Padding(2, 0, 2, 0);
+			cbShowMinorEntry.Size = new System.Drawing.Size(60, 13);
+			cbShowMinorEntry.TabIndex = 6;
+			cbShowMinorEntry.Text = "Show minor entry";
+			cbShowMinorEntry.Checked = true;
 		}
 
 		private void RemoveEnvironmentsAndStemName()
