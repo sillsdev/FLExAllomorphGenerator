@@ -6,6 +6,8 @@ copy "..\AlloGenModel\bin\x64\Debug\AlloGenModel.dll" "c:\fwrepo\fw\Output\Debug
 copy "..\AlloGenModel\bin\x64\Debug\AlloGenModel.pdb" "c:\fwrepo\fw\Output\Debug" > nul
 copy "..\AlloGenService\bin\x64\Debug\AlloGenService.dll" "c:\fwrepo\fw\Output\Debug" > nul
 copy "..\AlloGenService\bin\x64\Debug\AlloGenService.pdb" "c:\fwrepo\fw\Output\Debug" > nul
+copy "..\VarGenService\bin\x64\Debug\VarGenService.dll" "c:\fwrepo\fw\Output\Debug" > nul
+copy "..\VarGenService\bin\x64\Debug\VarGenService.pdb" "c:\fwrepo\fw\Output\Debug" > nul
 copy "..\VariantGeneratorDll\bin\x64\Debug\VariantGenerator.dll" "c:\fwrepo\fw\Output\Debug" > nul
 copy "..\VariantGeneratorDll\bin\x64\Debug\VariantGenerator.pdb" "c:\fwrepo\fw\Output\Debug" > nul
 echo Copying done

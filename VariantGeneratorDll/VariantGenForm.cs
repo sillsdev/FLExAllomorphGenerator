@@ -3,9 +3,12 @@
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
 using Microsoft.Win32;
+using SIL.AlloGenModel;
 using SIL.AlloGenService;
 using SIL.AllomorphGenerator;
 using SIL.LCModel;
+using SIL.LCModel.Infrastructure;
+using SIL.VarGenService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -146,6 +149,7 @@ namespace SIL.VariantGenerator
             cbShowMinorEntry.TabIndex = 6;
             cbShowMinorEntry.Text = "Show minor entry";
             cbShowMinorEntry.Checked = true;
+            cbShowMinorEntry.Click += new EventHandler(this.cbShowMinorEntry_Click);
         }
 
         private void RemoveEnvironmentsAndStemName()
@@ -192,12 +196,139 @@ namespace SIL.VariantGenerator
             }
         }
 
+        protected void cbShowMinorEntry_Click(object sender, EventArgs e)
+        {
+            if (Operation != null)
+            {
+                Operation.Action.ShowMinorEntry = cbShowMinorEntry.Checked;
+            }
+        }
+
         protected void RefreshVariantTypesListBox()
         {
             lBoxVariantTypes.Items.Clear();
             foreach (AlloGenModel.VariantType item in ActionOp.VariantTypes)
             {
                 lBoxVariantTypes.Items.Add(item);
+            }
+        }
+
+        override protected void btnApplyOperations_Click(object sender, EventArgs e)
+        {
+            RememberNonChosenEntries(Operation);
+            if (lvOperations.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("No operations are selected, so there's nothing to do");
+                return;
+            }
+            if (!CheckForInvalidVariantTypes())
+            {
+                return;
+            }
+            this.Cursor = Cursors.WaitCursor;
+            List<Replace> replaceOpsToUse = new List<Replace>();
+            //AllomorphCreator alloCreator = new AllomorphCreator(Cache, WritingSystems);
+            VariantCreator variantCreator = new VariantCreator(Cache, WritingSystems);
+            foreach (ListViewItem lvItem in lvOperations.CheckedItems)
+            {
+                Operation op = (Operation)lvItem.Tag;
+                List<ILexEntry> nonChosenEntries = new List<ILexEntry>();
+                if (dictNonChosen.ContainsKey(op))
+                {
+                    nonChosenEntries = dictNonChosen[op];
+                }
+                PatternMatcher patMatcher = new PatternMatcher(Cache, AlloGens);
+                patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
+                IList<ILexEntry> matchingEntries = patMatcher
+                    .MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern)
+                    .ToList();
+                IList<ILexEntry> matchingEntriesWithAllos = patMatcher
+                    .MatchEntriesWithAllosPerPattern(Operation, Pattern)
+                    .ToList();
+                foreach (ILexEntry entry in matchingEntriesWithAllos)
+                {
+                    matchingEntries.Add(entry);
+                }
+                if (matchingEntries == null || matchingEntries.Count() == 0)
+                {
+                    continue;
+                }
+                GetRepaceOpsToUse(replaceOpsToUse, op);
+                Replacer replacer = new Replacer(replaceOpsToUse);
+                string undoRedoPrompt = " Variant Generation for '" + op.Name;
+                UndoableUnitOfWorkHelper.Do(
+                    "Undo" + undoRedoPrompt,
+                    "Redo" + undoRedoPrompt,
+                    Cache.ActionHandlerAccessor,
+                    () =>
+                    {
+                        foreach (ILexEntry entry in matchingEntries)
+                        {
+                            if (nonChosenEntries.Contains(entry))
+                            {
+                                continue;
+                            }
+                            string formToUse = patMatcher.GetToMatch(entry).Text;
+                            List<string> forms = new List<string>();
+                            foreach (WritingSystem ws in WritingSystems)
+                            {
+                                forms.Add(GetPreviewForm(replacer, formToUse, ws));
+                            }
+                            ILexEntryRef variantEntryRef = variantCreator.CreateVariant(
+                                entry,
+                                forms
+                            );
+                            variantCreator.SetShowMinorEntry(
+                                variantEntryRef,
+                                op.Action.ShowMinorEntry
+                            );
+                            if (op.Action.VariantTypes.Count > 0)
+                            {
+                                variantCreator.AddVariantTypes(
+                                    variantEntryRef,
+                                    op.Action.VariantTypes
+                                );
+                            }
+                        }
+                    }
+                );
+            }
+            ShowPreview();
+            this.Cursor = Cursors.Arrow;
+        }
+
+        protected bool CheckForInvalidVariantTypes()
+        {
+            bool allIsGood = true;
+            foreach (ListViewItem lvItem in lvOperations.CheckedItems)
+            {
+                Operation op = (Operation)lvItem.Tag;
+                if (op.Action.VariantTypes.Count > 0)
+                {
+                    foreach (AlloGenModel.VariantType varType in op.Action.VariantTypes)
+                    {
+                        var variantType =
+                            Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(
+                                new Guid(varType.Guid)
+                            );
+                        if (variantType == null)
+                        {
+                            ReportMissingFLExItem("The variant type '", varType.Name, op.Name);
+                            allIsGood = false;
+                        }
+                    }
+                }
+            }
+            return allIsGood;
+        }
+
+        protected override void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            base.lBoxOperations_SelectedIndexChanged(sender, e);
+            if (Operation != null)
+            {
+                RefreshVariantTypesListBox();
+                cbShowMinorEntry.Checked = Operation.Action.ShowMinorEntry;
             }
         }
     }

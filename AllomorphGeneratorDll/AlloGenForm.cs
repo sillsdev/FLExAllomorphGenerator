@@ -1118,7 +1118,7 @@ namespace SIL.AllomorphGenerator
             return indicator;
         }
 
-        protected void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
+        protected virtual void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
             Operation = lBoxOperations.SelectedItem as Operation;
             if (Operation != null)
@@ -1557,7 +1557,7 @@ namespace SIL.AllomorphGenerator
             this.Cursor = Cursors.Arrow;
         }
 
-        protected void btnApplyOperations_Click(object sender, EventArgs e)
+        protected virtual void btnApplyOperations_Click(object sender, EventArgs e)
         {
             RememberNonChosenEntries(Operation);
             if (lvOperations.CheckedItems.Count == 0)

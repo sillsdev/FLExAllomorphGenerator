@@ -34,10 +34,32 @@
   <PropertyGroup>
     <ApplicationIcon>LT.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AlloGenModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\AlloGenModel\bin\x64\Debug\AlloGenModel.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonServiceLocator, Version=1.4.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="FwCoreDlgs">
       <HintPath>..\..\..\..\..\..\fwrepo\fw\Output\Debug\FwCoreDlgs.dll</HintPath>
@@ -85,6 +107,10 @@
     <ProjectReference Include="..\AllomorphGeneratorDll\AllomorphGeneratorDll.csproj">
       <Project>{BB78C880-E46A-4F7B-A10E-598AEC4DE55C}</Project>
       <Name>AllomorphGeneratorDll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VarGenService\VarGenService.csproj">
+      <Project>{E4DBBA30-ED6A-4D3E-9FA8-01E955B22038}</Project>
+      <Name>VarGenService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
