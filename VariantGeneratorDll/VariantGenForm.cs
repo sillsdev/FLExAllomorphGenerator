@@ -28,6 +28,7 @@ namespace SIL.VariantGenerator
         ListBox lBoxVariantTypes;
         Label lbVariantTypes;
         CheckBox cbShowMinorEntry;
+        VariantCreator variantCreator;
 
         public VariantGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
         {
@@ -82,6 +83,7 @@ namespace SIL.VariantGenerator
                 lBoxEnvironments.ClearSelected();
                 RememberTabSelection();
                 MarkAsChanged(false);
+                variantCreator = new VariantCreator(Cache, WritingSystems);
             }
             catch (Exception e)
             {
@@ -213,88 +215,28 @@ namespace SIL.VariantGenerator
             }
         }
 
-        override protected void btnApplyOperations_Click(object sender, EventArgs e)
+        protected override bool CheckForInvalidActionComponents()
         {
-            RememberNonChosenEntries(Operation);
-            if (lvOperations.CheckedItems.Count == 0)
+            return CheckForInvalidVariantTypes();
+        }
+
+        protected override string CreateUndoRedoPrompt(Operation op)
+        {
+            return " Variant Generation for '" + op.Name;
+        }
+
+        protected override void ApplyOperationToEntry(
+            Operation op,
+            ILexEntry entry,
+            List<string> forms
+        )
+        {
+            ILexEntryRef variantEntryRef = variantCreator.CreateVariant(entry, forms);
+            variantCreator.SetShowMinorEntry(variantEntryRef, op.Action.ShowMinorEntry);
+            if (op.Action.VariantTypes.Count > 0)
             {
-                MessageBox.Show("No operations are selected, so there's nothing to do");
-                return;
+                variantCreator.AddVariantTypes(variantEntryRef, op.Action.VariantTypes);
             }
-            if (!CheckForInvalidVariantTypes())
-            {
-                return;
-            }
-            this.Cursor = Cursors.WaitCursor;
-            List<Replace> replaceOpsToUse = new List<Replace>();
-            //AllomorphCreator alloCreator = new AllomorphCreator(Cache, WritingSystems);
-            VariantCreator variantCreator = new VariantCreator(Cache, WritingSystems);
-            foreach (ListViewItem lvItem in lvOperations.CheckedItems)
-            {
-                Operation op = (Operation)lvItem.Tag;
-                List<ILexEntry> nonChosenEntries = new List<ILexEntry>();
-                if (dictNonChosen.ContainsKey(op))
-                {
-                    nonChosenEntries = dictNonChosen[op];
-                }
-                PatternMatcher patMatcher = new PatternMatcher(Cache, AlloGens);
-                patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
-                IList<ILexEntry> matchingEntries = patMatcher
-                    .MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern)
-                    .ToList();
-                IList<ILexEntry> matchingEntriesWithAllos = patMatcher
-                    .MatchEntriesWithAllosPerPattern(Operation, Pattern)
-                    .ToList();
-                foreach (ILexEntry entry in matchingEntriesWithAllos)
-                {
-                    matchingEntries.Add(entry);
-                }
-                if (matchingEntries == null || matchingEntries.Count() == 0)
-                {
-                    continue;
-                }
-                GetRepaceOpsToUse(replaceOpsToUse, op);
-                Replacer replacer = new Replacer(replaceOpsToUse);
-                string undoRedoPrompt = " Variant Generation for '" + op.Name;
-                UndoableUnitOfWorkHelper.Do(
-                    "Undo" + undoRedoPrompt,
-                    "Redo" + undoRedoPrompt,
-                    Cache.ActionHandlerAccessor,
-                    () =>
-                    {
-                        foreach (ILexEntry entry in matchingEntries)
-                        {
-                            if (nonChosenEntries.Contains(entry))
-                            {
-                                continue;
-                            }
-                            string formToUse = patMatcher.GetToMatch(entry).Text;
-                            List<string> forms = new List<string>();
-                            foreach (WritingSystem ws in WritingSystems)
-                            {
-                                forms.Add(GetPreviewForm(replacer, formToUse, ws));
-                            }
-                            ILexEntryRef variantEntryRef = variantCreator.CreateVariant(
-                                entry,
-                                forms
-                            );
-                            variantCreator.SetShowMinorEntry(
-                                variantEntryRef,
-                                op.Action.ShowMinorEntry
-                            );
-                            if (op.Action.VariantTypes.Count > 0)
-                            {
-                                variantCreator.AddVariantTypes(
-                                    variantEntryRef,
-                                    op.Action.VariantTypes
-                                );
-                            }
-                        }
-                    }
-                );
-            }
-            ShowPreview();
-            this.Cursor = Cursors.Arrow;
         }
 
         protected bool CheckForInvalidVariantTypes()

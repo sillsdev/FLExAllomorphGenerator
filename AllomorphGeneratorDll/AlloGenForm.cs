@@ -40,6 +40,7 @@ namespace SIL.AllomorphGenerator
         public LcmCache Cache { get; set; }
         public Mediator Mediator { get; set; }
         public PropertyTable PropTable { get; set; }
+        AllomorphCreator alloCreator;
 
         protected RegistryKey regkey;
         public static string RegKey { get; set; } = "Software\\SIL\\AllomorphGenerator";
@@ -169,6 +170,7 @@ namespace SIL.AllomorphGenerator
                 lBoxEnvironments.ClearSelected();
                 RememberTabSelection();
                 MarkAsChanged(false);
+                alloCreator = new AllomorphCreator(Cache, WritingSystems);
             }
             catch (Exception e)
             {
@@ -1557,7 +1559,17 @@ namespace SIL.AllomorphGenerator
             this.Cursor = Cursors.Arrow;
         }
 
-        protected virtual void btnApplyOperations_Click(object sender, EventArgs e)
+        protected virtual bool CheckForInvalidActionComponents()
+        {
+            return CheckForInvalidEnvironmentsAndStemNames();
+        }
+
+        protected virtual string CreateUndoRedoPrompt(Operation op)
+        {
+            return " Allomorph Generation for '" + op.Name;
+        }
+
+        protected void btnApplyOperations_Click(object sender, EventArgs e)
         {
             RememberNonChosenEntries(Operation);
             if (lvOperations.CheckedItems.Count == 0)
@@ -1565,13 +1577,12 @@ namespace SIL.AllomorphGenerator
                 MessageBox.Show("No operations are selected, so there's nothing to do");
                 return;
             }
-            if (!CheckForInvalidEnvironmentsAndStemNames())
+            if (!CheckForInvalidActionComponents())
             {
                 return;
             }
             this.Cursor = Cursors.WaitCursor;
             List<Replace> replaceOpsToUse = new List<Replace>();
-            AllomorphCreator alloCreator = new AllomorphCreator(Cache, WritingSystems);
             foreach (ListViewItem lvItem in lvOperations.CheckedItems)
             {
                 Operation op = (Operation)lvItem.Tag;
@@ -1598,7 +1609,7 @@ namespace SIL.AllomorphGenerator
                 }
                 GetRepaceOpsToUse(replaceOpsToUse, op);
                 Replacer replacer = new Replacer(replaceOpsToUse);
-                string undoRedoPrompt = " Allomorph Generation for '" + op.Name;
+                string undoRedoPrompt = CreateUndoRedoPrompt(op);
                 UndoableUnitOfWorkHelper.Do(
                     "Undo" + undoRedoPrompt,
                     "Redo" + undoRedoPrompt,
@@ -1617,21 +1628,30 @@ namespace SIL.AllomorphGenerator
                             {
                                 forms.Add(GetPreviewForm(replacer, formToUse, ws));
                             }
-                            IMoStemAllomorph form = alloCreator.CreateAllomorph(entry, forms);
-                            if (op.Action.StemName.Guid.Length > 0)
-                            {
-                                alloCreator.AddStemName(form, op.Action.StemName.Guid);
-                            }
-                            if (op.Action.Environments.Count > 0)
-                            {
-                                alloCreator.AddEnvironments(form, op.Action.Environments);
-                            }
+                            ApplyOperationToEntry(op, entry, forms);
                         }
                     }
                 );
             }
             ShowPreview();
             this.Cursor = Cursors.Arrow;
+        }
+
+        protected virtual void ApplyOperationToEntry(
+            Operation op,
+            ILexEntry entry,
+            List<string> forms
+        )
+        {
+            IMoStemAllomorph form = alloCreator.CreateAllomorph(entry, forms);
+            if (op.Action.StemName.Guid.Length > 0)
+            {
+                alloCreator.AddStemName(form, op.Action.StemName.Guid);
+            }
+            if (op.Action.Environments.Count > 0)
+            {
+                alloCreator.AddEnvironments(form, op.Action.Environments);
+            }
         }
 
         protected void GetRepaceOpsToUse(List<Replace> replaceOpsToUse, Operation op)
