@@ -53,6 +53,7 @@ namespace SIL.VariantGenerator
                 InitializeVariantTypesControls();
                 InitializeShowInMinorEntryControls();
                 SetBackColor();
+                this.Text = "Variant Generator";
             }
             // Create an instance of a ListView column sorter and assign it
             // to the ListView control.
