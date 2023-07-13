@@ -443,7 +443,7 @@ namespace SIL.AllomorphGenerator
             this.m_MatchDiacriticscheckBox.Name = "m_MatchDiacriticscheckBox";
             this.m_MatchDiacriticscheckBox.UseVisualStyleBackColor = true;
             //
-            // SimpleMatchDlg
+            // SimpleMatchDlgAlloGen
             //
             this.AcceptButton = this.m_okButton;
             resources.ApplyResources(this, "$this");
