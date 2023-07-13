@@ -36,14 +36,18 @@ namespace SIL.VariantGenerator
         void CreateVariantTypes()
         {
             ICmPossibilityList allVariants = Cache.LangProject.LexDbOA.VariantEntryTypesOA;
-            foreach (ILexEntryType variant in allVariants.PossibilitiesOS)
+            CreateVariantSubtypes(allVariants.PossibilitiesOS);
+        }
+
+        void CreateVariantSubtypes(ILcmOwningSequence<ICmPossibility> subtypes)
+        {
+            foreach (ILexEntryType variant in subtypes)
             {
-                {
-                    AlloGenModel.VariantType varType = new AlloGenModel.VariantType();
-                    varType.Guid = variant.Guid.ToString();
-                    varType.Name = variant.ChooserNameTS.Text;
-                    VariantTypes.Add(varType);
-                }
+                AlloGenModel.VariantType varType = new AlloGenModel.VariantType();
+                varType.Guid = variant.Guid.ToString();
+                varType.Name = variant.ChooserNameTS.Text;
+                VariantTypes.Add(varType);
+                CreateVariantSubtypes(variant.SubPossibilitiesOS);
             }
         }
 
@@ -53,7 +57,7 @@ namespace SIL.VariantGenerator
             SelectedVariantTypes.AddRange(selectedOnes);
         }
 
-        public void FillVarianTypesListBox()
+        public void FillVariantTypesListBox()
         {
             clbVariantTypes.Items.Clear();
             foreach (AlloGenModel.VariantType varType in VariantTypes)

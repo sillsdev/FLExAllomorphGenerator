@@ -187,7 +187,7 @@ namespace SIL.VariantGenerator
             {
                 VariantTypesChooser chooser = new VariantTypesChooser(Cache);
                 chooser.setSelected(ActionOp.VariantTypes);
-                chooser.FillVarianTypesListBox();
+                chooser.FillVariantTypesListBox();
                 chooser.ShowDialog();
                 if (chooser.DialogResult == DialogResult.OK)
                 {
