@@ -1764,16 +1764,13 @@ namespace SIL.AllomorphGenerator
             {
                 PatternMatcher patMatcher = new PatternMatcher(Cache, AlloGens);
                 patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
-                IList<ILexEntry> matchingEntries = patMatcher
-                    .MatchPattern(patMatcher.EntriesWithNoAllomorphs, Operation.Pattern)
-                    .ToList();
-                IList<ILexEntry> matchingEntriesWithAllos = patMatcher
-                    .MatchEntriesWithAllosPerPattern(Operation, Pattern)
-                    .ToList();
-                foreach (ILexEntry entry in matchingEntriesWithAllos)
-                {
-                    matchingEntries.Add(entry);
-                }
+                IList<ILexEntry> matchingEntries,
+                    matchingEntriesWithItemsAlready;
+                GetMatchingEntries(
+                    patMatcher,
+                    out matchingEntries,
+                    out matchingEntriesWithItemsAlready
+                );
                 if (matchingEntries == null)
                 {
                     string errMsg = string.Format(
@@ -1804,7 +1801,7 @@ namespace SIL.AllomorphGenerator
                     lvItem.UseItemStyleForSubItems = false;
                     string formToUse = patMatcher.GetToMatch(entry).Text;
                     lvItem.SubItems.Add(formToUse);
-                    if (matchingEntriesWithAllos.Contains(entry))
+                    if (matchingEntriesWithItemsAlready.Contains(entry))
                     {
                         lvItem.SubItems[1].BackColor = Color.Yellow;
                     }
@@ -1830,6 +1827,24 @@ namespace SIL.AllomorphGenerator
             lbCountRunOps.Text = sCount;
             LastOperationShown = Operation;
             this.Cursor = Cursors.Arrow;
+        }
+
+        protected virtual void GetMatchingEntries(
+            PatternMatcher patMatcher,
+            out IList<ILexEntry> matchingEntries,
+            out IList<ILexEntry> matchingEntriesWithItemsAlready
+        )
+        {
+            matchingEntries = patMatcher
+                .MatchPattern(patMatcher.EntriesWithNoAllomorphs, Operation.Pattern)
+                .ToList();
+            matchingEntriesWithItemsAlready = patMatcher
+                .MatchEntriesWithAllosPerPattern(Operation, Pattern)
+                .ToList();
+            foreach (ILexEntry entry in matchingEntriesWithItemsAlready)
+            {
+                matchingEntries.Add(entry);
+            }
         }
 
         protected void RememberNonChosenEntries(Operation op)

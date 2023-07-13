@@ -24,6 +24,8 @@ namespace SIL.AlloGenService
         public IEnumerable<ILexEntry> AllEntries { get; set; }
         public IEnumerable<ILexEntry> EntriesWithNoAllomorphs { get; set; }
         public IEnumerable<ILexEntry> MultiAllomorphEntries { get; set; }
+        public IEnumerable<ILexEntry> NonVariantMainEntries { get; set; }
+        public IEnumerable<ILexEntry> VariantEntries { get; set; }
         public IMoMorphType morphType { get; set; }
         public List<IMoMorphType> morphTypes { get; set; } = new List<IMoMorphType>();
         public string ErrorMessage { get; set; } = "";
@@ -37,6 +39,12 @@ namespace SIL.AlloGenService
             AllEntries = Cache.LanguageProject.LexDbOA.Entries;
             EntriesWithNoAllomorphs = AllEntries.Where(e => e.AlternateFormsOS.Count == 0);
             MultiAllomorphEntries = AllEntries.Where(e => e.AlternateFormsOS.Count > 0);
+            NonVariantMainEntries = AllEntries.Where(
+                e => e.EntryRefsOS.Count() == 0 && e.SensesOS.Count > 0
+            );
+            VariantEntries = AllEntries.Where(
+                e => e.EntryRefsOS.Count() > 0 && e.SensesOS.Count == 0
+            );
             AlloGens = alloGens;
             WritingSystems = alloGens.WritingSystems;
             m_mdc = cache.MetaDataCacheAccessor as IFwMetaDataCacheManaged;
@@ -197,15 +205,9 @@ namespace SIL.AlloGenService
             lexEntriesThatMatch = MatchCategory(lexEntriesThatMatch, pattern);
             lexEntriesThatMatch = MatchMorphTypes(lexEntriesThatMatch, pattern);
 
-            AlloGenModel.Action action = operation.Action;
-            List<Replace> replaceOps = new List<Replace>();
-            foreach (string opRef in action.ReplaceOpRefs)
-            {
-                Replace replace = AlloGens.ReplaceOperations.FirstOrDefault(ro => ro.Guid == opRef);
-                if (replace != null)
-                    replaceOps.Add(replace);
-            }
-            Replacer replacer = new Replacer(replaceOps);
+            AlloGenModel.Action action;
+            Replacer replacer;
+            PrepareReplacer(operation, out action, out replacer);
             IList<ILexEntry> lexEntriesWithAllosThatDoNotMatch = new List<ILexEntry>();
             foreach (ILexEntry entry in lexEntriesThatMatch)
             {
@@ -295,6 +297,102 @@ namespace SIL.AlloGenService
                 if (actionsEnvs.FindIndex(e => e.Guid == env.Guid.ToString()) == -1)
                 {
                     return false;
+                }
+            }
+            return true;
+        }
+
+        public IEnumerable<ILexEntry> MatchEntriesWithVariantsPerPattern(
+            Operation operation,
+            Pattern pattern
+        )
+        {
+            IList<ILexEntry> lexEntriesWithVariants = new List<ILexEntry>();
+            Dictionary<ILexEntry, ILexEntry> entryRefEntryPairs =
+                new Dictionary<ILexEntry, ILexEntry>();
+            foreach (ILexEntry variantEntry in VariantEntries)
+            {
+                foreach (ILexEntryRef entryRef in variantEntry.EntryRefsOS)
+                {
+                    foreach (ICmObject obj in entryRef.ComponentLexemesRS)
+                    {
+                        ILexEntry mainEntry = obj as ILexEntry;
+                        if (mainEntry != null)
+                        {
+                            if (!lexEntriesWithVariants.Contains(mainEntry))
+                            {
+                                lexEntriesWithVariants.Add(mainEntry);
+                                if (!entryRefEntryPairs.ContainsKey(variantEntry))
+                                {
+                                    entryRefEntryPairs.Add(variantEntry, mainEntry);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            var lexEntriesThatMatch = MatchMatchString(lexEntriesWithVariants, pattern);
+            if (lexEntriesThatMatch == null)
+                return null;
+            lexEntriesThatMatch = MatchCategory(lexEntriesThatMatch, pattern);
+            lexEntriesThatMatch = MatchMorphTypes(lexEntriesThatMatch, pattern);
+
+            AlloGenModel.Action action;
+            Replacer replacer;
+            PrepareReplacer(operation, out action, out replacer);
+            IList<ILexEntry> mainEntriesWithVariantsThatAlreadyExist = new List<ILexEntry>();
+            foreach (ILexEntry mainEntry in lexEntriesThatMatch)
+            {
+                ILexEntry variantEntry = entryRefEntryPairs
+                    .FirstOrDefault(e => e.Value == mainEntry)
+                    .Key;
+                // compare lexeme form of variant entry with the generated form of the main entry
+                if (HaveSameLexemeForm(replacer, mainEntry, variantEntry, action))
+                {
+                    mainEntriesWithVariantsThatAlreadyExist.Add(mainEntry);
+                }
+            }
+            return mainEntriesWithVariantsThatAlreadyExist;
+        }
+
+        private void PrepareReplacer(
+            Operation operation,
+            out AlloGenModel.Action action,
+            out Replacer replacer
+        )
+        {
+            action = operation.Action;
+            List<Replace> replaceOps = new List<Replace>();
+            foreach (string opRef in action.ReplaceOpRefs)
+            {
+                Replace replace = AlloGens.ReplaceOperations.FirstOrDefault(ro => ro.Guid == opRef);
+                if (replace != null)
+                    replaceOps.Add(replace);
+            }
+            replacer = new Replacer(replaceOps);
+        }
+
+        private bool HaveSameLexemeForm(
+            Replacer replacer,
+            ILexEntry mainEntry,
+            ILexEntry variantEntry,
+            AlloGenModel.Action action
+        )
+        {
+            ITsString useToMatch = GetToMatch(mainEntry);
+            if (useToMatch != null)
+            {
+                IMoStemAllomorph lexemeForm = variantEntry.LexemeFormOA as IMoStemAllomorph;
+                if (lexemeForm != null)
+                {
+                    string form = useToMatch.Text;
+                    foreach (WritingSystem ws in WritingSystems)
+                    {
+                        if (!HaveSameAllomorphForm(replacer, form, lexemeForm, ws))
+                        {
+                            return false;
+                        }
+                    }
                 }
             }
             return true;

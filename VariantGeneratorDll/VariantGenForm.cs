@@ -264,6 +264,29 @@ namespace SIL.VariantGenerator
             return allIsGood;
         }
 
+        protected override void GetMatchingEntries(
+            PatternMatcher patMatcher,
+            out IList<ILexEntry> matchingEntries,
+            out IList<ILexEntry> matchingEntriesWithItems
+        )
+        {
+            matchingEntries = patMatcher
+                .MatchPattern(patMatcher.NonVariantMainEntries, Operation.Pattern)
+                .ToList();
+            // following gets all main entries that already have a variant that matches the replace op
+            matchingEntriesWithItems = patMatcher
+                .MatchEntriesWithVariantsPerPattern(Operation, Pattern)
+                .ToList();
+            foreach (ILexEntry entry in matchingEntriesWithItems)
+            {
+                if (matchingEntries.Contains(entry))
+                {
+                    // it is already there, so remove it
+                    matchingEntries.Remove(entry);
+                }
+            }
+        }
+
         protected override void lBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
             base.lBoxOperations_SelectedIndexChanged(sender, e);

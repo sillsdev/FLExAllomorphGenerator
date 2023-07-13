@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace SIL.AlloGenServiceTest
 {
-    class FwTestBase : MemoryOnlyBackendProviderTestBase
+    public class FwTestBase : MemoryOnlyBackendProviderTestBase
     {
         protected string TestDataDir { get; set; }
         protected string FieldWorksTestFile { get; set; }
