@@ -30,6 +30,9 @@ namespace SIL.VariantGenerator
         CheckBox cbShowMinorEntry;
         VariantCreator variantCreator;
 
+        protected new const string OperationsFilePrompt =
+            "Variant Generator Operations File (*.vgf)|*.vgf|" + "All Files (*.*)|*.*";
+
         public VariantGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
         {
             Cache = cache;
@@ -296,6 +299,11 @@ namespace SIL.VariantGenerator
                 RefreshVariantTypesListBox();
                 cbShowMinorEntry.Checked = Operation.Action.ShowMinorEntry;
             }
+        }
+
+        protected override string GetOperationsFilePrompt()
+        {
+            return OperationsFilePrompt;
         }
     }
 }

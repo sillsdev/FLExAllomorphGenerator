@@ -882,10 +882,15 @@ namespace SIL.AllomorphGenerator
             regkey.Close();
         }
 
+        protected virtual string GetOperationsFilePrompt()
+        {
+            return OperationsFilePrompt;
+        }
+
         protected void btnBrowse_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = OperationsFilePrompt;
+            dlg.Filter = GetOperationsFilePrompt();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 OperationsFile = dlg.FileName;
@@ -1432,7 +1437,7 @@ namespace SIL.AllomorphGenerator
         {
             SaveAnyChanges();
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter = OperationsFilePrompt;
+            dlg.Filter = GetOperationsFilePrompt();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 OperationsFile = dlg.FileName;
