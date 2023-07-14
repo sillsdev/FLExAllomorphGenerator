@@ -59,6 +59,7 @@ namespace SIL.VariantGenerator
 
         public void FillVariantTypesListBox()
         {
+            clbVariantTypes.BeginUpdate();
             clbVariantTypes.Items.Clear();
             foreach (AlloGenModel.VariantType varType in VariantTypes)
             {
@@ -78,6 +79,7 @@ namespace SIL.VariantGenerator
                     }
                 }
             }
+            clbVariantTypes.EndUpdate();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
