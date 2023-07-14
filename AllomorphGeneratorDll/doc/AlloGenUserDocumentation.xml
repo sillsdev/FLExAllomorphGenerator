@@ -20,9 +20,9 @@ type="tAlloGen"
 ><emailAddress
 >blackhandrew@gmail.com</emailAddress
 ><date
->11 May, 2023</date
+>17 July, 2023</date
 ><version
->Version 2.0.0 Beta<comment
+>Version 2.1.0 Beta<comment
 ><endnote
 id="nDBv01Tov2"
 ><p
@@ -99,8 +99,8 @@ id="sInstallation"
 type="tAlloGen"
 ></object
 >, obtain the installer from <link
-href="https://github.com/AndyBlack/FLExAllomorphGenerator/tree/master/Installer/Output/AllomorphGeneratorDllSetup.exe"
->https://​github.com/​AndyBlack/​FLExAllomorphGenerator/​tree/​master/​Installer/​Output/​Allomorph​Generator​Dll​Setup.exe</link
+href="https://github.com/sillsdev/FLExAllomorphGenerator/blob/master/Installer/Output/AllomorphGeneratorDllSetup.exe"
+>https://​github.​com/​sillsdev/​FLExAllomorphGenerator/​blob/​master/​Installer/​Output/​Allomorph​Generator​Dll​Setup.​exe</link
 >. The installer will check to see if you have installed <object
 type="tFieldWorks"
 ></object
@@ -476,6 +476,7 @@ num="xCustomFieldSettings"
 ><chart
 ><img
 src="resources/CustomFieldSettings.png"
+width="500"
 ></img
 ></chart
 ></example
@@ -1135,31 +1136,18 @@ color="navy"
 id="tTool"
 ></type
 ><type
+before="Variant Generator"
+color="navy"
+font-style="italic"
+id="tVarGen"
+></type
+><type
 before="XMLmind XML Editor"
 color="navy"
 font-style="italic"
 id="tXXE"
 ></type
 ></types
-><contentControl
-><contentTypes
-><contentType
-id="ctKeyColor"
->Tree description in color/font</contentType
-><contentType
-id="ctRegular"
->Tree description plain</contentType
-></contentTypes
-><contentControlChoices
-><contentControlChoice
-active="yes"
-exclude="ctKeyColor"
->Tree description regular</contentControlChoice
-><contentControlChoice
-active="no"
->Tree description color/font</contentControlChoice
-></contentControlChoices
-></contentControl
 ></lingPaper
 ><publisherStyleSheet
 ><publisherStyleSheetName
