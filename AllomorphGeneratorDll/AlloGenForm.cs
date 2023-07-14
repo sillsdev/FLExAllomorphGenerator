@@ -1593,16 +1593,9 @@ namespace SIL.AllomorphGenerator
                 }
                 PatternMatcher patMatcher = new PatternMatcher(Cache, AlloGens);
                 patMatcher.ApplyTo = cbApplyTo.SelectedItem as ApplyTo;
-                IList<ILexEntry> matchingEntries = patMatcher
-                    .MatchPattern(patMatcher.EntriesWithNoAllomorphs, op.Pattern)
-                    .ToList();
-                IList<ILexEntry> matchingEntriesWithAllos = patMatcher
-                    .MatchEntriesWithAllosPerPattern(Operation, Pattern)
-                    .ToList();
-                foreach (ILexEntry entry in matchingEntriesWithAllos)
-                {
-                    matchingEntries.Add(entry);
-                }
+                IList<ILexEntry> matchingEntries,
+                    matchingEntriesWithAllos;
+                GetMatchingEntries(patMatcher, out matchingEntries, out matchingEntriesWithAllos);
                 if (matchingEntries == null || matchingEntries.Count() == 0)
                 {
                     continue;
