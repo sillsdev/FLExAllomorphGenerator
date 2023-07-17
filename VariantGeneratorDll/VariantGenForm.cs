@@ -305,5 +305,10 @@ namespace SIL.VariantGenerator
         {
             return OperationsFilePrompt;
         }
+
+        protected override Form BuildAboutBox()
+        {
+            return new AboutBox();
+        }
     }
 }

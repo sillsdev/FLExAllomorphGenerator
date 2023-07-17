@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SIL.AllomorphGenerator
+namespace SIL.VariantGenerator
 {
     public partial class AboutBox : Form
     {

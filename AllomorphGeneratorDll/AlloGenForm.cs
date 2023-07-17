@@ -1480,13 +1480,17 @@ namespace SIL.AllomorphGenerator
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == About)
             {
-                var dialog = new AboutBox();
+                var dialog = BuildAboutBox();
                 // for some reason the following is needed to keep the dialog within the form
                 Point pt = dialog.PointToClient(System.Windows.Forms.Cursor.Position);
                 dialog.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
-                Console.WriteLine("dialog result=" + dialog.Location.X + "," + dialog.Location.Y);
                 dialog.Show();
             }
+        }
+
+        protected virtual Form BuildAboutBox()
+        {
+            return new AboutBox();
         }
 
         protected void UserDoc_Click(object sender, EventArgs e)

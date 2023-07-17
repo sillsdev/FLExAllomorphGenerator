@@ -83,6 +83,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs" />
     <Compile Include="VariantTypesChooser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +118,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AboutBox.resx" />
     <EmbeddedResource Include="VariantTypesChooser.resx">
       <DependentUpon>VariantTypesChooser.cs</DependentUpon>
     </EmbeddedResource>
