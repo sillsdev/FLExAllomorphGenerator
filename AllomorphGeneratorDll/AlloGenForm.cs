@@ -918,6 +918,11 @@ namespace SIL.AllomorphGenerator
             }
         }
 
+        protected virtual Form BuildCreateNewOpenCancelDialog()
+        {
+            return new CreateNewOpenCancelDialog();
+        }
+
         protected void LoadMigrateGetOperations()
         {
             if (!File.Exists(OperationsFile))
@@ -925,7 +930,7 @@ namespace SIL.AllomorphGenerator
                 if (String.IsNullOrEmpty(OperationsFile))
                 {
                     // probably first time it is run
-                    var dlg = new CreateNewOpenCancelDialog();
+                    var dlg = BuildCreateNewOpenCancelDialog();
                     var result = dlg.ShowDialog();
                     if (result == DialogResult.OK)
                     {

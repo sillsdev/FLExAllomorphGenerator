@@ -310,5 +310,12 @@ namespace SIL.VariantGenerator
         {
             return new AboutBox();
         }
+
+        protected override Form BuildCreateNewOpenCancelDialog()
+        {
+            var dlg = new CreateNewOpenCancelDialog();
+            dlg.Text = "Variant Generator";
+            return dlg;
+        }
     }
 }
