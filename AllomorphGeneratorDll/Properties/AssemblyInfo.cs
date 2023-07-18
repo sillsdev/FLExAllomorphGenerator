@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("AllomorphGenerator")]
 [assembly: AssemblyDescription(
-    "This program enables one to create allomorphs in lexical entries based on the shape of the ciation form.\r\nIt is compatible with FLEx database version 7000072 such as in version 9.1.12 Beta of FLEx.\r\n\r\nThis software is licensed under the LGPL, version 2.1 or later\r\n(http://www.gnu.org/licenses/lgpl-2.1.html)"
+	"This program enables one to create allomorphs in lexical entries based on the shape of the citation form, lexeme form, etymology form, or entry level custom field.\r\nIt is compatible with FLEx database version 7000072 such as in version 9.1.12 Beta of FLEx.\r\n\r\nThis software is licensed under the LGPL, version 2.1 or later\r\n(http://www.gnu.org/licenses/lgpl-2.1.html)"
 )]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SIL International")]
@@ -38,5 +38,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.2.0")]
-[assembly: AssemblyFileVersion("2.0.2.0")]
+[assembly: AssemblyVersion("2.1.0.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]
