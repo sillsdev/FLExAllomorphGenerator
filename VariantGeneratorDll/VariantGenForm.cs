@@ -14,7 +14,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,7 +24,7 @@ using XCore;
 
 namespace SIL.VariantGenerator
 {
-    public partial class VariantGenForm : AlloGenForm
+    public partial class VariantGenForm : AlloGenFormBase
     {
         Button btnVariantTypes;
         ListBox lBoxVariantTypes;
@@ -317,5 +319,16 @@ namespace SIL.VariantGenerator
             dlg.Text = "Variant Generator";
             return dlg;
         }
-    }
+
+		protected override string GetUserDocPath()
+		{
+			String basedir = GetAppBaseDir();
+			return Path.Combine(basedir, "doc", "VarGenUserDocumentation.pdf");
+		}
+
+		protected override Uri GetBaseUri()
+		{
+			return new Uri(Assembly.GetExecutingAssembly().CodeBase);
+		}
+	}
 }

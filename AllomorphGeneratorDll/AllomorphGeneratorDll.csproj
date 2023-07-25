@@ -156,8 +156,11 @@
     <Compile Include="AlloGenForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AlloGenForm.Designer.cs">
-      <DependentUpon>AlloGenForm.cs</DependentUpon>
+    <Compile Include="AlloGenFormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlloGenFormBase.Designer.cs">
+      <DependentUpon>AlloGenFormBase.cs</DependentUpon>
     </Compile>
     <Compile Include="CreateNewOpenCancelDialog.cs">
       <SubType>Form</SubType>
@@ -212,8 +215,8 @@
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AlloGenForm.resx">
-      <DependentUpon>AlloGenForm.cs</DependentUpon>
+    <EmbeddedResource Include="AlloGenFormBase.resx">
+      <DependentUpon>AlloGenFormBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateNewOpenCancelDialog.resx">
       <DependentUpon>CreateNewOpenCancelDialog.cs</DependentUpon>
