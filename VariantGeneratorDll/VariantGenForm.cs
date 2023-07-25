@@ -320,15 +320,15 @@ namespace SIL.VariantGenerator
             return dlg;
         }
 
-		protected override string GetUserDocPath()
-		{
-			String basedir = GetAppBaseDir();
-			return Path.Combine(basedir, "doc", "VarGenUserDocumentation.pdf");
-		}
+        protected override string GetUserDocPath()
+        {
+            String basedir = GetAppBaseDir();
+            return Path.Combine(basedir, "doc", "VarGenUserDocumentation.pdf");
+        }
 
-		protected override Uri GetBaseUri()
-		{
-			return new Uri(Assembly.GetExecutingAssembly().CodeBase);
-		}
-	}
+        protected override Uri GetBaseUri()
+        {
+            return new Uri(Assembly.GetExecutingAssembly().CodeBase);
+        }
+    }
 }

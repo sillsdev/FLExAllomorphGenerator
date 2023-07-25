@@ -818,25 +818,25 @@ namespace SIL.AllomorphGenerator
             MarkAsChanged(true);
         }
 
-		virtual protected void RememberFormState()
-		{
-			regkey = Registry.CurrentUser.OpenSubKey(RegKey);
-			if (regkey != null)
-			{
-				Cursor.Current = Cursors.WaitCursor;
-				Application.DoEvents();
-				RetrieveRegistryInfo();
-				regkey.Close();
-				DesktopBounds = RectNormal;
-				WindowState = WindowState;
-				StartPosition = FormStartPosition.Manual;
-				if (!String.IsNullOrEmpty(LastOperationsFile))
-					tbFile.Text = LastOperationsFile;
-				Cursor.Current = Cursors.Default;
-			}
-		}
+        virtual protected void RememberFormState()
+        {
+            regkey = Registry.CurrentUser.OpenSubKey(RegKey);
+            if (regkey != null)
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                Application.DoEvents();
+                RetrieveRegistryInfo();
+                regkey.Close();
+                DesktopBounds = RectNormal;
+                WindowState = WindowState;
+                StartPosition = FormStartPosition.Manual;
+                if (!String.IsNullOrEmpty(LastOperationsFile))
+                    tbFile.Text = LastOperationsFile;
+                Cursor.Current = Cursors.Default;
+            }
+        }
 
-		protected void RetrieveRegistryInfo()
+        protected void RetrieveRegistryInfo()
         {
             // Window location
             int iX = (int)regkey.GetValue(m_strLocationX, 100);
@@ -1503,15 +1503,15 @@ namespace SIL.AllomorphGenerator
             ToolStripItem menuItem = (ToolStripItem)sender;
             if (menuItem.Name == UserDocumentation)
             {
-				string pathToUse = GetUserDocPath();
+                string pathToUse = GetUserDocPath();
                 Process.Start(pathToUse);
             }
         }
 
-		protected abstract string GetUserDocPath();
-		protected abstract Uri GetBaseUri();
+        protected abstract string GetUserDocPath();
+        protected abstract Uri GetBaseUri();
 
-		protected string GetAppBaseDir()
+        protected string GetAppBaseDir()
         {
             string basedir;
             string rootdir;
@@ -1529,7 +1529,7 @@ namespace SIL.AllomorphGenerator
             out int indexOfBinInPath
         )
         {
-			Uri uriBase = GetBaseUri();
+            Uri uriBase = GetBaseUri();
             rootdir = Path.GetDirectoryName(Uri.UnescapeDataString(uriBase.AbsolutePath));
             indexOfBinInPath = rootdir.LastIndexOf("bin");
         }

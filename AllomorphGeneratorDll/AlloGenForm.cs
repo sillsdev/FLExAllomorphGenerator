@@ -90,11 +90,11 @@ namespace SIL.AllomorphGenerator
             }
         }
 
-		override protected void RememberFormState()
-		{
-			RegKey = "Software\\SIL\\AllomorphGenerator";
-			base.RememberFormState();
-		}
+        override protected void RememberFormState()
+        {
+            RegKey = "Software\\SIL\\AllomorphGenerator";
+            base.RememberFormState();
+        }
 
         protected override string CreateUndoRedoPrompt(Operation op)
         {
@@ -141,15 +141,15 @@ namespace SIL.AllomorphGenerator
             return dlg;
         }
 
-		protected override string GetUserDocPath()
-		{
-			String basedir = GetAppBaseDir();
-			return Path.Combine(basedir, "doc", "AlloGenUserDocumentation.pdf");
-		}
+        protected override string GetUserDocPath()
+        {
+            String basedir = GetAppBaseDir();
+            return Path.Combine(basedir, "doc", "AlloGenUserDocumentation.pdf");
+        }
 
-		protected override Uri GetBaseUri()
-		{
-			return new Uri(Assembly.GetExecutingAssembly().CodeBase);
-		}
-	}
+        protected override Uri GetBaseUri()
+        {
+            return new Uri(Assembly.GetExecutingAssembly().CodeBase);
+        }
+    }
 }
