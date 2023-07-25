@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Variant Generator for FLEx"
-#define MyAppVersion "1.0.0 Beta"
+#define MyAppVersion "1.0.1 Beta"
 #define MyAppPublisher "SIL Iternational"
 #define MyAppURL "https://software.sil.org/"
 #define MyAppExeName "VariantGeneratorDll.dll"
@@ -34,12 +34,12 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 ;Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: 
 
 [Files]
-Source: "..\VariantGeneratorDll\bin\x64\Release\AlloGenModel.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\VariantGeneratorDll\bin\x64\Release\AlloGenModel.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\VariantGeneratorDll\bin\x64\Release\AlloGenService.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\VariantGeneratorDll\bin\x64\Release\AlloGenService.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\VariantGeneratorDll\bin\x64\Release\AllomorphGenerator.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\VariantGeneratorDll\bin\x64\Release\AllomorphGenerator.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AllomorphGeneratorDll\bin\x64\Release\AlloGenModel.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AllomorphGeneratorDll\bin\x64\Release\AlloGenModel.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AllomorphGeneratorDll\bin\x64\Release\AlloGenService.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AllomorphGeneratorDll\bin\x64\Release\AlloGenService.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AllomorphGeneratorDll\bin\x64\Release\AllomorphGenerator.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\AllomorphGeneratorDll\bin\x64\Release\AllomorphGenerator.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\VarGenService\bin\x64\Release\VarGenService.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\VarGenService\bin\x64\Release\VarGenService.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\VariantGeneratorDll\bin\x64\Release\VariantGenerator.dll"; DestDir: "{app}"; Flags: ignoreversion
