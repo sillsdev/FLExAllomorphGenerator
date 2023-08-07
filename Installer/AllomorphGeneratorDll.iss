@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Allomorph Generator for FLEx"
-#define MyAppVersion "2.1.1 Beta"
+#define MyAppVersion "2.1.2 Beta"
 #define MyAppPublisher "SIL Iternational"
 #define MyAppURL "https://software.sil.org/"
 #define MyAppExeName "AllomorphGeneratorDll.dll"

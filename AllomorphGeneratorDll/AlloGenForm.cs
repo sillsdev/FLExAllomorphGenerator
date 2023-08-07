@@ -80,6 +80,7 @@ namespace SIL.AllomorphGenerator
                 lBoxEnvironments.ClearSelected();
                 RememberTabSelection();
                 MarkAsChanged(false);
+                alloCreator = new AllomorphCreator(Cache, WritingSystems);
                 variantCreator = new AllomorphCreator(Cache, WritingSystems);
             }
             catch (Exception e)

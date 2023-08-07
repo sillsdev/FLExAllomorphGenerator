@@ -40,7 +40,7 @@ namespace SIL.AllomorphGenerator
         public LcmCache Cache { get; set; }
         public Mediator Mediator { get; set; }
         public PropertyTable PropTable { get; set; }
-        AllomorphCreator alloCreator;
+        protected AllomorphCreator alloCreator;
 
         protected RegistryKey regkey;
         public static string RegKey { get; set; } = "Software\\SIL\\AllomorphGenerator";
