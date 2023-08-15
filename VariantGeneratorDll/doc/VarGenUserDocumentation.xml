@@ -20,9 +20,9 @@ type="tVarGen"
 ><emailAddress
 >blackhandrew@gmail.com</emailAddress
 ><date
->17 July, 2023</date
+>16 August, 2023</date
 ><version
->Version 1.0.0 Beta</version
+>Version 1.1.0 Beta</version
 ><version
 >Copyright © 2023 SIL International</version
 ><contents
@@ -784,6 +784,14 @@ type="tMenuItem"
 type="tMenuItem"
 >Utilities...</object
 > may not show.</li
+><li
+>Every newly added Lexeme Form will have the same Morph Type as does the Lexeme Form of the main entry.  If this is incorrect, you will need to use <object
+type="tView"
+>Lexicon</object
+> / <object
+type="tView"
+>Bulk Edit Entries</object
+> / List Choice (with the Morph Type column showing) to fix this.</li
 ></ol
 ></section1
 ><section1
