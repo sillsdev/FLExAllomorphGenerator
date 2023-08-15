@@ -31,7 +31,7 @@ namespace SIL.VarGenService
 		
 			IMoStemAllomorph form = variantEntry.Services.GetInstance<IMoStemAllomorphFactory>().Create();
 			variantEntry.LexemeFormOA = form;
-			//entry.AlternateFormsOS.Add(form);
+			variantEntry.LexemeFormOA.MorphTypeRA = entry.LexemeFormOA.MorphTypeRA;
 			for (int i = 0; i < WritingSystems.Count && i < forms.Count; i++)
 			{
 				form.Form.set_String(WritingSystems[i].Handle, forms[i]);
