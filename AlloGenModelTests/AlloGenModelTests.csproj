@@ -102,7 +102,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="ViewsInterfaces, Version=9.1.19.25497, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

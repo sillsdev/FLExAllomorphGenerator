@@ -18,9 +18,10 @@ namespace SIL.AlloGenModel
         public List<Environment> Environments { get; set; }
         public StemName StemName { get; set; } = new StemName();
 
-        // Variant Types and ShowInMinorEntry used in Variant Generator
+        // Variant Types, ShowInMinorEntry, and PublishEntryIn used in Variant Generator
         public List<VariantType> VariantTypes { get; set; }
         public bool ShowMinorEntry { get; set; } = true;
+        public List<PublishEntryInItem> PublishEntryInItems { get; set; }
 
         public Action()
         {
@@ -64,6 +65,16 @@ namespace SIL.AlloGenModel
             }
             newAction.VariantTypes = newVariantTypes;
             newAction.ShowMinorEntry = ShowMinorEntry;
+            List<PublishEntryInItem> newPublishEntryIn = new List<PublishEntryInItem>();
+            foreach (PublishEntryInItem pubItem in PublishEntryInItems)
+            {
+                var newPubItem = new PublishEntryInItem();
+                newPubItem.Active = pubItem.Active;
+                newPubItem.Guid = pubItem.Guid;
+                newPubItem.Name = pubItem.Name;
+                newPublishEntryIn.Add(newPubItem);
+            }
+            newAction.PublishEntryInItems = newPublishEntryIn;
             return newAction;
         }
 
@@ -80,6 +91,7 @@ namespace SIL.AlloGenModel
                 return (ReplaceOpRefs.SequenceEqual(act.ReplaceOpRefs))
                     && (Environments.SequenceEqual(act.Environments))
                     && (VariantTypes.SequenceEqual(act.VariantTypes))
+                    && (PublishEntryInItems.SequenceEqual(act.PublishEntryInItems))
                     && (StemName.Equals(act.StemName))
                     && (ShowMinorEntry == act.ShowMinorEntry);
             }
@@ -88,7 +100,14 @@ namespace SIL.AlloGenModel
         public override int GetHashCode()
         {
             return Tuple
-                .Create(ReplaceOpRefs, Environments, StemName, VariantTypes, ShowMinorEntry)
+                .Create(
+                    ReplaceOpRefs,
+                    Environments,
+                    StemName,
+                    VariantTypes,
+                    ShowMinorEntry,
+                    PublishEntryInItems
+                )
                 .GetHashCode();
         }
     }

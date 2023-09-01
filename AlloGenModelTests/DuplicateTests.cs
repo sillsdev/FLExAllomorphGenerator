@@ -69,6 +69,15 @@ namespace AlloGenModelTests
                 Assert.AreEqual(replace.WritingSystemRefs[i], replaceCopy.WritingSystemRefs[i]);
             }
             Assert.AreEqual(replace.Active, replaceCopy.Active);
+
+            Action actionCopy = action.Duplicate();
+            Assert.NotNull(actionCopy);
+            Assert.AreEqual(action.Environments, actionCopy.Environments);
+            Assert.AreEqual(action.PublishEntryInItems, actionCopy.PublishEntryInItems);
+            Assert.AreEqual(action.ShowMinorEntry, actionCopy.ShowMinorEntry);
+            Assert.AreEqual(action.StemName, actionCopy.StemName);
+            Assert.AreEqual(action.VariantTypes, actionCopy.VariantTypes);
+            Assert.AreEqual(action.ReplaceOpRefs, actionCopy.ReplaceOpRefs);
         }
     }
 }

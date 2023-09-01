@@ -30,6 +30,9 @@ namespace SIL.VariantGenerator
         ListBox lBoxVariantTypes;
         Label lbVariantTypes;
         CheckBox cbShowMinorEntry;
+        Button btnPublishEntryIn;
+        ListBox lBoxPublishEntryIn;
+        Label lbPublishEntryIn;
         VariantCreator variantCreator;
 
         protected new const string OperationsFilePrompt =
@@ -55,8 +58,10 @@ namespace SIL.VariantGenerator
             if (plActions != null)
             {
                 RemoveEnvironmentsAndStemName();
+                AdjustHeightOfReplaceOpsBox();
                 InitializeVariantTypesControls();
                 InitializeShowInMinorEntryControls();
+                InitializePublishEntryInControls();
                 SetBackColor();
                 this.Text = "Variant Generator";
             }
@@ -99,7 +104,12 @@ namespace SIL.VariantGenerator
             }
         }
 
-        private void InitializeVariantTypesControls()
+        protected void AdjustHeightOfReplaceOpsBox()
+        {
+            this.lBoxReplaceOps.Height -= 20;
+        }
+
+        protected void InitializeVariantTypesControls()
         {
             btnVariantTypes = new Button();
             lBoxVariantTypes = new ListBox();
@@ -111,7 +121,7 @@ namespace SIL.VariantGenerator
             // lbVariantTypes
             //
             lbVariantTypes.AutoSize = true;
-            lbVariantTypes.Location = new Point(83, 119);
+            lbVariantTypes.Location = new Point(83, 83); // was 119
             lbVariantTypes.Margin = new Padding(2, 0, 2, 0);
             lbVariantTypes.Name = "lblbVariantTypes";
             lbVariantTypes.Size = new Size(71, 13);
@@ -122,16 +132,16 @@ namespace SIL.VariantGenerator
             //
             lBoxVariantTypes.Enabled = false;
             lBoxVariantTypes.FormattingEnabled = true;
-            lBoxVariantTypes.Location = new Point(177, 119);
+            lBoxVariantTypes.Location = new Point(177, 83);
             lBoxVariantTypes.Margin = new Padding(2, 2, 2, 2);
             lBoxVariantTypes.Name = "lBoxVariantTypes";
-            lBoxVariantTypes.Size = new Size(207, 82);
+            lBoxVariantTypes.Size = new Size(207, 62);
             lBoxVariantTypes.TabIndex = 4;
             lBoxVariantTypes.BringToFront();
             //
             // btnVariantTypes
             //
-            btnVariantTypes.Location = new Point(399, 119);
+            btnVariantTypes.Location = new Point(399, 83);
             btnVariantTypes.Margin = new Padding(2, 2, 2, 2);
             btnVariantTypes.Name = "btnVariantTypes";
             btnVariantTypes.Size = new Size(33, 20);
@@ -150,7 +160,7 @@ namespace SIL.VariantGenerator
             // cbShowInMinorEntry
             //
             cbShowMinorEntry.AutoSize = true;
-            cbShowMinorEntry.Location = new Point(81, 214);
+            cbShowMinorEntry.Location = new Point(81, 148);
             cbShowMinorEntry.Name = "cbShowInMinorEntry";
             cbShowMinorEntry.Margin = new Padding(2, 0, 2, 0);
             cbShowMinorEntry.Size = new System.Drawing.Size(60, 13);
@@ -158,6 +168,49 @@ namespace SIL.VariantGenerator
             cbShowMinorEntry.Text = "Show minor entry";
             cbShowMinorEntry.Checked = true;
             cbShowMinorEntry.Click += new EventHandler(this.cbShowMinorEntry_Click);
+        }
+
+        private void InitializePublishEntryInControls()
+        {
+            btnPublishEntryIn = new Button();
+            lBoxPublishEntryIn = new ListBox();
+            lbPublishEntryIn = new Label();
+            plActions.Controls.Add(btnPublishEntryIn);
+            plActions.Controls.Add(lBoxPublishEntryIn);
+            plActions.Controls.Add(lbPublishEntryIn);
+            //
+            // lbPublishEntryIn
+            //
+            lbPublishEntryIn.AutoSize = true;
+            lbPublishEntryIn.Location = new Point(83, 190);
+            lbPublishEntryIn.Margin = new Padding(2, 0, 2, 0);
+            lbPublishEntryIn.Name = "lblbPublishEntryIn";
+            lbPublishEntryIn.Size = new Size(71, 13);
+            lbPublishEntryIn.TabIndex = 7;
+            lbPublishEntryIn.Text = "Publish Entry In";
+            //
+            // lBoxPublishEntryIn
+            //
+            lBoxPublishEntryIn.Enabled = false;
+            lBoxPublishEntryIn.FormattingEnabled = true;
+            lBoxPublishEntryIn.Location = new Point(177, 190);
+            lBoxPublishEntryIn.Margin = new Padding(2, 2, 2, 2);
+            lBoxPublishEntryIn.Name = "lBoxPublishEntryIn";
+            lBoxPublishEntryIn.Size = new Size(207, 62);
+            lBoxPublishEntryIn.TabIndex = 8;
+            lBoxPublishEntryIn.BringToFront();
+            //
+            // btnPublishEntryIn
+            //
+            btnPublishEntryIn.Location = new Point(399, 190);
+            btnPublishEntryIn.Margin = new Padding(2, 2, 2, 2);
+            btnPublishEntryIn.Name = "btnPublishEntryIn";
+            btnPublishEntryIn.Size = new Size(33, 20);
+            btnPublishEntryIn.TabIndex = 9;
+            btnPublishEntryIn.Text = "Ed&it";
+            btnPublishEntryIn.UseVisualStyleBackColor = true;
+            btnPublishEntryIn.BringToFront();
+            btnPublishEntryIn.Click += new System.EventHandler(this.btnPublishEntryIn_Click);
         }
 
         private void RemoveEnvironmentsAndStemName()
@@ -212,6 +265,24 @@ namespace SIL.VariantGenerator
             }
         }
 
+        protected void btnPublishEntryIn_Click(object sender, EventArgs e)
+        {
+            if (Cache != null)
+            {
+                PublishEntryInChooser chooser = new PublishEntryInChooser(Cache);
+                chooser.setSelected(ActionOp.PublishEntryInItems);
+                chooser.FillPublishEntryInItemsListBox();
+                chooser.ShowDialog();
+                if (chooser.DialogResult == DialogResult.OK)
+                {
+                    ActionOp.PublishEntryInItems.Clear();
+                    ActionOp.PublishEntryInItems.AddRange(chooser.SelectedPublishEntryInItems);
+                    RefreshPublishEntryInListBox();
+                    MarkAsChanged(true);
+                }
+            }
+        }
+
         protected void RefreshVariantTypesListBox()
         {
             lBoxVariantTypes.Items.Clear();
@@ -221,9 +292,18 @@ namespace SIL.VariantGenerator
             }
         }
 
+        protected void RefreshPublishEntryInListBox()
+        {
+            lBoxPublishEntryIn.Items.Clear();
+            foreach (AlloGenModel.PublishEntryInItem item in ActionOp.PublishEntryInItems)
+            {
+                lBoxPublishEntryIn.Items.Add(item);
+            }
+        }
+
         protected override bool CheckForInvalidActionComponents()
         {
-            return CheckForInvalidVariantTypes();
+            return CheckForInvalidVariantTypes() && CheckForInvalidPublishEntryIItems();
         }
 
         protected override string CreateUndoRedoPrompt(Operation op)
@@ -242,6 +322,10 @@ namespace SIL.VariantGenerator
             if (op.Action.VariantTypes.Count > 0)
             {
                 variantCreator.AddVariantTypes(variantEntryRef, op.Action.VariantTypes);
+            }
+            if (op.Action.PublishEntryInItems.Count > 0)
+            {
+                variantCreator.AddPublishEntryInItems(op.Action.PublishEntryInItems);
             }
         }
 
@@ -262,6 +346,33 @@ namespace SIL.VariantGenerator
                         if (variantType == null)
                         {
                             ReportMissingFLExItem("The variant type '", varType.Name, op.Name);
+                            allIsGood = false;
+                        }
+                    }
+                }
+            }
+            return allIsGood;
+        }
+
+        protected bool CheckForInvalidPublishEntryIItems()
+        {
+            bool allIsGood = true;
+            foreach (ListViewItem lvItem in lvOperations.CheckedItems)
+            {
+                Operation op = (Operation)lvItem.Tag;
+                if (op.Action.PublishEntryInItems.Count > 0)
+                {
+                    foreach (
+                        AlloGenModel.PublishEntryInItem pubItem in op.Action.PublishEntryInItems
+                    )
+                    {
+                        var publication =
+                            Cache.ServiceLocator.ObjectRepository.GetObjectOrIdWithHvoFromGuid(
+                                new Guid(pubItem.Guid)
+                            );
+                        if (publication == null)
+                        {
+                            ReportMissingFLExItem("The publication '", pubItem.Name, op.Name);
                             allIsGood = false;
                         }
                     }
@@ -300,6 +411,7 @@ namespace SIL.VariantGenerator
             {
                 RefreshVariantTypesListBox();
                 cbShowMinorEntry.Checked = Operation.Action.ShowMinorEntry;
+                RefreshPublishEntryInListBox();
             }
         }
 

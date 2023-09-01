@@ -19,7 +19,7 @@ namespace SIL.AlloGenService
     public class DatabaseMigrator
     {
         // is public and can be changed for testing purposes
-        public int LatestVersion { get; set; } = 4;
+        public int LatestVersion { get; set; } = 6;
 
 #if Marks
         public AllomorphGenerators Migrate(AllomorphGenerators oldDatabase, string file)
