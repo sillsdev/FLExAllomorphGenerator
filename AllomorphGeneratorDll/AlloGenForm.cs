@@ -105,23 +105,18 @@ namespace SIL.AllomorphGenerator
         protected override void GetMatchingEntries(
             PatternMatcher patMatcher,
             out IList<ILexEntry> matchingEntries,
-            out IList<ILexEntry> matchingEntriesWithItems
+            out IList<ILexEntry> matchingEntriesWithItemsAlready
         )
         {
             matchingEntries = patMatcher
-                .MatchPattern(patMatcher.NonVariantMainEntries, Operation.Pattern)
+                .MatchPattern(patMatcher.EntriesWithNoAllomorphs, Operation.Pattern)
                 .ToList();
-            // following gets all main entries that already have a variant that matches the replace op
-            matchingEntriesWithItems = patMatcher
-                .MatchEntriesWithVariantsPerPattern(Operation, Pattern)
+            matchingEntriesWithItemsAlready = patMatcher
+                .MatchEntriesWithAllosPerPattern(Operation, Pattern)
                 .ToList();
-            foreach (ILexEntry entry in matchingEntriesWithItems)
+            foreach (ILexEntry entry in matchingEntriesWithItemsAlready)
             {
-                if (matchingEntries.Contains(entry))
-                {
-                    // it is already there, so remove it
-                    matchingEntries.Remove(entry);
-                }
+                matchingEntries.Add(entry);
             }
         }
 
