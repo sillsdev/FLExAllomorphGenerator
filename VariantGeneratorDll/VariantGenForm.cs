@@ -37,6 +37,7 @@ namespace SIL.VariantGenerator
 
         protected new const string OperationsFilePrompt =
             "Variant Generator Operations File (*.vgf)|*.vgf|" + "All Files (*.*)|*.*";
+        const string RegKey = "Software\\SIL\\VariantGenerator";
 
         public VariantGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
         {
@@ -55,6 +56,7 @@ namespace SIL.VariantGenerator
 
         protected void VarGenInitForm()
         {
+            base.InitializeComponent();
             if (plActions != null)
             {
                 RemoveEnvironmentsAndStemName();
@@ -71,9 +73,12 @@ namespace SIL.VariantGenerator
             lvPreview.ListViewItemSorter = lvwColumnSorter;
             lvwEditReplaceOpsColumnSorter = new ListViewColumnSorter();
             lvEditReplaceOps.ListViewItemSorter = lvwEditReplaceOpsColumnSorter;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(
+                this.OnFormClosing
+            );
             try
             {
-                RememberFormState();
+                RememberFormState(RegKey);
                 Provider = new XmlBackEndProvider();
                 Migrator = new DatabaseMigrator();
                 LoadMigrateGetOperations();
@@ -233,12 +238,6 @@ namespace SIL.VariantGenerator
             plActions.BackColor = tabBackColor;
         }
 
-        override protected void RememberFormState()
-        {
-            RegKey = "Software\\SIL\\VariantGenerator";
-            base.RememberFormState();
-        }
-
         protected void btnVariantTypes_Click(object sender, EventArgs e)
         {
             if (Cache != null)
@@ -281,6 +280,12 @@ namespace SIL.VariantGenerator
                     MarkAsChanged(true);
                 }
             }
+        }
+
+        protected void OnFormClosing(object sender, EventArgs e)
+        {
+            SaveAnyChanges();
+            SaveRegistryInfo(RegKey);
         }
 
         protected void RefreshVariantTypesListBox()

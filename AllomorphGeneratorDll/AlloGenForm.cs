@@ -25,10 +25,11 @@ namespace SIL.AllomorphGenerator
 {
     public partial class AlloGenForm : AlloGenFormBase
     {
-        AllomorphCreator variantCreator;
+        AllomorphCreator allomorphCreator;
 
         protected new const string OperationsFilePrompt =
             "Allomorph Generator Operations File (*.agf)|*.agf|" + "All Files (*.*)|*.*";
+        const string RegKey = "Software\\SIL\\AllomorphGenerator";
 
         public AlloGenForm(LcmCache cache, PropertyTable propTable, Mediator mediator)
         {
@@ -47,6 +48,7 @@ namespace SIL.AllomorphGenerator
 
         protected void AlloGenInitForm()
         {
+            base.InitializeComponent();
             if (plActions != null)
             {
                 this.Text = "Allomorph Generator";
@@ -57,9 +59,12 @@ namespace SIL.AllomorphGenerator
             lvPreview.ListViewItemSorter = lvwColumnSorter;
             lvwEditReplaceOpsColumnSorter = new ListViewColumnSorter();
             lvEditReplaceOps.ListViewItemSorter = lvwEditReplaceOpsColumnSorter;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(
+                this.OnFormClosing
+            );
             try
             {
-                RememberFormState();
+                RememberFormState(RegKey);
                 Provider = new XmlBackEndProvider();
                 Migrator = new DatabaseMigrator();
                 LoadMigrateGetOperations();
@@ -81,7 +86,7 @@ namespace SIL.AllomorphGenerator
                 RememberTabSelection();
                 MarkAsChanged(false);
                 alloCreator = new AllomorphCreator(Cache, WritingSystems);
-                variantCreator = new AllomorphCreator(Cache, WritingSystems);
+                allomorphCreator = new AllomorphCreator(Cache, WritingSystems);
             }
             catch (Exception e)
             {
@@ -89,12 +94,6 @@ namespace SIL.AllomorphGenerator
                 Console.WriteLine(e.InnerException);
                 Console.WriteLine(e.StackTrace);
             }
-        }
-
-        override protected void RememberFormState()
-        {
-            RegKey = "Software\\SIL\\AllomorphGenerator";
-            base.RememberFormState();
         }
 
         protected override string CreateUndoRedoPrompt(Operation op)
@@ -133,7 +132,7 @@ namespace SIL.AllomorphGenerator
         protected override Form BuildCreateNewOpenCancelDialog()
         {
             var dlg = new CreateNewOpenCancelDialog();
-            dlg.Text = "Variant Generator";
+            dlg.Text = "Allomorph Generator";
             return dlg;
         }
 
@@ -146,6 +145,12 @@ namespace SIL.AllomorphGenerator
         protected override Uri GetBaseUri()
         {
             return new Uri(Assembly.GetExecutingAssembly().CodeBase);
+        }
+
+        protected void OnFormClosing(object sender, EventArgs e)
+        {
+            SaveAnyChanges();
+            SaveRegistryInfo(RegKey);
         }
     }
 }

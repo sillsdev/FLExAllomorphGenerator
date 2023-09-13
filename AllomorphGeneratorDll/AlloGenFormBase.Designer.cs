@@ -25,7 +25,7 @@ namespace SIL.AllomorphGenerator
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        protected void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlloGenFormBase));
@@ -770,7 +770,6 @@ namespace SIL.AllomorphGenerator
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.Name = "AlloGenFormBase";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
 			this.tabControl.ResumeLayout(false);
 			this.tabEditOps.ResumeLayout(false);
 			this.tabEditOps.PerformLayout();

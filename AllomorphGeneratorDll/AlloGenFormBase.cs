@@ -43,7 +43,6 @@ namespace SIL.AllomorphGenerator
         protected AllomorphCreator alloCreator;
 
         protected RegistryKey regkey;
-        public static string RegKey { get; set; } = "Software\\SIL\\AllomorphGenerator";
         protected const string m_strLastDatabase = "LastDatabase";
         protected const string m_strLastOperationsFile = "LastOperationsFile";
         protected const string m_strLastOperation = "Lastoperation";
@@ -122,63 +121,6 @@ namespace SIL.AllomorphGenerator
         protected ListViewColumnSorter lvwEditReplaceOpsColumnSorter;
         protected List<FDWrapper> customFields = new List<FDWrapper>();
         protected string applyToField = "";
-
-        public AlloGenFormBase(LcmCache cache, PropertyTable propTable, Mediator mediator)
-        {
-            Cache = cache;
-            PropTable = propTable;
-            Mediator = mediator;
-            FLExCustomFieldsObtainer obtainer = new FLExCustomFieldsObtainer(cache);
-            customFields = obtainer.CustomFields;
-            InitForm();
-        }
-
-        public AlloGenFormBase()
-        {
-            InitForm();
-        }
-
-        protected void InitForm()
-        {
-            InitializeComponent();
-            // Create an instance of a ListView column sorter and assign it
-            // to the ListView control.
-            lvwColumnSorter = new ListViewColumnSorter();
-            lvPreview.ListViewItemSorter = lvwColumnSorter;
-            lvwEditReplaceOpsColumnSorter = new ListViewColumnSorter();
-            lvEditReplaceOps.ListViewItemSorter = lvwEditReplaceOpsColumnSorter;
-            try
-            {
-                RememberFormState();
-                Provider = new XmlBackEndProvider();
-                Migrator = new DatabaseMigrator();
-                LoadMigrateGetOperations();
-                FillOperationsListBox();
-                FillApplyToComboBox();
-                SetupFontAndStyleInfo();
-                SetUpOperationsCheckedListBox();
-                SetUpPreviewCheckedListBox();
-                FillApplyOperationsListView();
-                SetUpEditReplaceOpsListView();
-                FillReplaceOpsListView();
-                BuildReplaceContextMenu();
-                BuildEditReplaceOpContextMenu();
-                BuildHelpContextMenu();
-                BuildOperationsCheckBoxContextMenu();
-                BuildPreviewCheckBoxContextMenu();
-                lBoxMorphTypes.ClearSelected();
-                lBoxEnvironments.ClearSelected();
-                RememberTabSelection();
-                MarkAsChanged(false);
-                alloCreator = new AllomorphCreator(Cache, WritingSystems);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.InnerException);
-                Console.WriteLine(e.StackTrace);
-            }
-        }
 
         protected void FillApplyToComboBox()
         {
@@ -818,9 +760,9 @@ namespace SIL.AllomorphGenerator
             MarkAsChanged(true);
         }
 
-        virtual protected void RememberFormState()
+        virtual protected void RememberFormState(string sRegKey)
         {
-            regkey = Registry.CurrentUser.OpenSubKey(RegKey);
+            regkey = Registry.CurrentUser.OpenSubKey(sRegKey);
             if (regkey != null)
             {
                 Cursor.Current = Cursors.WaitCursor;
@@ -857,12 +799,12 @@ namespace SIL.AllomorphGenerator
             LastTab = (int)regkey.GetValue(m_strLastTab, 0);
         }
 
-        public void SaveRegistryInfo()
+        public void SaveRegistryInfo(string sRegKey)
         {
-            regkey = Registry.CurrentUser.OpenSubKey(RegKey, true);
+            regkey = Registry.CurrentUser.OpenSubKey(sRegKey, true);
             if (regkey == null)
             {
-                regkey = Registry.CurrentUser.CreateSubKey(RegKey);
+                regkey = Registry.CurrentUser.CreateSubKey(sRegKey);
             }
 
             if (LastDatabase != null)
@@ -985,12 +927,6 @@ namespace SIL.AllomorphGenerator
                 WritingSystems = AlloGens.WritingSystems;
             }
 #endif
-        }
-
-        protected void OnFormClosing(object sender, EventArgs e)
-        {
-            SaveAnyChanges();
-            SaveRegistryInfo();
         }
 
         protected void SaveAnyChanges()
