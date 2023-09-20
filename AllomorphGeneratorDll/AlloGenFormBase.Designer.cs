@@ -768,6 +768,7 @@ namespace SIL.AllomorphGenerator
 			this.Controls.Add(this.lbAlloGenFile);
 			this.Controls.Add(this.tabControl);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.KeyPreview = true;
 			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.Name = "AlloGenFormBase";
 			this.tabControl.ResumeLayout(false);

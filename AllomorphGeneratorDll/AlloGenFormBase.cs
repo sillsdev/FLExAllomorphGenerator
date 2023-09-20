@@ -333,18 +333,19 @@ namespace SIL.AllomorphGenerator
         protected void BuildPreviewCheckBoxContextMenu()
         {
             previewCheckBoxContextMenu = new ContextMenuStrip();
-            ToolStripMenuItem selectAll = new ToolStripMenuItem(cmSelectAll);
+            ToolStripMenuItem selectAll = new ToolStripMenuItem(cmSelectAll + " / Ctrl-L");
             selectAll.Click += new EventHandler(PreviewSelectAll_Click);
             selectAll.Name = cmSelectAll;
-            ToolStripMenuItem clearAll = new ToolStripMenuItem(cmClearAll);
+            ToolStripMenuItem clearAll = new ToolStripMenuItem(cmClearAll + " / Ctrl-R");
             clearAll.Click += new EventHandler(PreviewClearAll_Click);
             clearAll.Name = cmClearAll;
-            ToolStripMenuItem toggle = new ToolStripMenuItem(cmToggle);
+            ToolStripMenuItem toggle = new ToolStripMenuItem(cmToggle + " / Ctrl-T");
             toggle.Click += new EventHandler(PreviewToggle_Click);
             toggle.Name = cmToggle;
             previewCheckBoxContextMenu.Items.Add(selectAll);
             previewCheckBoxContextMenu.Items.Add(clearAll);
             previewCheckBoxContextMenu.Items.Add(toggle);
+            this.KeyUp += new KeyEventHandler(AlloGenFormBase_KeyUp);
         }
 
         protected void PreviewClearAll_Click(object sender, EventArgs e)
@@ -368,6 +369,25 @@ namespace SIL.AllomorphGenerator
             foreach (ListViewItem lvItem in lvPreview.Items)
             {
                 lvItem.Checked = !lvItem.Checked;
+            }
+        }
+
+        protected void AlloGenFormBase_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (tabControl.SelectedTab == tabRunOps)
+            {
+                if (e.Control && e.KeyCode == Keys.R)
+                {
+                    PreviewClearAll_Click(sender, e);
+                }
+                else if (e.Control && e.KeyCode == Keys.L)
+                {
+                    PreviewSelectAll_Click(sender, e);
+                }
+                else if (e.Control && e.KeyCode == Keys.T)
+                {
+                    PreviewToggle_Click(sender, e);
+                }
             }
         }
 
