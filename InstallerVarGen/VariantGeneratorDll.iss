@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Variant Generator for FLEx"
-#define MyAppVersion "1.2.1 Beta"
+#define MyAppVersion "1.3.0 Beta"
 #define MyAppPublisher "SIL Iternational"
 #define MyAppURL "https://software.sil.org/"
 #define MyAppExeName "VariantGeneratorDll.dll"

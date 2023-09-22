@@ -20,9 +20,9 @@ type="tVarGen"
 ><emailAddress
 >blackhandrew@gmail.com</emailAddress
 ><date
->1 September, 2023</date
+>21 September, 2023</date
 ><version
->Version 1.2.0 Beta</version
+>Version 1.3.0 Beta</version
 ><version
 >Copyright © 2023 SIL International</version
 ><contents
@@ -506,13 +506,33 @@ letter="xCheckBoxMenu"
 num="xCheckBoxMenu"
 ></exampleRef
 >.</p
+><p
+>Both of the items in the <object
+type="tRunTab"
+></object
+> tab have check boxes and both have a checked check box as the column header of the first column. When you click on this checked box in the top row of the “Operations to apply” portion, you will see the menu shown in example <exampleRef
+letter="xCheckBoxMenu"
+num="xCheckBoxMenu"
+></exampleRef
+>.</p
 ><xi:include
 href="../../AllomorphGeneratorDll/doc/AlloGenUserDocumentation.xml"
 xpointer="xCheckBoxMenu"
 xmlns:xi="http://www.w3.org/2001/XInclude"
 ></xi:include
 ><p
->This works like the bulk edit check box menu does in <object
+>When you click on this checked box in the top row of the "Preview of selected operation" portion, you will see the menu shown in example <exampleRef
+letter="xCheckBoxMenuPreview"
+num="xCheckBoxMenuPreview"
+></exampleRef
+>.</p
+><xi:include
+href="../../AllomorphGeneratorDll/doc/AlloGenUserDocumentation.xml"
+xpointer="xCheckBoxMenuPreview"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+><p
+>These work like the bulk edit check box menu does in <object
 type="tFLEx"
 ></object
 >. For operations, you choose which operations you want to be applied when you press the <object
@@ -521,7 +541,12 @@ type="tApplyOps"
 > button. For the preview portion, it works like it does in bulk edit in <object
 type="tFLEx"
 ></object
->: if an item is checked, a new variant will be produced for the entry containing that indicated form. If an item is not checked, it will be ignored (i.e., it will remain as it currently is).</p
+>: if an item is checked, a new <object
+type="tStemAllo"
+></object
+> will be produced for the entry containing that indicated form. If an item is not checked, it will be ignored (i.e., it will remain as it currently is).</p
+><p
+>Note that for the "Preview of selected operation" portion, there are three keyboard shortcuts shown. These keyboard shortcuts only work when you have overtly clicked in the “Run Operations" tab.</p
 ><p
 >See section <sectionRef
 sec="sApplyOpsVar"
