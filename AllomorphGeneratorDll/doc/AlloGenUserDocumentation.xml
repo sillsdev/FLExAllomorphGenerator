@@ -20,9 +20,9 @@ type="tAlloGen"
 ><emailAddress
 >blackhandrew@gmail.com</emailAddress
 ><date
->17 July, 2023</date
+>21 September, 2023</date
 ><version
->Version 2.1.0 Beta<comment
+>Version 2.2.0 Beta<comment
 ><endnote
 id="nDBv01Tov2"
 ><p
@@ -538,7 +538,7 @@ type="tFLEx"
 >Both of the items in the <object
 type="tRunTab"
 ></object
-> tab have check boxes and both have a checked check box as the column header of the first column. When you click on this checked box in the top row, you will see the menu shown in example <exampleRef
+> tab have check boxes and both have a checked check box as the column header of the first column. When you click on this checked box in the top row of the “Operations to apply” portion, you will see the menu shown in example <exampleRef
 letter="xCheckBoxMenu"
 num="xCheckBoxMenu"
 ></exampleRef
@@ -552,7 +552,21 @@ src="resources/CheckBoxMenu.png"
 ></chart
 ></example
 ><p
->This works like the bulk edit check box menu does in <object
+>When you click on this checked box in the top row of the "Preview of selected operation" portion, you will see the menu shown in example <exampleRef
+letter="xCheckBoxMenuPreview"
+num="xCheckBoxMenuPreview"
+></exampleRef
+>.</p
+><example
+num="xCheckBoxMenuPreview"
+><chart
+><img
+src="resources/CheckBoxMenuPreview.png"
+></img
+></chart
+></example
+><p
+>These work like the bulk edit check box menu does in <object
 type="tFLEx"
 ></object
 >. For operations, you choose which operations you want to be applied when you press the <object
@@ -565,6 +579,8 @@ type="tFLEx"
 type="tStemAllo"
 ></object
 > will be produced for the entry containing that indicated form. If an item is not checked, it will be ignored (i.e., it will remain as it currently is).</p
+><p
+>Note that for the "Preview of selected operation" portion, there are three keyboard shortcuts shown.  These keyboard shortcuts only work when you have overtly clicked in the “Run Operations" tab.</p
 ><p
 >See section <sectionRef
 sec="sApplyOps"
