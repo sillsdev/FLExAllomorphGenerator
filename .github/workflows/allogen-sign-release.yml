@@ -4,7 +4,8 @@ name: AlloGen Sign and Release
 
 on:
   push:
-
+    paths:
+      - 'Installer/Output/**'
 jobs:
   preparation:
 
