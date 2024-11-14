@@ -1,0 +1,50 @@
+# This workflow will sign an installer for the FLExAllomorphGenerator utility.
+
+name: AlloGen Manual Sign and Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  runs-on: windows-latest
+
+  preparation:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+
+      - name: Create artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AllomorphGenerator
+          path: Installer/Output/AllomorphGeneratorDllSetup.exe
+          if-no-files-found: error
+
+  sign-installer:
+    name: Sign AlloGen installer
+    needs: preparation
+    uses: sillsdev/codesign/.github/workflows/sign.yml@v2
+    with:
+      artifact: AllomorphGenerator
+    secrets:
+      certificate: ${{ secrets.CODESIGN_LSDEVSECTIGOEV }}
+
+  create-release:
+    name: Create Release
+    needs: sign-installer
+#    runs-on: windows-latest
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: AllomorphGenerator
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: AllomorphGeneratorDllSetup.exe
+          body: |
+            Release for version ${{ github.ref }}
+          draft: true
