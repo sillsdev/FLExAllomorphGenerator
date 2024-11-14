@@ -4,6 +4,8 @@ name: VarGen Sign and Release
 
 on:
   push:
+    paths:
+      - 'InstallerVarGen/Output/**'
 
 jobs:
   preparation:
