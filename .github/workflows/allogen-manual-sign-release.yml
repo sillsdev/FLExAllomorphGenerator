@@ -3,7 +3,7 @@
 name: AlloGen Manual Sign and Release
 
 on:
-  workflow_dispatch:
+  push:
 
 jobs:
   preparation:
