@@ -6,9 +6,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  runs-on: windows-latest
-
   preparation:
+
+    runs-on: windows-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
