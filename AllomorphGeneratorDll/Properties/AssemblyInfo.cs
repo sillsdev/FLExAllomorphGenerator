@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022-2024 SIL International
+﻿// Copyright (c) 2022-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 
@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SIL International")]
 [assembly: AssemblyProduct("AllomorphGenerator")]
-[assembly: AssemblyCopyright("Copyright ©  2023-2024")]
+[assembly: AssemblyCopyright("Copyright ©  2023-2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -38,5 +38,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.2.3.0")]
-[assembly: AssemblyFileVersion("2.2.3.0")]
+[assembly: AssemblyVersion("2.2.4.0")]
+[assembly: AssemblyFileVersion("2.2.4.0")]
