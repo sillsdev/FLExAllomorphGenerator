@@ -1,23 +1,15 @@
-# Allomorph Generator for FLEx
+# This repository is now included with FieldWorks.
+Therefore this repository has been archived.
+See https://github.com/sillsdev/FieldWorks/tree/main/Src/Utilities/AlloVarGen.
+
+## Allomorph Generator for FLEx
 A tool to generate allomorphs for a FLEx project based on the citation form, the lexeme form, the etymology form, or an entry-level custom field of an entry.
 
 *Allomorph Generator for FLEx* is a 64-bit Windows program.  It does not run on any other platform.
 
-*Allomorph Generator for FLEx* is compatible with version 9.1.18 or higher of FLEx.
-
-See https://github.com/sillsdev/FLExAllomorphGenerator/blob/master/AllomorphGeneratorDll/doc/AlloGenUserDocumentation.pdf for more.
-
-The installer can be downloaded at https://github.com/sillsdev/FLExAllomorphGenerator/blob/master/Installer/Output/AllomorphGeneratorDllSetup.exe.
-
-# Variant Generator for FLEx
+## Variant Generator for FLEx
 A tool to generate variants for a FLEx project based on the citation form, the lexeme form, the etymology form, or an entry-level custom field of an entry.
 
 *Variant Generator for FLEx* is a 64-bit Windows program.  It does not run on any other platform.
 
-*Variant Generator for FLEx* is compatible with version 9.1.18 or higher of FLEx.
-
-See https://github.com/sillsdev/FLExAllomorphGenerator/blob/master/VariantGeneratorDll/doc/VarGenUserDocumentation.pdf for more.
-
-The installer can be downloaded at https://github.com/sillsdev/FLExAllomorphGenerator/blob/master/InstallerVarGen/Output/VariantGeneratorDllSetup.exe
-.
 
